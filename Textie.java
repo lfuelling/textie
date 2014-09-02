@@ -10,6 +10,7 @@ import java.io.Console;
 
 public class Textie {
   static int[] inventory = new int[6];
+  static int[] umgebung = new int[4];
   static String playerName = "Fremder";
   public static final int STATE = 0;
   public static final int DEAD = 1;
@@ -113,6 +114,9 @@ public class Textie {
     }
   }
 
+
+
+
   public static int getObjectID (String objectName) {
     switch(objectName) {
       case "FACKEL":
@@ -144,10 +148,13 @@ public class Textie {
     }
   }
 
-  public static boolean addToInventory (int objectID) {
+
+ public static boolean addToInventory(int ObjectID, int[] umgebung)
     for (int i = 1; i<6; i++) {
       if (inventory[i] == 0) {
         inventory[i] = objectID;
+        int objektInUmgebung = searchObject(objectID, umgebung)
+        umgebung[]
         return true;
       }
     }
@@ -185,5 +192,12 @@ public class Textie {
   public static String[] parseInput(String command) {
     String[] result = command.split(" ", 2);
     return result;
+  }
+  public static int searchObject(int ObjectID, int umgebung){
+    for(i=0; i<4; i++){
+      if(umgebung[i]==ObjectID){
+        return i;
+      }
+    }
   }
 }
