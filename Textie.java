@@ -84,4 +84,32 @@ public class Textie {
         return "Unbekannt";
     }
   }
+
+  public static boolean addToInventory (int objectID) {
+    for (int i = 1; i<6; i++) {
+      if (inventory[i] == 0) {
+        inventory[i] = objectID;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public static boolean removeFromInventory (int objectID) {
+    for (int i = 1; i<6; i++) {
+      if (inventory[i] == objectID) {
+        inventory[i] = 0;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public static void listInventory () {
+    System.out.println("In deiner Tasche befindet sich:");
+    for (int i = 1; i<6; i++) {
+      String objectName = getObjectName(inventory[i]);
+      System.out.println(objectName);
+    }
+  }
 }
