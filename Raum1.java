@@ -2,6 +2,12 @@ import java.io.Console;
 
 public class Raum1 {
   public static void start(int[] inventory) {
+    int[] umgebung = new int[3];
+    umgebung[0] = 1; // FACKEL
+    umgebung[1] = 2; // HANDTUCH
+    umgebung[2] = 3; // QUIETSCHEENTE
+    int vorhanden = 2; // Höchster ZÄHLERWERT des umgebung-Arrays
+
     boolean finished = false;
     System.out.println("Du befindest dich in einem dunklen Raum.");
     do{
@@ -9,7 +15,13 @@ public class Raum1 {
       String command = console.readLine("Was willst du tun? ");
       String[] parsed_command = Textie.parseInput(command);
       int object_to_use = 0;
-      if(parsed_command[1] != null || parsed_command[1] != ""){
+      int count = 0;
+      for (int x = 0; x < parsed_command.length; x++) {
+        if(parsed_command[x] != null) {
+            count++;
+        }
+      }
+      if(count == 2){
         object_to_use = Textie.getObjectID(parsed_command[1].toUpperCase());
       }
 
@@ -23,7 +35,7 @@ public class Raum1 {
           System.out.println("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen");
           break;
         case "nimm":
-          if(Textie.addToInventory(object_to_use)){
+          if(Textie.addToInventory(object_to_use, umgebung, vorhanden)){
             System.out.println(parsed_command[1] + " zum Inventar hinzugefügt.");
           }
           else {

@@ -149,13 +149,19 @@ public class Textie {
   }
 
 
- public static boolean addToInventory(int ObjectID, int[] umgebung)
-    for (int i = 1; i<6; i++) {
+ public static boolean addToInventory(int objectID, int[] umgebung, int vorhanden){
+    int objektInUmgebung = -128;
+    for (int i = 1; i<5; i++) {
       if (inventory[i] == 0) {
         inventory[i] = objectID;
-        int objektInUmgebung = searchObject(objectID, umgebung)
-        umgebung[]
-        return true;
+        for(int y=0; y<vorhanden; y++){
+          if(umgebung[y]==objectID){
+            objektInUmgebung = i;
+          }
+        }
+        if (objektInUmgebung != -128) {
+          return true;
+        }
       }
     }
     return false;
@@ -183,7 +189,7 @@ public class Textie {
     System.out.println("Willkommen " + playerName + ".");
     System.out.println("Falls du Hilfe bei der Bedienung brauchst, tippe \'hilfe\' ein.");
     Console console = System.console();
-    playerName = console.readLine("Wie ist dein Name? ");
+    playerName = console.readLine("\nWie ist dein Name? ");
     if (playerName == null || playerName == ""){
       playerName = "Fremder";
     }
@@ -192,12 +198,5 @@ public class Textie {
   public static String[] parseInput(String command) {
     String[] result = command.split(" ", 2);
     return result;
-  }
-  public static int searchObject(int ObjectID, int umgebung){
-    for(i=0; i<4; i++){
-      if(umgebung[i]==ObjectID){
-        return i;
-      }
-    }
   }
 }
