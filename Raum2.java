@@ -4,7 +4,7 @@ public class Raum2 {
   public static void start(int[] inventory) {
     umgebung[0] = SCHWERT;
     umgebung[1] = FEUERZEUG;
-    umgebung[2] = SCHUESSEL;
+    umgebung[2] = SCHLUESSEL;
     umgebung[3] = STEIN;
     Textie.listInventory();
     System.out.println("Du kommst in einen weiteren dunklen Raum.");
@@ -22,7 +22,7 @@ public class Raum2 {
           System.out.println("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen");
           break;
         case "nimm":
-        
+
       }
     }while(finished == false);
   }
