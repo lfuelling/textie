@@ -82,7 +82,7 @@ public class Textie {
         return "Stein";
 
       default:
-        return "Unbekannt";
+        return "Kein Objekt";
     }
   }
 
@@ -122,5 +122,10 @@ public class Textie {
     if (playerName == null || playerName == ""){
       playerName = "Fremder";
     }
+  }
+
+  public static String[] parseInput(String command) {
+    String[] result = command.split(" ", 2);
+    return result;
   }
 }
