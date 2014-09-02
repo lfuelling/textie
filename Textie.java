@@ -10,6 +10,7 @@ import java.io.Console;
 
 public class Textie {
   static int[] inventory = new int[6];
+  static String playerName = "Fremder";
   public static final int STATE = 0;
   public static final int DEAD = 1;
 
@@ -46,11 +47,12 @@ public class Textie {
 
           default:
             System.out.println("Gebe eine Zahl von 1-3 ein.");
-            break;  
+            break;
       }
       return;
     }
 
+    Textie.showIntro();
     Textie.runGame();
   }
 
@@ -136,6 +138,16 @@ public class Textie {
     for (int i = 1; i<6; i++) {
       String objectName = getObjectName(inventory[i]);
       System.out.println(objectName);
+    }
+  }
+
+  public static void showIntro() {
+    System.out.println("Willkommen " + playerName + ".");
+    System.out.println("Falls du Hilfe bei der Bedienung brauchst, tippe \'hilfe\' ein.");
+    Console console = System.console();
+    playerName = console.readLine("Wie ist dein Name? ");
+    if (playerName == null || playerName == ""){
+      playerName = "Fremder";
     }
   }
 }
