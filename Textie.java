@@ -114,11 +114,47 @@ public class Textie {
     }
   }
 
-  public static boolean addToInventory (int objectID, int umgebung) {
+
+
+
+  public static int getObjectID (String objectName) {
+    switch(objectName) {
+      case "FACKEL":
+        return FACKEL;
+
+      case "HANDTUCH":
+        return HANDTUCH;
+
+      case "QUIETSCHEENTE":
+        return QUIETSCHEENTE;
+
+      case "BRECHEISEN":
+        return BRECHEISEN;
+
+      case "SCHWERT":
+        return SCHWERT;
+
+      case "FEUERZEUG":
+        return FEUERZEUG;
+
+      case "SCHLÜSSEL":
+        return SCHLUESSEL;
+
+      case "STEIN":
+        return STEIN;
+
+      default:
+        return 0;
+    }
+  }
+
+
+ public static boolean addToInventory(int ObjectID, int[] umgebung)
     for (int i = 1; i<6; i++) {
       if (inventory[i] == 0) {
         inventory[i] = objectID;
-
+        int objektInUmgebung = searchObject(objectID, umgebung)
+        umgebung[]
         return true;
       }
     }
@@ -157,8 +193,11 @@ public class Textie {
     String[] result = command.split(" ", 2);
     return result;
   }
+  public static int searchObject(int ObjectID, int umgebung){
+    for(i=0; i<4; i++){
+      if(umgebung[i]==ObjectID){
+        return i;
+      }
+    }
+  }
 }
-
- public static int searchObject(objectID){
-   
- }
