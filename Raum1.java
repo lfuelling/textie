@@ -18,7 +18,7 @@ public class Raum1 {
           System.out.println("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen")
           break;
         case "nimm":
-          
+
       }
     }while(finished == false)
   }

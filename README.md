@@ -1,4 +1,0 @@
-textie
-======
-
-Ein kleines Textadventure.

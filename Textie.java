@@ -25,6 +25,33 @@ public class Textie {
   public static final int STEIN = 8;
 
   public static void main (String[] args) {
+
+    if (args.length == 1){
+      int raumNummer = Integer.parseInt(args[0]);
+
+      switch(raumNummer){
+          case 1:
+            Raum1.start(inventory);
+            break;
+
+          case 2:
+            inventory[1] = FACKEL;
+            Raum2.start(inventory);
+            break;
+
+          case 3:
+            inventory[1] = FACKEL;
+            inventory[2] = SCHLUESSEL;
+            Raum3.start(inventory);
+            break;
+
+          default:
+            System.out.println("Gebe eine Zahl von 1-3 ein.");
+            break;
+      }
+      return;
+    }
+
     Textie.showIntro();
     Textie.runGame();
   }
