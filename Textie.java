@@ -113,6 +113,37 @@ public class Textie {
     }
   }
 
+  public static int getObjectID (String objectName) {
+    switch(objectName) {
+      case "FACKEL":
+        return FACKEL;
+
+      case "HANDTUCH":
+        return HANDTUCH;
+
+      case "QUIETSCHEENTE":
+        return QUIETSCHEENTE;
+
+      case "BRECHEISEN":
+        return BRECHEISEN;
+
+      case "SCHWERT":
+        return SCHWERT;
+
+      case "FEUERZEUG":
+        return FEUERZEUG;
+
+      case "SCHLÜSSEL":
+        return SCHLUESSEL;
+
+      case "STEIN":
+        return STEIN;
+
+      default:
+        return 0;
+    }
+  }
+
   public static boolean addToInventory (int objectID) {
     for (int i = 1; i<6; i++) {
       if (inventory[i] == 0) {
