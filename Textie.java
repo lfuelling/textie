@@ -10,6 +10,7 @@ import java.io.Console;
 
 public class Textie {
   static int[] inventory = new int[6];
+  static int[] umgebung = new int[4];
   static String playerName = "Fremder";
   public static final int STATE = 0;
   public static final int DEAD = 1;
@@ -113,10 +114,11 @@ public class Textie {
     }
   }
 
-  public static boolean addToInventory (int objectID) {
+  public static boolean addToInventory (int objectID, int umgebung) {
     for (int i = 1; i<6; i++) {
       if (inventory[i] == 0) {
         inventory[i] = objectID;
+
         return true;
       }
     }
@@ -156,3 +158,7 @@ public class Textie {
     return result;
   }
 }
+
+ public static int searchObject(objectID){
+   
+ }
