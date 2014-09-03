@@ -24,6 +24,10 @@ public class Textie {
   public static final int FEUERZEUG = 6;
   public static final int SCHLUESSEL = 7;
   public static final int STEIN = 8;
+  public static final int TRUHE = 9;
+  public static final int SCHALTER = 10;
+  public static final int WHITEBOARD = 11;
+  public static final int FALLTUER = 12;
 
   public static void main (String[] args) {
 
@@ -109,6 +113,18 @@ public class Textie {
       case STEIN:
         return "Stein";
 
+      case TRUHE:
+        return "Truhe";
+
+      case SCHALTER:
+        return "Schalter";
+
+      case WHITEBOARD:
+        return "Whiteboard";
+
+      case FALLTUER:
+        return "Falltür";
+
       default:
         return "Kein Objekt";
     }
@@ -142,6 +158,18 @@ public class Textie {
 
       case "STEIN":
         return STEIN;
+
+      case "TRUHE":
+        return TRUHE;
+
+      case "SCHALTER":
+        return SCHALTER;
+
+      case "WHITEBOARD":
+        return WHITEBOARD;
+
+      case "FALLTÜR":
+        return FALLTUER;
 
       default:
         return 0;
@@ -200,9 +228,9 @@ public class Textie {
     return result;
   }
 
-  public static void listRoom (int[] umgebung) {
+  public static void listRoom (int[] umgebung, int vorhanden) {
     System.out.println("Im Raum befindet sich:");
-    for (int i = 1; i<6; i++) {
+    for (int i = 0; i<vorhanden; i++) {
       String objectName = getObjectName(umgebung[i]);
       System.out.println("\t" + objectName);
     }
@@ -217,8 +245,8 @@ public class Textie {
     return -128;
   }
 
-  public static int findInRoom (int[] umgebung, int objectID){
-    for (int i = 1; i<6; i++) {
+  public static int findInRoom (int[] umgebung, int objectID, int vorhanden){
+    for (int i = 0; i<vorhanden; i++) {
       if(umgebung[i] == objectID){
         return i;
       }

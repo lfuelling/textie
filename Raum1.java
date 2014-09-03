@@ -2,11 +2,13 @@ import java.io.Console;
 
 public class Raum1 {
   public static void start(int[] inventory) {
-    int[] umgebung = new int[3];
+    int[] umgebung = new int[5];
     umgebung[0] = 1; // FACKEL
     umgebung[1] = 2; // HANDTUCH
     umgebung[2] = 3; // QUIETSCHEENTE
-    int vorhanden = 2; // Höchster ZÄHLERWERT des umgebung-Arrays
+    umgebung[3] = 9; // TRUHE
+    umgebung[4] = 10; // SCHALTER
+    int vorhanden = 5; // Höchster ZÄHLERWERT des umgebung-Arrays + 1
 
     boolean finished = false;
     System.out.println("Du befindest dich in einem dunklen Raum.");
@@ -43,7 +45,6 @@ public class Raum1 {
             System.out.println("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
             break;
           }
-          break;
         case "benutze":
           if (count == 2){
             switch(parsed_command[1]){
@@ -77,7 +78,7 @@ public class Raum1 {
           if (count == 2){
             switch(parsed_command[1]){
               case "raum":
-                Textie.listRoom(umgebung);
+                Textie.listRoom(umgebung, vorhanden);
                 break;
 
               case "inventar":
@@ -88,7 +89,7 @@ public class Raum1 {
                 if(Textie.findInInventory(inventory, 1) != -128) {
                   System.out.println("Du betrachtest die Fackel. Wie kann man die wohl anzünden?");
                 }
-                else if(Textie.findInRoom(umgebung, 1) != -128) {
+                else if(Textie.findInRoom(umgebung, 1, vorhanden) != -128) {
                   System.out.println("Da liegt eine Fackel.");
                 }
                 else {

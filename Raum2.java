@@ -7,10 +7,10 @@ public class Raum2 {
     umgebung[1] = 6;
     umgebung[2] = 7;
     umgebung[3] = 8;
-    int vorhanden = 3; // Höchster ZÄHLERWERT des umgebung-Arrays
+    int vorhanden = 4; // Höchster ZÄHLERWERT des umgebung-Arrays +1
 
     //    <DEBUG>
-    Textie.listInventory();
+    Textie.listInventory(inventory);
     //    </DEBUG>
 
     boolean finished = false;
