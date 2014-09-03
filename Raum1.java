@@ -64,7 +64,7 @@ public class Raum1 {
             }
           }
           else {
-            System.out.println("Was soll untersucht werden?")
+            System.out.println("Was soll untersucht werden?");
           }
           break;
         case "untersuche":
@@ -95,7 +95,7 @@ public class Raum1 {
             }
           }
           else {
-            System.out.println("Was soll untersucht werden?")
+            System.out.println("Was soll untersucht werden?");
           }
           break;
         case "vernichte":
