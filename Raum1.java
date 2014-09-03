@@ -5,10 +5,9 @@ public class Raum1 {
     int[] umgebung = new int[5];
     umgebung[0] = 1; // FACKEL
     umgebung[1] = 2; // HANDTUCH
-    umgebung[2] = 3; // QUIETSCHEENTE
-    umgebung[3] = 9; // TRUHE
-    umgebung[4] = 10; // SCHALTER
-    int vorhanden = 5; // Höchster ZÄHLERWERT des umgebung-Arrays + 1
+    umgebung[2] = 9; // TRUHE
+    umgebung[3] = 10; // SCHALTER
+    int vorhanden = 4; // Höchster ZÄHLERWERT des umgebung-Arrays + 1
 
     boolean finished = false;
     System.out.println("Du befindest dich in einem dunklen Raum.");
@@ -73,7 +72,7 @@ public class Raum1 {
                 }
 
               case "schalter":
-                System.out.println("Du hörst ein rumpeln, als du den Schalter betätigst. Nichts geschieht.")
+                System.out.println("Du hörst ein rumpeln, als du den Schalter betätigst. Nichts geschieht.");
             }
           }
           else {
@@ -160,19 +159,27 @@ public class Raum1 {
             switch(parsed_command[1]){
               case "nord":
                 System.out.println("Du bist gegen die Wand gelaufen.");
+                break;
               case "süd":
                 if(Textie.findInInventory(inventory, 1) != -128){
                   System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
                   finished = true;
+                  break;
                 }
                 else {
                   System.out.println("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");
+                  break;
                 }
               case "ost":
                 System.out.println("Du bist gegen die Wand gelaufen.");
+                break;
               case "west":
                 System.out.println("Du bist gegen die Wand gelaufen.");
+                break;
             }
+          }
+          else{
+            System.out.println("Wohin gehen?");
           }
           break;
 
