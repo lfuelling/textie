@@ -84,7 +84,11 @@ public class Textie {
   }
 
   public static void ende() {
-    //TODO
+    System.out.println("Herzlichen Glückwunsch " + playerName + "!");
+    System.out.println("Du bist aus deinem Traum erwacht und siehst, dass du");
+    System.out.println("in deinem Bett liegst. Du spürst dein Herz stark und schnell schlagen");
+    System.out.println("bist aber froh, dass du aufwachen konntest.");
+    return;
   }
 
   public static String getObjectName (int id) {

@@ -10,7 +10,7 @@ public class Raum2 {
     int vorhanden = 4; // Höchster ZÄHLERWERT des umgebung-Arrays +1
 
     //    <DEBUG>
-    Textie.listInventory(inventory);
+    //Textie.listInventory(inventory);
     //    </DEBUG>
 
     boolean finished = false;
@@ -72,7 +72,7 @@ public class Raum2 {
                 case Textie.SCHWERT:
                   System.out.println("Du stichst dir das Schwert zwischen die Rippen und stirbst.");
                   Textie.ende();
-                  break;
+                  return;
                 case Textie.SCHLUESSEL:
                   System.out.println("Hier gibt es nichts um den Schlüssel zu benutzen.");
                   break;
@@ -93,7 +93,8 @@ public class Raum2 {
                      System.out.println("Du hast keine Fackel.");
                    }
                    break;
-
+                  default:
+                    System.out.println("Welches Objekt möchtest du benutzen?");
               }
             }
           }
