@@ -41,7 +41,66 @@ public class Raum1 {
           else {
             System.out.println("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
           }
+          break;
         case "benutze":
+          if (count == 2){
+            switch(parsed_command[1]){
+              case "fackel":
+                if(Textie.findInInventory(inventar, 1) != -128 && Textie.findInInventory(inventar, 6) != -128) { // Die 1 steht für die Fackel, die 6 für das Feuerzeug. Siehe "Textie.java/getObjectID"
+                  System.out.println("Der Raum ist hell erleuchtet.");
+                }
+                else if(Textie.findInInventory(inventar, 1) != -128) {
+                  System.out.println("Du betrachtest die Fackel. Wie kann man die wohl anzünden?");
+                }
+                else {
+                  System.out.println("Du hast keine Fackel.");
+                }
+
+              case "handtuch":
+
+              case "truhe":
+
+              case "schalter":
+            }
+          }
+          else {
+            System.out.println("Was soll untersucht werden?")
+          }
+
+        case "untersuche":
+          if (count == 2){
+            switch(parsed_command[1]){
+              case "raum":
+                Textie.listRoom(umgebung);
+
+              case "inventar":
+                Textie.listInventory(inventory);
+
+              case "fackel":
+                if(Textie.findInInventory(inventar, 1) != -128) {
+                  System.out.println("Du betrachtest die Fackel. Wie kann man die wohl anzünden?");
+                }
+                else if(Textie.findInRoom(umgebung, 1 != -128)) {
+                  System.out.println("Da liegt eine Fackel.");
+                }
+                else {
+                  System.out.println("Hä?");
+                }
+
+              case "handtuch":
+
+              case "truhe":
+
+              case "schalter":
+            }
+          }
+          else {
+            System.out.println("Was soll untersucht werden?")
+          }
+        case "vernichte":
+
+        default:
+          System.out.println("Unbekannter Befehl: " + parsed_command[0]);
 
 
       }

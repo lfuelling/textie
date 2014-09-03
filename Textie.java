@@ -177,11 +177,11 @@ public class Textie {
     return false;
   }
 
-  public static void listInventory () {
+  public static void listInventory (int[] inventory) {
     System.out.println("In deiner Tasche befindet sich:");
     for (int i = 1; i<6; i++) {
       String objectName = getObjectName(inventory[i]);
-      System.out.println(objectName);
+      System.out.println("\t" + objectName);
     }
   }
 
@@ -198,5 +198,31 @@ public class Textie {
   public static String[] parseInput(String command) {
     String[] result = command.split(" ", 2);
     return result;
+  }
+
+  public static void listRoom (int[] umgebung) {
+    System.out.println("Im Raum befindet sich:");
+    for (int i = 1; i<6; i++) {
+      String objectName = getObjectName(umgebung[i]);
+      System.out.println("\t" + objectName);
+    }
+  }
+
+  public static int findInInventory (int[] inventory, int objectID){
+    for (int i = 1; i<6; i++) {
+      if(inventory[i] == objectID){
+        return i;
+      }
+    }
+    return -128;
+  }
+
+  public static int findInRoom (int[] umgebung, int objectID){
+    for (int i = 1; i<6; i++) {
+      if(umgebung[i] == objectID){
+        return i;
+      }
+    }
+    return -128;
   }
 }
