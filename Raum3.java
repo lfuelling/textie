@@ -50,7 +50,7 @@ public class Raum3 {
             switch(parsed_command[1]){
               case "feuerzeug":
                 if(Textie.findInInventory(inventory, 1) != -128 && Textie.findInInventory(inventory, 6) != -128) { // Die 1 steht für die Fackel, die 6 für das Feuerzeug. Siehe "Textie.java/getObjectID"
-                  System.out.println("Der Raum ist hell erleuchtet.");
+                  System.out.println("Der Raum ist hell erleuchtet. Auf dem Whiteboard, das an der Wand hängt steh mit Blut geschrieben: \'Flieh!\'");
                   break;
                 }
                 else if(Textie.findInInventory(inventory, 6) != -128) {
@@ -100,6 +100,14 @@ public class Raum3 {
         case "untersuche":
           if (count == 2){
             switch(parsed_command[1]){
+              case "raum":
+                Textie.listRoom(umgebung, vorhanden);
+                break;
+
+              case "inventar":
+                Textie.listInventory(inventory);
+                break;
+
               case "feuerzeug":
                 if(Textie.findInInventory(inventory, 1) != -128 && Textie.findInInventory(inventory, 6) != -128) { // Die 1 steht für die Fackel, die 6 für das Feuerzeug. Siehe "Textie.java/getObjectID"
                   System.out.println("Du schaust auf das Feuerzeug und dann auf die Fackel. Irgendwas muss man da doch machen können.");

@@ -8,6 +8,7 @@ public class Raum2 {
     umgebung[2] = 7;
     umgebung[3] = 8;
     int vorhanden = 4; // Höchster ZÄHLERWERT des umgebung-Arrays +1
+    boolean fackelUsed = false;
 
     //    <DEBUG>
     //Textie.listInventory(inventory);
@@ -61,6 +62,7 @@ public class Raum2 {
                     }
                     if(feuerzeugVorhanden==true){
                       System.out.println("Du zündest deine Fackel mit dem Feuerzeug an.");
+                      fackelUsed = true;
                     }
                     else{
                       System.out.println("Du hast kein Feuerzeug.");
@@ -88,6 +90,7 @@ public class Raum2 {
                    }
                    if(fackelVorhanden==true){
                      System.out.println("Du zündest deine Fackel mit dem Feuerzeug an.");
+                     fackelUsed = true;
                    }
                    else{
                      System.out.println("Du hast keine Fackel.");
@@ -233,7 +236,7 @@ public class Raum2 {
                   System.out.println("Du bist gegen die Wand gelaufen.");
                   break;
                 case "west":
-                  if(Textie.findInInventory(inventory, 1) != -128 && Textie.findInInventory(inventory, 6) != -128 && Textie.findInInventory(inventory, 7) != -128){
+                  if(Textie.findInInventory(inventory, 1) != -128 && Textie.findInInventory(inventory, 6) != -128 && Textie.findInInventory(inventory, 7) != -128 && fackelUsed==true){
                     System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
                     finished = true;
                     break;
@@ -259,6 +262,6 @@ public class Raum2 {
             System.out.println("Unbekannter Befehl: " + parsed_command[0]);
             break;
       }
-    }while(finished == false);
+    }while(finished == false || fackelUsed == false);
   }
 }
