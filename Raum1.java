@@ -2,7 +2,7 @@ import java.io.Console;
 
 public class Raum1 {
   public static void start(int[] inventory) {
-    int[] umgebung = new int[5];
+    int[] umgebung = new int[4];
     umgebung[0] = 1; // FACKEL
     umgebung[1] = 2; // HANDTUCH
     umgebung[2] = 9; // TRUHE
