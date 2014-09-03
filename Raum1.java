@@ -46,10 +46,10 @@ public class Raum1 {
           if (count == 2){
             switch(parsed_command[1]){
               case "fackel":
-                if(Textie.findInInventory(inventar, 1) != -128 && Textie.findInInventory(inventar, 6) != -128) { // Die 1 steht für die Fackel, die 6 für das Feuerzeug. Siehe "Textie.java/getObjectID"
+                if(Textie.findInInventory(inventory, 1) != -128 && Textie.findInInventory(inventory, 6) != -128) { // Die 1 steht für die Fackel, die 6 für das Feuerzeug. Siehe "Textie.java/getObjectID"
                   System.out.println("Der Raum ist hell erleuchtet.");
                 }
-                else if(Textie.findInInventory(inventar, 1) != -128) {
+                else if(Textie.findInInventory(inventory, 1) != -128) {
                   System.out.println("Du betrachtest die Fackel. Wie kann man die wohl anzünden?");
                 }
                 else {
@@ -77,10 +77,10 @@ public class Raum1 {
                 Textie.listInventory(inventory);
 
               case "fackel":
-                if(Textie.findInInventory(inventar, 1) != -128) {
+                if(Textie.findInInventory(inventory, 1) != -128) {
                   System.out.println("Du betrachtest die Fackel. Wie kann man die wohl anzünden?");
                 }
-                else if(Textie.findInRoom(umgebung, 1 != -128)) {
+                else if(Textie.findInRoom(umgebung, 1) != -128) {
                   System.out.println("Da liegt eine Fackel.");
                 }
                 else {
