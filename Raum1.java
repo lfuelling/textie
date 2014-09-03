@@ -66,7 +66,7 @@ public class Raum1 {
           else {
             System.out.println("Was soll untersucht werden?")
           }
-
+          break;
         case "untersuche":
           if (count == 2){
             switch(parsed_command[1]){
@@ -97,12 +97,13 @@ public class Raum1 {
           else {
             System.out.println("Was soll untersucht werden?")
           }
+          break;
         case "vernichte":
 
+          break;
         default:
           System.out.println("Unbekannter Befehl: " + parsed_command[0]);
-
-
+          break;
       }
     }while(finished == false);
   }
