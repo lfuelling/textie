@@ -1,7 +1,10 @@
-import java.io.Console;
 
-public class Raum3 {
-  public static void start(int[] inventory) {
+public class Raum3 extends Raum {
+  public Raum3(Inventory inventory, int...items) {
+		super(inventory, items);
+	}
+
+public void start() {
     int[] umgebung = new int[4];
     umgebung[0] = 3; // ENTE
     umgebung[1] = 4; // BRECHEISEN
@@ -13,20 +16,11 @@ public class Raum3 {
     System.out.println("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
     System.out.println("Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.");
     do{
-      Console console = System.console();
-      String command = console.readLine("Was willst du tun? ");
-      String[] parsed_command = Textie.parseInput(command);
-      int object_to_use = 0;
-      int count = 0;
-      for (int x = 0; x < parsed_command.length; x++) {
-        if(parsed_command[x] != null) {
-            count++;
-        }
-      }
-      if(count == 2){
-        object_to_use = Textie.getObjectID(parsed_command[1].toUpperCase());
-      }
-
+    	int object_to_use = 0;
+    	String[] parsed_command = this.parse();
+    	if (parsed_command.length == 2) {
+			object_to_use = Textie.getObjectID(parsed_command[1].toUpperCase());
+		}
       switch(parsed_command[0]){
         case "hilfe":
           System.out.println("Mögliche Befehle:");
@@ -37,7 +31,7 @@ public class Raum3 {
           System.out.println("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen");
           break;
         case "nimm":
-          if(Textie.addToInventory(object_to_use, umgebung, vorhanden)){
+          if(inventory.addToInventory(object_to_use, umgebung, vorhanden)){
             System.out.println(parsed_command[1] + " zum Inventar hinzugefügt.");
             break;
           }
@@ -46,14 +40,15 @@ public class Raum3 {
             break;
           }
         case "benutze":
-          if (count == 2){
+          if (parsed_command.length == 2){
             switch(parsed_command[1]){
+            case "Feuerzeug":
               case "feuerzeug":
-                if(Textie.findInInventory(inventory, 1) != -128 && Textie.findInInventory(inventory, 6) != -128) { // Die 1 steht für die Fackel, die 6 für das Feuerzeug. Siehe "Textie.java/getObjectID"
+                if(inventory.findInInventory(1) != -128 && inventory.findInInventory(6) != -128) { // Die 1 steht für die Fackel, die 6 für das Feuerzeug. Siehe "Textie.java/getObjectID"
                   System.out.println("Der Raum ist hell erleuchtet. Auf dem Whiteboard, das an der Wand hängt steh mit Blut geschrieben: \'Flieh!\'");
                   break;
                 }
-                else if(Textie.findInInventory(inventory, 6) != -128) {
+                else if(inventory.findInInventory(6) != -128) {
                   System.out.println("Du betrachtest das Feuerzeug.");
                   break;
                 }
@@ -61,8 +56,9 @@ public class Raum3 {
                   System.out.println("Du hast kein Feuerzeug.");
                   break;
                 }
+              case "Quietscheente":
               case "quietscheente":
-                if(Textie.findInInventory(inventory, 3) != -128) {
+                if(inventory.findInInventory(3) != -128) {
                   System.out.println("Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst.");
                   break;
                 }
@@ -70,9 +66,9 @@ public class Raum3 {
                   System.out.println("Du hast keine Quietscheente.");
                   break;
                 }
-
+              case "Brecheisen":
               case "brecheisen":
-                if(Textie.findInInventory(inventory, 4) != -128) {
+                if(inventory.findInInventory(4) != -128) {
                   System.out.println("Du kratzt dich mit dem Brecheisen am Kopf.");
                   break;
                 }
@@ -84,9 +80,9 @@ public class Raum3 {
               case "whiteboard":
                 System.out.println("Das fasse ich bestimmt nicht an.");
                 break;
-
+              case "Falltür":
               case "falltür":
-                if(Textie.findInInventory(inventory, 4) != -128 || Textie.findInInventory(inventory, 7) != -128) {
+                if(inventory.findInInventory(4) != -128 || inventory.findInInventory(7) != -128) {
                   System.out.println("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
                   break;
                 }
@@ -98,22 +94,22 @@ public class Raum3 {
           }
           break;
         case "untersuche":
-          if (count == 2){
+          if (parsed_command.length == 2){
             switch(parsed_command[1]){
               case "raum":
                 Textie.listRoom(umgebung, vorhanden);
                 break;
 
               case "inventar":
-                Textie.listInventory(inventory);
+                inventory.listInventory();
                 break;
 
               case "feuerzeug":
-                if(Textie.findInInventory(inventory, 1) != -128 && Textie.findInInventory(inventory, 6) != -128) { // Die 1 steht für die Fackel, die 6 für das Feuerzeug. Siehe "Textie.java/getObjectID"
+                if(inventory.findInInventory(1) != -128 && inventory.findInInventory(6) != -128) { // Die 1 steht für die Fackel, die 6 für das Feuerzeug. Siehe "Textie.java/getObjectID"
                   System.out.println("Du schaust auf das Feuerzeug und dann auf die Fackel. Irgendwas muss man da doch machen können.");
                   break;
                 }
-                else if(Textie.findInInventory(inventory, 6) != -128) {
+                else if(inventory.findInInventory(6) != -128) {
                   System.out.println("Du betrachtest das Feuerzeug. Es wirkt zuverlässig.");
                   break;
                 }
@@ -122,7 +118,7 @@ public class Raum3 {
                   break;
                 }
               case "quietscheente":
-                if(Textie.findInInventory(inventory, 3) != -128) {
+                if(inventory.findInInventory(3) != -128) {
                   System.out.println("Die Ente schaut dich vorwurfsvoll an.");
                   break;
                 }
@@ -136,7 +132,7 @@ public class Raum3 {
                 }
 
               case "brecheisen":
-                if(Textie.findInInventory(inventory, 4) != -128) {
+                if(inventory.findInInventory(4) != -128) {
                   System.out.println("Du kratzt dich mit dem Brecheisen am Kopf.");
                   break;
                 }
@@ -150,7 +146,7 @@ public class Raum3 {
                 break;
 
               case "falltür":
-                if(Textie.findInInventory(inventory, 4) != -128 || Textie.findInInventory(inventory, 7) != -128) {
+                if(inventory.findInInventory(4) != -128 || inventory.findInInventory(7) != -128) {
                   System.out.println("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
                   finished = true;
                   break;
@@ -163,8 +159,8 @@ public class Raum3 {
           }
           break;
         case "vernichte":
-          if (count == 2) {
-            if(Textie.removeFromInventory(object_to_use)){
+          if (parsed_command.length == 2) {
+            if(inventory.removeFromInventory(object_to_use)){
               System.out.println(parsed_command[1] + " vernichtet.");
               break;
             }
@@ -179,7 +175,7 @@ public class Raum3 {
           break;
 
         case "gehe":
-          if (count == 2){
+          if (parsed_command.length == 2){
             switch(parsed_command[1]){
               case "nord":
                 System.out.println("Du bist gegen die Wand gelaufen.");

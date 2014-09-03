@@ -6,14 +6,9 @@
  *  Wenn der Raum abgeschlossen wurde, muss das erste Feld "0" enthalten und wenn der Spieler tot ist, muss dieses Feld 1 enthalten.
  */
 
-import java.io.Console;
-
 public class Textie {
-  static int[] inventory = new int[6];
-  static int[] umgebung = new int[4];
-  static String playerName = "Fremder";
-  public static final int STATE = 0;
-  public static final int DEAD = 1;
+	
+  //static int[] inventory = new int[6];
 
   // Gegenstände
   public static final int FACKEL = 1;
@@ -28,57 +23,94 @@ public class Textie {
   public static final int SCHALTER = 10;
   public static final int WHITEBOARD = 11;
   public static final int FALLTUER = 12;
+  
+  static int[] umgebung = new int[4];
+  static String playerName = "Fremder";
+  public static final int STATE = 0;
+  public static final int DEAD = 1;
+  public static final boolean ALIVE = true;
+  static Inventory inventory = new Inventory(ALIVE);
+  static Raum raum1 = new Raum1(inventory, FACKEL, HANDTUCH, TRUHE, SCHALTER);
+  static Raum raum2 = new Raum2(inventory, SCHWERT, FEUERZEUG, SCHLUESSEL, STEIN);
+  static Raum raum3 = new Raum3(inventory, QUIETSCHEENTE, WHITEBOARD, BRECHEISEN, FALLTUER);
+
 
   public static void main (String[] args) {
 
-    if (args.length == 1){
-      int raumNummer = Integer.parseInt(args[0]);
+//    if (args.length == 1){
+//      int raumNummer = Integer.parseInt(args[0]);
+//
+//      switch(raumNummer){
+//          case 1:
+//            Raum1.start(inventory);
+//            break;
+//
+//          case 2:
+//            inventory.setItemForStartHack(FACKEL, 0);
+//            Raum2.start(inventory);
+//            break;
+//
+//          case 3:
+//        	inventory.setItemForStartHack(FACKEL, 0);
+//        	inventory.setItemForStartHack(SCHLUESSEL, 1);
+//            Raum3.start(inventory);
+//            break;
+//
+//          default:
+//            System.out.println("Gebe eine Zahl von 1-3 ein.");
+//            break;
+//      }
+//      return;
+//    }
+	  
+	  if (args.length == 1){
+	      int raumNummer = Integer.parseInt(args[0]);
 
-      switch(raumNummer){
-          case 1:
-            Raum1.start(inventory);
-            break;
+	      switch(raumNummer){
+	          case 1:
+	            raum1.start();
+	            break;
 
-          case 2:
-            inventory[1] = FACKEL;
-            Raum2.start(inventory);
-            break;
+	          case 2:
+	            inventory.setItemForStartHack(FACKEL, 0);
+	            raum2.start();
+	            break;
 
-          case 3:
-            inventory[1] = FACKEL;
-            inventory[2] = SCHLUESSEL;
-            Raum3.start(inventory);
-            break;
+	          case 3:
+	        	inventory.setItemForStartHack(FACKEL, 0);
+	        	inventory.setItemForStartHack(SCHLUESSEL, 1);
+	            raum3.start();
+	            break;
 
-          default:
-            System.out.println("Gebe eine Zahl von 1-3 ein.");
-            break;
-      }
-      return;
-    }
+	          default:
+	            System.out.println("Gebe eine Zahl von 1-3 ein.");
+	            break;
+	      }
+	      return;
+	    }
 
     Textie.showIntro();
     Textie.runGame();
   }
 
   public static void runGame () {
-    Raum1.start(inventory);
-    if (inventory[STATE] != DEAD) {
-      Raum2.start(inventory);
-        if (inventory[STATE] != DEAD) {
-          Raum3.start(inventory);
-            if (inventory[STATE] != DEAD) {
+    raum1.start();
+    if (inventory.isAlive()) {
+      raum2.start();
+        if (inventory.isAlive()) {
+          raum3.start();
+            if (inventory.isAlive()) {
               Textie.runGame();
             }
-            else if (inventory[STATE] == DEAD) {
+            else if (!inventory.isAlive()) {
               System.out.println("Du bist gestorben.");
             }
         }
-        else if (inventory[STATE] == DEAD) {
+        else if (!inventory.isAlive()) {
           Textie.ende();
         }
     }
-    else if (inventory[STATE] == DEAD) {
+    else if (!inventory.isAlive()) {
       System.out.println("Du bist gestorben.");
     }
   }
@@ -181,47 +213,46 @@ public class Textie {
   }
 
 
- public static boolean addToInventory(int objectID, int[] umgebung, int vorhanden){
-    int objektInUmgebung = -128;
-    for (int i = 1; i<6; i++) {
-      if (inventory[i] == 0) {
-        inventory[i] = objectID;
-        for(int y=0; y<vorhanden; y++){
-          if(umgebung[y]==objectID){
-            objektInUmgebung = i;
-          }
-        }
-        if (objektInUmgebung != -128) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  public static boolean removeFromInventory (int objectID) {
-    for (int i = 1; i<6; i++) {
-      if (inventory[i] == objectID) {
-        inventory[i] = 0;
-        return true;
-      }
-    }
-    return false;
-  }
-
-  public static void listInventory (int[] inventory) {
-    System.out.println("In deiner Tasche befindet sich:");
-    for (int i = 1; i<6; i++) {
-      String objectName = getObjectName(inventory[i]);
-      System.out.println("\t" + objectName);
-    }
-  }
+// public static boolean addToInventory(int objectID, int[] umgebung, int vorhanden){
+//    int objektInUmgebung = -128;
+//    for (int i = 1; i<6; i++) {
+//      if (inventory[i] == 0) {
+//        inventory[i] = objectID;
+//        for(int y=0; y<vorhanden; y++){
+//          if(umgebung[y]==objectID){
+//            objektInUmgebung = i;
+//          }
+//        }
+//        if (objektInUmgebung != -128) {
+//          return true;
+//        }
+//      }
+//    }
+//    return false;
+//  }
+//
+//  public static boolean removeFromInventory (int objectID) {
+//    for (int i = 1; i<6; i++) {
+//      if (inventory[i] == objectID) {
+//        inventory[i] = 0;
+//        return true;
+//      }
+//    }
+//    return false;
+//  }
+//
+//  public static void listInventory (int[] inventory) {
+//    System.out.println("In deiner Tasche befindet sich:");
+//    for (int i = 1; i<6; i++) {
+//      String objectName = getObjectName(inventory[i]);
+//      System.out.println("\t" + objectName);
+//    }
+//  }
 
   public static void showIntro() {
     System.out.println("\n\nWillkommen " + playerName + ".");
     System.out.println("Falls du Hilfe bei der Bedienung brauchst, tippe \'hilfe\' ein.");
-    Console console = System.console();
-    playerName = console.readLine("\nWie ist dein Name? ");
+    playerName = IOUtils.readine("\nWie ist dein Name? ");
     if (playerName == null || playerName == ""){
       playerName = "Fremder";
     }
@@ -240,14 +271,14 @@ public class Textie {
     }
   }
 
-  public static int findInInventory (int[] inventory, int objectID){
-    for (int i = 1; i<6; i++) {
-      if(inventory[i] == objectID){
-        return i;
-      }
-    }
-    return -128;
-  }
+//  public static int findInInventory (int[] inventory, int objectID){
+//    for (int i = 1; i<6; i++) {
+//      if(inventory[i] == objectID){
+//        return i;
+//      }
+//    }
+//    return -128;
+//  }
 
   public static int findInRoom (int[] umgebung, int objectID, int vorhanden){
     for (int i = 0; i<vorhanden; i++) {
