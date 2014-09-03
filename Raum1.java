@@ -2,11 +2,13 @@ import java.io.Console;
 
 public class Raum1 {
   public static void start(int[] inventory) {
-    int[] umgebung = new int[3];
+    int[] umgebung = new int[5];
     umgebung[0] = 1; // FACKEL
     umgebung[1] = 2; // HANDTUCH
     umgebung[2] = 3; // QUIETSCHEENTE
-    int vorhanden = 2; // Höchster ZÄHLERWERT des umgebung-Arrays
+    umgebung[3] = 9; // TRUHE
+    umgebung[4] = 10; // SCHALTER
+    int vorhanden = 5; // Höchster ZÄHLERWERT des umgebung-Arrays + 1
 
     boolean finished = false;
     System.out.println("Du befindest dich in einem dunklen Raum.");
@@ -37,13 +39,84 @@ public class Raum1 {
         case "nimm":
           if(Textie.addToInventory(object_to_use, umgebung, vorhanden)){
             System.out.println(parsed_command[1] + " zum Inventar hinzugefügt.");
+            break;
           }
           else {
             System.out.println("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
+            break;
           }
         case "benutze":
+          if (count == 2){
+            switch(parsed_command[1]){
+              case "fackel":
+                if(Textie.findInInventory(inventory, 1) != -128 && Textie.findInInventory(inventory, 6) != -128) { // Die 1 steht für die Fackel, die 6 für das Feuerzeug. Siehe "Textie.java/getObjectID"
+                  System.out.println("Der Raum ist hell erleuchtet.");
+                  break;
+                }
+                else if(Textie.findInInventory(inventory, 1) != -128) {
+                  System.out.println("Du betrachtest die Fackel. Wie kann man die wohl anzünden?");
+                  break;
+                }
+                else {
+                  System.out.println("Du hast keine Fackel.");
+                  break;
+                }
 
+              case "handtuch":
 
+              case "truhe":
+
+              case "schalter":
+            }
+          }
+          else {
+            System.out.println("Was soll benutzt werden?");
+            break;
+          }
+          break;
+        case "untersuche":
+          if (count == 2){
+            switch(parsed_command[1]){
+              case "raum":
+                Textie.listRoom(umgebung, vorhanden);
+                break;
+
+              case "inventar":
+                Textie.listInventory(inventory);
+                break;
+
+              case "fackel":
+                if(Textie.findInInventory(inventory, 1) != -128) {
+                  System.out.println("Du betrachtest die Fackel. Wie kann man die wohl anzünden?");
+                }
+                else if(Textie.findInRoom(umgebung, 1, vorhanden) != -128) {
+                  System.out.println("Da liegt eine Fackel.");
+                }
+                else {
+                  System.out.println("Hä?");
+                }
+                break;
+
+              case "handtuch":
+                break;
+
+              case "truhe":
+                break;
+
+              case "schalter":
+                break;
+            }
+          }
+          else {
+            System.out.println("Was soll untersucht werden?");
+          }
+          break;
+        case "vernichte":
+
+          break;
+        default:
+          System.out.println("Unbekannter Befehl: " + parsed_command[0]);
+          break;
       }
     }while(finished == false);
   }
