@@ -183,7 +183,7 @@ public class Textie {
 
  public static boolean addToInventory(int objectID, int[] umgebung, int vorhanden){
     int objektInUmgebung = -128;
-    for (int i = 1; i<5; i++) {
+    for (int i = 1; i<6; i++) {
       if (inventory[i] == 0) {
         inventory[i] = objectID;
         for(int y=0; y<vorhanden; y++){
