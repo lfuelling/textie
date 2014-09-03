@@ -1,6 +1,6 @@
 import java.io.Console;
 
-public class Raum1 {
+public class Raum3 {
   public static void start(int[] inventory) {
     int[] umgebung = new int[4];
     umgebung[0] = 3; // ENTE
