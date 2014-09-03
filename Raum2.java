@@ -101,6 +101,163 @@ public class Raum2 {
           if(objektVorhanden==false){
             System.out.println("Du hast " + Textie.getObjectName(object_to_use) + " nicht.");
           }
+          break;
+          case "untersuche":
+            if (count == 2){
+              switch(parsed_command[1]){
+                case "raum":
+                  Textie.listRoom(umgebung, vorhanden);
+                  break;
+
+                case "inventar":
+                  Textie.listInventory(inventory);
+                  break;
+
+                case "fackel":
+                  if(Textie.findInInventory(inventory, 1) != -128) {
+                    System.out.println("Du betrachtest die Fackel. Wie kann man die wohl anzünden?");
+                  }
+                  else if(Textie.findInRoom(umgebung, 1, vorhanden) != -128) {
+                    System.out.println("Da liegt eine Fackel.");
+                  }
+                  else {
+                    System.out.println("Hä?");
+                  }
+                  break;
+
+                case "handtuch":
+                  if(Textie.findInInventory(inventory, 2) != -128) {
+                    System.out.println("Du betrachtest das Handtuch. Es sieht sehr flauschig aus.");
+                  }
+                  else if(Textie.findInRoom(umgebung, 2, vorhanden) != -128) {
+                    System.out.println("Da liegt ein Handtuch.");
+                  }
+                  else {
+                    System.out.println("Hä?");
+                  }
+                  break;
+
+                case "truhe":
+                  if(Textie.findInRoom(umgebung, 9, vorhanden) != -128) {
+                    System.out.println("Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.");
+                  }
+                  else {
+                    System.out.println("Hä?");
+                  }
+                  break;
+
+                case "schalter":
+                  if(Textie.findInRoom(umgebung, 10, vorhanden) != -128) {
+                    System.out.println("Da ist ein kleiner Schalter an der Wand.");
+                  }
+                  else {
+                    System.out.println("Hä?");
+                  }
+                  break;
+
+                case "schwert":
+                    if(Textie.findInInventory(inventory, 5) != -128) {
+                      System.out.println("Du betrachtest das Schwert. Es sieht sehr scharf aus.");
+                    }
+                    else if(Textie.findInRoom(umgebung, 5, vorhanden) != -128) {
+                      System.out.println("Da liegt ein Schwert.");
+                    }
+                    else {
+                      System.out.println("Hä?");
+                    }
+                    break;
+
+                case "feuerzeug":
+                  if(Textie.findInInventory(inventory, 6) != -128) {
+                    System.out.println("Du betrachtest das Feuerzeug. Es wirkt zuverlässig.");
+                  }
+                  else if(Textie.findInRoom(umgebung, 2, vorhanden) != -128) {
+                    System.out.println("Da liegt ein Feuerzeug.");
+                  }
+                  else {
+                    System.out.println("Hä?");
+                  }
+                  break;
+
+                case "schlüssel":
+                  if(Textie.findInInventory(inventory, 2) != -128) {
+                    System.out.println("Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?");
+                  }
+                  else if(Textie.findInRoom(umgebung, 2, vorhanden) != -128) {
+                    System.out.println("Da liegt ein Schlüssel.");
+                  }
+                  else {
+                    System.out.println("Hä?");
+                  }
+                  break;
+
+                case "stein":
+                  if(Textie.findInInventory(inventory, 2) != -128) {
+                    System.out.println("Du betrachtest den Stein. Er ist kalt.");
+                  }
+                  else if(Textie.findInRoom(umgebung, 2, vorhanden) != -128) {
+                    System.out.println("Da liegt ein Stein.");
+                  }
+                  else {
+                    System.out.println("Hä?");
+                  }
+                  break;
+
+
+              }
+            }
+            else {
+              System.out.println("Was soll untersucht werden?");
+            }
+            break;
+          case "vernichte":
+            if (count == 2) {
+              if(Textie.removeFromInventory(object_to_use)){
+                System.out.println(parsed_command[1] + " vernichtet.");
+                break;
+              }
+              else {
+                System.out.println("Entweder das Objekt gibt es nicht, oder es ist nicht im Inventar.");
+                break;
+              }
+            }
+            else {
+              System.out.println("Was soll vernichtet werden?");
+            }
+            break;
+
+          case "gehe":
+            if (count == 2){
+              switch(parsed_command[1]){
+                case "nord":
+                  System.out.println("Du bist gegen die Wand gelaufen.");
+                  break;
+                case "west":
+                  if(Textie.findInInventory(inventory, 1) != -128 && Textie.findInInventory(inventory, 6) != -128 && Textie.findInInventory(inventory, 7) != -128){
+                    System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
+                    finished = true;
+                    break;
+                  }
+                  else {
+                    System.out.println("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");
+                    break;
+                  }
+                case "ost":
+                  System.out.println("Du bist gegen die Wand gelaufen.");
+                  break;
+                case "süd":
+                  System.out.println("Du bist gegen die Wand gelaufen.");
+                  break;
+              }
+            }
+            else{
+              System.out.println("Wohin gehen?");
+            }
+            break;
+
+          default:
+            System.out.println("Unbekannter Befehl: " + parsed_command[0]);
+            break;
       }
     }while(finished == false);
   }
