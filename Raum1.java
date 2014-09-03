@@ -10,7 +10,7 @@ public class Raum1 {
     int vorhanden = 4; // Höchster ZÄHLERWERT des umgebung-Arrays + 1
 
     boolean finished = false;
-    System.out.println("Du befindest dich in einem dunklen Raum.");
+    System.out.println("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
     do{
       Console console = System.console();
       String command = console.readLine("Was willst du tun? ");

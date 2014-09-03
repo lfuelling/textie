@@ -214,7 +214,7 @@ public class Textie {
   }
 
   public static void showIntro() {
-    System.out.println("Willkommen " + playerName + ".");
+    System.out.println("\n\nWillkommen " + playerName + ".");
     System.out.println("Falls du Hilfe bei der Bedienung brauchst, tippe \'hilfe\' ein.");
     Console console = System.console();
     playerName = console.readLine("\nWie ist dein Name? ");
