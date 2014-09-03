@@ -179,7 +179,7 @@ public class Raum1 {
               case "süd":
                 System.out.println("Du bist gegen die Wand gelaufen.");
               case "ost":
-                System.out.println("Du willst nict zurück.");
+                System.out.println("Du willst nicht zurück.");
                 break;
               case "west":
                 System.out.println("Du bist gegen die Wand gelaufen.");
