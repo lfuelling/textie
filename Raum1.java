@@ -63,10 +63,17 @@ public class Raum1 {
                 }
 
               case "handtuch":
-
-              case "truhe":
+                if(Textie.findInInventory(inventory, 2) != -128) {
+                  System.out.println("Du bist trocken. Das Handtuch ist schön flauschig.");
+                  break;
+                }
+                else {
+                  System.out.println("Du hast kein Handtuch.");
+                  break;
+                }
 
               case "schalter":
+                System.out.println("Du hörst ein rumpeln, als du den Schalter betätigst. Nichts geschieht.")
             }
           }
           else {
@@ -98,12 +105,33 @@ public class Raum1 {
                 break;
 
               case "handtuch":
+                if(Textie.findInInventory(inventory, 2) != -128) {
+                  System.out.println("Du betrachtest das Handtuch. Es sieht sehr flauschig aus.");
+                }
+                else if(Textie.findInRoom(umgebung, 2, vorhanden) != -128) {
+                  System.out.println("Da liegt ein Handtuch.");
+                }
+                else {
+                  System.out.println("Hä?");
+                }
                 break;
 
               case "truhe":
+                if(Textie.findInRoom(umgebung, 9, vorhanden) != -128) {
+                  System.out.println("Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.");
+                }
+                else {
+                  System.out.println("Hä?");
+                }
                 break;
 
               case "schalter":
+                if(Textie.findInRoom(umgebung, 10, vorhanden) != -128) {
+                  System.out.println("Da ist ein kleiner Schalter an der Wand.");
+                }
+                else {
+                  System.out.println("Hä?");
+                }
                 break;
             }
           }
@@ -114,6 +142,28 @@ public class Raum1 {
         case "vernichte":
 
           break;
+
+        case "gehe":
+          if (count == 2){
+            switch(parsed_command[1]){
+              case "nord":
+                System.out.println("Du bist gegen die Wand gelaufen.");
+              case "süd":
+                if(Textie.findInInventory(inventory, 1) != -128){
+                  System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
+                  finished = true;
+                }
+                else {
+                  System.out.println("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");
+                }
+              case "ost":
+                System.out.println("Du bist gegen die Wand gelaufen.");
+              case "west":
+                System.out.println("Du bist gegen die Wand gelaufen.");
+            }
+          }
+          break;
+
         default:
           System.out.println("Unbekannter Befehl: " + parsed_command[0]);
           break;
