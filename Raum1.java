@@ -140,7 +140,19 @@ public class Raum1 {
           }
           break;
         case "vernichte":
-
+          if (count == 2) {
+            if(Textie.removeFromInventory(object_to_use)){
+              System.out.println(parsed_command[1] + " vernichtet.");
+              break;
+            }
+            else {
+              System.out.println("Entweder das Objekt gibt es nicht, oder es ist nicht im Inventar.");
+              break;
+            }
+          }
+          else {
+            System.out.println("Was soll vernichtet werden?");
+          }
           break;
 
         case "gehe":
