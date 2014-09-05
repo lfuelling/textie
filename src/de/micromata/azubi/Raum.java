@@ -15,7 +15,7 @@ public abstract class Raum {
 	public void listItems() {
 		System.out.println("Im Raum befindet sich:");
 		for (int i = 0; i < MAX_SLOTS_ITEMS; i++) {
-			String objectName = Textie.getObjectName(this.items[i]);
+			String objectName = Item.getObjectName(this.items[i]);
 			System.out.println("\t" + objectName);
 		}
 	}
@@ -46,7 +46,7 @@ public abstract class Raum {
 				}
 			}
 			if (count == 2) {
-				object_to_use = Textie.getObjectID(parsed_command[1]
+				object_to_use = Item.getObjectID(parsed_command[1]
 						.toUpperCase());
 			}
 			switch (parsed_command[0]) {
