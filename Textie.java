@@ -120,7 +120,7 @@ public class Textie {
     System.out.println("Du bist aus deinem Traum erwacht und siehst, dass du");
     System.out.println("in deinem Bett liegst. Du spürst dein Herz stark und schnell schlagen");
     System.out.println("bist aber froh, dass du aufwachen konntest.");
-    return;
+    System.exit(0);
   }
 
   public static String getObjectName (int id) {
@@ -263,13 +263,7 @@ public class Textie {
     return result;
   }
 
-  public static void listRoom (int[] umgebung, int vorhanden) {
-    System.out.println("Im Raum befindet sich:");
-    for (int i = 0; i<vorhanden; i++) {
-      String objectName = getObjectName(umgebung[i]);
-      System.out.println("\t" + objectName);
-    }
-  }
+
 
 //  public static int findInInventory (int[] inventory, int objectID){
 //    for (int i = 1; i<6; i++) {
@@ -280,12 +274,5 @@ public class Textie {
 //    return -128;
 //  }
 
-  public static int findInRoom (int[] umgebung, int objectID, int vorhanden){
-    for (int i = 0; i<vorhanden; i++) {
-      if(umgebung[i] == objectID){
-        return i;
-      }
-    }
-    return -128;
-  }
+
 }

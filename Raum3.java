@@ -5,13 +5,6 @@ public class Raum3 extends Raum {
 	}
 
 public void start() {
-    int[] umgebung = new int[4];
-    umgebung[0] = 3; // ENTE
-    umgebung[1] = 4; // BRECHEISEN
-    umgebung[2] = 11; // WHITEBOARD
-    umgebung[3] = 12; // FALLTÜR
-    int vorhanden = 4; // Höchster ZÄHLERWERT des umgebung-Arrays + 1
-
     boolean finished = false;
     System.out.println("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
     System.out.println("Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.");
@@ -31,7 +24,7 @@ public void start() {
           System.out.println("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen");
           break;
         case "nimm":
-          if(inventory.addToInventory(object_to_use, umgebung, vorhanden)){
+          if(inventory.addToInventory(object_to_use, this)){
             System.out.println(parsed_command[1] + " zum Inventar hinzugefügt.");
             break;
           }
@@ -97,7 +90,7 @@ public void start() {
           if (parsed_command.length == 2){
             switch(parsed_command[1]){
               case "raum":
-                Textie.listRoom(umgebung, vorhanden);
+                listItems();
                 break;
 
               case "inventar":
@@ -122,7 +115,7 @@ public void start() {
                   System.out.println("Die Ente schaut dich vorwurfsvoll an.");
                   break;
                 }
-                else if (Textie.findInRoom(umgebung, 1, vorhanden) != -128){
+                else if (this.isInRoom(Textie.QUIETSCHEENTE)){
                   System.out.println("Da liegt eine Quietscheente.");
                   break;
                 }

@@ -2,16 +2,9 @@
 public class Raum2 extends Raum {
   public Raum2(Inventory inventory, int...items) {
 		super(inventory, items);
-		// TODO Auto-generated constructor stub
 	}
 
 public void start() {
-    int[] umgebung = new int[4];
-    umgebung[0] = 5;
-    umgebung[1] = 6;
-    umgebung[2] = 7;
-    umgebung[3] = 8;
-    int vorhanden = 4; // Höchster ZÄHLERWERT des umgebung-Arrays +1
     boolean fackelUsed = false;
 
     //    <DEBUG>
@@ -36,7 +29,7 @@ public void start() {
           System.out.println("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen");
           break;
         case "nimm":
-          if(inventory.addToInventory(object_to_use, umgebung, vorhanden)){
+          if(inventory.addToInventory(object_to_use, this)){
             System.out.println(parsed_command[1] + " zum Inventar hinzugefügt.");
           }
           else {
@@ -66,6 +59,7 @@ public void start() {
                   break;
                 case Textie.SCHWERT:
                   System.out.println("Du stichst dir das Schwert zwischen die Rippen und stirbst.");
+                  inventory.setAlive(false);
                   Textie.ende();
                   return;
                 case Textie.SCHLUESSEL:
@@ -100,7 +94,7 @@ public void start() {
             if (parsed_command.length == 2){
               switch(parsed_command[1]){
                 case "raum":
-                  Textie.listRoom(umgebung, vorhanden);
+                	listItems();
                   break;
 
                 case "inventar":
@@ -111,7 +105,7 @@ public void start() {
                   if(inventory.findInInventory(1) != -128) {
                     System.out.println("Du betrachtest die Fackel. Wie kann man die wohl anzünden?");
                   }
-                  else if(Textie.findInRoom(umgebung, 1, vorhanden) != -128) {
+                  else if(this.find(Textie.FACKEL) != -128) {
                     System.out.println("Da liegt eine Fackel.");
                   }
                   else {
@@ -123,7 +117,7 @@ public void start() {
                   if(inventory.findInInventory(2) != -128) {
                     System.out.println("Du betrachtest das Handtuch. Es sieht sehr flauschig aus.");
                   }
-                  else if(Textie.findInRoom(umgebung, 2, vorhanden) != -128) {
+                  else if(this.find(Textie.HANDTUCH) != -128) {
                     System.out.println("Da liegt ein Handtuch.");
                   }
                   else {
@@ -132,7 +126,7 @@ public void start() {
                   break;
 
                 case "truhe":
-                  if(Textie.findInRoom(umgebung, 9, vorhanden) != -128) {
+                  if(this.find(Textie.TRUHE) != -128) {
                     System.out.println("Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.");
                   }
                   else {
@@ -141,7 +135,7 @@ public void start() {
                   break;
 
                 case "schalter":
-                  if(Textie.findInRoom(umgebung, 10, vorhanden) != -128) {
+                  if(this.find(Textie.SCHALTER) != -128) {
                     System.out.println("Da ist ein kleiner Schalter an der Wand.");
                   }
                   else {
@@ -153,7 +147,7 @@ public void start() {
                     if(inventory.findInInventory(5) != -128) {
                       System.out.println("Du betrachtest das Schwert. Es sieht sehr scharf aus.");
                     }
-                    else if(Textie.findInRoom(umgebung, 5, vorhanden) != -128) {
+                    else if(this.find(Textie.SCHWERT) != -128) {
                       System.out.println("Da liegt ein Schwert.");
                     }
                     else {
@@ -165,7 +159,7 @@ public void start() {
                   if(inventory.findInInventory(6) != -128) {
                     System.out.println("Du betrachtest das Feuerzeug. Es wirkt zuverlässig.");
                   }
-                  else if(Textie.findInRoom(umgebung, 2, vorhanden) != -128) {
+                  else if(this.isInRoom(Textie.FEUERZEUG) == true) {
                     System.out.println("Da liegt ein Feuerzeug.");
                   }
                   else {
@@ -177,7 +171,7 @@ public void start() {
                   if(inventory.findInInventory(2) != -128) {
                     System.out.println("Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?");
                   }
-                  else if(Textie.findInRoom(umgebung, 2, vorhanden) != -128) {
+                  else if(this.find(Textie.SCHLUESSEL) != -128) {
                     System.out.println("Da liegt ein Schlüssel.");
                   }
                   else {
@@ -189,7 +183,7 @@ public void start() {
                   if(inventory.findInInventory(2) != -128) {
                     System.out.println("Du betrachtest den Stein. Er ist kalt.");
                   }
-                  else if(Textie.findInRoom(umgebung, 2, vorhanden) != -128) {
+                  else if(this.find(Textie.STEIN) != -128) {
                     System.out.println("Da liegt ein Stein.");
                   }
                   else {

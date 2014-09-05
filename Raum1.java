@@ -4,13 +4,6 @@ public class Raum1 extends Raum {
 	}
 
 	public void start() {
-		int[] umgebung = new int[4];
-		umgebung[0] = 1; // FACKEL
-		umgebung[1] = 2; // HANDTUCH
-		umgebung[2] = 9; // TRUHE
-		umgebung[3] = 10; // SCHALTER
-		int vorhanden = 4; // Höchster ZÄHLERWERT des umgebung-Arrays + 1
-
 		boolean finished = false;
 		System.out
 				.println("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
@@ -34,7 +27,7 @@ public class Raum1 extends Raum {
 						.println("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen");
 				break;
 			case "nimm":
-				if ( inventory.addToInventory(object_to_use, umgebung, vorhanden)) {
+				if ( inventory.addToInventory(object_to_use, this)) {
 					System.out.println(parsed_command[1]
 							+ " zum Inventar hinzugefügt.");
 					break;
@@ -95,7 +88,7 @@ public class Raum1 extends Raum {
 				if (parsed_command.length == 2) {
 					switch (parsed_command[1]) {
 					case "raum":
-						Textie.listRoom(umgebung, vorhanden);
+						this.listItems();
 						break;
 
 					case "inventar":
@@ -106,7 +99,7 @@ public class Raum1 extends Raum {
 						if (inventory.findInInventory(1) != -128) {
 							System.out
 									.println("Du betrachtest die Fackel. Wie kann man die wohl anzünden?");
-						} else if (Textie.findInRoom(umgebung, 1, vorhanden) != -128) {
+						} else if (this.isInRoom(Textie.FACKEL)) {
 							System.out.println("Da liegt eine Fackel.");
 						} else {
 							System.out.println("Hä?");
@@ -117,7 +110,7 @@ public class Raum1 extends Raum {
 						if (inventory.findInInventory( 2) != -128) {
 							System.out
 									.println("Du betrachtest das Handtuch. Es sieht sehr flauschig aus.");
-						} else if (Textie.findInRoom(umgebung, 2, vorhanden) != -128) {
+						} else if (this.isInRoom(Textie.HANDTUCH)) {
 							System.out.println("Da liegt ein Handtuch.");
 						} else {
 							System.out.println("Hä?");
@@ -125,7 +118,7 @@ public class Raum1 extends Raum {
 						break;
 
 					case "truhe":
-						if (Textie.findInRoom(umgebung, 9, vorhanden) != -128) {
+						if (this.isInRoom(Textie.FACKEL)) {
 							System.out
 									.println("Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.");
 						} else {
@@ -134,7 +127,7 @@ public class Raum1 extends Raum {
 						break;
 
 					case "schalter":
-						if (Textie.findInRoom(umgebung, 10, vorhanden) != -128) {
+						if (this.isInRoom(Textie.SCHALTER)) {
 							System.out
 									.println("Da ist ein kleiner Schalter an der Wand.");
 						} else {
