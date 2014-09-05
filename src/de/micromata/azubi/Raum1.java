@@ -1,3 +1,5 @@
+package de.micromata.azubi;
+
 public class Raum1 extends Raum {
 	boolean south = false;
 

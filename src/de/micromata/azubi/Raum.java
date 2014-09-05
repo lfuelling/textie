@@ -1,3 +1,5 @@
+package de.micromata.azubi;
+
 public abstract class Raum {
 
 	public static final int MAX_SLOTS_ITEMS = 4;

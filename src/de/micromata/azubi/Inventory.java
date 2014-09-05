@@ -1,3 +1,5 @@
+package de.micromata.azubi;
+
 public class Inventory {
 
 	private static final int MAX_SLOTS_INVENTORY = 5;

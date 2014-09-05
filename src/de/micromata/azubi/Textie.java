@@ -1,3 +1,5 @@
+package de.micromata.azubi;
+
 /*
  *  TEXTIE
  *

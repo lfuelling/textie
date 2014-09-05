@@ -1,3 +1,5 @@
+package de.micromata.azubi;
+
 public class Raum3 extends Raum {
 	public Raum3(Inventory inventory, int... items) {
 		super(inventory, items);
