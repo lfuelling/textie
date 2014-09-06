@@ -47,7 +47,7 @@ public class Inventory {
 	public void listInventory() {
 		System.out.println("In deiner Tasche befindet sich:");
 		for (int i = 0; i < MAX_SLOTS_INVENTORY; i++) {
-			String objectName = Textie.getObjectName(inventory[i]);
+			String objectName = Item.getObjectName(inventory[i]);
 			System.out.println("\t" + objectName);
 		}
 	}
