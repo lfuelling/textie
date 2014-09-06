@@ -339,7 +339,7 @@ public abstract class Raum {
 				.println("\tuntersuche [gegenstand/raum/inventar] -> Gegenstand, Raum oder Inventar untersuchen");
 		System.out
 				.println("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen");
-		System.out.println("");//TODO Gehen-Befehl
+		System.out.println("\tgehe [himmelsrichtung]");
 	}
 
 	private void goWall() {
@@ -365,5 +365,12 @@ public abstract class Raum {
 	public void goSouth() {
 		goWall();
 
+	}
+	
+	public void removeItem(int objectID){
+		if(this.find(objectID) != -128){
+			int i = this.find(objectID);
+			items[i] = 0;	
+		}
 	}
 }

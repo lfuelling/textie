@@ -27,6 +27,7 @@ public class Inventory {
 					}
 				}
 				if (objektInUmgebung != -128) {
+					raum.removeItem(objectID);
 					return true;
 				}
 			}
@@ -47,7 +48,7 @@ public class Inventory {
 	public void listInventory() {
 		System.out.println("In deiner Tasche befindet sich:");
 		for (int i = 0; i < MAX_SLOTS_INVENTORY; i++) {
-			String objectName = Textie.getObjectName(inventory[i]);
+			String objectName = Item.getObjectName(inventory[i]);
 			System.out.println("\t" + objectName);
 		}
 	}
@@ -72,4 +73,5 @@ public class Inventory {
 	public void setAlive(boolean par){
 		this.alive = par;
 	}
+	
 }
