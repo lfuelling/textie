@@ -15,8 +15,12 @@ public class Raum3 extends Raum {
 
 	@Override
 	public boolean isFinished() {
-		//Raum3 durch durch benutzen der Falltür verlassen
-		return inventory.isInInventory(Textie.BRECHEISEN)
-				|| inventory.isInInventory(Textie.SCHLUESSEL);
+		//Raum3 durch benutzen der Falltür verlassen
+		if(falltuerUsed == true){
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
