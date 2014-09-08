@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class Raum {
 
-	public static final int MAX_SLOTS_ITEMS = 4;
+	//public static final int MAX_SLOTS_ITEMS = 4;
 	@SuppressWarnings("rawtypes")
 	protected List items = new ArrayList();
 	protected Inventory inventory;
@@ -16,7 +16,9 @@ public abstract class Raum {
 	public Raum(Inventory inventory, Item... items1) {
 		this.inventory = inventory;
 
-		items.addAll(items);
+		for(Item item : items1){
+			items.add(item);
+		}
 	}
 
 	public void listItems() {
@@ -29,7 +31,7 @@ public abstract class Raum {
 		 */
 
 		System.out.println("Im Raum befindet sich:");
-		for (int i = 0; i < MAX_SLOTS_ITEMS; i++) {
+		for (int i = 0; i < items.size(); i++) {
 			if (items == null) {
 				System.out.println("\tKein Objekt");
 			} else {
@@ -45,7 +47,7 @@ public abstract class Raum {
 	 * @return Returns -128 when the item is not in the room
 	 */
 	public int find(int objectID) {
-		for (int i = 0; i < MAX_SLOTS_ITEMS; i++) {
+		for (int i = 0; i < items.size(); i++) {
 			if (((Item) items.get(i)).getID() == objectID) {
 				return i;
 			}
@@ -404,11 +406,10 @@ public abstract class Raum {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	public void removeItem(int objectID) {
 		if (this.find(objectID) != -128) {
 			int i = this.find(objectID);
-			items.set(i, null);
+			items.remove(i);
 		}
 	}
 }

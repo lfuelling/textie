@@ -24,7 +24,7 @@ public class Inventory {
 		for (int i = 0; i < MAX_SLOTS_INVENTORY; i++) {
 			if (inventory[i] == 0) {
 				inventory[i] = objectID;
-				for (int y = 0; y < Raum.MAX_SLOTS_ITEMS; y++) {
+				for (int y = 0; y < items.size(); y++) {
 					if (((Item) items.get(y)).getID() == objectID) {
 						objektInUmgebung = i;
 					}
