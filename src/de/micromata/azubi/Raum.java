@@ -3,12 +3,12 @@ package de.micromata.azubi;
 public abstract class Raum {
 
 	public static final int MAX_SLOTS_ITEMS = 4;
-	protected int[] items;
+	protected Item[] items;
 	protected Inventory inventory;
 	protected boolean fackelUsed = false;
 	protected boolean falltuerUsed = false;
 
-	public Raum(Inventory inventory, int... items) {
+	public Raum(Inventory inventory, Item... items) {
 		this.inventory = inventory;
 		this.items = items;
 	}
@@ -16,8 +16,13 @@ public abstract class Raum {
 	public void listItems() {
 		System.out.println("Im Raum befindet sich:");
 		for (int i = 0; i < MAX_SLOTS_ITEMS; i++) {
-			String objectName = Item.getObjectName(this.items[i]);
+			if(items[i] == null){
+				System.out.println("\tKein Objekt");
+			}
+			else{
+			String objectName = items[i].getName();
 			System.out.println("\t" + objectName);
+			}
 		}
 	}
 
@@ -28,7 +33,7 @@ public abstract class Raum {
 	 */
 	public int find(int objectID) {
 		for (int i = 0; i < MAX_SLOTS_ITEMS; i++) {
-			if (this.items[i] == objectID) {
+			if (items[i].getID() == objectID) {
 				return i;
 			}
 		}
@@ -116,6 +121,7 @@ public abstract class Raum {
 		}
 	}
 
+	
 	private void doUntersuche(String[] parsed_command, int count) {
 		if (count == 2) {
 			switch (parsed_command[1]) {
@@ -387,7 +393,7 @@ public abstract class Raum {
 	public void removeItem(int objectID) {
 		if (this.find(objectID) != -128) {
 			int i = this.find(objectID);
-			items[i] = 0;
+			items[i] = null;
 		}
 	}
 }

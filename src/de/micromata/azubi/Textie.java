@@ -30,12 +30,56 @@ public class Textie {
 	public static final int WHITEBOARD = 11;
 	public static final int FALLTUER = 12;
 
+	static Item fackel = new Item(FACKEL, "Fackel",
+			"Du betrachtest die Fackel. Wie kann man die wohl anzünden?",
+			"Du zündest deine Fackel mit dem Feuerzeug an.");
+	static Item handtuch = new Item(HANDTUCH, "Handtuch",
+			"Das Handtuch sieht sehr flauschig aus.",
+			"Du wischst dir den Angstschweiß von der Stirn.");
+	static Item ente = new Item(
+			QUIETSCHEENTE,
+			"Quietscheente",
+			"Die Ente schaut dich vorwurfsvoll an.",
+			"Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst.");
+	static Item brecheisen = new Item(BRECHEISEN, "Brecheisen",
+			"Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.",
+			"Du kratzt dich mit dem Brecheisen am Kopf");
+	static Item schwert = new Item(SCHWERT, "Schwert",
+			"Du betrachtest das Schwert. Es sieht sehr scharf aus.",
+			"Du stichst dir das Schwert zwischen die Rippen und stirbst.");
+	static Item feuerzeug = new Item(FEUERZEUG, "Feuerzeug",
+			"Du betrachtest das Feuerzeug. Es wirkt zuverlässig.",
+			"Du zündest deine Fackel mit dem Feuerzeug an.");
+	static Item schluessel = new Item(
+			SCHLUESSEL,
+			"Schlüssel",
+			"Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?",
+			"Hier gibt es nichts um den Schlüssel zu benutzen.");
+	static Item stein = new Item(STEIN, "Stein",
+			"Du betrachtest den Stein. Er wirkt kalt.",
+			"Hier gibt es nichts um den Stein zu benutzen.");
+	static Item truhe = new Item(
+			TRUHE,
+			"Truhe",
+			"Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.",
+			"Du kannst die Truhe nicht öffnen.");
+	static Item schalter = new Item(
+			SCHALTER,
+			"Schalter",
+			"Da ist ein kleiner Schalter an der Wand.",
+			"Du hörst ein Rumpeln, als du den Schalter drückst. Es geschieht nichts weiter.");
+	static Item whiteboard = new Item(WHITEBOARD, "Whiteboard",
+			"Es steht \'FLIEH!\' mit Blut geschrieben darauf.",
+			"Das fasse ich bestimmt nicht an!");
+	static Item falltuer = new Item(FALLTUER, "Falltür", "Da ist eine Falltür",
+			"Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
+
 	static Inventory inventory = new Inventory(ALIVE);
-	static Raum raum1 = new Raum1(inventory, FACKEL, HANDTUCH, TRUHE, SCHALTER);
-	static Raum raum2 = new Raum2(inventory, SCHWERT, FEUERZEUG, SCHLUESSEL,
-			STEIN);
-	static Raum raum3 = new Raum3(inventory, QUIETSCHEENTE, WHITEBOARD,
-			BRECHEISEN, FALLTUER);
+	static Raum raum1 = new Raum1(inventory, fackel, handtuch, truhe, schalter);
+	static Raum raum2 = new Raum2(inventory, schwert, feuerzeug, schluessel,
+			stein);
+	static Raum raum3 = new Raum3(inventory, ente, whiteboard,
+			brecheisen, falltuer);
 
 	public static void main(String[] args) {
 

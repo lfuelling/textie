@@ -16,13 +16,13 @@ public class Inventory {
 	}
 
 	public boolean addToInventory(int objectID, Raum raum) {
-		int[] items = raum.items;
+		Item[] items = raum.items;
 		int objektInUmgebung = -128;
 		for (int i = 0; i < MAX_SLOTS_INVENTORY; i++) {
 			if (inventory[i] == 0) {
 				inventory[i] = objectID;
 				for (int y = 0; y < Raum.MAX_SLOTS_ITEMS; y++) {
-					if (items[y] == objectID) {
+					if (items[y].getID() == objectID) {
 						objektInUmgebung = i;
 					}
 				}

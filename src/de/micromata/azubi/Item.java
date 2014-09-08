@@ -16,20 +16,26 @@ public class Item {
 	public static final int FALLTUER = 12;
 
 	private int objectID = 0;
-	private String untersucheText;
+	private String untersucheText = "";
 	private String benutzeText;
+	private String name;
 
-	public Item(int objectID, String untersucheText, String benutzeText) {
+	public Item(int objectID, String name, String untersucheText, String benutzeText) {
 		this.objectID = objectID;
+		this.name = name;
 	}
 	public String getName(){
 		
-		return getObjectName(objectID);
+		return this.name;
+		//return getObjectName(objectID);
 	}
 	
 	public int getID(){
 		return this.objectID;
 	}
+	
+	
+	
 	
 	public static String getObjectName(int id) {
 		switch (id) {
@@ -74,6 +80,7 @@ public class Item {
 		}
 	}
 
+	
 	public static int getObjectID(String objectName) {
 		switch (objectName) {
 		case "FACKEL":
@@ -117,11 +124,16 @@ public class Item {
 		}
 	}
 	
+	
 	public void benutzen(){
 		System.out.println(benutzeText);
 	}
 	
 	public void untersuchen(){
+		if(untersucheText.equals("") == true){
+			//TODO itemgeschlechter hinzufügen und Text anpassen
+			System.out.println("Da ist ein/e "+ this.getName() +".");
+		}
 		System.out.println(untersucheText);
 	}
 
