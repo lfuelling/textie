@@ -1,5 +1,7 @@
 package de.micromata.azubi;
 
+import java.util.List;
+
 public class Inventory {
 
 	private static final int MAX_SLOTS_INVENTORY = 5;
@@ -16,13 +18,14 @@ public class Inventory {
 	}
 
 	public boolean addToInventory(int objectID, Raum raum) {
-		Item[] items = raum.items;
+		@SuppressWarnings("rawtypes")
+		List items = raum.items;
 		int objektInUmgebung = -128;
 		for (int i = 0; i < MAX_SLOTS_INVENTORY; i++) {
 			if (inventory[i] == 0) {
 				inventory[i] = objectID;
 				for (int y = 0; y < Raum.MAX_SLOTS_ITEMS; y++) {
-					if (items[y].getID() == objectID) {
+					if (((Item) items.get(y)).getID() == objectID) {
 						objektInUmgebung = i;
 					}
 				}

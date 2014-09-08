@@ -1,27 +1,40 @@
 package de.micromata.azubi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Raum {
 
 	public static final int MAX_SLOTS_ITEMS = 4;
-	protected Item[] items;
+	@SuppressWarnings("rawtypes")
+	protected List items = new ArrayList();
 	protected Inventory inventory;
 	protected boolean fackelUsed = false;
 	protected boolean falltuerUsed = false;
 
-	public Raum(Inventory inventory, Item... items) {
+	@SuppressWarnings("unchecked")
+	public Raum(Inventory inventory, Item... items1) {
 		this.inventory = inventory;
-		this.items = items;
+
+		items.addAll(items);
 	}
 
 	public void listItems() {
+
+		/*
+		 * List list = new ArrayList();
+		 * 
+		 * // speicherbereich + 32 bit list.add(); list.add("TV");
+		 * list.remove("TV");
+		 */
+
 		System.out.println("Im Raum befindet sich:");
 		for (int i = 0; i < MAX_SLOTS_ITEMS; i++) {
-			if(items[i] == null){
+			if (items == null) {
 				System.out.println("\tKein Objekt");
-			}
-			else{
-			String objectName = items[i].getName();
-			System.out.println("\t" + objectName);
+			} else {
+				String objectName = ((Item) items.get(i)).getName();
+				System.out.println("\t" + objectName);
 			}
 		}
 	}
@@ -33,7 +46,7 @@ public abstract class Raum {
 	 */
 	public int find(int objectID) {
 		for (int i = 0; i < MAX_SLOTS_ITEMS; i++) {
-			if (items[i].getID() == objectID) {
+			if (((Item) items.get(i)).getID() == objectID) {
 				return i;
 			}
 		}
@@ -42,7 +55,7 @@ public abstract class Raum {
 
 	protected void prompt() {
 		do {
-			falltuerUsed = false; 
+			falltuerUsed = false;
 			String command = IOUtils.readLine("Was willst du tun? ");
 			String[] parsed_command = Textie.parseInput(command);
 			int object_to_use = 0;
@@ -121,7 +134,6 @@ public abstract class Raum {
 		}
 	}
 
-	
 	private void doUntersuche(String[] parsed_command, int count) {
 		if (count == 2) {
 			switch (parsed_command[1]) {
@@ -324,8 +336,9 @@ public abstract class Raum {
 			}
 			break;
 		case Textie.SCHALTER:
-			if (find(Textie.SCHALTER) != -128){
-				System.out.println("Du hörst ein Rumpeln, als du den Schalter drückst. Es geschieht nichts weiter.");
+			if (find(Textie.SCHALTER) != -128) {
+				System.out
+						.println("Du hörst ein Rumpeln, als du den Schalter drückst. Es geschieht nichts weiter.");
 			}
 		default:
 			System.out.println("Welches Objekt möchtest du benutzen?");
@@ -353,7 +366,8 @@ public abstract class Raum {
 				.println("\tuntersuche [gegenstand/raum/inventar] -> Gegenstand, Raum oder Inventar untersuchen");
 		System.out
 				.println("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen");
-		System.out.println("\tgehe [nord/süd/ost/west] -> In eine Richtung gehen");
+		System.out
+				.println("\tgehe [nord/süd/ost/west] -> In eine Richtung gehen");
 	}
 
 	private void goWall() {
@@ -363,12 +377,12 @@ public abstract class Raum {
 	public abstract void start();
 
 	public abstract boolean isFinished();
-	
-	public boolean hasEverything(){
-		if(inventory.isInInventory(Textie.BRECHEISEN) && inventory.isInInventory(Textie.SCHLUESSEL)){
-			return true;	
-		}
-		else{
+
+	public boolean hasEverything() {
+		if (inventory.isInInventory(Textie.BRECHEISEN)
+				&& inventory.isInInventory(Textie.SCHLUESSEL)) {
+			return true;
+		} else {
 			return false;
 		}
 	}
@@ -390,10 +404,11 @@ public abstract class Raum {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void removeItem(int objectID) {
 		if (this.find(objectID) != -128) {
 			int i = this.find(objectID);
-			items[i] = null;
+			items.set(i, null);
 		}
 	}
 }
