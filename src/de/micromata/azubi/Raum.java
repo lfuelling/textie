@@ -37,6 +37,7 @@ public abstract class Raum {
 
 	protected void prompt() {
 		do {
+			falltuerUsed = false; 
 			String command = IOUtils.readLine("Was willst du tun? ");
 			String[] parsed_command = Textie.parseInput(command);
 			int object_to_use = 0;
