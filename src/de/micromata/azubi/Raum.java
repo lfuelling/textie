@@ -6,7 +6,7 @@ public abstract class Raum {
 	protected int[] items;
 	protected Inventory inventory;
 	protected boolean fackelUsed = false;
-	protected boolean falltuerUsed = true;
+	protected boolean falltuerUsed = false;
 
 	public Raum(Inventory inventory, int... items) {
 		this.inventory = inventory;
