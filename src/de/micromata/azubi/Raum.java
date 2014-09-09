@@ -7,7 +7,7 @@ public abstract class Raum {
 
 	//public static final int MAX_SLOTS_ITEMS = 4;
 	@SuppressWarnings("rawtypes")
-	protected List items = new ArrayList();
+	protected List<Item> items = new ArrayList<Item>();
 	protected Inventory inventory;
 	protected boolean fackelUsed = false;
 	protected boolean falltuerUsed = false;
