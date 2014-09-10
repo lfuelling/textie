@@ -32,42 +32,19 @@ public class Textie {
 	static Map<String, Item> itemMap = new HashMap<String, Item>();
 	static Inventory inventory = new Inventory(ALIVE);
 
-	//	Item _fackel = itemMap.get("fackel");
-	
-	static Raum raum1 = new Raum1(inventory, itemMap.get("fackel"), itemMap.get("handtuch"), itemMap.get("truhe"), itemMap.get("schalter"));
-	static Raum raum2 = new Raum2(inventory, schwert, feuerzeug, schluessel,
-			stein);
-	static Raum raum3 = new Raum3(inventory, ente, whiteboard, brecheisen,
-			falltuer, karte);
+	// Item _fackel = itemMap.get("fackel");
 
-
+	static Raum raum1 = new Raum1(inventory, itemMap.get("FACKEL"),
+			itemMap.get("HANDTUCH"), itemMap.get("TRUHE"),
+			itemMap.get("SCHALTER"));
+	static Raum raum2 = new Raum2(inventory, itemMap.get("SCHWERT"),
+			itemMap.get("FEUERZEUG"), itemMap.get("SCHLÜSSEL"),
+			itemMap.get("STEIN"));
+	static Raum raum3 = new Raum3(inventory, itemMap.get("QUIETSCHEENTE"),
+			itemMap.get("WHITEBOARD"), itemMap.get("BRECHEISEN"),
+			itemMap.get("FALLTÜR"), itemMap.get("KARTE"));
 
 	public static void main(String[] args) {
-		if (args.length == 1) {
-			int raumNummer = Integer.parseInt(args[0]);
-
-			switch (raumNummer) {
-			case 1:
-				raum1.start();
-				break;
-
-			case 2:
-				inventory.setItemForStartHack(fackel);
-				raum2.start();
-				break;
-
-			case 3:
-				inventory.setItemForStartHack(fackel);
-				inventory.setItemForStartHack(schluessel);
-				raum3.start();
-				break;
-
-			default:
-				System.out.println("Gebe eine Zahl von 1-3 ein.");
-				break;
-			}
-			return;
-		}
 		Textie.initItems();
 		Textie.showIntro();
 		Textie.runGame();
@@ -118,56 +95,56 @@ public class Textie {
 	}
 
 	private static void initItems() {
-		itemMap.put("Karte", new Item("Karte",
+		itemMap.put("KARTE", new Item("Karte",
 				"Die Karte zeigt an, in welchem Raum man sich befindet.",
 				"Du bist in Raum"));
 		itemMap.put(
-				"Falltür",
+				"FALLTÜR",
 				new Item("Falltür", "Da ist eine Falltür",
 						"Du schlüpfst durch die Falltür in den darunterliegenden Raum."));
-		itemMap.put("Whiteboard", new Item("Whiteboard",
+		itemMap.put("WHITEBOARD", new Item("Whiteboard",
 				"Es steht \'FLIEH!\' mit Blut geschrieben darauf.",
 				"Das fasse ich bestimmt nicht an!"));
 		itemMap.put(
-				"Schalter",
+				"SCHALTER",
 				new Item(
 						"Schalter",
 						"Da ist ein kleiner Schalter an der Wand.",
 						"Du hörst ein Rumpeln, als du den Schalter drückst. Es geschieht nichts weiter."));
 		itemMap.put(
-				"Truhe",
+				"TRUHE",
 				new Item(
 						"Truhe",
 						"Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.",
 						"Du kannst die Truhe nicht öffnen."));
-		itemMap.put("Stein", new Item("Stein",
+		itemMap.put("STEIN", new Item("Stein",
 				"Du betrachtest den Stein. Er wirkt kalt.",
 				"Hier gibt es nichts um den Stein zu benutzen."));
 		itemMap.put(
-				"Schlüssel",
+				"SCHLÜSSEL",
 				new Item(
 						"Schlüssel",
 						"Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?",
 						"Hier gibt es nichts um den Schlüssel zu benutzen."));
-		itemMap.put("Feuerzeug", new Item("Feuerzeug",
+		itemMap.put("FEUERZEUG", new Item("Feuerzeug",
 				"Du betrachtest das Feuerzeug. Es wirkt zuverlässig.",
 				"Du zündest deine Fackel mit dem Feuerzeug an."));
-		itemMap.put("Schwert", new Item("Schwert",
+		itemMap.put("SCHWERT", new Item("Schwert",
 				"Du betrachtest das Schwert. Es sieht sehr scharf aus.",
 				"Du stichst dir das Schwert zwischen die Rippen und stirbst."));
-		itemMap.put("Brecheisen", new Item("Brecheisen",
+		itemMap.put("BRECHEISEN", new Item("Brecheisen",
 				"Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.",
 				"Du kratzt dich mit dem Brecheisen am Kopf"));
 		itemMap.put(
-				"Ente",
+				"QUIETSCHEENTE",
 				new Item(
 						"Quietscheente",
 						"Die Ente schaut dich vorwurfsvoll an.",
 						"Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst."));
-		itemMap.put("Handtuch", new Item("Handtuch",
+		itemMap.put("HANDTUCH", new Item("Handtuch",
 				"Das Handtuch sieht sehr flauschig aus.",
 				"Du wischst dir den Angstschweiß von der Stirn."));
-		itemMap.put("Fackel", new Item("Fackel",
+		itemMap.put("FACKEL", new Item("Fackel",
 				"Du betrachtest die Fackel. Wie kann man die wohl anzünden?",
 				"Du zündest deine Fackel mit dem Feuerzeug an."));
 	}
