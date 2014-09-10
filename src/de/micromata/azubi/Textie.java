@@ -34,40 +34,15 @@ public class Textie {
 
 	//	Item _fackel = itemMap.get("fackel");
 	
-	static Raum raum1 = new Raum1(inventory, itemMap.get("fackel"), itemMap.get("handtuch"), itemMap.get("truhe"), itemMap.get("schalter"));
-	static Raum raum2 = new Raum2(inventory, schwert, feuerzeug, schluessel,
-			stein);
-	static Raum raum3 = new Raum3(inventory, ente, whiteboard, brecheisen,
-			falltuer, karte);
+	static Raum raum1 = new Raum1(inventory, itemMap.get("Fackel"), itemMap.get("Handtuch"), itemMap.get("Truhe"), itemMap.get("Schalter"));
+	static Raum raum2 = new Raum2(inventory, itemMap.get("Schwert"), itemMap.get("Feuerzeug"), itemMap.get("Schlüssel"),
+			itemMap.get("stein"));
+	static Raum raum3 = new Raum3(inventory, itemMap.get("Ente"), itemMap.get("Whiteboard"), itemMap.get("Brecheisen"),
+			itemMap.get("Falltür"), itemMap.get("Karte"));
 
 
 
 	public static void main(String[] args) {
-		if (args.length == 1) {
-			int raumNummer = Integer.parseInt(args[0]);
-
-			switch (raumNummer) {
-			case 1:
-				raum1.start();
-				break;
-
-			case 2:
-				inventory.setItemForStartHack(fackel);
-				raum2.start();
-				break;
-
-			case 3:
-				inventory.setItemForStartHack(fackel);
-				inventory.setItemForStartHack(schluessel);
-				raum3.start();
-				break;
-
-			default:
-				System.out.println("Gebe eine Zahl von 1-3 ein.");
-				break;
-			}
-			return;
-		}
 		Textie.initItems();
 		Textie.showIntro();
 		Textie.runGame();
