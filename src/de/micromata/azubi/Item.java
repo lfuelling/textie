@@ -21,8 +21,7 @@ public class Item {
 	private String benutzeText;
 	private String name;
 
-	public Item(int objectID, String name, String untersucheText, String benutzeText) {
-		this.objectID = objectID;
+	public Item(String name, String untersucheText, String benutzeText) {
 		this.name = name;
 	}
 	public String getName(){
