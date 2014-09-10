@@ -28,7 +28,7 @@ public class Raum1 extends Raum {
 	@Override
 	public void goSouth() {
 		// Fackel muss im inventar sein, bevor south = true gesetzt wird
-		if (inventory.isInInventory(Textie.FACKEL)) {
+		if (inventory.isInInventory(Textie.itemMap.get("FACKEL"))) {
 			south = true;
 		} else {
 			System.out

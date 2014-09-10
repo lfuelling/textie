@@ -28,8 +28,8 @@ public class Raum2 extends Raum {
 
 	@Override
 	public void goWest() {
-		if (inventory.isInInventory(Textie.FEUERZEUG)
-				&& inventory.isInInventory(Textie.SCHLUESSEL)) {
+		if (inventory.isInInventory(Textie.itemMap.get("FEUERZEUG"))
+				&& inventory.isInInventory(Textie.itemMap.get("SCHLUESSEL"))) {
 			west = true;
 		} else {
 			System.out
