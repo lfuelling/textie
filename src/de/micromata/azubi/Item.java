@@ -21,13 +21,8 @@ public class Item {
 	private String benutzeText;
 	private String name;
 
-<<<<<<< HEAD
-	public Item(int objectID, String name, String untersucheText,
-			String benutzeText) {
-		this.objectID = objectID;
-=======
+
 	public Item(String name, String untersucheText, String benutzeText) {
->>>>>>> 9a0e46ec4712f250b63892597379e9040389b58f
 		this.name = name;
 	}
 

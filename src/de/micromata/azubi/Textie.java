@@ -29,35 +29,20 @@ public class Textie {
 	 * WHITEBOARD = 11; public static final int FALLTUER = 12; public static
 	 * final int KARTE = 13;
 	 */
-
+	static Map<String, Item> itemMap = new HashMap<String, Item>();
 	static Inventory inventory = new Inventory(ALIVE);
 
-	static Raum raum1 = new Raum1(inventory, fackel, handtuch, truhe, schalter);
+	//	Item _fackel = itemMap.get("fackel");
+	
+	static Raum raum1 = new Raum1(inventory, itemMap.get("fackel"), itemMap.get("handtuch"), itemMap.get("truhe"), itemMap.get("schalter"));
 	static Raum raum2 = new Raum2(inventory, schwert, feuerzeug, schluessel,
 			stein);
 	static Raum raum3 = new Raum3(inventory, ente, whiteboard, brecheisen,
 			falltuer, karte);
 
-	static Map<String, Item> itemMap = new HashMap<String, Item>();
+
 
 	public static void main(String[] args) {
-
-		/*
-		 * 'fackel' = new Item(.... 'fackel')
-		 */
-
-		itemMap.put("fackel", fackel);
-
-		Item _fackel = itemMap.get("fackel");
-
-		for (Item value : itemMap.values()) {
-			System.out.println(value);
-		}
-
-		for (String key : itemMap.keySet()) {
-			System.out.println(key);
-		}
-
 		if (args.length == 1) {
 			int raumNummer = Integer.parseInt(args[0]);
 
