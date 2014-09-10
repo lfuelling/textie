@@ -139,7 +139,7 @@ public class Textie {
 			}
 			return;
 		}
-
+		Textie.initItems();
 		Textie.showIntro();
 		Textie.runGame();
 	}
