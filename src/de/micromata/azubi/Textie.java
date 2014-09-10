@@ -75,12 +75,12 @@ public class Textie {
 			"Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
 
 	static Inventory inventory = new Inventory(ALIVE);
-	
+
 	static Raum raum1 = new Raum1(inventory, fackel, handtuch, truhe, schalter);
 	static Raum raum2 = new Raum2(inventory, schwert, feuerzeug, schluessel,
 			stein);
-	static Raum raum3 = new Raum3(inventory, ente, whiteboard,
-			brecheisen, falltuer);
+	static Raum raum3 = new Raum3(inventory, ente, whiteboard, brecheisen,
+			falltuer);
 
 	public static void main(String[] args) {
 
