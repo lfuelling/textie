@@ -93,13 +93,13 @@ public class Textie {
 				break;
 
 			case 2:
-				inventory.setItemForStartHack(FACKEL, 0);
+				inventory.setItemForStartHack(fackel);
 				raum2.start();
 				break;
 
 			case 3:
-				inventory.setItemForStartHack(FACKEL, 0);
-				inventory.setItemForStartHack(SCHLUESSEL, 1);
+				inventory.setItemForStartHack(fackel);
+				inventory.setItemForStartHack(schluessel);
 				raum3.start();
 				break;
 

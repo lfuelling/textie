@@ -1,31 +1,46 @@
 package de.micromata.azubi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Inventory {
 
 	private static final int MAX_SLOTS_INVENTORY = 5;
 	private boolean alive;
-	private int[] inventory;
+	//private int[] inventory;
+	private List <Item> inventory = new ArrayList<Item>();
 
 	public Inventory(boolean alive) {
 		this.alive = alive;
-		this.inventory = new int[MAX_SLOTS_INVENTORY];
+	//	this.inventory = new int[MAX_SLOTS_INVENTORY];
 	}
 
 	public boolean isAlive() {
 		return this.alive;
 	}
 
+	public boolean addItem(Item item){
+		if(inventory.size()<MAX_SLOTS_INVENTORY){
+			inventory.add(item);							//TODO Fertig machen
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	
+	
+	
+	/*
 	public boolean addToInventory(int objectID, Raum raum) {
-		@SuppressWarnings("rawtypes")
-		List items = raum.items;
+		List <Item>items = raum.items;
 		int objektInUmgebung = -128;
 		for (int i = 0; i < MAX_SLOTS_INVENTORY; i++) {
 			if (inventory[i] == 0) {
 				inventory[i] = objectID;
 				for (int y = 0; y < items.size(); y++) {
-					if (((Item) items.get(y)).getID() == objectID) {
+					if ( items.get(y).getID() == objectID) {
 						objektInUmgebung = i;
 					}
 				}
@@ -37,44 +52,46 @@ public class Inventory {
 		}
 		return false;
 	}
+	*/
 
-	public boolean removeFromInventory(int objectID) {
-		for (int i = 0; i < MAX_SLOTS_INVENTORY; i++) {
-			if (inventory[i] == objectID) {
-				inventory[i] = 0;
-				return true;
-			}
+	public boolean removeItem(Item item) {
+			if(inventory.remove(item)) return true;
+			return false;
 		}
-		return false;
-	}
 
-	public void listInventory() {
+
+	public void listItems() {
 		System.out.println("In deiner Tasche befindet sich:");
-		for (int i = 0; i < MAX_SLOTS_INVENTORY; i++) {
-			String objectName = Item.getObjectName(inventory[i]);
+		for (Item items : inventory) {
+			String objectName = items.getName();
 			System.out.println("\t" + objectName);
 		}
 	}
 
-	public int findInInventory(int objectID) {
-		for (int i = 0; i < MAX_SLOTS_INVENTORY; i++) {
-			if (inventory[i] == objectID) {
-				return i;
-			}
+	public int findItem(Item items) {
+		int slot = -128;
+		slot = inventory.indexOf(items);
+		if(slot > -128){
+			return slot;
 		}
 		return -128;
 	}
 	
-	public boolean isInInventory(int objectID){
-		return findInInventory(objectID) != -128;
+	public boolean isInInventory(Item items){
+		return findItem(items) != -128;
 	}
 	
+	public void setAlive(boolean state){
+		this.alive = state;
+	}
+	/*
 	public void setItemForStartHack(int item, int slot){
-		this.inventory[slot] = item;
+		 = item;
 	}
 	
 	public void setAlive(boolean par){
 		this.alive = par;
 	}
+	*/
 	
 }

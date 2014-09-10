@@ -6,13 +6,11 @@ import java.util.List;
 public abstract class Raum {
 
 	//public static final int MAX_SLOTS_ITEMS = 4;
-	@SuppressWarnings("rawtypes")
 	protected List<Item> items = new ArrayList<Item>();
 	protected Inventory inventory;
 	protected boolean fackelUsed = false;
 	protected boolean falltuerUsed = false;
 
-	@SuppressWarnings("unchecked")
 	public Raum(Inventory inventory, Item... items1) {
 		this.inventory = inventory;
 
@@ -35,7 +33,7 @@ public abstract class Raum {
 			if (items == null) {
 				System.out.println("\tKein Objekt");
 			} else {
-				String objectName = ((Item) items.get(i)).getName();
+				String objectName = items.get(i).getName();
 				System.out.println("\t" + objectName);
 			}
 		}
@@ -48,7 +46,7 @@ public abstract class Raum {
 	 */
 	public int find(int objectID) {
 		for (int i = 0; i < items.size(); i++) {
-			if (((Item) items.get(i)).getID() == objectID) {
+			if (items.get(i).getID() == objectID) {
 				return i;
 			}
 		}
@@ -76,7 +74,7 @@ public abstract class Raum {
 				printHelp();
 				break;
 			case "nimm":
-				doNimm(parsed_command, object_to_use);
+				doNimm(parsed_command, Textie.inventory);
 				break;
 			case "benutze":
 				doBenutze(object_to_use);
@@ -85,7 +83,8 @@ public abstract class Raum {
 				doUntersuche(parsed_command, count);
 				break;
 			case "vernichte":
-				doVernichte(parsed_command, object_to_use, count);
+				//TODO
+				doVernichte(parsed_command, items1, count);
 				break;
 
 			case "gehe":
@@ -120,10 +119,10 @@ public abstract class Raum {
 		}
 	}
 
-	private void doVernichte(String[] parsed_command, int object_to_use,
+	private void doVernichte(String[] parsed_command, Item item,
 			int count) {
 		if (count == 2) {
-			if (inventory.removeFromInventory(object_to_use)) {
+			if (inventory.removeItem(item)) {
 				System.out.println(parsed_command[1] + " vernichtet.");
 				return;
 			} else {
@@ -144,11 +143,11 @@ public abstract class Raum {
 				break;
 
 			case "inventar":
-				inventory.listInventory();
+				inventory.listItems();
 				break;
 
 			case "fackel":
-				if (inventory.isInInventory(Textie.FACKEL)) {
+				if (inventory.isInInventory(Textie.fackel)) {
 					System.out
 							.println("Du betrachtest die Fackel. Wie kann man die wohl anzünden?");
 				} else if (this.find(Textie.FACKEL) != -128) {
@@ -159,7 +158,7 @@ public abstract class Raum {
 				break;
 
 			case "handtuch":
-				if (inventory.isInInventory(Textie.FACKEL)) {
+				if (inventory.isInInventory(Textie.handtuch)) {
 					System.out
 							.println("Du betrachtest das Handtuch. Es sieht sehr flauschig aus.");
 				} else if (this.find(Textie.HANDTUCH) != -128) {
@@ -188,7 +187,7 @@ public abstract class Raum {
 				break;
 
 			case "schwert":
-				if (inventory.isInInventory(Textie.SCHWERT)) {
+				if (inventory.isInInventory(Textie.schwert)) {
 					System.out
 							.println("Du betrachtest das Schwert. Es sieht sehr scharf aus.");
 				} else if (this.find(Textie.SCHWERT) != -128) {
@@ -199,7 +198,7 @@ public abstract class Raum {
 				break;
 
 			case "feuerzeug":
-				if (inventory.isInInventory(Textie.FEUERZEUG)) {
+				if (inventory.isInInventory(Textie.feuerzeug)) {
 					System.out
 							.println("Du betrachtest das Feuerzeug. Es wirkt zuverlässig.");
 				} else if (this.find(Textie.FEUERZEUG) != -128) {
@@ -210,7 +209,7 @@ public abstract class Raum {
 				break;
 
 			case "schlüssel":
-				if (inventory.isInInventory(Textie.SCHLUESSEL)) {
+				if (inventory.isInInventory(Textie.schluessel)) {
 					System.out
 							.println("Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?");
 				} else if (this.find(Textie.SCHLUESSEL) != -128) {
@@ -221,7 +220,7 @@ public abstract class Raum {
 				break;
 
 			case "stein":
-				if (inventory.isInInventory(Textie.STEIN)) {
+				if (inventory.isInInventory(Textie.stein)) {
 					System.out
 							.println("Du betrachtest den Stein. Er ist kalt.");
 				} else if (this.find(Textie.STEIN) != -128) {
@@ -231,7 +230,7 @@ public abstract class Raum {
 				}
 				break;
 			case "quietscheente":
-				if (inventory.isInInventory(Textie.QUIETSCHEENTE)) {
+				if (inventory.isInInventory(Textie.ente)) {
 					System.out.println("Die Ente schaut dich vorwurfsvoll an.");
 					break;
 				} else if (find(Textie.QUIETSCHEENTE) != -128) {
@@ -243,7 +242,7 @@ public abstract class Raum {
 				}
 
 			case "brecheisen":
-				if (inventory.isInInventory(Textie.BRECHEISEN)) {
+				if (inventory.isInInventory(Textie.brecheisen)) {
 					System.out
 							.println("Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.");
 
@@ -272,8 +271,8 @@ public abstract class Raum {
 		switch (object_to_use) {
 		case Textie.FACKEL:
 		case Textie.FEUERZEUG:
-			int fackelSlot = inventory.findInInventory(Textie.FACKEL);
-			int feuerZeugSlot = inventory.findInInventory(Textie.FEUERZEUG);
+			int fackelSlot = inventory.findItem(Textie.fackel);
+			int feuerZeugSlot = inventory.findItem(Textie.feuerzeug);
 			if (feuerZeugSlot < 0) {
 				System.out.println("Du hast kein Feuerzeug.");
 				break;
@@ -304,7 +303,7 @@ public abstract class Raum {
 			System.out.println("Hier gibt es nichts um den Stein zu benutzen.");
 			break;
 		case Textie.QUIETSCHEENTE:
-			if (inventory.findInInventory(Textie.QUIETSCHEENTE) != -128) {
+			if (inventory.findItem(Textie.ente) != -128) {
 				System.out
 						.println("Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst.");
 				break;
@@ -314,7 +313,7 @@ public abstract class Raum {
 			}
 
 		case Textie.BRECHEISEN:
-			if (inventory.findInInventory(Textie.BRECHEISEN) != -128) {
+			if (inventory.findItem(Textie.brecheisen) != -128) {
 				System.out
 						.println("Du kratzt dich mit dem Brecheisen am Kopf.");
 				break;
@@ -348,8 +347,8 @@ public abstract class Raum {
 		}
 	}
 
-	private void doNimm(String[] parsed_command, int object_to_use) {
-		if (inventory.addToInventory(object_to_use, this)) {
+	private void doNimm(String[] parsed_command, Item item) {
+		if (inventory.addItem(item)) {
 			System.out
 					.println(parsed_command[1] + " zum Inventar hinzugefügt.");
 		} else {
@@ -381,8 +380,8 @@ public abstract class Raum {
 	public abstract boolean isFinished();
 
 	public boolean hasEverything() {
-		if (inventory.isInInventory(Textie.BRECHEISEN)
-				&& inventory.isInInventory(Textie.SCHLUESSEL)) {
+		if (inventory.isInInventory(Textie.brecheisen)
+				&& inventory.isInInventory(Textie.schluessel)) {
 			return true;
 		} else {
 			return false;
