@@ -29,6 +29,7 @@ public class Textie {
 	public static final int SCHALTER = 10;
 	public static final int WHITEBOARD = 11;
 	public static final int FALLTUER = 12;
+	public static final int KARTE = 13;
 
 	static Item fackel = new Item(FACKEL, "Fackel",
 			"Du betrachtest die Fackel. Wie kann man die wohl anzünden?",
@@ -73,6 +74,7 @@ public class Textie {
 			"Das fasse ich bestimmt nicht an!");
 	static Item falltuer = new Item(FALLTUER, "Falltür", "Da ist eine Falltür",
 			"Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
+	static Item karte = new Item(KARTE, "Karte","Die Karte zeigt an, in welchem Raum man sich befindet.", "Du bist in Raum");
 
 	static Inventory inventory = new Inventory(ALIVE);
 	

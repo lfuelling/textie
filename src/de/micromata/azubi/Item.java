@@ -14,6 +14,7 @@ public class Item {
 	public static final int SCHALTER = 10;
 	public static final int WHITEBOARD = 11;
 	public static final int FALLTUER = 12;
+	public static final int KARTE = 13;
 
 	private int objectID = 0;
 	private String untersucheText = "";
@@ -74,6 +75,9 @@ public class Item {
 
 		case FALLTUER:
 			return "Falltür";
+			
+		case KARTE:
+			return "Karte";
 
 		default:
 			return "Kein Objekt";
@@ -118,6 +122,9 @@ public class Item {
 
 		case "FALLTÜR":
 			return FALLTUER;
+			
+		case "KARTE":
+			return KARTE;
 
 		default:
 			return 0;
