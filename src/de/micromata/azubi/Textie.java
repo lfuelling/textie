@@ -74,15 +74,17 @@ public class Textie {
 			"Das fasse ich bestimmt nicht an!");
 	static Item falltuer = new Item(FALLTUER, "Falltür", "Da ist eine Falltür",
 			"Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
-	static Item karte = new Item(KARTE, "Karte","Die Karte zeigt an, in welchem Raum man sich befindet.", "Du bist in Raum");
+	static Item karte = new Item(KARTE, "Karte",
+			"Die Karte zeigt an, in welchem Raum man sich befindet.",
+			"Du bist in Raum");
 
 	static Inventory inventory = new Inventory(ALIVE);
-	
+
 	static Raum raum1 = new Raum1(inventory, fackel, handtuch, truhe, schalter);
 	static Raum raum2 = new Raum2(inventory, schwert, feuerzeug, schluessel,
 			stein);
-	static Raum raum3 = new Raum3(inventory, ente, whiteboard,
-			brecheisen, falltuer);
+	static Raum raum3 = new Raum3(inventory, ente, whiteboard, brecheisen,
+			falltuer, karte);
 
 	public static void main(String[] args) {
 
