@@ -14,15 +14,20 @@ public class Item {
 	public static final int SCHALTER = 10;
 	public static final int WHITEBOARD = 11;
 	public static final int FALLTUER = 12;
+	public static final int KARTE = 13;
 
 	private int objectID = 0;
 	private String untersucheText = "";
 	private String benutzeText;
 	private String name;
 
+<<<<<<< HEAD
 	public Item(int objectID, String name, String untersucheText,
 			String benutzeText) {
 		this.objectID = objectID;
+=======
+	public Item(String name, String untersucheText, String benutzeText) {
+>>>>>>> 9a0e46ec4712f250b63892597379e9040389b58f
 		this.name = name;
 	}
 
@@ -73,6 +78,9 @@ public class Item {
 
 		case FALLTUER:
 			return "Falltür";
+			
+		case KARTE:
+			return "Karte";
 
 		default:
 			return "Kein Objekt";
@@ -116,6 +124,9 @@ public class Item {
 
 		case "FALLTÜR":
 			return FALLTUER;
+			
+		case "KARTE":
+			return KARTE;
 
 		default:
 			return 0;
