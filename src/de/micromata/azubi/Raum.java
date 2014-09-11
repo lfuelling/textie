@@ -135,127 +135,13 @@ public abstract class Raum {
 			case "raum":
 				this.listItems();
 				break;
-
 			case "inventar":
 				inventory.listItems();
 				break;
+			default:
+				Textie.itemMap.get(parsed_command[1]).untersuchen();
 
-			case "fackel":
-				if (inventory.isInInventory(Textie.itemMap.get("FACKEL"))) {
-					System.out
-							.println("Du betrachtest die Fackel. Wie kann man die wohl anzünden?");
-				} else if (this.find(Textie.itemMap.get("Fackel")) != -128) {
-					System.out.println("Da liegt eine Fackel.");
-				} else {
-					System.out.println("Hä?");
-				}
-				break;
-
-			case "handtuch":
-				if (inventory.isInInventory(Textie.itemMap.get("HANDTUCH"))) {
-					System.out
-							.println("Du betrachtest das Handtuch. Es sieht sehr flauschig aus.");
-				} else if (this.find(Textie.itemMap.get("HANDTUCH")) != -128) {
-					System.out.println("Da liegt ein Handtuch.");
-				} else {
-					System.out.println("Hä?");
-				}
-				break;
-
-			case "truhe":
-				if (this.find(Textie.itemMap.get("TRUHE")) != -128) {
-					System.out
-							.println("Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.");
-				} else {
-					System.out.println("Hä?");
-				}
-				break;
-
-			case "schalter":
-				if (this.find(Textie.itemMap.get("SCHALTER")) != -128) {
-					System.out
-							.println("Da ist ein kleiner Schalter an der Wand.");
-				} else {
-					System.out.println("Hä?");
-				}
-				break;
-
-			case "schwert":
-				if (inventory.isInInventory(Textie.itemMap.get("SCHWERT"))) {
-					System.out
-							.println("Du betrachtest das Schwert. Es sieht sehr scharf aus.");
-				} else if (this.find(Textie.itemMap.get("SCHWERT")) != -128) {
-					System.out.println("Da liegt ein Schwert.");
-				} else {
-					System.out.println("Hä?");
-				}
-				break;
-
-			case "feuerzeug":
-				if (inventory.isInInventory(Textie.itemMap.get("FEUERZEUG"))) {
-					System.out
-							.println("Du betrachtest das Feuerzeug. Es wirkt zuverlässig.");
-				} else if (this.find(Textie.itemMap.get("FEUERZEUG")) != -128) {
-					System.out.println("Da liegt ein Feuerzeug.");
-				} else {
-					System.out.println("Hä?");
-				}
-				break;
-
-			case "schlüssel":
-				if (inventory.isInInventory(Textie.itemMap.get("SCHLÜSSEL"))) {
-					System.out
-							.println("Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?");
-				} else if (this.find(Textie.itemMap.get("SCHLÜSSEL")) != -128) {
-					System.out.println("Da liegt ein Schlüssel.");
-				} else {
-					System.out.println("Hä?");
-				}
-				break;
-
-			case "stein":
-				if (inventory.isInInventory(Textie.itemMap.get("STEIN"))) {
-					System.out
-							.println("Du betrachtest den Stein. Er ist kalt.");
-				} else if (this.find(Textie.itemMap.get("STEIN")) != -128) {
-					System.out.println("Da liegt ein Stein.");
-				} else {
-					System.out.println("Hä?");
-				}
-				break;
-			case "quietscheente":
-				if (inventory
-						.isInInventory(Textie.itemMap.get("QUIETSCHEENTE"))) {
-					System.out.println("Die Ente schaut dich vorwurfsvoll an.");
-					break;
-				} else if (find(Textie.itemMap.get("QUIETSCHEENTE")) != -128) {
-					System.out.println("Da liegt eine Quietscheente.");
-					break;
-				} else {
-					System.out.println("Da liegt keine Quietscheente.");
-					break;
-				}
-
-			case "brecheisen":
-				if (inventory.isInInventory(Textie.itemMap.get("BRECHEISEN"))) {
-					System.out
-							.println("Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.");
-
-					break;
-				} else {
-					System.out.println("Du hast kein Brecheisen.");
-					break;
-				}
-
-			case "whiteboard":
-				System.out
-						.println("Es steht \'FLIEH!\' mit Blut geschrieben darauf.");
-				break;
-
-			case "falltür":
-				System.out.println("Da ist eine Falltür");
-				break;
-
+			
 			}
 		} else {
 			System.out.println("Was soll untersucht werden?");
