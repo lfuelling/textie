@@ -28,15 +28,21 @@ public abstract class Raum {
 		 * list.remove("TV");
 		 */
 
+//		System.out.println("Im Raum befindet sich:");
+//		for (int i = 0; i < items.size(); i++) {
+//			if (items == null) {
+//				System.out.println("\tKein Objekt");
+//			} else {
+//				String objectName = items.get(i).getName();
+//				System.out.println("\t" + objectName);
+//			}
+//		}
 		System.out.println("Im Raum befindet sich:");
-		for (int i = 0; i < items.size(); i++) {
-			if (items == null) {
-				System.out.println("\tKein Objekt");
-			} else {
-				String objectName = items.get(i).getName();
-				System.out.println("\t" + objectName);
-			}
+		// TODO Kontext zum Raum herstellen...
+		for (Item value : Textie.itemMap.values()) {
+		    System.out.println(value.getName());
 		}
+		
 	}
 
 	/**
@@ -132,10 +138,10 @@ public abstract class Raum {
 	private void doUntersuche(String[] parsed_command, int count) {
 		if (count == 2) {
 			switch (parsed_command[1]) {
-			case "raum":
+			case "RAUM":
 				this.listItems();
 				break;
-			case "inventar":
+			case "INVENTAR":
 				inventory.listItems();
 				break;
 			default:
