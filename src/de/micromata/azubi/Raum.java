@@ -141,7 +141,21 @@ public abstract class Raum {
 		if (count == 2) {
 			switch (parsed_command[1].toLowerCase()) {
 			case "raum":
-				this.listItems();
+				if(Textie.currentRaum.equals(Textie.raum3)){
+					Item item = Textie.itemMap.get("FACKEL");
+					if(item instanceof ToggleItem){
+						ToggleItem fackel = (ToggleItem) item;
+						if(fackel.getState() == true){
+							this.listItems();
+						}
+						else {
+							System.out.println("Du kannst nichts sehen!");
+						}	
+					}
+				}
+				else {
+					this.listItems();
+				}
 				break;
 			case "inventar":
 				inventory.listItems();
