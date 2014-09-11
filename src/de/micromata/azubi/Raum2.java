@@ -3,8 +3,8 @@ package de.micromata.azubi;
 public class Raum2 extends Raum {
 	boolean west = false;
 
-	public Raum2(Inventory inventory, Item... items) {
-		super(inventory, items);
+	public Raum2(Inventory inventory, int number, Item... items) {
+		super(inventory, number, items);
 	}
 
 	public void start() {

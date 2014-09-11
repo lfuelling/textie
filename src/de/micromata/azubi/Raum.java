@@ -10,9 +10,11 @@ public abstract class Raum {
 	protected Inventory inventory;
 	protected boolean fackelUsed = false;
 	protected boolean falltuerUsed = false;
+	protected int roomNumber;
 
-	public Raum(Inventory inventory, Item... items1) {
+	public Raum(Inventory inventory, int number, Item... items1) {
 		this.inventory = inventory;
+		roomNumber = number;
 
 		for (Item item : items1) {
 			this.items.add(item);
@@ -123,6 +125,10 @@ public abstract class Raum {
 		} else {
 			System.out.println("Was soll vernichtet werden?");
 		}
+	}
+	
+	public int getNumber(){
+		return roomNumber;
 	}
 
 	private void doUntersuche(String[] parsed_command, int count) {

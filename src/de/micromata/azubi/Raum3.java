@@ -1,8 +1,8 @@
 package de.micromata.azubi;
 
 public class Raum3 extends Raum {
-	public Raum3(Inventory inventory, Item... items) {
-		super(inventory, items);
+	public Raum3(Inventory inventory, int number, Item... items) {
+		super(inventory, number, items);
 	}
 
 	public void start() {
