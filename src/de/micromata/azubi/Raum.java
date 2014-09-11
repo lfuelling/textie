@@ -190,7 +190,11 @@ public abstract class Raum {
 				break;
 			} else {
 				System.out.println("Du zündest deine Fackel mit dem Feuerzeug an.");
-				fackelUsed = true;
+				Item item2 = Textie.itemMap.get("FACKEL");
+				if(item2 instanceof ToggleItem){
+					ToggleItem fackel = (ToggleItem) item2;
+					fackel.setState(true);
+				}
 				break;
 			}
 		case "Handtuch":
