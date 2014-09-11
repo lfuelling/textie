@@ -32,20 +32,22 @@ public class Textie {
 	static Map<String, Item> itemMap = new HashMap<String, Item>();
 	static Inventory inventory = new Inventory(ALIVE);
 
-	// Item _fackel = itemMap.get("fackel");
-
-	static Raum raum1 = new Raum1(inventory, itemMap.get("FACKEL"),
-			itemMap.get("HANDTUCH"), itemMap.get("TRUHE"),
-			itemMap.get("SCHALTER"));
-	static Raum raum2 = new Raum2(inventory, itemMap.get("SCHWERT"),
-			itemMap.get("FEUERZEUG"), itemMap.get("SCHLÜSSEL"),
-			itemMap.get("STEIN"));
-	static Raum raum3 = new Raum3(inventory, itemMap.get("QUIETSCHEENTE"),
-			itemMap.get("WHITEBOARD"), itemMap.get("BRECHEISEN"),
-			itemMap.get("FALLTÜR"), itemMap.get("KARTE"));
+	
 
 	public static void main(String[] args) {
 		Textie.initItems();
+		Textie.initRooms();
+
+		int anzahlItems;
+		anzahlItems = itemMap.size();
+		System.out.println("Anzahl der Keys: " + anzahlItems);
+		
+		System.out.println(itemMap.get("FACKEL").getName());
+		System.out.println(itemMap.get("SCHALTER").getName());
+		System.out.println(itemMap.get("TRUHE").getName());
+		System.out.println(itemMap.get("HANDTUCH").getName());
+
+		
 		Textie.showIntro();
 		Textie.runGame();
 	}
@@ -148,5 +150,16 @@ public class Textie {
 				"Du betrachtest die Fackel. Wie kann man die wohl anzünden?",
 				"Du zündest deine Fackel mit dem Feuerzeug an."));
 	}
+	public static  void initRooms(){
+		 Raum raum1 = new Raum1(inventory, itemMap.get("FACKEL"),
+				itemMap.get("HANDTUCH"), itemMap.get("TRUHE"),
+				itemMap.get("SCHALTER"));
+		 Raum raum2 = new Raum2(inventory, itemMap.get("SCHWERT"),
+				itemMap.get("FEUERZEUG"), itemMap.get("SCHLÜSSEL"),
+				itemMap.get("STEIN"));
+		 Raum raum3 = new Raum3(inventory, itemMap.get("QUIETSCHEENTE"),
+				itemMap.get("WHITEBOARD"), itemMap.get("BRECHEISEN"),
+				itemMap.get("FALLTÜR"), itemMap.get("KARTE"));
+		}
 
 }

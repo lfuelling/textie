@@ -16,7 +16,6 @@ public class Item {
 	public static final int FALLTUER = 12;
 	public static final int KARTE = 13;
 
-	private int objectID = 0;
 	private String untersucheText = "";
 	private String benutzeText;
 	private String name;
@@ -24,6 +23,8 @@ public class Item {
 
 	public Item(String name, String untersucheText, String benutzeText) {
 		this.name = name;
+		this.untersucheText = untersucheText;
+		this.benutzeText = benutzeText;
 	}
 
 	public String getName() {
@@ -32,9 +33,6 @@ public class Item {
 		// return getObjectName(objectID);
 	}
 
-	public int getID() {
-		return this.objectID;
-	}
 
 	public static String getObjectName(int id) {
 		switch (id) {

@@ -13,14 +13,20 @@ public abstract class Raum {
 
 	public Raum(Inventory inventory, Item... items1) {
 		this.inventory = inventory;
-
+		
+		int i = 0;
+		
 		for (Item item : items1) {
-			items.add(item);
+			this.items.add(item);
+		//	System.out.println(i + ". Objekt: " + items.get(i).getName());
+			i++;
 		}
+		System.out.println("Größe der Liste: " + items.size());
 	}
 
-	public void listItems() {
+	public void listItems() { //TODO
 
+		System.out.println("1. Item in List: " + this.items.get(1).getName());
 		/*
 		 * List list = new ArrayList();
 		 * 
@@ -29,12 +35,12 @@ public abstract class Raum {
 		 */
 
 		System.out.println("Im Raum befindet sich:");
-		for (int i = 0; i < items.size(); i++) {
-			if (items == null) {
+		for (Item item : items) {
+			if (item == null) {
 				System.out.println("\tKein Objekt");
 			} else {
-				String objectName = items.get(i).getName();
-				System.out.println("\t" + objectName);
+				//String objectName = items.get(i).getName();
+				System.out.println("\t" + item.getName());
 			}
 		}
 	}
@@ -60,9 +66,6 @@ public abstract class Raum {
 				if (parsed_command[x] != null) {
 					count++;
 				}
-			}
-			if (count == 2) {
-				parsed_command[1] = parsed_command[1].toUpperCase();
 			}
 			switch (parsed_command[0]) {
 			case "hilfe":
