@@ -17,7 +17,6 @@ public abstract class Raum {
 		for (Item item : items1) {
 			this.items.add(item);
 		}
-		System.out.println("Größe der Liste: " + items.size());
 	}
 
 	public void listItems() { // TODO
@@ -50,6 +49,13 @@ public abstract class Raum {
 		i = items.indexOf(item);
 		return i;
 	}
+	
+	public  boolean hasItem(Item item){
+		if(items.contains(item)){
+			return true;
+		}
+		return false;
+	}
 
 	protected void prompt() {
 		do {
@@ -67,7 +73,7 @@ public abstract class Raum {
 				printHelp();
 				break;
 			case "nimm":
-				doNimm(parsed_command, Textie.itemMap.get(parsed_command[1]));
+				doNimm(parsed_command, Textie.itemMap.get(parsed_command[1].toUpperCase()));
 				break;
 			case "benutze":
 				doBenutze(parsed_command);
@@ -127,17 +133,17 @@ public abstract class Raum {
 
 	private void doUntersuche(String[] parsed_command, int count) {
 		if (count == 2) {
-			switch (parsed_command[1]) {
-			case "RAUM":
+			switch (parsed_command[1].toLowerCase()) {
+			case "raum":
 				this.listItems();
 				break;
-			case "INVENTAR":
+			case "inventar":
 				inventory.listItems();
 				break;
 			default:
-				Item itemUSU = Textie.itemMap.get(parsed_command[1]);
+				Item itemUSU = Textie.itemMap.get(parsed_command[1].toUpperCase());
 				if (itemUSU == null) {
-					System.out.println("Das Objekt gibte es nicht.");
+					System.out.println("Das Objekt gibt es nicht.");
 				} else {
 					itemUSU.untersuchen();
 				}
@@ -222,7 +228,7 @@ public abstract class Raum {
 
 	private void doNimm(String[] parsed_command, Item item) {
 		if (inventory.addItem(item)) {
-			System.out.println(parsed_command[1] + " zum Inventar hinzugefügt.");
+			System.out.println(item.getName() + " zum Inventar hinzugefügt.");
 		} else {
 			System.out.println("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
 		}
@@ -274,4 +280,5 @@ public abstract class Raum {
 	 * public void removeItem(int objectID) { if (this.find(objectID) != -128) {
 	 * int i = this.find(objectID); items.remove(i); } }
 	 */
+	
 }

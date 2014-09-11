@@ -19,21 +19,12 @@ public class Textie {
 	public static final int DEAD = 1;
 	public static final boolean ALIVE = true;
 
-	/*
-	 * // Gegenstände public static final int FACKEL = 1; public static final
-	 * int HANDTUCH = 2; public static final int QUIETSCHEENTE = 3; public
-	 * static final int BRECHEISEN = 4; public static final int SCHWERT = 5;
-	 * public static final int FEUERZEUG = 6; public static final int SCHLUESSEL
-	 * = 7; public static final int STEIN = 8; public static final int TRUHE =
-	 * 9; public static final int SCHALTER = 10; public static final int
-	 * WHITEBOARD = 11; public static final int FALLTUER = 12; public static
-	 * final int KARTE = 13;
-	 */
 	static Map<String, Item> itemMap = new HashMap<String, Item>();
 	static Inventory inventory = new Inventory(ALIVE);
 	static Raum raum1;
 	static Raum raum2;
 	static Raum raum3;
+	static Raum currentRaum;
 
 	public static void main(String[] args) {
 		Textie.initItems();
@@ -43,10 +34,13 @@ public class Textie {
 	}
 
 	public static void runGame() {
+		currentRaum = raum1;
 		raum1.start();
 		if (inventory.isAlive()) {
+			currentRaum = raum2;
 			raum2.start();
 			if (inventory.isAlive()) {
+				currentRaum = raum3;
 				raum3.start();
 				if (inventory.isAlive()) {
 					Textie.runGame();
