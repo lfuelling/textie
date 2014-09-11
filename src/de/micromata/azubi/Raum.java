@@ -245,6 +245,11 @@ public abstract class Raum {
 			if (find(Textie.itemMap.get("SCHALTER")) != -128) {
 				System.out.println("Du hörst ein Rumpeln, als du den Schalter drückst. Es geschieht nichts weiter.");
 			}
+			break;
+		case "Karte":
+			if (find(Textie.itemMap.get("SCHALTER")) != -128) {
+				System.out.println("Du bist in Raum " + Textie.currentRaum.getNumber());
+			}
 		default:
 			System.out.println("Welches Objekt möchtest du benutzen?");
 			break;
