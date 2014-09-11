@@ -84,7 +84,7 @@ public class Textie {
 	}
 
 	private static void initItems() {
-		itemMap.put("KARTE", new Item("Karte", "Die Karte zeigt an, in welchem Raum man sich befindet.", "Du bist in Raum"));
+		itemMap.put("KARTE", new Item("Karte", "Die Karte zeigt an, in welchem Raum man sich befindet.", "Du bist in Raum" + currentRaum));
 		itemMap.put("FALLTÜR", new Item("Falltür", "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum."));
 		itemMap.put("WHITEBOARD", new Item("Whiteboard", "Es steht \'FLIEH!\' mit Blut geschrieben darauf.", "Das fasse ich bestimmt nicht an!"));
 		itemMap.put("SCHALTER", new Item("Schalter", "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst. Es geschieht nichts weiter."));
