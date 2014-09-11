@@ -13,7 +13,7 @@ public class Raum3 extends Raum {
 			fackel.setState(false);
 		}
 		System.out.println("Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.");
-		prompt();
+		Textie.prompt();
 	}
 
 	@Override

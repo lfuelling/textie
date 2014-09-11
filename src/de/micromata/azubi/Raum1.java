@@ -11,7 +11,7 @@ public class Raum1 extends Raum {
 		south = false;
 		System.out
 				.println("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
-		prompt();
+		Textie.prompt();
 	}
 
 	@Override

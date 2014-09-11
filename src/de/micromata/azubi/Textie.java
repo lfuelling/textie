@@ -54,6 +54,58 @@ public class Textie {
 			System.out.println("Du bist gestorben.");
 		}
 	}
+	
+	
+	
+	
+	public static void prompt() {
+		do {
+			currentRaum.falltuerUsed = false;
+			String command = IOUtils.readLine("Was willst du tun? ");
+			String[] parsed_command = Textie.parseInput(command);
+			int count = 0;
+			for (int x = 0; x < parsed_command.length; x++) {
+				if (parsed_command[x] != null) {
+					count++;
+				}
+			}
+			Item itemToUse = Textie.itemMap.get(parsed_command[1].toUpperCase());
+			switch (parsed_command[0]) {
+			case "hilfe":
+				currentRaum.printHelp();
+				break;
+			case "nimm":
+				currentRaum.doNimm(itemToUse);
+				break;
+			case "benutze":
+				currentRaum.doBenutze(itemToUse);
+				break;
+			case "untersuche":
+				currentRaum.doUntersuche(parsed_command, count);
+				break;
+			case "vernichte":
+				currentRaum.doVernichte(itemToUse, count);
+				break;
+
+			case "gehe":
+				currentRaum.doGehen(parsed_command, count);
+				break;
+
+			default:
+				System.out.println("Unbekannter Befehl: " + parsed_command[1]);
+				break;
+			}
+		} while (currentRaum.isFinished() == false);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public static void ende() {
 		System.out.println("Herzlichen Glückwunsch " + playerName + "!");

@@ -12,7 +12,7 @@ public class Raum2 extends Raum {
 		west = false;
 
 		System.out.println("Du kommst in einen weiteren dunklen Raum.");
-		this.prompt();
+		Textie.prompt();
 	}
 
 	@Override

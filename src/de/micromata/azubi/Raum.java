@@ -59,47 +59,9 @@ public abstract class Raum {
 		return false;
 	}
 
-	protected void prompt() {
-		do {
-			falltuerUsed = false;
-			String command = IOUtils.readLine("Was willst du tun? ");
-			String[] parsed_command = Textie.parseInput(command);
-			int count = 0;
-			for (int x = 0; x < parsed_command.length; x++) {
-				if (parsed_command[x] != null) {
-					count++;
-				}
-			}
-			Item itemToUse = Textie.itemMap.get(parsed_command[1].toUpperCase());
-			switch (parsed_command[0]) {
-			case "hilfe":
-				printHelp();
-				break;
-			case "nimm":
-				doNimm(itemToUse);
-				break;
-			case "benutze":
-				doBenutze(itemToUse);
-				break;
-			case "untersuche":
-				doUntersuche(parsed_command, count);
-				break;
-			case "vernichte":
-				doVernichte(itemToUse, count);
-				break;
 
-			case "gehe":
-				doGehen(parsed_command, count);
-				break;
 
-			default:
-				System.out.println("Unbekannter Befehl: " + parsed_command[1]);
-				break;
-			}
-		} while (isFinished() == false);
-	}
-
-	private void doGehen(String[] parsed_command, int count) {
+	void doGehen(String[] parsed_command, int count) {
 		if (count == 2) {
 			switch (parsed_command[1]) {
 			case "nord":
@@ -120,7 +82,7 @@ public abstract class Raum {
 		}
 	}
 
-	private void doVernichte(Item item, int count) {
+	void doVernichte(Item item, int count) {
 		if (count == 2) {
 			if (inventory.removeItem(item)) {
 				System.out.println(item.getName() + " vernichtet.");
@@ -138,7 +100,7 @@ public abstract class Raum {
 		return roomNumber;
 	}
 
-	private void doUntersuche(String[] parsed_command, int count) {
+	void doUntersuche(String[] parsed_command, int count) {
 		if (count == 2) {
 			switch (parsed_command[1].toLowerCase()) {
 			case "raum":
@@ -175,7 +137,7 @@ public abstract class Raum {
 		}
 	}
 
-	private void doBenutze(Item item) {
+	void doBenutze(Item item) {
 		String itemName = item.getName();
 		switch (itemName) {
 		case "Fackel":// Textie.itemMap.get("FACKEL").getName():
@@ -256,7 +218,7 @@ public abstract class Raum {
 		}
 	}
 
-	private void doNimm(Item item) {
+	void doNimm(Item item) {
 		if (inventory.addItem(item)) {
 			
 			System.out.println(item.getName() + " zum Inventar hinzugefügt.");
@@ -265,7 +227,7 @@ public abstract class Raum {
 		}
 	}
 
-	private void printHelp() {
+	void printHelp() {
 		System.out.println("Mögliche Befehle:");
 		System.out.println("\thilfe -> Zeigt diese Hilfe");
 		System.out.println("\tnimm [gegenstand] -> Gegenstand zum Inventar hinzufügen");
