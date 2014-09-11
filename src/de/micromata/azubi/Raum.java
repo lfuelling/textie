@@ -21,7 +21,6 @@ public abstract class Raum {
 	}
 
 	public void listItems() { // TODO
-
 		// System.out.println("1. Item in List: " +
 		// this.items.get(1).getName());
 		System.out.println("Im Raum befindet sich:");
@@ -36,9 +35,9 @@ public abstract class Raum {
 				 * Textie.itemMap.values()) {
 				 * System.out.println(value.getName()); }
 				 */
-
 			}
 		}
+
 	}
 
 	/**
@@ -77,8 +76,7 @@ public abstract class Raum {
 				doUntersuche(parsed_command, count);
 				break;
 			case "vernichte":
-				doVernichte(parsed_command,
-						Textie.itemMap.get(parsed_command[1]), count);
+				doVernichte(parsed_command, Textie.itemMap.get(parsed_command[1]), count);
 				break;
 
 			case "gehe":
@@ -119,8 +117,7 @@ public abstract class Raum {
 				System.out.println(parsed_command[1] + " vernichtet.");
 				return;
 			} else {
-				System.out
-						.println("Entweder das Objekt gibt es nicht, oder es ist nicht im Inventar.");
+				System.out.println("Entweder das Objekt gibt es nicht, oder es ist nicht im Inventar.");
 				return;
 			}
 		} else {
@@ -138,7 +135,12 @@ public abstract class Raum {
 				inventory.listItems();
 				break;
 			default:
-				Textie.itemMap.get(parsed_command[1]).untersuchen();
+				Item itemUSU = Textie.itemMap.get(parsed_command[1]);
+				if (itemUSU == null) {
+					System.out.println("Das Objekt gibte es nicht.");
+				} else {
+					itemUSU.untersuchen();
+				}
 
 			}
 		} else {
@@ -152,8 +154,7 @@ public abstract class Raum {
 		case "Fackel":// Textie.itemMap.get("FACKEL").getName():
 		case "Feuerzeug": // Textie.itemMap.get("FEUERZEUG").getName():
 			int fackelSlot = inventory.findItem(Textie.itemMap.get("FACKEL"));
-			int feuerZeugSlot = inventory.findItem(Textie.itemMap
-					.get("FEUERZEUG"));
+			int feuerZeugSlot = inventory.findItem(Textie.itemMap.get("FEUERZEUG"));
 			if (feuerZeugSlot < 0) {
 				System.out.println("Du hast kein Feuerzeug.");
 				break;
@@ -161,32 +162,27 @@ public abstract class Raum {
 				System.out.println("Du hast keine Fackel.");
 				break;
 			} else {
-				System.out
-						.println("Du zündest deine Fackel mit dem Feuerzeug an.");
+				System.out.println("Du zündest deine Fackel mit dem Feuerzeug an.");
 				fackelUsed = true;
 				break;
 			}
 		case "Handtuch":
-			System.out
-					.println("Du wischst dir den Angstschweiß von der Stirn.");
+			System.out.println("Du wischst dir den Angstschweiß von der Stirn.");
 			break;
 		case "Schwert":
-			System.out
-					.println("Du stichst dir das Schwert zwischen die Rippen und stirbst.");
+			System.out.println("Du stichst dir das Schwert zwischen die Rippen und stirbst.");
 			inventory.setAlive(false);
 			Textie.ende();
 			System.exit(0);
 		case "Schlüssel":
-			System.out
-					.println("Hier gibt es nichts um den Schlüssel zu benutzen.");
+			System.out.println("Hier gibt es nichts um den Schlüssel zu benutzen.");
 			break;
 		case "Stein":
 			System.out.println("Hier gibt es nichts um den Stein zu benutzen.");
 			break;
 		case "Quietscheente":
 			if (inventory.findItem(Textie.itemMap.get("QUIETSCHEENTE")) != -128) {
-				System.out
-						.println("Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst.");
+				System.out.println("Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst.");
 				break;
 			} else {
 				System.out.println("Du hast keine Quietscheente.");
@@ -195,8 +191,7 @@ public abstract class Raum {
 
 		case "Brecheisen":
 			if (inventory.findItem(Textie.itemMap.get("BRECHEISEN")) != -128) {
-				System.out
-						.println("Du kratzt dich mit dem Brecheisen am Kopf.");
+				System.out.println("Du kratzt dich mit dem Brecheisen am Kopf.");
 				break;
 			} else {
 				System.out.println("Du hast kein Brecheisen.");
@@ -209,18 +204,15 @@ public abstract class Raum {
 
 		case "Falltür":
 			if (find(Textie.itemMap.get("FALLTUER")) != -128 && hasEverything()) {
-				System.out
-						.println("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
+				System.out.println("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
 				falltuerUsed = true;
 			} else if (find(Textie.itemMap.get("FALLTUER")) != -128) {
-				System.out
-						.println("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
+				System.out.println("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
 			}
 			break;
 		case "Schalter":
 			if (find(Textie.itemMap.get("SCHALTER")) != -128) {
-				System.out
-						.println("Du hörst ein Rumpeln, als du den Schalter drückst. Es geschieht nichts weiter.");
+				System.out.println("Du hörst ein Rumpeln, als du den Schalter drückst. Es geschieht nichts weiter.");
 			}
 		default:
 			System.out.println("Welches Objekt möchtest du benutzen?");
@@ -230,26 +222,20 @@ public abstract class Raum {
 
 	private void doNimm(String[] parsed_command, Item item) {
 		if (inventory.addItem(item)) {
-			System.out
-					.println(parsed_command[1] + " zum Inventar hinzugefügt.");
+			System.out.println(parsed_command[1] + " zum Inventar hinzugefügt.");
 		} else {
-			System.out
-					.println("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
+			System.out.println("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
 		}
 	}
 
 	private void printHelp() {
 		System.out.println("Mögliche Befehle:");
 		System.out.println("\thilfe -> Zeigt diese Hilfe");
-		System.out
-				.println("\tnimm [gegenstand] -> Gegenstand zum Inventar hinzufügen");
+		System.out.println("\tnimm [gegenstand] -> Gegenstand zum Inventar hinzufügen");
 		System.out.println("\tbenutze [gegenstand] -> Gegenstand benutzen");
-		System.out
-				.println("\tuntersuche [gegenstand/raum/inventar] -> Gegenstand, Raum oder Inventar untersuchen");
-		System.out
-				.println("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen");
-		System.out
-				.println("\tgehe [nord/süd/ost/west] -> In eine Richtung gehen");
+		System.out.println("\tuntersuche [gegenstand/raum/inventar] -> Gegenstand, Raum oder Inventar untersuchen");
+		System.out.println("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen");
+		System.out.println("\tgehe [nord/süd/ost/west] -> In eine Richtung gehen");
 	}
 
 	private void goWall() {
@@ -261,8 +247,7 @@ public abstract class Raum {
 	public abstract boolean isFinished();
 
 	public boolean hasEverything() {
-		if (inventory.isInInventory(Textie.itemMap.get("Brecheisen"))
-				&& inventory.isInInventory(Textie.itemMap.get("Schlüssel"))) {
+		if (inventory.isInInventory(Textie.itemMap.get("Brecheisen")) && inventory.isInInventory(Textie.itemMap.get("Schlüssel"))) {
 			return true;
 		} else {
 			return false;
