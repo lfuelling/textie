@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Inventory {
 
+	
 	private static final int MAX_SLOTS_INVENTORY = 5;
 	private boolean alive;
 	// private int[] inventory;
@@ -22,6 +23,7 @@ public class Inventory {
 	public boolean addItem(Item item) {
 		if (inventory.size() < MAX_SLOTS_INVENTORY && Textie.currentRaum.hasItem(item)) {
 			inventory.add(item);
+			Textie.currentRaum.removeItem(item);
 			return true;
 		} else {
 			return false;
@@ -39,8 +41,7 @@ public class Inventory {
 	 */
 
 	public boolean removeItem(Item item) {
-		if (inventory.remove(item))
-			return true;
+		if (inventory.remove(item) && Textie.currentRaum.addItem(item)) return true;
 		return false;
 	}
 

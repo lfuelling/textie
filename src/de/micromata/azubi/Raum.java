@@ -70,21 +70,22 @@ public abstract class Raum {
 					count++;
 				}
 			}
+			Item itemToUse = Textie.itemMap.get(parsed_command[1].toUpperCase());
 			switch (parsed_command[0]) {
 			case "hilfe":
 				printHelp();
 				break;
 			case "nimm":
-				doNimm(parsed_command, Textie.itemMap.get(parsed_command[1].toUpperCase()));
+				doNimm(itemToUse);
 				break;
 			case "benutze":
-				doBenutze(parsed_command);
+				doBenutze(itemToUse);
 				break;
 			case "untersuche":
 				doUntersuche(parsed_command, count);
 				break;
 			case "vernichte":
-				doVernichte(parsed_command, Textie.itemMap.get(parsed_command[1]), count);
+				doVernichte(itemToUse, count);
 				break;
 
 			case "gehe":
@@ -119,10 +120,10 @@ public abstract class Raum {
 		}
 	}
 
-	private void doVernichte(String[] parsed_command, Item item, int count) {
+	private void doVernichte(Item item, int count) {
 		if (count == 2) {
 			if (inventory.removeItem(item)) {
-				System.out.println(parsed_command[1] + " vernichtet.");
+				System.out.println(item.getName() + " vernichtet.");
 				return;
 			} else {
 				System.out.println("Entweder das Objekt gibt es nicht, oder es ist nicht im Inventar.");
@@ -160,8 +161,8 @@ public abstract class Raum {
 		}
 	}
 
-	private void doBenutze(String[] parsed_command) {
-		String itemName = Textie.itemMap.get(parsed_command[1]).getName();
+	private void doBenutze(Item item) {
+		String itemName = item.getName();
 		switch (itemName) {
 		case "Fackel":// Textie.itemMap.get("FACKEL").getName():
 		case "Feuerzeug": // Textie.itemMap.get("FEUERZEUG").getName():
@@ -232,8 +233,9 @@ public abstract class Raum {
 		}
 	}
 
-	private void doNimm(String[] parsed_command, Item item) {
+	private void doNimm(Item item) {
 		if (inventory.addItem(item)) {
+			
 			System.out.println(item.getName() + " zum Inventar hinzugefügt.");
 		} else {
 			System.out.println("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
@@ -282,9 +284,18 @@ public abstract class Raum {
 		goWall();
 
 	}
-	/*
-	 * public void removeItem(int objectID) { if (this.find(objectID) != -128) {
-	 * int i = this.find(objectID); items.remove(i); } }
-	 */
+	
+	public boolean addItem(Item item){
+		if(items.add(item)){
+			return true;
+		}
+		
+		return false;
+	}
+
+	public boolean removeItem(Item item) {
+		if(items.remove(item)) return true;
+		return false;
+	}
 	
 }
