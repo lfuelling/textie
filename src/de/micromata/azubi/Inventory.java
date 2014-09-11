@@ -20,8 +20,8 @@ public class Inventory {
 	}
 
 	public boolean addItem(Item item) {
-		if (inventory.size() < MAX_SLOTS_INVENTORY) {
-			inventory.add(item); // TODO Fertig machen
+		if (inventory.size() < MAX_SLOTS_INVENTORY && Textie.currentRaum.hasItem(item)) {
+			inventory.add(item);
 			return true;
 		} else {
 			return false;
@@ -45,10 +45,15 @@ public class Inventory {
 	}
 
 	public void listItems() {
+		if(inventory.size() > 0){
 		System.out.println("In deiner Tasche befindet sich:");
 		for (Item items : inventory) {
 			String objectName = items.getName();
 			System.out.println("\t" + objectName);
+		}
+		}
+		else{
+			System.out.println("Deine Tasche ist leer.");
 		}
 	}
 
