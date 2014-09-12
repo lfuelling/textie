@@ -165,7 +165,8 @@ public abstract class Raum {
 		String itemName = item.getName();
 		switch (itemName) {
 		// Fackel und Feuerzeug sind besonders, da sie auch funktionen aufrufen
-		// und nicht nur einen Text ausgeben.
+		// und nicht nur einen Text ausgeben. Außerdem sollen diese Items
+		// benutzbar sein, selbst wenn der Raum dunkel ist.
 		case "Fackel":// Textie.itemMap.get("FACKEL").getName():
 		case "Feuerzeug": // Textie.itemMap.get("FEUERZEUG").getName():
 			int fackelSlot = inventory.findItem(Textie.itemMap.get("FACKEL"));
@@ -186,11 +187,28 @@ public abstract class Raum {
 				break;
 			}
 		default:
-			Item itemToUse = Textie.itemMap.get(itemName.toUpperCase());
-			if (itemToUse == null) {
-				System.out.println("Das Objekt gibt es nicht.");
+			if (Textie.currentRaum.equals(Textie.raum3)) {
+				Item item5 = Textie.itemMap.get("FACKEL");
+				if (item5 instanceof ToggleItem) {
+					ToggleItem fackel = (ToggleItem) item5;
+					if (fackel.getState() == true) {
+						Item itemToUse = Textie.itemMap.get(itemName.toUpperCase());
+						if (itemToUse == null) {
+							System.out.println("Das Objekt gibt es nicht.");
+						} else {
+							itemToUse.benutzen();
+						}
+					} else {
+						System.out.println("Du kannst nichts sehen!");
+					}
+				}
 			} else {
-				itemToUse.benutzen();
+				Item itemToUse = Textie.itemMap.get(itemName.toUpperCase());
+				if (itemToUse == null) {
+					System.out.println("Das Objekt gibt es nicht.");
+				} else {
+					itemToUse.benutzen();
+				}
 			}
 		}
 	}
