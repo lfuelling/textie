@@ -1,6 +1,8 @@
 package de.micromata.azubi;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /*
@@ -21,11 +23,10 @@ public class Textie {
 
 	static Map<String, Item> itemMap = new HashMap<String, Item>();
 	static Inventory inventory = new Inventory(ALIVE);
-	static Raum raum1;
-	static Raum raum2;
-	static Raum raum3;
+	static List<Raum> raumList = new LinkedList<Raum>();
 	static Raum currentRaum;
-
+	static int raumNummer;
+	
 	public static void main(String[] args) {
 		Textie.initItems();
 		Textie.initRooms();
@@ -34,14 +35,12 @@ public class Textie {
 	}
 
 	public static void runGame() {
-		currentRaum = raum1;
-		raum1.start();
+		raumList.get(raumNummer);
 		if (inventory.isAlive()) {
-			currentRaum = raum2;
-			raum2.start();
+			raumList.get(raumNummer).start();
 			if (inventory.isAlive()) {
-				currentRaum = raum3;
-				raum3.start();
+				raumNummer = raumNummer+1;
+				raumList.get(raumNummer).start();
 				if (inventory.isAlive()) {
 					Textie.runGame();
 				} else if (inventory.isAlive() == false) {
@@ -147,9 +146,11 @@ public class Textie {
 	}
 
 	public static void initRooms() {
-		raum1 = new Raum1(inventory, 1, itemMap.get("FACKEL"), itemMap.get("HANDTUCH"), itemMap.get("TRUHE"), itemMap.get("SCHALTER"));
-		raum2 = new Raum2(inventory, 2, itemMap.get("SCHWERT"), itemMap.get("FEUERZEUG"), itemMap.get("SCHLÜSSEL"), itemMap.get("STEIN"));
-		raum3 = new Raum3(inventory, 3, itemMap.get("QUIETSCHEENTE"), itemMap.get("WHITEBOARD"), itemMap.get("BRECHEISEN"), itemMap.get("FALLTÜR"), itemMap.get("KARTE"));
+		raumList.add(new Raum1(inventory, 1, itemMap.get("FACKEL"), itemMap.get("HANDTUCH"), itemMap.get("TRUHE"), itemMap.get("SCHALTER")));
+		raumList.add(new Raum2(inventory, 2, itemMap.get("SCHWERT"), itemMap.get("FEUERZEUG"), itemMap.get("SCHLÜSSEL"), itemMap.get("STEIN")));
+		raumList.add(new Raum3(inventory, 3, itemMap.get("QUIETSCHEENTE"), itemMap.get("WHITEBOARD"), itemMap.get("BRECHEISEN"), itemMap.get("FALLTÜR"), itemMap.get("KARTE")));
+		int raumNummer = 0;
+		currentRaum = raumList.get(raumNummer);
 	}
 
 }
