@@ -9,16 +9,14 @@ public class Raum1 extends Raum {
 
 	public void start() {
 		south = false;
-		System.out
-				.println("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
+		System.out.println("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
 		Textie.prompt();
 	}
 
 	@Override
 	public boolean isFinished() {
 		if (south) {
-			System.out
-					.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
+			System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
 			return true;
 		}
 
@@ -31,8 +29,7 @@ public class Raum1 extends Raum {
 		if (inventory.isInInventory(Textie.itemMap.get("FACKEL"))) {
 			south = true;
 		} else {
-			System.out
-					.println("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");
+			System.out.println("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");
 		}
 
 	}

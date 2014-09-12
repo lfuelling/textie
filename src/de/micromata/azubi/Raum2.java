@@ -17,10 +17,10 @@ public class Raum2 extends Raum {
 
 	@Override
 	public boolean isFinished() {
-		//West wird in goWest gesetzt und ist wahr, wenn Feuerzeug und Schlüssel im Inventar sind
+		// West wird in goWest gesetzt und ist wahr, wenn Feuerzeug und
+		// Schlüssel im Inventar sind
 		if (west) {
-			System.out
-					.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
+			System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
 			return true;
 		}
 		return false;
@@ -28,12 +28,10 @@ public class Raum2 extends Raum {
 
 	@Override
 	public void goWest() {
-		if (inventory.isInInventory(Textie.itemMap.get("FEUERZEUG"))
-				&& inventory.isInInventory(Textie.itemMap.get("SCHLUESSEL"))) {
+		if (inventory.isInInventory(Textie.itemMap.get("FEUERZEUG")) && inventory.isInInventory(Textie.itemMap.get("SCHLUESSEL"))) {
 			west = true;
 		} else {
-			System.out
-					.println("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");
+			System.out.println("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");
 		}
 	}
 }
