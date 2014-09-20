@@ -1,7 +1,7 @@
 textie
 ======
 
-Ein kleines Textadventure von @[lfuelling](https://github.com/lfuelling) und @[YuleZ](https://github.com/YuleZ).
+Ein Textadventure von @[lfuelling](https://github.com/lfuelling) und @[YuleZ](https://github.com/YuleZ).
 
 Das Spiel entsteht im Rahmen unserer Ausbildung bei der [Micromata GmbH](https://github.com/micromata).
 
