@@ -6,7 +6,6 @@ public class Item {
 	private String benutzeText;
 	private String name;
 
-
 	public Item(String name, String untersucheText, String benutzeText) {
 		this.name = name;
 		this.untersucheText = untersucheText;
@@ -18,7 +17,6 @@ public class Item {
 		return this.name;
 		// return getObjectName(objectID);
 	}
-
 
 	public void benutzen() {
 		System.out.println(benutzeText);

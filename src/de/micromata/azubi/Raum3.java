@@ -8,7 +8,7 @@ public class Raum3 extends Raum {
 	public void start() {
 		System.out.println("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
 		Item item2 = Textie.itemMap.get("FACKEL");
-		if(item2 instanceof ToggleItem){
+		if (item2 instanceof ToggleItem) {
 			ToggleItem fackel = (ToggleItem) item2;
 			fackel.setState(false);
 		}

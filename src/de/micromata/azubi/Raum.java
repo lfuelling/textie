@@ -102,7 +102,7 @@ public abstract class Raum {
 		if (count == 2) {
 			switch (parsed_command[1].toLowerCase()) {
 			case "raum":
-				if(Textie.currentRaum.equals(Textie.raumList.get(Textie.raumNummer))){
+				if (Textie.currentRaum.equals(Textie.raumList.get(Textie.raumNummer))) {
 
 					Item item = Textie.itemMap.get("FACKEL");
 					if (item instanceof ToggleItem) {

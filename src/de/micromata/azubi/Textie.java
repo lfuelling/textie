@@ -21,7 +21,7 @@ public class Textie {
 	static List<Raum> raumList = new LinkedList<Raum>();
 	static Raum currentRaum;
 	static int raumNummer;
-	
+
 	public static void main(String[] args) {
 		Textie.initItems();
 		Textie.initRooms();
@@ -34,7 +34,7 @@ public class Textie {
 		if (inventory.isAlive()) {
 			raumList.get(raumNummer).start();
 			if (inventory.isAlive()) {
-				raumNummer = raumNummer+1;
+				raumNummer = raumNummer + 1;
 				raumList.get(raumNummer).start();
 				if (inventory.isAlive()) {
 					Textie.runGame();
@@ -48,10 +48,7 @@ public class Textie {
 			System.out.println("Du bist gestorben.");
 		}
 	}
-	
-	
-	
-	
+
 	public static void prompt() {
 		do {
 			currentRaum.falltuerUsed = false;
@@ -91,15 +88,6 @@ public class Textie {
 			}
 		} while (currentRaum.isFinished() == false);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	public static void ende() {
 		System.out.println("Herzlichen Glückwunsch " + playerName + "!");
@@ -124,7 +112,8 @@ public class Textie {
 	}
 
 	private static void initItems() {
-		//TODO (Wenn wir den benutzeText der Items benutzen) Raumnummer hinzufügen.
+		// TODO (Wenn wir den benutzeText der Items benutzen) Raumnummer
+		// hinzufügen.
 		itemMap.put("KARTE", new Item("Karte", "Die Karte zeigt an, in welchem Raum man sich befindet.", "Du bist in Raum "));
 		itemMap.put("FALLTÜR", new Item("Falltür", "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum."));
 		itemMap.put("WHITEBOARD", new Item("Whiteboard", "Es steht \'FLIEH!\' mit Blut geschrieben darauf.", "Das fasse ich bestimmt nicht an!"));

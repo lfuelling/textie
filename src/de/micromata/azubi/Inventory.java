@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Inventory {
 
-	
 	private static final int MAX_SLOTS_INVENTORY = 5;
 	private boolean alive;
 	// private int[] inventory;
@@ -41,19 +40,19 @@ public class Inventory {
 	 */
 
 	public boolean removeItem(Item item) {
-		if (inventory.remove(item) && Textie.currentRaum.addItem(item)) return true;
+		if (inventory.remove(item) && Textie.currentRaum.addItem(item))
+			return true;
 		return false;
 	}
 
 	public void listItems() {
-		if(inventory.size() > 0){
-		System.out.println("In deiner Tasche befindet sich:");
-		for (Item items : inventory) {
-			String objectName = items.getName();
-			System.out.println("\t" + objectName);
-		}
-		}
-		else{
+		if (inventory.size() > 0) {
+			System.out.println("In deiner Tasche befindet sich:");
+			for (Item items : inventory) {
+				String objectName = items.getName();
+				System.out.println("\t" + objectName);
+			}
+		} else {
 			System.out.println("Deine Tasche ist leer.");
 		}
 	}
