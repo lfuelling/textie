@@ -16,6 +16,7 @@ public class Human {
 	private String questDoneText;
 	private String name;
 	Item questItem;
+	String questItemName = questItem.getName();
 
 	public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item questItem) {
 		this.name = name;
@@ -43,16 +44,21 @@ public class Human {
 				break;
 			}
 		} else {
-			doQuest();
+			System.out.println(questText);
 		}
 	}
-
-	public void doQuest() {
-		do {
-			System.out.println(questText);
-			// TODO questDone muss irgendwie gesetzt werden.
-		} while (questDone != true);
-		System.out.println(questDoneText);
+	
+	public void doGeben(String[] parsed_command, int count) {
+		if (count == 2) {
+			String itemToUse = IOUtils.convertToName(parsed_command[1]);
+			if(itemToUse.equals(questItemName)) {
+				System.out.println(questDoneText);
+				questDone = true;
+			}
+			else {
+				System.out.println("Das brauche ich nicht.");
+			}
+		}
 	}
 	
 	public boolean getQuestState(){

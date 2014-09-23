@@ -20,5 +20,10 @@ public class IOUtils {
 	    }
 	    return eingabe;
 	}
+	
+	public static String convertToName(String stc) {
+		stc = stc.substring(0, 1).toUpperCase() + stc.substring(1).toLowerCase();
+		return stc;
+	}
 
 }
