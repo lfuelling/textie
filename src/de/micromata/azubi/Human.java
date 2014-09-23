@@ -1,5 +1,6 @@
 package de.micromata.azubi;
 
+
 /*
  * Der Mensch (Human) ist bis jetzt noch ziemlich beschränkt (nur zwei Dialoge)
  * Wir werden das später evtl. erweitern. Vorerst genügt das. Wichtig ist mir nur, dass die Quests funktionieren.
@@ -57,7 +58,7 @@ public class Human {
 					questDone = true;
 				}
 				else {
-					System.out.println("Layer 8 Error");
+					System.out.println("Item nicht im Inventar.");
 				}
 			}
 			else {
