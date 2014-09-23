@@ -48,6 +48,19 @@ public class Inventory
 			return true;
 		return false;
 	}
+	
+	/**
+	 * Removes an Item but doesn't put it back into the room.
+	 * 
+	 * @param item
+	 * @return Returns true if item was removed successfully.
+	 */
+	public boolean giveItem(Item item) {
+		if(inventory.remove(item)) {
+			return true;
+		}
+		return false;
+	}
 
 	public void listItems()
 	{

@@ -52,8 +52,13 @@ public class Human {
 		if (count == 2) {
 			String itemToUse = IOUtils.convertToName(parsed_command[1]);
 			if(itemToUse.equals(questItemName)) {
-				System.out.println(questDoneText);
-				questDone = true;
+				if(Textie.inventory.giveItem(Textie.itemMap.get(parsed_command[1].toUpperCase()))){
+					System.out.println(questDoneText);
+					questDone = true;
+				}
+				else {
+					System.out.println("Layer 8 Error");
+				}
 			}
 			else {
 				System.out.println("Das brauche ich nicht.");
