@@ -18,7 +18,7 @@ public class Raum4 extends Raum {
 	@Override
 	public boolean isFinished() {
 		// nord
-		if (nord && Textie.humanMap.get("ALTER MANN").getQuestState()) {
+		if (nord /*&& Textie.humanMap.get("ALTER MANN").getQuestState()*/) { //TODO
 			System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
 			return true;
 		}
