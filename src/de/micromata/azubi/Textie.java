@@ -161,13 +161,14 @@ public class Textie {
 		itemMap.put("QUIETSCHEENTE", new Item("Quietscheente", "Die Ente schaut dich vorwurfsvoll an.", "Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst.", true));
 		itemMap.put("HANDTUCH", new Item("Handtuch", "Das Handtuch sieht sehr flauschig aus.", "Du wischst dir den Angstschweiß von der Stirn.",true ));
 		itemMap.put("FACKEL", new ToggleItem("Fackel", "Du betrachtest die Fackel. Wie kann man die wohl anzünden?", "Du zündest deine Fackel mit dem Feuerzeug an.", true, false));
+		itemMap.put("SACK", new Item("Sack", "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
 	}
 
 	public static void initRooms() {
 		raum1 = new Raum1(inventory, 1, itemMap.get("FACKEL"), itemMap.get("HANDTUCH"), itemMap.get("TRUHE"), itemMap.get("SCHALTER"));
 		raum2 = new Raum2(inventory, 2, itemMap.get("SCHWERT"), itemMap.get("FEUERZEUG"), itemMap.get("SCHLÜSSEL"), itemMap.get("STEIN"));
 		raum3 = new Raum3(inventory, 3, itemMap.get("QUIETSCHEENTE"), itemMap.get("WHITEBOARD"), itemMap.get("BRECHEISEN"), itemMap.get("FALLTÜR")/*, itemMap.get("KARTE")*/);
-		raum4 = new Raum4(inventory, 4, humanMap.get("ALTER MANN"), itemMap.get("SCHLÜSSEL")); // TODO Schlüssel durch die restlichen Items ersetzen (Sack, etc.)
+		raum4 = new Raum4(inventory, 4, humanMap.get("ALTER MANN"), itemMap.get("SCHLÜSSEL"), itemMap.get("SACK"), itemMap.get("SCHWERT"), itemMap.get("QUIETSCHEENTE"), itemMap.get("STEIN")); // TODO Schlüssel durch die restlichen Items ersetzen (Sack, etc.)
 		raumList.addFirst(raum1);
 		raumList.add(raum2);
 		raumList.add(raum3);
