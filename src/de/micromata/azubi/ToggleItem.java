@@ -4,8 +4,8 @@ public class ToggleItem extends Item{
 	
 	private boolean state;
 
-	public ToggleItem(String name, String untersucheText, String benutzeText, boolean state) {
-		super(name, untersucheText, benutzeText);
+	public ToggleItem(String name, String untersucheText, String benutzeText, boolean pickable, boolean state) {
+		super(name, untersucheText, benutzeText, pickable);
 		state = this.state;
 	}
 	

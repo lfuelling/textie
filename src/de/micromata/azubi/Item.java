@@ -5,14 +5,19 @@ public class Item {
 	private String untersucheText = "";
 	private String benutzeText;
 	private String name;
+	private boolean pickable;
 
 
-	public Item(String name, String untersucheText, String benutzeText) {
+	public Item(String name, String untersucheText, String benutzeText, boolean pickable) {
 		this.name = name;
 		this.untersucheText = untersucheText;
 		this.benutzeText = benutzeText;
+		this.pickable = pickable;
 	}
 
+	public boolean isPickable(){
+		return this.pickable;
+	}
 	public String getName() {
 
 		return this.name;
