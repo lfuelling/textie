@@ -20,5 +20,16 @@ public class IOUtils {
 	    }
 	    return eingabe;
 	}
+	
+	/**
+	 * 
+	 * @author Lukas Fülling
+	 * @param string to convert
+	 * @return Returns the string which was given as parameter where the first letter is uppercase and every other is lowercase (ex. "LuKaS MaEd DiS" => "Lukas maed dis")
+	 */
+	public static String convertToName(String stc) {
+		stc = stc.substring(0, 1).toUpperCase() + stc.substring(1).toLowerCase();
+		return stc;
+	}
 
 }

@@ -24,6 +24,7 @@ public class Textie {
 	static Raum raum3;
 	static Raum raum4;
 	static Raum currentRaum = raum1;
+	static Human currentHuman;
 	static LinkedList<Raum> raumList= new LinkedList<Raum>();
 	static ListIterator<Raum> listIterator;
 	
@@ -35,7 +36,10 @@ public class Textie {
 		Textie.showIntro();
 		Textie.runGame();
 	}
-
+	
+	public static void setCurrentHuman (Human hts) {
+		currentHuman = hts;
+	}
 	public static void runGame() {
 		currentRaum = raum1;
 		while(inventory.isAlive()){
@@ -111,6 +115,9 @@ public class Textie {
 			case "rede":
 				currentRaum.doReden(parsed_command, count);
 				break;
+			case "gib":
+				currentHuman.doGeben(parsed_command, count);
+				break;
 			default:
 				System.out.println("Unbekannter Befehl: " + parsed_command[1]);
 				break;
@@ -142,7 +149,7 @@ public class Textie {
 
 	private static void initHumans() {
 		humanMap.put("ALTER MANN", new Human("Gordon", "Probier' doch mal, die Karte zu benutzen.", "Hast du irgendwo GabeN gesehen? Wir wollten uns treffen...",
-				"Ich suche einen Schlüssel. Hast du einen?", "Sehr gut. Danke dir.", itemMap.get("SCHLÜSSEL")));
+				"Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.", itemMap.get("BRECHEISEN")));
 	}
 
 	private static void initItems() {
