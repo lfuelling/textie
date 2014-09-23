@@ -158,7 +158,7 @@ public class Textie {
 		//itemMap.put(Consts.KARTE, new Item("Karte", "Die Karte zeigt an, in welchem Raum man sich befindet.", "Du bist in Raum " + currentRaum.getNumberAsString()));
 		itemMap.put(Consts.FALLTÜR, new Item("Falltür", "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
 		itemMap.put(Consts.WHITEBOARD, new Item("Whiteboard", "Es steht \'FLIEH!\' mit Blut geschrieben darauf.", "Das fasse ich bestimmt nicht an!", false));
-		itemMap.put(Consts.SCHALTER, new Item("Schalter", "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst. Es geschieht nichts weiter.", false));
+		itemMap.put(Consts.SCHALTER, new ToggleItem("Schalter", "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst. Es geschieht nichts weiter.", false, false));
 		itemMap.put(Consts.TRUHE, new Item("Truhe", "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false));
 		itemMap.put(Consts.STEIN, new Item("Stein", "Du betrachtest den Stein. Er wirkt kalt.", "Hier gibt es nichts um den Stein zu benutzen.", true));
 		itemMap.put(Consts.SCHLÜSSEL, new Item("Schlüssel", "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true));
@@ -175,7 +175,7 @@ public class Textie {
 		raum1 = new Raum1(inventory, 1, itemMap.get(Consts.FACKEL), itemMap.get(Consts.HANDTUCH), itemMap.get(Consts.TRUHE), itemMap.get(Consts.SCHALTER));
 		raum2 = new Raum2(inventory, 2, itemMap.get(Consts.SCHWERT), itemMap.get(Consts.FEUERZEUG), itemMap.get(Consts.SCHLÜSSEL), itemMap.get(Consts.STEIN));
 		raum3 = new Raum3(inventory, 3, itemMap.get(Consts.QUIETSCHEENTE), itemMap.get(Consts.WHITEBOARD), itemMap.get(Consts.BRECHEISEN), itemMap.get(Consts.FALLTÜR)/*, itemMap.get("KARTE")*/);
-		raum4 = new Raum4(inventory, 4, humanMap.get(Consts.ALTER_MANN), itemMap.get(Consts.SCHLÜSSEL), itemMap.get(Consts.SACK)); // TODO Schlüssel durch die restlichen Items ersetzen (Sack, etc.)
+		raum4 = new Raum4(inventory, 4, humanMap.get(Consts.ALTER_MANN), itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK)); // TODO Schlüssel durch die restlichen Items ersetzen (Sack, etc.)
 		raumList.addFirst(raum1);
 		raumList.add(raum2);
 		raumList.add(raum3);

@@ -36,5 +36,11 @@ public class Item {
 		}
 		System.out.println(untersucheText);
 	}
+	public boolean isToggle(){
+		if (this instanceof ToggleItem) {
+			return true;
+		}
+	return false;	
+	}
 
 }
