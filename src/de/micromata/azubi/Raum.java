@@ -111,7 +111,7 @@ public abstract class Raum {
 			switch (parsed_command[1].toLowerCase()) {
 			case "raum":
 				if (Textie.currentRaum.equals(Textie.raum3)) {
-					Item item = Textie.itemMap.get("FACKEL");
+					Item item = Textie.itemMap.get(Consts.FACKEL);
 					if (item instanceof ToggleItem) {
 						ToggleItem fackel = (ToggleItem) item;
 						if (fackel.getState() == true) {
@@ -126,7 +126,7 @@ public abstract class Raum {
 				break;
 			case "inventar":
 				if (Textie.currentRaum.equals(Textie.raum3)) {
-					Item item = Textie.itemMap.get("FACKEL");
+					Item item = Textie.itemMap.get(Consts.FACKEL);
 					if (item instanceof ToggleItem) {
 						ToggleItem fackel = (ToggleItem) item;
 						if (fackel.getState() == true) {
@@ -141,7 +141,7 @@ public abstract class Raum {
 				break;
 			default:
 				if (Textie.currentRaum.equals(Textie.raum3)) {
-					Item item = Textie.itemMap.get("FACKEL");
+					Item item = Textie.itemMap.get(Consts.FACKEL);
 					if (item instanceof ToggleItem) {
 						ToggleItem fackel = (ToggleItem) item;
 						if (fackel.getState() == true) {
@@ -177,8 +177,8 @@ public abstract class Raum {
 		// benutzbar sein, selbst wenn der Raum dunkel ist.
 		case "Fackel":// Textie.itemMap.get("FACKEL").getName():
 		case "Feuerzeug": // Textie.itemMap.get("FEUERZEUG").getName():
-			int fackelSlot = inventory.findItem(Textie.itemMap.get("FACKEL"));
-			int feuerZeugSlot = inventory.findItem(Textie.itemMap.get("FEUERZEUG"));
+			int fackelSlot = inventory.findItem(Textie.itemMap.get(Consts.FACKEL));
+			int feuerZeugSlot = inventory.findItem(Textie.itemMap.get(Consts.FEUERZEUG));
 			if (feuerZeugSlot < 0) {
 				System.out.println("Du hast kein Feuerzeug.");
 				break;
@@ -196,7 +196,7 @@ public abstract class Raum {
 			}
 		case "Falltür":
 			if (Textie.currentRaum.equals(Textie.raum3)) {
-				Item item5 = Textie.itemMap.get("FACKEL");
+				Item item5 = Textie.itemMap.get(Consts.FACKEL);
 				if (item5 instanceof ToggleItem) {
 					ToggleItem fackel = (ToggleItem) item5;
 					if (fackel.getState() == true) {
@@ -205,11 +205,11 @@ public abstract class Raum {
 							System.out.println("Das Objekt gibt es nicht.");
 							break;
 						} else {
-							if (find(Textie.itemMap.get("FALLTUER")) != -128 && hasEverything()) {
+							if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128 && hasEverything()) {
 								System.out.println("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
 								falltuerUsed = true;
 								break;
-							} else if (find(Textie.itemMap.get("FALLTUER")) != -128) {
+							} else if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128) {
 								System.out.println("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
 								break;
 							}
@@ -224,11 +224,11 @@ public abstract class Raum {
 				if (itemToUse == null) {
 					System.out.println("Das Objekt gibt es nicht.");
 				} else {
-					if (find(Textie.itemMap.get("FALLTUER")) != -128 && hasEverything()) {
+					if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128 && hasEverything()) {
 						System.out.println("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
 						falltuerUsed = true;
 						break;
-					} else if (find(Textie.itemMap.get("FALLTUER")) != -128) {
+					} else if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128) {
 						System.out.println("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
 						break;
 					}
@@ -241,7 +241,7 @@ public abstract class Raum {
 			break;
 		default:
 			if (Textie.currentRaum.equals(Textie.raum3)) {
-				Item item5 = Textie.itemMap.get("FACKEL");
+				Item item5 = Textie.itemMap.get(Consts.FACKEL);
 				if (item5 instanceof ToggleItem) {
 					ToggleItem fackel = (ToggleItem) item5;
 					if (fackel.getState() == true) {
@@ -299,7 +299,7 @@ public abstract class Raum {
 	public abstract boolean isFinished();
 
 	public boolean hasEverything() {
-		if (inventory.isInInventory(Textie.itemMap.get("BRECHEISEN")) && inventory.isInInventory(Textie.itemMap.get("SCHLÜSSEL"))) {
+		if (inventory.isInInventory(Textie.itemMap.get(Consts.BRECHEISEN)) && inventory.isInInventory(Textie.itemMap.get(Consts.SCHLÜSSEL))) {
 			return true;
 		} else {
 			return false;

@@ -28,7 +28,7 @@ public class Raum2 extends Raum {
 
 	@Override
 	public void goWest() {
-		if (inventory.isInInventory(Textie.itemMap.get("FEUERZEUG")) && inventory.isInInventory(Textie.itemMap.get("SCHLÜSSEL"))) {
+		if (inventory.isInInventory(Textie.itemMap.get(Consts.FEUERZEUG)) && inventory.isInInventory(Textie.itemMap.get(Consts.SCHLÜSSEL))) {
 			west = true;
 		} else {
 			System.out.println("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");

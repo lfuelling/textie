@@ -12,7 +12,7 @@ public class Raum3 extends Raum
 
 	public void start()
 	{
-		ToggleItem fackel = (ToggleItem) Textie.itemMap.get("FACKEL");
+		ToggleItem fackel = (ToggleItem) Textie.itemMap.get(Consts.FACKEL);
 		if (fackel.getState() == true) {
 			System.out.println("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
 			fackel.setState(false);
