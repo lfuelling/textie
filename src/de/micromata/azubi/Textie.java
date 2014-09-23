@@ -148,7 +148,7 @@ public class Textie {
 	}
 
 	private static void initHumans() {
-		humanMap.put("ALTER MANN", new Human("Gordon", "Probier' doch mal, die Karte zu benutzen.", "Hast du irgendwo GabeN gesehen? Wir wollten uns treffen...",
+		humanMap.put(Consts.ALTER_MANN, new Human("Gordon", "Probier' doch mal, die Karte zu benutzen.", "Hast du irgendwo GabeN gesehen? Wir wollten uns treffen...",
 				"Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.", itemMap.get("BRECHEISEN")));
 	}
 
