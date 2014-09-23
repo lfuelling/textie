@@ -59,10 +59,6 @@ public abstract class Raum {
 		return false;
 	}
 
-	void doReden(String[] parsed_command, int count) {
-
-	}
-
 	void doGehen(String[] parsed_command, int count) {
 		if (count == 2) {
 			switch (parsed_command[1]) {

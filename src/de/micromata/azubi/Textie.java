@@ -113,7 +113,7 @@ public class Textie {
 				currentRaum.doGehen(parsed_command, count);
 				break;
 			case "rede":
-				currentRaum.doReden(parsed_command, count);
+				currentHuman.doReden(parsed_command, count);
 				break;
 			case "gib":
 				currentHuman.doGeben(parsed_command, count);

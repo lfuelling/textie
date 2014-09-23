@@ -30,8 +30,8 @@ public class Human {
 	public String getName() {
 		return this.name;
 	}
-
-	public void talk() {
+	
+	void doReden(String[] parsed_command, int count) {
 		if (questDone == true) {
 			switch (dialogNumber) {
 			case 0:
