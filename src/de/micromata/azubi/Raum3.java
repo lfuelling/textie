@@ -1,16 +1,20 @@
+
 package de.micromata.azubi;
 
-public class Raum3 extends Raum {
-	public Raum3(Inventory inventory, int number, Item... items) {
-		//null, denn es gibt in den ersten drei Räumen nix lebendiges (oder doch?!... *grusel*)
+public class Raum3 extends Raum
+{
+
+	public Raum3(Inventory inventory, int number, Item... items)
+	{
+		// null, denn es gibt in den ersten drei Räumen nix lebendiges (oder doch?!... *grusel*)
 		super(inventory, number, null, items);
 	}
 
-	public void start() {
-		System.out.println("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
-		Item item2 = Textie.itemMap.get("FACKEL");
-		if(item2 instanceof ToggleItem){
-			ToggleItem fackel = (ToggleItem) item2;
+	public void start()
+	{
+		ToggleItem fackel = (ToggleItem) Textie.itemMap.get("FACKEL");
+		if (fackel.getState() == true) {
+			System.out.println("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
 			fackel.setState(false);
 		}
 		System.out.println("Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.");
@@ -18,7 +22,8 @@ public class Raum3 extends Raum {
 	}
 
 	@Override
-	public boolean isFinished() {
+	public boolean isFinished()
+	{
 		// Raum3 durch benutzen der Falltür verlassen
 		if (falltuerUsed == true) {
 			return true;
