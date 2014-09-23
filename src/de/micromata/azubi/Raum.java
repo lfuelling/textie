@@ -97,6 +97,7 @@ public abstract class Raum {
 	public int getNumber() {
 		return roomNumber;
 	}
+
 	public String getNumberAsString() {
 		String raumNummerString = String.valueOf(roomNumber);
 		return raumNummerString;
@@ -166,123 +167,131 @@ public abstract class Raum {
 	}
 
 	void doBenutze(Item item) {
-		String itemName = item.getName();
-		switch (itemName) {
-		// Fackel und Feuerzeug sind besonders, da sie auch funktionen aufrufen
-		// und nicht nur einen Text ausgeben. Außerdem sollen diese Items
-		// benutzbar sein, selbst wenn der Raum dunkel ist.
-		case "Fackel":// Textie.itemMap.get("FACKEL").getName():
-		case "Feuerzeug": // Textie.itemMap.get("FEUERZEUG").getName():
-			int fackelSlot = inventory.findItem(Textie.itemMap.get(Consts.FACKEL));
-			int feuerZeugSlot = inventory.findItem(Textie.itemMap.get(Consts.FEUERZEUG));
-			if (feuerZeugSlot < 0) {
-				System.out.println("Du hast kein Feuerzeug.");
-				break;
-			} else if (fackelSlot < 0) {
-				System.out.println("Du hast keine Fackel.");
-				break;
-			} else {
-				System.out.println("Du zündest deine Fackel mit dem Feuerzeug an.");
-				Item item2 = Textie.itemMap.get("FACKEL");
-				if (item2 instanceof ToggleItem) {
-					ToggleItem fackel = (ToggleItem) item2;
-					fackel.setState(true);
+		if (item==null) {
+
+			System.out.println("Das Item gibt es nicht.");
+
+		} else {
+			String itemName = item.getName();
+			switch (itemName) {
+			// Fackel und Feuerzeug sind besonders, da sie auch funktionen
+			// aufrufen
+			// und nicht nur einen Text ausgeben. Außerdem sollen diese Items
+			// benutzbar sein, selbst wenn der Raum dunkel ist.
+			case "Fackel":// Textie.itemMap.get("FACKEL").getName():
+			case "Feuerzeug": // Textie.itemMap.get("FEUERZEUG").getName():
+				int fackelSlot = inventory.findItem(Textie.itemMap.get(Consts.FACKEL));
+				int feuerZeugSlot = inventory.findItem(Textie.itemMap.get(Consts.FEUERZEUG));
+				if (feuerZeugSlot < 0) {
+					System.out.println("Du hast kein Feuerzeug.");
+					break;
+				} else if (fackelSlot < 0) {
+					System.out.println("Du hast keine Fackel.");
+					break;
+				} else {
+					System.out.println("Du zündest deine Fackel mit dem Feuerzeug an.");
+					Item item2 = Textie.itemMap.get("FACKEL");
+					if (item2 instanceof ToggleItem) {
+						ToggleItem fackel = (ToggleItem) item2;
+						fackel.setState(true);
+					}
+					break;
 				}
-				break;
-			}
-		case "Falltür":
-			if (Textie.currentRaum.equals(Textie.raum3)) {
-				Item item5 = Textie.itemMap.get(Consts.FACKEL);
-				if (item5 instanceof ToggleItem) {
-					ToggleItem fackel = (ToggleItem) item5;
-					if (fackel.getState() == true) {
-						Item itemToUse = Textie.itemMap.get(itemName.toUpperCase());
-						if (itemToUse == null) {
-							System.out.println("Das Objekt gibt es nicht.");
-							break;
-						} else {
-							if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128) {
-								System.out.println("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
-								falltuerUsed = true;
+			case "Falltür":
+				if (Textie.currentRaum.equals(Textie.raum3)) {
+					Item item5 = Textie.itemMap.get(Consts.FACKEL);
+					if (item5 instanceof ToggleItem) {
+						ToggleItem fackel = (ToggleItem) item5;
+						if (fackel.getState() == true) {
+							Item itemToUse = Textie.itemMap.get(itemName.toUpperCase());
+							if (itemToUse == null) {
+								System.out.println("Das Objekt gibt es nicht.");
 								break;
-							} 
-//								else if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128) {
-//								System.out.println("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
-//								break;
-//							}
-						}
-					} else {
-						System.out.println("Du kannst nichts sehen!");
-						break;
-					}
-				}
-			} else {
-				Item itemToUse = Textie.itemMap.get(itemName.toUpperCase());
-				if (itemToUse == null) {
-					System.out.println("Das Objekt gibt es nicht.");
-				} else {
-					if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128 && hasEverything()) {
-						System.out.println("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
-						falltuerUsed = true;
-						break;
-					} else if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128) {
-						System.out.println("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
-						break;
-					}
-				}
-			}
-		case "Sack":
-			Item sack = Textie.itemMap.get(itemName.toUpperCase());
-			sack.benutzen();
-			inventory.setInventorySize(2);
-			break;
-		case "Schalter":
-			ToggleItem schalter = (ToggleItem) Textie.itemMap.get(itemName.toUpperCase());
-			schalter.benutzen();
-			schalter.setState(true);
-			break;
-		case "Schwert":
-			Textie.itemMap.get(Consts.SCHWERT).benutzen();
-			Textie.ende();
-			break;
-			
-		default:
-			if (Textie.currentRaum.equals(Textie.raum3)) {
-				Item item5 = Textie.itemMap.get(Consts.FACKEL);
-				if (item5 instanceof ToggleItem) {
-					ToggleItem fackel = (ToggleItem) item5;
-					if (fackel.getState() == true) {
-						Item itemToUse = Textie.itemMap.get(itemName.toUpperCase());
-						if (itemToUse == null) {
-							System.out.println("Das Objekt gibt es nicht.");
+							} else {
+								if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128) {
+									System.out.println("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
+									falltuerUsed = true;
+									break;
+								}
+								// else if
+								// (find(Textie.itemMap.get(Consts.FALLTÜR)) !=
+								// -128) {
+								// System.out.println("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
+								// break;
+								// }
+							}
 						} else {
-							itemToUse.benutzen();
+							System.out.println("Du kannst nichts sehen!");
+							break;
 						}
+					}
+				} else {
+					Item itemToUse = Textie.itemMap.get(itemName.toUpperCase());
+					if (itemToUse == null) {
+						System.out.println("Das Objekt gibt es nicht.");
 					} else {
-						System.out.println("Du kannst nichts sehen!");
+						if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128 && hasEverything()) {
+							System.out.println("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
+							falltuerUsed = true;
+							break;
+						} else if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128) {
+							System.out.println("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
+							break;
+						}
 					}
 				}
-			} else {
-				Item itemToUse = Textie.itemMap.get(itemName.toUpperCase());
-				if (itemToUse == null) {
-					System.out.println("Das Objekt gibt es nicht.");
+			case "Sack":
+				Item sack = Textie.itemMap.get(itemName.toUpperCase());
+				sack.benutzen();
+				inventory.setInventorySize(2);
+				break;
+			case "Schalter":
+				ToggleItem schalter = (ToggleItem) Textie.itemMap.get(itemName.toUpperCase());
+				schalter.benutzen();
+				schalter.setState(true);
+				break;
+			case "Schwert":
+				Textie.itemMap.get(Consts.SCHWERT).benutzen();
+				Textie.ende();
+				break;
+
+			default:
+				if (Textie.currentRaum.equals(Textie.raum3)) {
+					Item item5 = Textie.itemMap.get(Consts.FACKEL);
+					if (item5 instanceof ToggleItem) {
+						ToggleItem fackel = (ToggleItem) item5;
+						if (fackel.getState() == true) {
+							Item itemToUse = Textie.itemMap.get(itemName.toUpperCase());
+							if (itemToUse == null) {
+								System.out.println("Das Objekt gibt es nicht.");
+							} else {
+								itemToUse.benutzen();
+							}
+						} else {
+							System.out.println("Du kannst nichts sehen!");
+						}
+					}
 				} else {
-					itemToUse.benutzen();
+					Item itemToUse = Textie.itemMap.get(itemName.toUpperCase());
+					if (itemToUse == null) {
+						System.out.println("Das Objekt gibt es nicht.");
+					} else {
+						itemToUse.benutzen();
+					}
 				}
 			}
 		}
 	}
 
 	void doNimm(Item item) {
-		if(item.isPickable()){
+		if (item.isPickable()) {
 			if (inventory.addItem(item)) {
 
 				System.out.println(item.getName() + " zum Inventar hinzugefügt.");
 			} else {
 				System.out.println("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
 			}
-		}
-		else{
+		} else {
 			System.out.println("Du kannst dieses Item nicht aufheben.");
 		}
 	}
