@@ -201,14 +201,15 @@ public abstract class Raum {
 							System.out.println("Das Objekt gibt es nicht.");
 							break;
 						} else {
-							if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128 && hasEverything()) {
+							if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128) {
 								System.out.println("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
 								falltuerUsed = true;
 								break;
-							} else if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128) {
-								System.out.println("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
-								break;
-							}
+							} 
+//								else if (find(Textie.itemMap.get(Consts.FALLTÜR)) != -128) {
+//								System.out.println("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
+//								break;
+//							}
 						}
 					} else {
 						System.out.println("Du kannst nichts sehen!");
@@ -235,6 +236,16 @@ public abstract class Raum {
 			sack.benutzen();
 			inventory.setInventorySize(2);
 			break;
+		case "Schalter":
+			ToggleItem schalter = (ToggleItem) Textie.itemMap.get(itemName.toUpperCase());
+			schalter.benutzen();
+			schalter.setState(true);
+			break;
+		case "Schwert":
+			Textie.itemMap.get(Consts.SCHWERT).benutzen();
+			Textie.ende();
+			break;
+			
 		default:
 			if (Textie.currentRaum.equals(Textie.raum3)) {
 				Item item5 = Textie.itemMap.get(Consts.FACKEL);

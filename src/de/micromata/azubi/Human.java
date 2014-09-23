@@ -17,7 +17,7 @@ public class Human {
 	private String questDoneText;
 	private String name;
 	Item questItem;
-	String questItemName = questItem.getName();
+	String questItemName;
 
 	public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item questItem) {
 		this.name = name;
@@ -26,6 +26,7 @@ public class Human {
 		this.questText = questText;
 		this.questDoneText = questDoneText;
 		this.questItem = questItem;
+		this.questItemName = questItem.getName();
 	}
 
 	public String getName() {
