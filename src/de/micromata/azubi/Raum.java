@@ -234,6 +234,11 @@ public abstract class Raum {
 					}
 				}
 			}
+		case "Sack":
+			Item sack = Textie.itemMap.get(itemName.toUpperCase());
+			sack.benutzen();
+			inventory.setInventorySize(2);
+			break;
 		default:
 			if (Textie.currentRaum.equals(Textie.raum3)) {
 				Item item5 = Textie.itemMap.get("FACKEL");
@@ -294,7 +299,7 @@ public abstract class Raum {
 	public abstract boolean isFinished();
 
 	public boolean hasEverything() {
-		if (inventory.isInInventory(Textie.itemMap.get("Brecheisen")) && inventory.isInInventory(Textie.itemMap.get("Schlüssel"))) {
+		if (inventory.isInInventory(Textie.itemMap.get("BRECHEISEN")) && inventory.isInInventory(Textie.itemMap.get("SCHLÜSSEL"))) {
 			return true;
 		} else {
 			return false;

@@ -7,7 +7,7 @@ import java.util.List;
 public class Inventory
 {
 
-	private static final int MAX_SLOTS_INVENTORY = 5;
+	private static int MAX_SLOTS_INVENTORY = 5;
 
 	private boolean alive;
 
@@ -80,6 +80,10 @@ public class Inventory
 	public void setAlive(boolean state)
 	{
 		this.alive = state;
+	}
+	
+	public void setInventorySize(int slots){
+		MAX_SLOTS_INVENTORY = MAX_SLOTS_INVENTORY + slots;
 	}
 
 }
