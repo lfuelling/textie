@@ -1,5 +1,7 @@
-.textie
+.textie 
 ======
+
+[![Build Status](http://ci.k40s.net/job/Textie/badge/icon)](http://ci.k40s.net/job/Textie/)
 
 Ein Textadventure von @[lfuelling](https://github.com/lfuelling) und @[YuleZ](https://github.com/YuleZ). 
 
