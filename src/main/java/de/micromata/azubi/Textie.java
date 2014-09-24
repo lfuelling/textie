@@ -65,7 +65,11 @@ public class Textie {
                 }
             }
             if(parsed_command.length < 2) {
-                System.out.println("Was möchtest du benutzen?");
+                if(parsed_command[0].equals("hilfe")){
+                    currentRaum.printHelp();
+                } else {
+                    System.out.println("Unbekannter Befehl oder fehlende Argumente: " + parsed_command[1]);
+                }
             } else {
                 Item itemToUse = Textie.itemMap.get(parsed_command[1].toUpperCase());
                 switch (parsed_command[0]) {
