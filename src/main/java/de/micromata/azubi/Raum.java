@@ -21,7 +21,7 @@ public abstract class Raum {
         }
     }
 
-    public void listItems() { // TODO
+    public void listItems() {
         // System.out.println("1. Item in List: " +
         // this.items.get(1).getName());
         System.out.println("Im Raum befindet sich:");
@@ -133,6 +133,14 @@ public abstract class Raum {
                         }
                     } else {
                         inventory.listItems();
+                    }
+                    break;
+                case "truhe":
+                    if(find(Textie.itemMap.get(Consts.TRUHE)) != -128){
+                        StorageItem truhe = (StorageItem) Textie.itemMap.get(Consts.TRUHE);
+                        truhe.listItems();
+                    } else {
+                        System.out.println("Hier ist keine Truhe");
                     }
                     break;
                 default:
