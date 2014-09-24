@@ -27,4 +27,4 @@ Wir sollen .textie allein entwickeln. Deswegen ist zum jetzigen Zeitpunkt nur Hi
 
 
 ## Sternchen
-**gib funktioniert nur, wenn eine Person im Raum ist.*
+* *gib funktioniert nur, wenn eine Person im Raum ist.*
