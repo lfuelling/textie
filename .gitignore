@@ -1,6 +1,6 @@
 
 *.class
-
+.idea/
 .DS_Store
 .settings/
 bin/
