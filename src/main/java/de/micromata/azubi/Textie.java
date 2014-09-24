@@ -163,7 +163,7 @@ public class Textie {
         itemMap.put(Consts.SCHALTER, new ToggleItem(
                 "Schalter", "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false,
                 false));
-        itemMap.put(Consts.TRUHE, new Item(
+        itemMap.put(Consts.TRUHE, new StorageItem(
                 "Truhe", "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false));
         itemMap.put(Consts.STEIN, new Item("Stein", "Du betrachtest den Stein. Er wirkt kalt.", "Hier gibt es nichts um den Stein zu benutzen.", true));
         itemMap.put(Consts.SCHLÜSSEL, new Item(

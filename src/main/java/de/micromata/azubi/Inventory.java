@@ -33,8 +33,14 @@ public class Inventory {
     }
 
     public boolean addItemFromChest (Item item) {
-        //TODO: returns false until implemented.
-        return false;
+        StorageItem dieTruhe = (StorageItem) Textie.itemMap.get(Consts.TRUHE);
+        if(inventory.size() < MAX_SLOTS_INVENTORY && dieTruhe.hasItem(item)){
+            inventory.add(item);
+            dieTruhe.removeItem(item);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 	/*
