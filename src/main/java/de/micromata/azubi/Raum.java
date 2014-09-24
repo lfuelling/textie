@@ -282,6 +282,19 @@ public abstract class Raum {
         }
     }
 
+    void doTakeFromChest (Item item){
+        if(item.isPickable()) {
+            if(inventory.addItemFromChest(item)) {
+
+                System.out.println(item.getName() + " zum Inventar hinzugefügt.");
+            } else {
+                System.out.println("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
+            }
+        } else {
+            System.out.println("Du kannst dieses Item nicht aufheben.");
+        }
+    }
+
     void doNimm(Item item) {
         if(item.isPickable()) {
             if(inventory.addItem(item)) {

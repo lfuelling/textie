@@ -32,6 +32,11 @@ public class Inventory {
         }
     }
 
+    public boolean addItemFromChest (Item item) {
+        //TODO: returns false until implemented.
+        return false;
+    }
+
 	/*
      * public boolean addToInventory(int objectID, Raum raum) { List <Item>items = raum.items; int objektInUmgebung = -128; for (int i = 0; i <
 	 * MAX_SLOTS_INVENTORY; i++) { if (inventory[i] == 0) { inventory[i] = objectID; for (int y = 0; y < items.size(); y++) { if ( items.get(y).getID() ==

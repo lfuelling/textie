@@ -58,10 +58,17 @@ public class Textie {
             currentRaum.falltuerUsed = false;
             String command = IOUtils.readLine("Was willst du tun? ");
             String[] parsed_command = Textie.parseInput(command);
+            String[] parsed_args = Textie.parseInput(parsed_command[1]);
             int count = 0;
+            int args = 0;
             for (int x = 0; x < parsed_command.length; x++) {
                 if(parsed_command[x] != null) {
                     count++;
+                }
+            }
+            for (int x = 0; x < parsed_args.length; x++) {
+                if(parsed_args[x] != null) {
+                    args++;
                 }
             }
             if(parsed_command.length < 2) {
@@ -77,7 +84,19 @@ public class Textie {
                         currentRaum.printHelp();
                         break;
                     case "nimm":
-                        currentRaum.doNimm(itemToUse);
+                        if(args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
+                            switch(parsed_args[1].toLowerCase()) {
+                                case "aus truhe":
+                                    currentRaum.doTakeFromChest(Textie.itemMap.get(parsed_args[0].toUpperCase()));
+                                    break;
+                                default:
+                                    System.out.println("Unbekanntes Item: " + parsed_command[1]);
+                                    break;
+                            }
+                        }
+                        else {
+                            currentRaum.doNimm(itemToUse);
+                        }
                         break;
                     case "benutze":
                         currentRaum.doBenutze(itemToUse);
