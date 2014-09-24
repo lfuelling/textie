@@ -42,7 +42,7 @@ public abstract class Raum {
     }
 
     /**
-     * @param objectID
+     * @param item
      * @return Returns -128 when the item is not in the room
      */
     public int find(Item item) {
