@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 public class IOUtils {
 
-    public static String readLine(String promt){
+    public static String readLine(String promt) {
 
         System.out.print(promt);
 
@@ -22,10 +22,9 @@ public class IOUtils {
     }
 
     /**
-     *
-     * @author Lukas Fülling
      * @param string to convert
      * @return Returns the string which was given as parameter where the first letter is uppercase and every other is lowercase (ex. "LuKaS MaEd DiS" => "Lukas maed dis")
+     * @author Lukas Fülling
      */
     public static String convertToName(String stc) {
         stc = stc.substring(0, 1).toUpperCase() + stc.substring(1).toLowerCase();

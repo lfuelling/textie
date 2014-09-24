@@ -34,7 +34,7 @@ public class Human {
     }
 
     void doReden(String[] parsed_command, int count) {
-        if (questDone == true) {
+        if(questDone == true) {
             switch (dialogNumber) {
                 case 0:
                     System.out.println(dialog1);
@@ -51,24 +51,22 @@ public class Human {
     }
 
     public void doGeben(String[] parsed_command, int count) {
-        if (count == 2) {
+        if(count == 2) {
             String itemToUse = IOUtils.convertToName(parsed_command[1]);
             if(itemToUse.equals(questItemName)) {
-                if(Textie.inventory.giveItem(Textie.itemMap.get(parsed_command[1].toUpperCase()))){
+                if(Textie.inventory.giveItem(Textie.itemMap.get(parsed_command[1].toUpperCase()))) {
                     System.out.println(questDoneText);
                     questDone = true;
-                }
-                else {
+                } else {
                     System.out.println("Item nicht im Inventar.");
                 }
-            }
-            else {
+            } else {
                 System.out.println("Das brauche ich nicht.");
             }
         }
     }
 
-    public boolean getQuestState(){
+    public boolean getQuestState() {
         return questDone;
     }
 

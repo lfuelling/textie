@@ -7,7 +7,6 @@ public class Item {
     private String name;
     private boolean pickable;
 
-
     public Item(String name, String untersucheText, String benutzeText, boolean pickable) {
         this.name = name;
         this.untersucheText = untersucheText;
@@ -15,29 +14,30 @@ public class Item {
         this.pickable = pickable;
     }
 
-    public boolean isPickable(){
+    public boolean isPickable() {
         return this.pickable;
     }
+
     public String getName() {
 
         return this.name;
         // return getObjectName(objectID);
     }
 
-
     public void benutzen() {
         System.out.println(benutzeText);
     }
 
     public void untersuchen() {
-        if (untersucheText.equals("") == true) {
+        if(untersucheText.equals("") == true) {
             // TODO itemgeschlechter hinzufügen und Text anpassen
             System.out.println("Da ist ein/e " + this.getName() + ".");
         }
         System.out.println(untersucheText);
     }
-    public boolean isToggle(){
-        if (this instanceof ToggleItem) {
+
+    public boolean isToggle() {
+        if(this instanceof ToggleItem) {
             return true;
         }
         return false;

@@ -1,8 +1,6 @@
 package de.micromata.azubi;
 
-
-public class Consts
-{
+public class Consts {
 
     //ITEMs
     public static final String FACKEL = "FACKEL";
@@ -23,8 +21,6 @@ public class Consts
     //NPCs
 
     public static final String ALTER_MANN = "ALTER MANN";
-
-
 
 
 }

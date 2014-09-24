@@ -1,6 +1,6 @@
 package de.micromata.azubi;
 
-public class ToggleItem extends Item{
+public class ToggleItem extends Item {
 
     private boolean state;
 
@@ -9,11 +9,11 @@ public class ToggleItem extends Item{
         state = this.state;
     }
 
-    public boolean getState () {
+    public boolean getState() {
         return state;
     }
 
-    public void setState (boolean stateToSet) {
+    public void setState(boolean stateToSet) {
         state = stateToSet;
     }
 }
