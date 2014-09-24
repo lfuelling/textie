@@ -11,37 +11,21 @@ import java.util.Map;
  */
 
 public class Textie {
-
     static int[] umgebung = new int[4];
-
     static String playerName = "Fremder";
-
     public static final int STATE = 0;
-
     public static final int DEAD = 1;
-
     public static final boolean ALIVE = true;
-
     static Map<String, Item> itemMap = new HashMap<String, Item>();
-
     static Map<String, Human> humanMap = new HashMap<String, Human>();
-
     static Inventory inventory = new Inventory(ALIVE);
-
     static Raum raum1;
-
     static Raum raum2;
-
     static Raum raum3;
-
     static Raum raum4;
-
     static Raum currentRaum = raum1;
-
     static Human currentHuman;
-
     static LinkedList<Raum> raumList = new LinkedList<Raum>();
-
     static ListIterator<Raum> listIterator;
 
     public static void main(String[] args) {

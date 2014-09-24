@@ -1,7 +1,6 @@
 package de.micromata.azubi;
 
 public class Item {
-
     private String untersucheText = "";
     private String benutzeText;
     private String name;
