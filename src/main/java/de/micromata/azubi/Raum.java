@@ -242,6 +242,7 @@ public abstract class Raum {
                 case "Sack":
                     Item sack = Textie.itemMap.get(itemName.toUpperCase());
                     sack.benutzen();
+                    inventory.removeItem(Textie.itemMap.get(Consts.SACK));
                     inventory.setInventorySize(2);
                     break;
                 case "Schalter":
