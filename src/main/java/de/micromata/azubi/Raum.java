@@ -262,7 +262,19 @@ public abstract class Raum {
                     Textie.itemMap.get(Consts.SCHWERT).benutzen();
                     Textie.ende();
                     break;
-
+                case "Schlüssel":
+                    StorageItem truhe = (StorageItem) Textie.itemMap.get(Consts.TRUHE);
+                    if(Textie.currentRaum.equals(Textie.raum1)) {
+                        truhe.lockState = false;
+                        System.out.println("Du öffnest die Truhe mit dem Schlüssel.");
+                    } else {
+                        Item itemToUse = Textie.itemMap.get(itemName.toUpperCase());
+                        if(itemToUse == null) {
+                            System.out.println("Das Objekt gibt es nicht.");
+                        } else {
+                            itemToUse.benutzen();
+                        }
+                    }
                 default:
                     if(Textie.currentRaum.equals(Textie.raum3)) {
                         Item item5 = Textie.itemMap.get(Consts.FACKEL);
