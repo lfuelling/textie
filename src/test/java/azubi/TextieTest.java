@@ -9,7 +9,7 @@ import org.junit.After;
 /** 
 * Textie Tester. 
 * 
-* @author <Authors name> 
+* @author Lukas Fülling
 * @since <pre>Sep 25, 2014</pre> 
 * @version 1.0 
 */ 
