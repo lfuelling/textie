@@ -7,10 +7,12 @@ public class Raum1 extends Raum {
         super(inventory, number, null, items);
     }
 
-    public void start() {
+    public void start(boolean withPrompt) {
         south = false;
         System.out.println("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
-        Textie.prompt();
+        if (withPrompt == true) {
+          Textie.prompt();
+        }
     }
 
     @Override

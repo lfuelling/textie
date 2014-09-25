@@ -10,7 +10,7 @@ public class Raum4 extends Raum {
         Textie.setCurrentHuman(human);
     }
 
-    public void start() {
+    public void start(boolean withPrompt) {
 
         nord = false;
 
@@ -23,6 +23,7 @@ public class Raum4 extends Raum {
         // nord
         if(nord) {
             System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
+            nord=false;
             return true;
         }
         return false;

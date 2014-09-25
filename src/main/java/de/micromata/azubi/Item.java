@@ -1,6 +1,20 @@
 package de.micromata.azubi;
 
 public class Item {
+    public static final String SCHALTER = "Schalter";
+    public static final String TRUHE = "Truhe";
+    public static final String SCHLÜSSEL = "Schlüssel";
+    public static final String FEUERZEUG = "Feuerzeug";
+    public static final String SCHWERT = "Schwert";
+    public static final String BRECHEISEN = "Brecheisen";
+    public static final String QUIETSCHEENTE = "Quietscheente";
+    public static final String FACKEL = "Fackel";
+    public static final String SACK = "Sack";
+    public static final String FALLTÜR = "Falltür";
+    public static final String WHITEBOARD = "Whiteboard";
+    public static final String STEIN = "Stein";
+    public static final String HANDTUCH = "Handtuch";
+
     private String untersucheText = "";
     private String benutzeText;
     private String name;

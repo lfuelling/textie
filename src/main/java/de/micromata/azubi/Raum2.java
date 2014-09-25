@@ -7,7 +7,7 @@ public class Raum2 extends Raum {
         super(inventory, number, null, items);
     }
 
-    public void start() {
+    public void start(boolean withPrompt) {
 
         west = false;
 
