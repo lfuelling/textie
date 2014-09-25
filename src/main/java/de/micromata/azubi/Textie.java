@@ -112,7 +112,7 @@ public class Textie {
                         currentRaum.doGehen(parsed_command, count);
                         break;
                     case "rede":
-                        currentHuman.doReden(parsed_command, count);
+                        currentHuman.doReden();
                         break;
                     case "gib":
                         currentHuman.doGeben(parsed_command, count);
@@ -149,8 +149,8 @@ public class Textie {
 
     private static void initHumans() {
         humanMap.put(Consts.ALTER_MANN, new Human(
-                "Gordon", "Probier' doch mal, die Karte zu benutzen.", "Hast du irgendwo GabeN gesehen? Wir wollten uns treffen...",
-                "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.", itemMap.get(Consts.BRECHEISEN)));
+                "Gordon", "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...", "Hast du irgendwo GabeN gesehen? Wir wollten uns treffen...",
+                "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.", itemMap.get(Consts.BRECHEISEN), itemMap.get(Consts.SCHLÜSSEL)));
     }
 
     private static void initItems() {

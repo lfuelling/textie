@@ -7,7 +7,6 @@ package de.micromata.azubi;
  */
 
 public class Human {
-
     // Anzahl der ausgegebenen Dialoge
     int dialogNumber = 0;
     private boolean questDone = false;
@@ -16,10 +15,12 @@ public class Human {
     private String questText;
     private String questDoneText;
     private String name;
+    private boolean giveItem = false;
     Item questItem;
+    Item rewarditem;
     String questItemName;
 
-    public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item questItem) {
+    public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item questItem, Item rewardItem) {
         this.name = name;
         this.dialog1 = dialog1;
         this.dialog2 = dialog2;
@@ -27,28 +28,40 @@ public class Human {
         this.questDoneText = questDoneText;
         this.questItem = questItem;
         this.questItemName = questItem.getName();
+        this.rewarditem = rewardItem;
     }
 
     public String getName() {
         return this.name;
     }
 
-    void doReden(String[] parsed_command, int count) {
+    void doReden() {
         if(questDone == true) {
-            switch (dialogNumber) {
-                case 0:
-                    System.out.println(dialog1);
-                    dialogNumber = 1;
-                    break;
-                case 1:
-                    System.out.println(dialog2);
-                    dialogNumber = 0;
-                    break;
+            if(giveItem == true) {
+                if(Textie.inventory.recieveItem(rewarditem)) {
+                    System.out.println("Hier, bitte schön.");
+                    giveItem = false;
+                } else {
+                    System.out.println("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
+                    giveItem = true;
+                }
+            } else {
+                switch (dialogNumber) {
+                    case 0:
+                        System.out.println(dialog1);
+                        dialogNumber = 1;
+                        break;
+                    case 1:
+                        System.out.println(dialog2);
+                        dialogNumber = 0;
+                        break;
+                }
             }
         } else {
             System.out.println(questText);
         }
     }
+
 
     public void doGeben(String[] parsed_command, int count) {
         if(count == 2) {
@@ -57,6 +70,12 @@ public class Human {
                 if(Textie.inventory.giveItem(Textie.itemMap.get(parsed_command[1].toUpperCase()))) {
                     System.out.println(questDoneText);
                     questDone = true;
+                    if(Textie.inventory.recieveItem(rewarditem)) {
+
+                    } else {
+                        System.out.println("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
+                        giveItem = true;
+                    }
                 } else {
                     System.out.println("Item nicht im Inventar.");
                 }
@@ -64,10 +83,6 @@ public class Human {
                 System.out.println("Das brauche ich nicht.");
             }
         }
-    }
-
-    public boolean getQuestState() {
-        return questDone;
     }
 
 }

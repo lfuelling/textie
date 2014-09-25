@@ -268,12 +268,7 @@ public abstract class Raum {
                         truhe.lockState = false;
                         System.out.println("Du öffnest die Truhe mit dem Schlüssel.");
                     } else {
-                        Item itemToUse = Textie.itemMap.get(itemName.toUpperCase());
-                        if(itemToUse == null) {
-                            System.out.println("Das Objekt gibt es nicht.");
-                        } else {
-                            itemToUse.benutzen();
-                        }
+                        System.out.println("Hier gibt es nichts, was man aufschließen könnte.");
                     }
                 default:
                     if(Textie.currentRaum.equals(Textie.raum3)) {
