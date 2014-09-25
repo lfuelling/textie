@@ -186,11 +186,9 @@ public class Textie {
 
     public static void initRooms() {
         raum1 = new Raum1(inventory, 1, itemMap.get(Consts.FACKEL), itemMap.get(Consts.HANDTUCH), itemMap.get(Consts.TRUHE), itemMap.get(Consts.SCHALTER));
-        raum2 = new Raum2(inventory, 2, itemMap.get(Consts.SCHWERT), itemMap.get(Consts.FEUERZEUG), itemMap.get(Consts.SCHLÜSSEL), itemMap.get(Consts.STEIN));
+        raum2 = new Raum2(inventory, 2, itemMap.get(Consts.SCHWERT), itemMap.get(Consts.FEUERZEUG), itemMap.get(Consts.STEIN));
         raum3 = new Raum3(inventory, 3, itemMap.get(Consts.QUIETSCHEENTE), itemMap.get(Consts.WHITEBOARD), itemMap.get(Consts.BRECHEISEN), itemMap.get(Consts.FALLTÜR));
-        raum4 = new Raum4(inventory, 4, humanMap.get(Consts.ALTER_MANN), itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK)); // TODO Schlüssel durch die
-        // restlichen Items ersetzen
-        // (Sack, etc.)
+        raum4 = new Raum4(inventory, 4, humanMap.get(Consts.ALTER_MANN), itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK));
         raumList.addFirst(raum1);
         raumList.add(raum2);
         raumList.add(raum3);
