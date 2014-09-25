@@ -71,7 +71,7 @@ public class Human {
                     System.out.println(questDoneText);
                     questDone = true;
                     if(Textie.inventory.recieveItem(rewarditem)) {
-
+                        System.out.println("Im Gegenzug bekommst du von mir auch etwas. Bitteschön.");
                     } else {
                         System.out.println("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
                         giveItem = true;

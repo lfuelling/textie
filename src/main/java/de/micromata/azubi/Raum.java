@@ -265,8 +265,12 @@ public abstract class Raum {
                 case "Schlüssel":
                     StorageItem truhe = (StorageItem) Textie.itemMap.get(Consts.TRUHE);
                     if(Textie.currentRaum.equals(Textie.raum1)) {
-                        truhe.lockState = false;
-                        System.out.println("Du öffnest die Truhe mit dem Schlüssel.");
+                        if(truhe.lockState==true) {
+                            truhe.lockState = false;
+                            System.out.println("Du öffnest die Truhe mit dem Schlüssel.");
+                        } else {
+                            System.out.println("Die Truhe ist bereits aufgeschlossen.");
+                        }
                     } else {
                         System.out.println("Hier gibt es nichts, was man aufschließen könnte.");
                     }
