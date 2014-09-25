@@ -1,5 +1,7 @@
 package de.micromata.azubi;
 
+import com.sun.tools.internal.jxc.ap.Const;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -264,15 +266,18 @@ public abstract class Raum {
                     break;
                 case "Schlüssel":
                     StorageItem truhe = (StorageItem) Textie.itemMap.get(Consts.TRUHE);
-                    if(Textie.currentRaum.equals(Textie.raum1)) {
+                    if(Textie.currentRaum.hasItem(Textie.itemMap.get(Consts.TRUHE))) {
                         if(truhe.lockState==true) {
                             truhe.lockState = false;
                             System.out.println("Du öffnest die Truhe mit dem Schlüssel.");
+                            break;
                         } else {
                             System.out.println("Die Truhe ist bereits aufgeschlossen.");
+                            break;
                         }
                     } else {
                         System.out.println("Hier gibt es nichts, was man aufschließen könnte.");
+                        break;
                     }
                 default:
                     if(Textie.currentRaum.equals(Textie.raum3)) {
@@ -316,15 +321,19 @@ public abstract class Raum {
     }
 
     void doNimm(Item item) {
-        if(item.isPickable()) {
-            if(inventory.addItem(item)) {
-
-                System.out.println(item.getName() + " zum Inventar hinzugefügt.");
-            } else {
-                System.out.println("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
-            }
+        if(item == null) {
+            System.out.println("Unbekanntes Item.");
         } else {
-            System.out.println("Du kannst dieses Item nicht aufheben.");
+            if(item.isPickable()) {
+                if(inventory.addItem(item)) {
+
+                    System.out.println(item.getName() + " zum Inventar hinzugefügt.");
+                } else {
+                    System.out.println("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
+                }
+            } else {
+                System.out.println("Du kannst dieses Item nicht aufheben.");
+            }
         }
     }
 

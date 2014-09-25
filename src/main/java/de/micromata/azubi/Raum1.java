@@ -17,6 +17,7 @@ public class Raum1 extends Raum {
     public boolean isFinished() {
         if(south) {
             System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
+            south = false;
             return true;
         }
 

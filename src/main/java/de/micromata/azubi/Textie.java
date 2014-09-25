@@ -58,7 +58,12 @@ public class Textie {
             currentRaum.falltuerUsed = false;
             String command = IOUtils.readLine("Was willst du tun? ");
             String[] parsed_command = Textie.parseInput(command);
-            String[] parsed_args = Textie.parseInput(parsed_command[1]);
+            String[] parsed_args = new String[2];
+            if (parsed_command[1] == null) {
+                parsed_args[0] = "nichts";
+            } else {
+                parsed_args = Textie.parseInput(parsed_command[1]);
+            }
             int count = 0;
             int args = 0;
             for (int x = 0; x < parsed_command.length; x++) {
