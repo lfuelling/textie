@@ -2,10 +2,8 @@ package test.de.micromata.azubi;
 
 import de.micromata.azubi.Command;
 import de.micromata.azubi.Dungeon;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+
 import static org.junit.Assert.fail;
 
 /**
@@ -25,6 +23,11 @@ public class TextieTest {
         start();
     }
 
+    @After
+    public void testAfter() {
+        dungeon.setDungeon(null);
+    }
+
 
     /* TESTDURCHGÄNGE */
     @Test
@@ -33,6 +36,7 @@ public class TextieTest {
         gehe("süd");
         nimm("schwert");
         benutze("schwert");
+        System.out.print("\n\n");
     }
 
     @Test
@@ -44,7 +48,32 @@ public class TextieTest {
         nimm("truhe");
         untersuche("truhe");
         benutze("truhe");
-
+        untersuche("Schalter");
+        benutze("Schalter");
+        nimm("handtuch");
+        untersuche("Handtuch");
+        benutze("handtuch");
+        untersuche("inventar");
+        untersuche("raum");
+        vernichte("handtuch");
+        untersuche("inventar");
+        untersuche("raum");
+        System.err.println("\nGehe in Raum 2\n");
+        gehe("süd");
+        untersuche("raum");
+        nimm("stein");
+        untersuche("stein");
+        benutze("stein");
+        untersuche("raum");
+        untersuche("inventar");
+        vernichte("stein");
+        untersuche("raum");
+        untersuche("inventar");
+        nimm("feuerzeug");
+        untersuche("feuerzeug");
+        benutze("feuerzeug");
+        untersuche("inventar");
+        untersuche("raum");
         Assert.assertEquals(2,dungeon.inventory.getInventory().size());
     }
 
@@ -52,7 +81,7 @@ public class TextieTest {
 
     private TextieTest gehe(String richtung) {
       try {
-        Thread.sleep(2000);
+        Thread.sleep(500);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -62,7 +91,7 @@ public class TextieTest {
 
     private TextieTest nimm(String text) {
       try {
-        Thread.sleep(2000);
+        Thread.sleep(500);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -89,7 +118,7 @@ public class TextieTest {
 
     private TextieTest benutze(String item) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -99,7 +128,7 @@ public class TextieTest {
 
     private TextieTest untersuche(String item) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -109,7 +138,7 @@ public class TextieTest {
 
     private TextieTest rede(String human) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -119,11 +148,21 @@ public class TextieTest {
 
     private TextieTest gib(String item) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         dungeon.executeCommand(new String[]{Command.GIB, item}, new String[]{item});
+        return this;
+    }
+
+    private TextieTest vernichte(String item) {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        dungeon.executeCommand(new String[]{Command.VERNICHTE, item}, new String[]{item});
         return this;
     }
 

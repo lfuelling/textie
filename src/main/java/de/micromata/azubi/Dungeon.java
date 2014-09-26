@@ -32,7 +32,11 @@ public class Dungeon {
     return dungeon;
   }
 
-  public void prompt() {
+    public static void setDungeon(Dungeon dungeon) {
+        Dungeon.dungeon = dungeon;
+    }
+
+    public void prompt() {
     do {
       currentRaum.falltuerUsed = false;
       String command = IOUtils.readLine("Was willst du tun? ");
