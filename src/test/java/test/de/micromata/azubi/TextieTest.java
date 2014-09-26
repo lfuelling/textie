@@ -74,7 +74,7 @@ public class TextieTest {
         benutze("feuerzeug");
         untersuche("inventar");
         untersuche("raum");
-        Assert.assertEquals(2,dungeon.inventory.getInventory().size());
+        Assert.assertEquals(1,dungeon.inventory.getInventory().size());
     }
 
     /* SUBFUNKTIONEN */
