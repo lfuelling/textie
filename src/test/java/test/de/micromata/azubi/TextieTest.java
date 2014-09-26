@@ -2,7 +2,6 @@ package test.de.micromata.azubi;
 
 import de.micromata.azubi.Command;
 import de.micromata.azubi.Dungeon;
-import de.micromata.azubi.Textie;
 import org.junit.Test;
 
 /** 
@@ -50,7 +49,7 @@ public class TextieTest {
           do {
               dungeon.runGame(false);
               //Thread.sleep(1000);
-          } while (!Textie.inventory.isAlive());
+          } while (!Dungeon.getDungeon().inventory.isAlive());
         }
       };
 

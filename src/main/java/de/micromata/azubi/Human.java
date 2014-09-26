@@ -38,7 +38,7 @@ public class Human {
     void doReden() {
         if(questDone == true) {
             if(giveItem == true) {
-                if(Textie.inventory.recieveItem(rewarditem)) {
+                if(Dungeon.getDungeon().inventory.recieveItem(rewarditem)) {
                     System.out.println("Hier, bitte schön.");
                     giveItem = false;
                 } else {
@@ -67,10 +67,10 @@ public class Human {
         if(count == 2) {
             String itemToUse = IOUtils.convertToName(parsed_command[1]);
             if(itemToUse.equals(questItemName)) {
-                if(Textie.inventory.giveItem(Textie.itemMap.get(parsed_command[1].toUpperCase()))) {
+                if(Dungeon.getDungeon().inventory.giveItem(Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase()))) {
                     System.out.println(questDoneText);
                     questDone = true;
-                    if(Textie.inventory.recieveItem(rewarditem)) {
+                    if(Dungeon.getDungeon().inventory.recieveItem(rewarditem)) {
                         System.out.println("Im Gegenzug bekommst du von mir auch etwas. Bitteschön.");
                     } else {
                         System.out.println("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");

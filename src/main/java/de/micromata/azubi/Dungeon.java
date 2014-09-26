@@ -36,12 +36,12 @@ public class Dungeon {
     do {
       currentRaum.falltuerUsed = false;
       String command = IOUtils.readLine("Was willst du tun? ");
-      String[] parsed_command = Textie.parseInput(command);
+      String[] parsed_command =  Dungeon.getDungeon().parseInput(command);
       String[] parsed_args = new String[2];
       if(parsed_command[1] == null) {
         parsed_args[0] = "nichts";
       } else {
-        parsed_args = Textie.parseInput(parsed_command[1]);
+        parsed_args =  Dungeon.getDungeon().parseInput(parsed_command[1]);
       }
       executeCommand(parsed_command, parsed_args);
     } while (!currentRaum.isFinished());
@@ -209,6 +209,10 @@ public class Dungeon {
     humanMap.put(Consts.ALTER_MANN, new Human(
         "Gordon", "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...", "...",
         "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.", itemMap.get(Consts.BRECHEISEN), itemMap.get(Consts.SCHLÜSSEL)));
+  }
+
+  public String[] parseInput(String command) {
+    return command.split(" ", 2);
   }
 
 }
