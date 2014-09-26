@@ -18,7 +18,7 @@ public class Textie {
     public static final boolean ALIVE = true;
     static Map<String, Item> itemMap = new HashMap<>();
     static Map<String, Human> humanMap = new HashMap<>();
-    static Inventory inventory = new Inventory(ALIVE);
+    public static Inventory inventory = new Inventory(ALIVE);
     static Raum currentRaum;
     static Human currentHuman;
     static LinkedList<Raum> raumList = new LinkedList<>();
@@ -34,6 +34,7 @@ public class Textie {
         Textie.initItems(); // TODO Die Karte braucht die Räume.
         Textie.initHumans(); // Humans benötigen Items
         Textie.initRooms(); // Räume benötigen Humans und Items
+        System.err.println("\nSpiel fertig intanziert !");
     }
 
     public static void setCurrentHuman(Human hts) {
@@ -43,14 +44,19 @@ public class Textie {
     public static void runGame(boolean withPrompt) {
         currentRaum = raumList.getFirst();
         listIterator = raumList.listIterator(1);
+        currentRaum.start(withPrompt);
+        System.err.println("Raum: " + currentRaum.roomNumber);
         while (inventory.isAlive()) {
-            currentRaum.start(withPrompt);
+            if (currentRaum.isFinished() == false) {
+              continue;
+            }
             if(listIterator.hasNext()) {
                 currentRaum = listIterator.next();
             } else {
                 listIterator = raumList.listIterator(1);
                 currentRaum = raumList.getFirst();
             }
+            currentRaum.start(withPrompt);
         }
         Textie.ende();
     }
@@ -70,7 +76,18 @@ public class Textie {
         } while (!currentRaum.isFinished());
     }
 
+//    public static void warten() {
+//      do {
+//        currentRaum.falltuerUsed = false;
+//      } while (!currentRaum.isFinished());
+//    }
+
     public static void executeCommand(String[] parsed_command, String[] parsed_args) {
+        if (currentRaum == null) {
+          System.err.println("currentRaum nicht da");
+          // Kein raum nichts tun
+          return;
+        }
         int count = 0;
         int args = 0;
         for (String aParsed_command : parsed_command) {
@@ -207,7 +224,7 @@ public class Textie {
         raumList.add(raum);
         raum = new Raum3(inventory, counter++, itemMap.get(Consts.QUIETSCHEENTE), itemMap.get(Consts.WHITEBOARD), itemMap.get(Consts.BRECHEISEN), itemMap.get(Consts.FALLTÜR));
         raumList.add(raum);
-        raum = new Raum4(inventory, counter, humanMap.get(Consts.ALTER_MANN), itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK));
+        raum = new Raum4(inventory, counter, itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK));
         raumList.add(raum);
     }
 

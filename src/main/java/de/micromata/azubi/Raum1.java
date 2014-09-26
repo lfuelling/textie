@@ -4,23 +4,21 @@ public class Raum1 extends Raum {
     boolean south = false;
 
     public Raum1(Inventory inventory, int number, Item... items) {
-        super(inventory, number, null, items);
+        super(inventory, number, items);
     }
 
     public void start(boolean withPrompt) {
         south = false;
-        System.out.println("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
-        if (withPrompt == true) {
-          Textie.prompt();
-        }
+        Dungeon.getDungeon().printText("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
+        warten(withPrompt);
     }
 
-    @Override
+
+  @Override
     public boolean isFinished() {
         if(south) {
-            System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
-            south = false;
-            return true;
+           south = false;
+           return true;
         }
 
         return false;
@@ -29,10 +27,11 @@ public class Raum1 extends Raum {
     @Override
     public void goSouth() {
         // Fackel muss im inventar sein, bevor south = true gesetzt wird
-        if(inventory.isInInventory(Textie.itemMap.get(Consts.FACKEL))) {
+        if(inventory.isInInventory(Dungeon.getDungeon().itemMap.get(Consts.FACKEL))) {
             south = true;
+            Dungeon.getDungeon().printText("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
         } else {
-            System.out.println("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");
+            Dungeon.getDungeon().printText("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");
         }
 
     }

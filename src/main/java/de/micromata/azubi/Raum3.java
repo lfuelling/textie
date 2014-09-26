@@ -5,17 +5,18 @@ public class Raum3 extends Raum {
 
     public Raum3(Inventory inventory, int number, Item... items) {
         // null, denn es gibt in den ersten drei Räumen nix lebendiges (oder doch?!... *grusel*)
-        super(inventory, number, null, items);
+        super(inventory, number, items);
     }
 
     public void start(boolean withPrompt) {
         ToggleItem fackel = (ToggleItem) Textie.itemMap.get(Consts.FACKEL);
         if(fackel.getState() == true) {
-            System.out.println("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
+            printText("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
             fackel.setState(false);
         }
-        System.out.println("Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.");
-        Textie.prompt();
+        printText("Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.");
+
+        warten(withPrompt);
     }
 
     @Override

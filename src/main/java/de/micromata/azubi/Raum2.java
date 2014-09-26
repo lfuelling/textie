@@ -4,15 +4,13 @@ public class Raum2 extends Raum {
     boolean west = false;
 
     public Raum2(Inventory inventory, int number, Item... items) {
-        super(inventory, number, null, items);
+        super(inventory, number, items);
     }
 
     public void start(boolean withPrompt) {
-
         west = false;
-
         System.out.println("Du kommst in einen weiteren dunklen Raum.");
-        Textie.prompt();
+        warten(withPrompt);
     }
 
     @Override
@@ -28,7 +26,7 @@ public class Raum2 extends Raum {
 
     @Override
     public void goWest() {
-        if(inventory.isInInventory(Textie.itemMap.get(Consts.FEUERZEUG))) {
+        if(inventory.isInInventory(Dungeon.getDungeon().itemMap.get(Consts.FEUERZEUG))) {
             west = true;
         } else {
             System.out.println("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");

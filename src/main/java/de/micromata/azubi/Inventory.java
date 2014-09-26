@@ -23,9 +23,9 @@ public class Inventory {
     }
 
     public boolean addItem(Item item) {
-        if(inventory.size() < MAX_SLOTS_INVENTORY && Textie.currentRaum.hasItem(item)) {
+        if(inventory.size() < MAX_SLOTS_INVENTORY && Dungeon.getDungeon().currentRaum.hasItem(item)) {
             inventory.add(item);
-            Textie.currentRaum.removeItem(item);
+            Dungeon.getDungeon().currentRaum.removeItem(item);
             return true;
         } else {
             return false;
@@ -42,7 +42,7 @@ public class Inventory {
     }
 
     public boolean addItemFromChest (Item item) {
-        StorageItem dieTruhe = (StorageItem) Textie.itemMap.get(Consts.TRUHE);
+        StorageItem dieTruhe = (StorageItem) Dungeon.getDungeon().itemMap.get(Consts.TRUHE);
         if(inventory.size() < MAX_SLOTS_INVENTORY && dieTruhe.hasItem(item)){
             inventory.add(item);
             dieTruhe.removeItem(item);
@@ -59,7 +59,7 @@ public class Inventory {
 	 */
 
     public boolean removeItem(Item item) {
-        if(inventory.remove(item) && Textie.currentRaum.addItem(item))
+        if(inventory.remove(item) && Dungeon.getDungeon().currentRaum.addItem(item))
             return true;
         return false;
     }
