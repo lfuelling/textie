@@ -16,12 +16,12 @@ public class Textie {
     public static final int STATE = 0;
     public static final int DEAD = 1;
     public static final boolean ALIVE = true;
-    static Map<String, Item> itemMap = new HashMap<String, Item>();
-    static Map<String, Human> humanMap = new HashMap<String, Human>();
+    static Map<String, Item> itemMap = new HashMap<>();
+    static Map<String, Human> humanMap = new HashMap<>();
     static Inventory inventory = new Inventory(ALIVE);
     static Raum currentRaum;
     static Human currentHuman;
-    static LinkedList<Raum> raumList = new LinkedList<Raum>();
+    static LinkedList<Raum> raumList = new LinkedList<>();
     static ListIterator<Raum> listIterator;
 
     public static void main(String[] args) {
@@ -45,7 +45,7 @@ public class Textie {
         listIterator = raumList.listIterator(1);
         while (inventory.isAlive()) {
             currentRaum.start(withPrompt);
-            if (listIterator.hasNext()) {
+            if(listIterator.hasNext()) {
                 currentRaum = listIterator.next();
             } else {
                 listIterator = raumList.listIterator(1);
@@ -61,33 +61,33 @@ public class Textie {
             String command = IOUtils.readLine("Was willst du tun? ");
             String[] parsed_command = Textie.parseInput(command);
             String[] parsed_args = new String[2];
-            if (parsed_command[1] == null) {
+            if(parsed_command[1] == null) {
                 parsed_args[0] = "nichts";
             } else {
                 parsed_args = Textie.parseInput(parsed_command[1]);
             }
             executeCommand(parsed_command, parsed_args);
-        } while (currentRaum.isFinished() == false);
+        } while (!currentRaum.isFinished());
     }
 
     public static void executeCommand(String[] parsed_command, String[] parsed_args) {
         int count = 0;
         int args = 0;
-        for (int x = 0; x < parsed_command.length; x++) {
-            if(parsed_command[x] != null) {
+        for (String aParsed_command : parsed_command) {
+            if(aParsed_command != null) {
                 count++;
             }
         }
-        for (int x = 0; x < parsed_args.length; x++) {
-            if(parsed_args[x] != null) {
+        for (String parsed_arg : parsed_args) {
+            if(parsed_arg != null) {
                 args++;
             }
         }
         if(parsed_command.length < 2) {
-            if(parsed_command[0].equals(Command.HILFE)){
+            if(parsed_command[0].equals(Command.HILFE)) {
                 currentRaum.printHelp();
             } else {
-                printText("Unbekannter Befehl oder fehlende Argumente: " + parsed_command[1]);
+                printText("Unbekannter Befehl oder fehlende Argumente: " + parsed_command[0]);
             }
         } else {
             Item itemToUse = Textie.itemMap.get(parsed_command[1].toUpperCase());
@@ -97,7 +97,7 @@ public class Textie {
                     break;
                 case Command.NIMM:
                     if(args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
-                        switch(parsed_args[1].toLowerCase()) {
+                        switch (parsed_args[1].toLowerCase()) {
                             case "aus truhe":
                                 currentRaum.doTakeFromChest(Textie.itemMap.get(parsed_args[0].toUpperCase()));
                                 break;
@@ -105,8 +105,7 @@ public class Textie {
                                 printText("Unbekanntes Item: " + parsed_command[1]);
                                 break;
                         }
-                    }
-                    else {
+                    } else {
                         currentRaum.doNimm(itemToUse);
                     }
                     break;
@@ -130,7 +129,7 @@ public class Textie {
                     currentHuman.doGeben(parsed_command, count);
                     break;
                 default:
-                    printText("Unbekannter Befehl: " + parsed_command[1]);
+                    printText("Unbekannter Befehl: " + parsed_command[0]);
                     break;
             }
         }
@@ -140,16 +139,16 @@ public class Textie {
         printText("Herzlichen Glückwunsch " + playerName + "!");
         printText("Du bist aus deinem Traum erwacht und siehst, dass du");
         printText("in deinem Bett liegst. Du spürst dein Herz stark und schnell schlagen");
-        printText("bist aber froh, dass du aufwachen konntest.");
+        printText("und bist froh, dass du aufgewacht bist.");
         System.exit(0);
     }
 
     public static void showIntro(String text) {
-        if (text == null || text == "") {
+        if(text == null || text.equals("")) {
             printText("\n\nWillkommen " + playerName + ".");
             printText("Falls du Hilfe bei der Bedienung brauchst, tippe \'hilfe\' ein.");
             playerName = IOUtils.readLine("\nWie ist dein Name? ");
-            if(playerName == null || playerName == "") {
+            if(playerName == null || playerName.equals("")) {
                 playerName = "Fremder";
             }
         } else {
@@ -160,13 +159,12 @@ public class Textie {
     }
 
     public static String[] parseInput(String command) {
-        String[] result = command.split(" ", 2);
-        return result;
+        return command.split(" ", 2);
     }
 
     private static void initHumans() {
         humanMap.put(Consts.ALTER_MANN, new Human(
-                "Gordon", "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...", "Hast du irgendwo GabeN gesehen? Wir wollten uns treffen...",
+                "Gordon", "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...", "...",
                 "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.", itemMap.get(Consts.BRECHEISEN), itemMap.get(Consts.SCHLÜSSEL)));
     }
 
@@ -214,7 +212,7 @@ public class Textie {
     }
 
     public static void printText(String text) {
-        System.out.println(Textie.currentRaum == null ? text : "[" + Textie.currentRaum.roomNumber + "], " +  text);
+        System.out.println(Textie.currentRaum == null ? text : "[" + Textie.currentRaum.roomNumber + "], " + text);
     }
 
 }
