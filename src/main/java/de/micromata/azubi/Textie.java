@@ -8,5 +8,6 @@ package de.micromata.azubi;
 public class Textie {
     public static void main(String[] args) {
         Dungeon.getDungeon().runGame(true);
+        System.exit(0);
     }
 }

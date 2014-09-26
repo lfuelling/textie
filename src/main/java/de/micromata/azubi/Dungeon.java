@@ -188,12 +188,12 @@ public class Dungeon {
         Item.SACK, "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
   }
 
-  public void ende() {
+  public boolean ende() {
     printText("Herzlichen Glückwunsch !");
     printText("Du bist aus deinem Traum erwacht und siehst, dass du");
     printText("in deinem Bett liegst. Du spürst dein Herz stark und schnell schlagen");
     printText("und bist froh, dass du aufgewacht bist.");
-    System.exit(0);
+    return true;
   }
 
   public void printText(String text) {
