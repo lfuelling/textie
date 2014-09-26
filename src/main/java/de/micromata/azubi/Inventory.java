@@ -110,4 +110,11 @@ public class Inventory {
         MAX_SLOTS_INVENTORY = MAX_SLOTS_INVENTORY + slots;
     }
 
+    public List<Item> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(List<Item> inventory) {
+        this.inventory = inventory;
+    }
 }

@@ -2,6 +2,9 @@ package test.de.micromata.azubi;
 
 import de.micromata.azubi.Command;
 import de.micromata.azubi.Dungeon;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.fail;
 
@@ -14,53 +17,26 @@ import static org.junit.Assert.fail;
  */
 public class TextieTest { 
 
-    Dungeon dungeon;
+    private static Dungeon dungeon;
 
-    @Test
-    public void testMain() throws Exception {
+    @Before
+    public void testBefore() throws Exception {
         dungeon = Dungeon.getDungeon();
-        System.out.println("Starting Speedrun\n");
         start();
-        speedrun();
-        /*
-        System.out.println("Starting Questmode");
-        start();
-        quest();
-        System.out.println("Starting Item Test");
-        items();
-         */
     }
 
-    /* TESTDURCHGÄNGE */
 
-    private TextieTest speedrun () {
+    /* TESTDURCHGÄNGE */
+    @Test
+    public void speedrun () {
         nimm("fackel");
         gehe("süd");
         nimm("schwert");
         benutze("schwert");
-        return this;
     }
 
-    private TextieTest quest () {
-        nimm("fackel");
-        gehe("süd");
-        nimm("feuerzeug");
-        gehe("west");
-        benutze("fackel");
-        nimm("brecheisen");
-        benutze("falltür");
-        rede("alter mann");
-        gib("brecheisen");
-        untersuche("inventar");
-        if(dungeon.inventory.isInInventory(dungeon.itemMap.get("SCHLÜSSEL"))) {
-            return this;
-        } else {
-            fail("Schlüssel nicht im Inventar");
-        }
-        return this;
-    }
-
-    private TextieTest items () {
+    @Test
+    public void items () {
         untersuche("raum");
         nimm("fackel");
         untersuche("fackel");
@@ -68,7 +44,8 @@ public class TextieTest {
         nimm("truhe");
         untersuche("truhe");
         benutze("truhe");
-        return this;
+
+        Assert.assertEquals(2,dungeon.inventory.getInventory().size());
     }
 
     /* SUBFUNKTIONEN */
