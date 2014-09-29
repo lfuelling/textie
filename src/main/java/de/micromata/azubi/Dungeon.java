@@ -14,7 +14,7 @@ public class Dungeon {
   public static final boolean ALIVE = true;
   public Map<String, Item> itemMap = new HashMap<>();
   public Map<String, Human> humanMap = new HashMap<>();
-  public Inventory inventory = new Inventory(ALIVE);
+  public Inventory inventory = new Inventory();
   public Human currentHuman;
   public Player player = new Player(inventory, currentRaum, "Fremder", true);
 
@@ -138,7 +138,12 @@ public class Dungeon {
           currentHuman.doReden();
           break;
         case Command.GIB:
-          currentHuman.doGeben(parsed_command, count);
+          if(currentHuman != null) {
+              currentHuman.doGeben(parsed_command, count);
+          }
+            else{
+              System.out.println("Hier gibt es niemandem, dem du etwas geben könntest.");
+          }
           break;
         default:
           printText("Unbekannter Befehl: " + parsed_command[0]);
