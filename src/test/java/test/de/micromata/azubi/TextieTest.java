@@ -30,8 +30,14 @@ public class TextieTest {
 
 
     /* TESTDURCHGÄNGE */
+
+    /**
+     * Speedrun
+     *
+     * @since <pre>Sep 26, 2014</pre>
+     */
     @Test
-    public void speedrun () {
+    public void TestA () {
         nimm("fackel");
         gehe("süd");
         nimm("schwert");
@@ -39,8 +45,13 @@ public class TextieTest {
         System.out.print("\n\n");
     }
 
+    /**
+     * ItemTest
+     *
+     * @since <pre>Sep 26, 2014</pre>
+     */
     @Test
-    public void items () {
+    public void TestB () {
         untersuche("raum");
         nimm("fackel");
         untersuche("fackel");
@@ -79,6 +90,11 @@ public class TextieTest {
 
     /* SUBFUNKTIONEN */
 
+    /**
+     * Lässt den Spieler gehen.
+     * @param richtung
+     * @return gibt den Test weiter.
+     */
     private TextieTest gehe(String richtung) {
       try {
         Thread.sleep(2000);

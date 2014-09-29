@@ -7,6 +7,10 @@ public class Raum1 extends Raum {
         super(inventory, number, items);
     }
 
+    /**
+     * Startet das Level.
+     * @param withPrompt
+     */
     public void start(boolean withPrompt) {
         south = false;
         Dungeon.getDungeon().printText("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
@@ -23,6 +27,7 @@ public class Raum1 extends Raum {
 
         return false;
     }
+
 
     @Override
     public void goSouth() {
