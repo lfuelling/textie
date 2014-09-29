@@ -39,16 +39,23 @@ public class Dungeon {
 
     public void prompt() {
     do {
-      currentRaum.falltuerUsed = false;
-      String command = IOUtils.readLine("Was willst du tun? ");
-      String[] parsed_command =  Dungeon.getDungeon().parseInput(command);
-      String[] parsed_args = new String[2];
-      if(parsed_command[1] == null) {
-        parsed_args[0] = "nichts";
-      } else {
-        parsed_args =  Dungeon.getDungeon().parseInput(parsed_command[1]);
-      }
-      executeCommand(parsed_command, parsed_args);
+        currentRaum.falltuerUsed = false;
+        String command = IOUtils.readLine("Was willst du tun? ");
+        if (command.equals("")) {
+         //   System.out.println("Gib was ein.");
+        } else{
+            String[] parsed_command = Dungeon.getDungeon().parseInput(command);
+        if (parsed_command.length < 2) {/*nothing to do*/}
+            else{
+            String[] parsed_args = new String[2];
+            if (parsed_command[1] == null) {
+                parsed_args[0] = "nichts";
+            } else {
+                parsed_args = Dungeon.getDungeon().parseInput(parsed_command[1]);
+            }
+            executeCommand(parsed_command, parsed_args);
+        }
+    }
     } while (!currentRaum.isFinished());
   }
 
@@ -142,7 +149,7 @@ public class Dungeon {
               currentHuman.doGeben(parsed_command, count);
           }
             else{
-              System.out.println("Hier gibt es niemandem, dem du etwas geben könntest.");
+              System.out.println("Hier gibt es niemandem, dem du etwas geben könntest");
           }
           break;
         default:
@@ -222,7 +229,8 @@ public class Dungeon {
   }
 
   public String[] parseInput(String command) {
-    return command.split(" ", 2);
+
+      return command.split(" ", 2);
   }
 
 }
