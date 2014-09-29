@@ -69,6 +69,7 @@ public class TextieTest {
         vernichte("handtuch");
         untersuche("inventar");
         untersuche("raum");
+        Assert.assertEquals(1,dungeon.inventory.getInventory().size());
         System.err.println("\nGehe in Raum 2\n");
         gehe("süd");
         untersuche("raum");
@@ -85,7 +86,10 @@ public class TextieTest {
         benutze("feuerzeug");
         untersuche("inventar");
         untersuche("raum");
-        Assert.assertEquals(1,dungeon.inventory.getInventory().size());
+        nimm("schwert");
+        untersuche("schwert");
+        Assert.assertEquals(2,dungeon.inventory.getInventory().size());
+        
     }
 
     /* SUBFUNKTIONEN */
