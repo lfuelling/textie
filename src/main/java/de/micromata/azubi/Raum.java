@@ -200,130 +200,135 @@ public abstract class Raum {
       printText("Das Item gibt es nicht.");
 
     } else {
-      String itemName = item.getName();
-      printText("Du willst '" + itemName + "' benutzen.");
-      switch (itemName) {
-        // Fackel und Feuerzeug sind besonders, da sie auch funktionen
-        // aufrufen
-        // und nicht nur einen Text ausgeben. Außerdem sollen diese Items
-        // benutzbar sein, selbst wenn der Raum dunkel ist.
-        case "Fackel":// Dungeon.getDungeon().itemMap.get("FACKEL").getName():
-        case "Feuerzeug": // Dungeon.getDungeon().itemMap.get("FEUERZEUG").getName():
-          int fackelSlot = inventory.findItem(Dungeon.getDungeon().itemMap.get(Consts.FACKEL));
-          int feuerZeugSlot = inventory.findItem(Dungeon.getDungeon().itemMap.get(Consts.FEUERZEUG));
-          if (feuerZeugSlot < 0) {
-            printText("Du hast kein Feuerzeug.");
-            break;
-          } else if (fackelSlot < 0) {
-            printText("Du hast keine Fackel.");
-            break;
-          } else {
-            printText("Du zündest deine Fackel mit dem Feuerzeug an.");
-            Item item2 = Dungeon.getDungeon().itemMap.get("FACKEL");
-            if (item2 instanceof ToggleItem) {
-              ToggleItem fackel = (ToggleItem) item2;
-              fackel.setState(true);
-            }
-            break;
-          }
-        case "Falltür":
-          if (Dungeon.getDungeon().currentRaum.getNumber() == 3) {
-            Item item5 = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
-            if (item5 instanceof ToggleItem) {
-              ToggleItem fackel = (ToggleItem) item5;
-              if (fackel.getState() == true) {
-                Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
-                if (itemToUse == null) {
-                  printText("Das Objekt gibt es nicht.");
-                  break;
-                } else {
-                  if (find(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR)) != -128) {
-                    printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
-                    falltuerUsed = true;
+        if(item.isPickable() == false || inventory.isInInventory(item)){
+        String itemName = item.getName();
+        printText("Du willst '" + itemName + "' benutzen.");
+        switch (itemName) {
+            // Fackel und Feuerzeug sind besonders, da sie auch funktionen
+            // aufrufen
+            // und nicht nur einen Text ausgeben. Außerdem sollen diese Items
+            // benutzbar sein, selbst wenn der Raum dunkel ist.
+            case "Fackel":// Dungeon.getDungeon().itemMap.get("FACKEL").getName():
+            case "Feuerzeug": // Dungeon.getDungeon().itemMap.get("FEUERZEUG").getName():
+                int fackelSlot = inventory.findItem(Dungeon.getDungeon().itemMap.get(Consts.FACKEL));
+                int feuerZeugSlot = inventory.findItem(Dungeon.getDungeon().itemMap.get(Consts.FEUERZEUG));
+                if (feuerZeugSlot < 0) {
+                    printText("Du hast kein Feuerzeug.");
                     break;
-                  }
-                  // else if
-                  // (find(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR)) !=
-                  // -128) {
-                  // printText("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
-                  // break;
-                  // }
-                }
-              } else {
-                printText("Du kannst nichts sehen!");
-                break;
-              }
-            }
-          } else {
-            Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
-            if (itemToUse == null) {
-              printText("Das Objekt gibt es nicht.");
-            } else {
-              if (find(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR)) != -128 && hasEverything()) {
-                printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
-                falltuerUsed = true;
-                break;
-              } else if (find(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR)) != -128) {
-                printText("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
-                break;
-              }
-            }
-          }
-        case "Sack":
-          Item sack = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
-          sack.benutzen();
-          inventory.removeItem(Dungeon.getDungeon().itemMap.get(Consts.SACK));
-          inventory.setInventorySize(2);
-          break;
-        case "Schalter":
-          ToggleItem schalter = (ToggleItem) Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
-          schalter.benutzen();
-          schalter.setState(true);
-          break;
-        case "Schwert":
-          Dungeon.getDungeon().itemMap.get(Consts.SCHWERT).benutzen();
-          Dungeon.getDungeon().ende();
-          break;
-        case "Schlüssel":
-          StorageItem truhe = (StorageItem) Dungeon.getDungeon().itemMap.get(Consts.TRUHE);
-          if (Dungeon.getDungeon().currentRaum.hasItem(Dungeon.getDungeon().itemMap.get(Consts.TRUHE))) {
-            if (truhe.lockState == true) {
-              truhe.lockState = false;
-              printText("Du öffnest die Truhe mit dem Schlüssel.");
-              break;
-            } else {
-              printText("Die Truhe ist bereits aufgeschlossen.");
-              break;
-            }
-          } else {
-            printText("Hier gibt es nichts, was man aufschließen könnte.");
-            break;
-          }
-        default:
-          if (roomNumber == 3) {
-            Item item5 = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
-            if (item5 instanceof ToggleItem) {
-              ToggleItem fackel = (ToggleItem) item5;
-              if (fackel.getState() == true) {
-                Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
-                if (itemToUse == null) {
-                  printText("Das Objekt gibt es nicht.");
+                } else if (fackelSlot < 0) {
+                    printText("Du hast keine Fackel.");
+                    break;
                 } else {
-                  itemToUse.benutzen();
+                    printText("Du zündest deine Fackel mit dem Feuerzeug an.");
+                    Item item2 = Dungeon.getDungeon().itemMap.get("FACKEL");
+                    if (item2 instanceof ToggleItem) {
+                        ToggleItem fackel = (ToggleItem) item2;
+                        fackel.setState(true);
+                    }
+                    break;
                 }
-              } else {
-                printText("Du kannst nichts sehen!");
-              }
-            }
-          } else {
-            Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
-            if (itemToUse == null) {
-              printText("Das Objekt gibt es nicht.");
-            } else {
-              itemToUse.benutzen();
-            }
-          }
-      }
+            case "Falltür":
+                if (Dungeon.getDungeon().currentRaum.getNumber() == 3) {
+                    Item item5 = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
+                    if (item5 instanceof ToggleItem) {
+                        ToggleItem fackel = (ToggleItem) item5;
+                        if (fackel.getState() == true) {
+                            Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
+                            if (itemToUse == null) {
+                                printText("Das Objekt gibt es nicht.");
+                                break;
+                            } else {
+                                if (find(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR)) != -128) {
+                                    printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
+                                    falltuerUsed = true;
+                                    break;
+                                }
+                                // else if
+                                // (find(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR)) !=
+                                // -128) {
+                                // printText("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
+                                // break;
+                                // }
+                            }
+                        } else {
+                            printText("Du kannst nichts sehen!");
+                            break;
+                        }
+                    }
+                } else {
+                    Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
+                    if (itemToUse == null) {
+                        printText("Das Objekt gibt es nicht.");
+                    } else {
+                        if (find(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR)) != -128 && hasEverything()) {
+                            printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
+                            falltuerUsed = true;
+                            break;
+                        } else if (find(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR)) != -128) {
+                            printText("Da ist eine Falltür. Du hast das Gefühl, nicht alles erledigt zu haben.");
+                            break;
+                        }
+                    }
+                }
+            case "Sack":
+                Item sack = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
+                sack.benutzen();
+                inventory.removeItem(Dungeon.getDungeon().itemMap.get(Consts.SACK));
+                inventory.setInventorySize(2);
+                break;
+            case "Schalter":
+                ToggleItem schalter = (ToggleItem) Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
+                schalter.benutzen();
+                schalter.setState(true);
+                break;
+            case "Schwert":
+                Dungeon.getDungeon().itemMap.get(Consts.SCHWERT).benutzen();
+                Dungeon.getDungeon().ende();
+                break;
+            case "Schlüssel":
+                StorageItem truhe = (StorageItem) Dungeon.getDungeon().itemMap.get(Consts.TRUHE);
+                if (Dungeon.getDungeon().currentRaum.hasItem(Dungeon.getDungeon().itemMap.get(Consts.TRUHE))) {
+                    if (truhe.lockState == true) {
+                        truhe.lockState = false;
+                        printText("Du öffnest die Truhe mit dem Schlüssel.");
+                        break;
+                    } else {
+                        printText("Die Truhe ist bereits aufgeschlossen.");
+                        break;
+                    }
+                } else {
+                    printText("Hier gibt es nichts, was man aufschließen könnte.");
+                    break;
+                }
+            default:
+                if (roomNumber == 3) {
+                    Item item5 = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
+                    if (item5 instanceof ToggleItem) {
+                        ToggleItem fackel = (ToggleItem) item5;
+                        if (fackel.getState() == true) {
+                            Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
+                            if (itemToUse == null) {
+                                printText("Das Objekt gibt es nicht.");
+                            } else {
+                                itemToUse.benutzen();
+                            }
+                        } else {
+                            printText("Du kannst nichts sehen!");
+                        }
+                    }
+                } else {
+                    Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
+                    if (itemToUse == null) {
+                        printText("Das Objekt gibt es nicht.");
+                    } else {
+                        itemToUse.benutzen();
+                    }
+                }
+        }
+    }
+        else{
+            System.out.println("Du musst das Item im Inventar haben.");
+        }
     }
   }
 
