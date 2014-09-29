@@ -18,7 +18,6 @@ public class Raum2 extends Raum {
         // West wird in goWest gesetzt und ist wahr, wenn Feuerzeug und
         // Schlüssel im Inventar sind
         if(west) {
-            System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
             return true;
         }
         return false;
@@ -28,6 +27,7 @@ public class Raum2 extends Raum {
     public void goWest() {
         if(inventory.isInInventory(Dungeon.getDungeon().itemMap.get(Consts.FEUERZEUG))) {
             west = true;
+            System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
         } else {
             System.out.println("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");
         }

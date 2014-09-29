@@ -42,7 +42,6 @@ public class Dungeon {
         currentRaum.falltuerUsed = false;
         String command = IOUtils.readLine("Was willst du tun? ");
         if (command.equals("")) {
-         //   System.out.println("Gib was ein.");
         } else{
             String[] parsed_command = Dungeon.getDungeon().parseInput(command);
         if (parsed_command.length < 2) {/*nothing to do*/}
