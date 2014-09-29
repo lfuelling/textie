@@ -39,8 +39,10 @@ public class TextieTest {
     @Test
     public void TestA () {
         nimm("fackel");
+        Assert.assertEquals(1,dungeon.inventory.getInventory().size());
         gehe("süd");
         nimm("schwert");
+        Assert.assertEquals(2,dungeon.inventory.getInventory().size());
         benutze("schwert");
         System.out.print("\n\n");
     }
@@ -110,6 +112,19 @@ public class TextieTest {
         Assert.assertEquals(3,dungeon.inventory.getInventory().size());
         System.err.println("\nGehe in Raum 4\n");
         benutze("falltür");
+        rede("alter mann");
+        gib("brecheisen");
+        Assert.assertEquals(3,dungeon.inventory.getInventory().size());
+        untersuche("inventar");
+        rede("alter mann");
+        untersuche("schalter");
+        benutze("schalter");
+        System.err.println("\nGehe in Raum 1\n");
+        gehe("ost");
+        untersuche("inventar");
+        benutze("schlüssel");
+        untersuche("truhe");
+        untersuche("raum");
     }
 
     /* SUBFUNKTIONEN */
