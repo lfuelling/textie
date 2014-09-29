@@ -94,7 +94,22 @@ public class TextieTest {
         gehe("west");
         untersuche("raum");
         untersuche("inventar");
-
+        benutze("fackel");
+        untersuche("raum");
+        untersuche("inventar");
+        nimm("brecheisen");
+        untersuche("brecheisen");
+        benutze("brecheisen");
+        untersuche("falltür");
+        untersuche("whiteboard");
+        benutze("whiteboard");
+        nimm("quietscheente");
+        untersuche("quietscheente");
+        benutze("quietscheente");
+        vernichte("quietscheente");
+        Assert.assertEquals(3,dungeon.inventory.getInventory().size());
+        System.err.println("\nGehe in Raum 4\n");
+        benutze("falltür");
     }
 
     /* SUBFUNKTIONEN */
