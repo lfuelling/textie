@@ -31,7 +31,7 @@ public class TextieTest {
     /* TESTDURCHGÄNGE */
 
     /**
-     * Speedrun
+     * Speedrun.
      *
      * @since <pre>Sep 26, 2014</pre>
      */
