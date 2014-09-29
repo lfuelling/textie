@@ -16,8 +16,9 @@ public class Dungeon {
   public Map<String, Human> humanMap = new HashMap<>();
   public Inventory inventory = new Inventory(ALIVE);
   public Human currentHuman;
+  public Player player = new Player(inventory, currentRaum, "Fremder", true);
 
-  private static Dungeon dungeon;
+    private static Dungeon dungeon;
 
   private Dungeon() {
     initItems();
@@ -56,7 +57,7 @@ public class Dungeon {
     ListIterator<Raum> listIterator = raums.listIterator(1);
     currentRaum.start(withPrompt);
 
-    while (inventory.isAlive()) {
+    while (player.isAlive()) {
       if (currentRaum.isFinished() == false) {
         continue;
       }
