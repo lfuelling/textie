@@ -8,11 +8,11 @@ public class Inventory {
 
     private static int MAX_SLOTS_INVENTORY = 5;
 
-    private boolean alive;
+    //private boolean alive;
 
     // private int[] inventory;
     private List<Item> inventory = new ArrayList<Item>();
-
+/*
     public Inventory(boolean alive) {
         this.alive = alive;
         // this.inventory = new int[MAX_SLOTS_INVENTORY];
@@ -20,7 +20,7 @@ public class Inventory {
 
     public boolean isAlive() {
         return this.alive;
-    }
+    }*/
 
     public boolean addItem(Item item) {
         if(inventory.size() < MAX_SLOTS_INVENTORY && Dungeon.getDungeon().currentRaum.hasItem(item)) {
@@ -102,10 +102,10 @@ public class Inventory {
         return findItem(items) >= 0;
     }
 
-    public void setAlive(boolean state) {
+    /*public void setAlive(boolean state) {
         this.alive = state;
     }
-
+*/
     public void setInventorySize(int slots) {
         MAX_SLOTS_INVENTORY = MAX_SLOTS_INVENTORY + slots;
     }

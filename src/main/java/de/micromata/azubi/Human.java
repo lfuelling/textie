@@ -64,25 +64,25 @@ public class Human {
 
 
     public void doGeben(String[] parsed_command, int count) {
-        if(count == 2) {
-            String itemToUse = IOUtils.convertToName(parsed_command[1]);
-            if(itemToUse.equals(questItemName)) {
-                if(Dungeon.getDungeon().inventory.giveItem(Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase()))) {
-                    System.out.println(questDoneText);
-                    questDone = true;
-                    if(Dungeon.getDungeon().inventory.recieveItem(rewarditem)) {
-                        System.out.println("Im Gegenzug bekommst du von mir auch etwas. Bitteschön.");
+            if (count == 2) {
+                String itemToUse = IOUtils.convertToName(parsed_command[1]);
+                if (itemToUse.equals(questItemName)) {
+                    if (Dungeon.getDungeon().inventory.giveItem(Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase()))) {
+                        System.out.println(questDoneText);
+                        questDone = true;
+                        if (Dungeon.getDungeon().inventory.recieveItem(rewarditem)) {
+                            System.out.println("Im Gegenzug bekommst du von mir auch etwas. Bitteschön.");
+                        } else {
+                            System.out.println("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
+                            giveItem = true;
+                        }
                     } else {
-                        System.out.println("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
-                        giveItem = true;
+                        System.out.println("Item nicht im Inventar.");
                     }
                 } else {
-                    System.out.println("Item nicht im Inventar.");
+                    System.out.println("Das brauche ich nicht.");
                 }
-            } else {
-                System.out.println("Das brauche ich nicht.");
             }
-        }
     }
 
 }

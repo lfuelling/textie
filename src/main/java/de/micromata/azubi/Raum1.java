@@ -21,7 +21,7 @@ public class Raum1 extends Raum {
   @Override
     public boolean isFinished() {
         if(south) {
-           south = false;
+           //south = false;
            return true;
         }
 

@@ -126,7 +126,7 @@ public class TextieTest {
         public void run() {
           do {
               dungeon.runGame(false);
-          } while (!Dungeon.getDungeon().inventory.isAlive());
+          } while (!Dungeon.getDungeon().player.isAlive());
         }
       };
 

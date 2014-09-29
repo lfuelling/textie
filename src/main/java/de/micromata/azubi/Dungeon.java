@@ -14,10 +14,11 @@ public class Dungeon {
   public static final boolean ALIVE = true;
   public Map<String, Item> itemMap = new HashMap<>();
   public Map<String, Human> humanMap = new HashMap<>();
-  public Inventory inventory = new Inventory(ALIVE);
+  public Inventory inventory = new Inventory();
   public Human currentHuman;
+  public Player player = new Player(inventory, currentRaum, "Fremder", true);
 
-  private static Dungeon dungeon;
+    private static Dungeon dungeon;
 
   private Dungeon() {
     initItems();
@@ -38,16 +39,23 @@ public class Dungeon {
 
     public void prompt() {
     do {
-      currentRaum.falltuerUsed = false;
-      String command = IOUtils.readLine("Was willst du tun? ");
-      String[] parsed_command =  Dungeon.getDungeon().parseInput(command);
-      String[] parsed_args = new String[2];
-      if(parsed_command[1] == null) {
-        parsed_args[0] = "nichts";
-      } else {
-        parsed_args =  Dungeon.getDungeon().parseInput(parsed_command[1]);
-      }
-      executeCommand(parsed_command, parsed_args);
+        currentRaum.falltuerUsed = false;
+        String command = IOUtils.readLine("Was willst du tun? ");
+        if (command.equals("")) {
+         //   System.out.println("Gib was ein.");
+        } else{
+            String[] parsed_command = Dungeon.getDungeon().parseInput(command);
+        if (parsed_command.length < 2) {/*nothing to do*/}
+            else{
+            String[] parsed_args = new String[2];
+            if (parsed_command[1] == null) {
+                parsed_args[0] = "nichts";
+            } else {
+                parsed_args = Dungeon.getDungeon().parseInput(parsed_command[1]);
+            }
+            executeCommand(parsed_command, parsed_args);
+        }
+    }
     } while (!currentRaum.isFinished());
   }
 
@@ -56,7 +64,7 @@ public class Dungeon {
     ListIterator<Raum> listIterator = raums.listIterator(1);
     currentRaum.start(withPrompt);
 
-    while (inventory.isAlive()) {
+    while (player.isAlive()) {
       if (currentRaum.isFinished() == false) {
         continue;
       }
@@ -137,7 +145,12 @@ public class Dungeon {
           currentHuman.doReden();
           break;
         case Command.GIB:
-          currentHuman.doGeben(parsed_command, count);
+          if(currentHuman != null) {
+              currentHuman.doGeben(parsed_command, count);
+          }
+            else{
+              System.out.println("Hier gibt es niemandem, dem du etwas geben könntest");
+          }
           break;
         default:
           printText("Unbekannter Befehl: " + parsed_command[0]);
@@ -216,7 +229,8 @@ public class Dungeon {
   }
 
   public String[] parseInput(String command) {
-    return command.split(" ", 2);
+
+      return command.split(" ", 2);
   }
 
 }
