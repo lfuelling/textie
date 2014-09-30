@@ -47,6 +47,38 @@ public class TextieTest {
     }
 
     /**
+     * Komischer Test, der Sachen testet, die es nicht geben sollte.
+     *
+     * @since <pre>Sep 29, 2014</pre>
+     */
+    @Test
+    public void TestC() {
+        untersuche("raum");
+        nimm("fackel");
+        Assert.assertEquals(1, dungeon.inventory.getInventory().size());
+        nimm("");
+        Assert.assertEquals(1, dungeon.inventory.getInventory().size());
+        nimm("lizard");
+        Assert.assertEquals(1, dungeon.inventory.getInventory().size());
+        nimm("234hjfkjvn932");
+        Assert.assertEquals(1, dungeon.inventory.getInventory().size());
+        nimm("0xD47B34T"); // Dat Beat :3
+        benutze("hfsejinefsi");
+        Assert.assertEquals(1, dungeon.inventory.getInventory().size());
+        untersuche("");
+        benutze("");
+        untersuche("sdfghjklhgfd");
+        Assert.assertEquals(1, dungeon.inventory.getInventory().size());
+        nimm("whiteboard");
+        nimm("brecheisen"); //Darf nicht sein, da das Ding nicht in Raum 1 ist.
+        Assert.assertEquals(1, dungeon.inventory.getInventory().size());
+        gehe("süd");
+        nimm("truhe");
+        untersuche("truhe");
+        Assert.assertEquals(1, dungeon.inventory.getInventory().size());
+    }
+
+    /**
      * ItemTest
      *
      * @since <pre>Sep 26, 2014</pre>
