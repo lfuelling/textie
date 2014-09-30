@@ -14,7 +14,7 @@ public class Dungeon {
   public Inventory inventory = new Inventory();
   public Human currentHuman;
   public Player player = new Player(inventory, currentRaum, "Fremder", true);
-  public ListIterator<Raum> listIterator;
+  public ListIterator listIterator;
 
   private static Dungeon dungeon;
 
@@ -22,7 +22,7 @@ public class Dungeon {
     initItems();
     initHumans(); // Humans benötigen Items
     initRooms();
-    listIterator = this.raums.listIterator(1);
+    //listIterator = this.raums.listIterator(1);
   }
 
   public static Dungeon getDungeon() {
@@ -66,17 +66,16 @@ public class Dungeon {
         continue;
       }
       else if(currentRaum.isFinished() == 1) {
-          if (listIterator.hasNext()) {
-              currentRaum = listIterator.next();
+          if (raums.listIterator(currentRaum.roomNumber-1).hasNext()) {
+              currentRaum = raums.listIterator(currentRaum.roomNumber).next();
           } else {
 //              listIterator = raums.listIterator(1);
               currentRaum = raums.getFirst();
           }
       }
         else if(currentRaum.isFinished() == -1) {
-          if (listIterator.hasPrevious()) {
-              currentRaum = listIterator.previous();
-              currentRaum = listIterator.previous();
+          if (raums.listIterator(currentRaum.roomNumber-1).hasPrevious()) {
+              currentRaum = raums.listIterator(currentRaum.roomNumber-1).previous();
           } else {
               currentRaum = raums.getLast();
           }
@@ -243,7 +242,7 @@ public class Dungeon {
 
       return command.split(" ", 2);
   }
-
+/*
     public void prevRaum(){
         if(listIterator.hasPrevious()) {
             this.currentRaum = this.listIterator.previous();
@@ -255,6 +254,7 @@ public class Dungeon {
         }
 
     }
+    */
 
 
 }
