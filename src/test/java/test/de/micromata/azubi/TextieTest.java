@@ -173,6 +173,7 @@ public class TextieTest {
         nimm("feuerzeug");
         Assert.assertEquals(2, dungeon.inventory.getInventory().size());
         gehe("west");
+        benutze("fackel")
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(2), dungeon.currentRaum);
         nimm("brecheisen");
