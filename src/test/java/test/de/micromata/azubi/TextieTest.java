@@ -99,6 +99,7 @@ public class TextieTest {
         untersuche("truhe");
         Assert.assertEquals(1, dungeon.inventory.getInventory().size());
         hilfe();
+        System.err.println("finished.");
     }
 
     /**
@@ -166,7 +167,30 @@ public class TextieTest {
         start();
         nimm("fackel");
         gehe("süd");
-
+        untersuche("raum");
+        Assert.assertEquals(dungeon.raums.get(1), dungeon.currentRaum);
+        Assert.assertEquals(1, dungeon.inventory.getInventory().size());
+        nimm("feuerzeug");
+        Assert.assertEquals(2, dungeon.inventory.getInventory().size());
+        gehe("west");
+        untersuche("raum");
+        Assert.assertEquals(dungeon.raums.get(2), dungeon.currentRaum);
+        nimm("brecheisen");
+        Assert.assertEquals(3, dungeon.inventory.getInventory().size());
+        benutze("falltür");
+        untersuche("raum");
+        Assert.assertEquals(dungeon.raums.get(3), dungeon.currentRaum);
+        rede("alter mann");
+        gib("brecheisen");
+        untersuche("inventar");
+        Assert.assertEquals(true, dungeon.inventory.isInInventory(dungeon.itemMap.get(Consts.SCHLÜSSEL)));
+        Assert.assertEquals(false, dungeon.inventory.isInInventory(dungeon.itemMap.get(Consts.BRECHEISEN)));
+        Assert.assertEquals(3, dungeon.inventory.getInventory().size());
+        benutze("schalter");
+        gehe("ost");
+        untersuche("raum");
+        Assert.assertEquals(dungeon.raums.get(0), dungeon.currentRaum);
+        System.err.println("finished.");
     }
 
     /**
@@ -254,6 +278,7 @@ public class TextieTest {
         benutze("schlüssel");
         untersuche("truhe");
         untersuche("raum");
+        System.err.println("finished.");
     }
 
     /* SUBFUNKTIONEN */
