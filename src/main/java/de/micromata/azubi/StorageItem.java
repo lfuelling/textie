@@ -43,7 +43,7 @@ public class StorageItem extends Item {
 
     public void listItems() {
         if(lockable == false || lockState == false) {
-            System.out.println("In" + name + " befindet sich:");
+            System.out.println("In " + name + " befindet sich:");
             for (Item item : items) {
                 if(item == null) {
                     System.out.println("\tKein Objekt");
