@@ -80,6 +80,7 @@ public class TextieTest {
         nimm("truhe");
         untersuche("truhe");
         Assert.assertEquals(1, dungeon.inventory.getInventory().size());
+        hilfe();
     }
 
     /**
@@ -320,6 +321,16 @@ public class TextieTest {
             e.printStackTrace();
         }
         dungeon.executeCommand(new String[]{Command.VERNICHTE, item}, new String[]{item});
+        return this;
+    }
+
+    private TextieTest hilfe() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        dungeon.executeCommand(new String[]{Command.HILFE}, new String[]{});
         return this;
     }
 
