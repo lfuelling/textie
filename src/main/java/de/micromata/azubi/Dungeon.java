@@ -212,9 +212,12 @@ public class Dungeon {
     return true;
   }
 
-  public void printText(String text) {
-    System.out.println(currentRaum == null ? text : "[" + currentRaum.roomNumber + "], " + text);
-  }
+    public void printText(String text) {
+        if(Textie.diag == true){
+            System.out.println(currentRaum == null ? text : "[" + currentRaum.roomNumber + "], " + text);
+        }
+        System.out.println(text);
+    }
 
   public void setCurrentHuman(Human hts) {
     currentHuman = hts;
