@@ -2,6 +2,7 @@ package test.de.micromata.azubi;
 
 import de.micromata.azubi.Command;
 import de.micromata.azubi.Dungeon;
+import de.micromata.azubi.Textie;
 import org.junit.*;
 
 import static org.junit.Assert.fail;
@@ -19,6 +20,7 @@ public class TextieTest {
     @Before
     public void testBefore() throws Exception {
         dungeon = Dungeon.getDungeon();
+        Textie.diag = true;
         start();
     }
 
