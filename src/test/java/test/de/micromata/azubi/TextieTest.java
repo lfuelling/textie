@@ -126,6 +126,7 @@ public class TextieTest {
         Assert.assertEquals(dungeon.raums.get(1), dungeon.currentRaum);
         System.out.println("Gehe in Raum 3");
         gehe("west");
+        benutze("fackel");
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(2), dungeon.currentRaum);
         System.out.println("Gehe in Raum 4");
