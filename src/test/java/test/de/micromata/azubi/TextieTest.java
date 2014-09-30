@@ -11,7 +11,7 @@ import static org.junit.Assert.fail;
  * Textie Tester.
  *
  * @author Lukas F&uuml;lling
- * @version 1.1
+ * @version 1.2
  * @since <pre>Sep 25, 2014</pre>
  */
 public class TextieTest {
@@ -21,7 +21,6 @@ public class TextieTest {
     public void testBefore() throws Exception {
         dungeon = Dungeon.getDungeon();
         Textie.diag = true;
-        start();
     }
 
     @After
@@ -42,6 +41,7 @@ public class TextieTest {
         System.out.println();
         System.out.println();
         System.err.println("Speedrun Test");
+        start();
         nimm("fackel");
         Assert.assertEquals(1, dungeon.inventory.getInventory().size());
         gehe("süd");
@@ -61,6 +61,7 @@ public class TextieTest {
         System.out.println();
         System.out.println();
         System.err.println("QS Test, hier soll komischer Kram stehen.");
+        start();
         untersuche("raum");
         nimm("fackel");
         Assert.assertEquals(1, dungeon.inventory.getInventory().size());
@@ -93,10 +94,11 @@ public class TextieTest {
      * @since <pre>Sep 30, 2014</pre>
      */
     @Test
-    public void TestD(){
+    public void TestD() {
         System.out.println();
         System.out.println();
         System.err.println("DRG Test.");
+        start();
         untersuche("raum");
         nimm("fackel");
         Assert.assertEquals(1, dungeon.inventory.getInventory().size());
@@ -150,141 +152,78 @@ public class TextieTest {
         System.out.println();
         System.out.println();
         System.err.println("Item Test.");
+        start();
         untersuche("raum");
-
         nimm("fackel");
-
         untersuche("fackel");
-
         benutze("fackel");
-
         nimm("truhe");
-
         untersuche("truhe");
-
         benutze("truhe");
-
         untersuche("Schalter");
-
         benutze("Schalter");
-
         nimm("handtuch");
-
         untersuche("Handtuch");
-
         benutze("handtuch");
-
         untersuche("inventar");
-
         untersuche("raum");
-
         vernichte("handtuch");
-
         untersuche("inventar");
-
         untersuche("raum");
-
         Assert.assertEquals(1, dungeon.inventory.getInventory().size());
         System.err.println("\nGehe in Raum 2\n");
-
         gehe("süd");
-
         untersuche("raum");
-
         nimm("stein");
-
         untersuche("stein");
-
         benutze("stein");
-
         untersuche("raum");
-
         untersuche("inventar");
-
         vernichte("stein");
-
         untersuche("raum");
-
         untersuche("inventar");
-
         nimm("feuerzeug");
-
         untersuche("feuerzeug");
-
         benutze("feuerzeug");
-
         untersuche("inventar");
-
         untersuche("raum");
-
         nimm("schwert");
-
         untersuche("schwert");
-
         vernichte("schwert");
-
         Assert.assertEquals(2, dungeon.inventory.getInventory().size());
         System.err.println("\nGehe in Raum 3\n");
         gehe("west");
-
         untersuche("raum");
-
         untersuche("inventar");
-
         benutze("fackel");
-
         untersuche("raum");
-
         untersuche("inventar");
-
         nimm("brecheisen");
-
         untersuche("brecheisen");
-
         benutze("brecheisen");
-
         untersuche("falltür");
-
         untersuche("whiteboard");
-
         benutze("whiteboard");
-
         nimm("quietscheente");
-
         untersuche("quietscheente");
-
         benutze("quietscheente");
-
         vernichte("quietscheente");
-
         Assert.assertEquals(3, dungeon.inventory.getInventory().size());
         System.err.println("\nGehe in Raum 4\n");
         benutze("falltür");
-
         rede("alter mann");
-
         gib("brecheisen");
-
         Assert.assertEquals(3, dungeon.inventory.getInventory().size());
         untersuche("inventar");
-
         rede("alter mann");
-
         rede("alter mann");
-
         untersuche("schalter");
-
         benutze("schalter");
-
         System.err.println("\nGehe in Raum 1\n");
         gehe("ost");
-
         untersuche("inventar");
-
         benutze("schlüssel");
-
         untersuche("truhe");
-
         untersuche("raum");
     }
 
