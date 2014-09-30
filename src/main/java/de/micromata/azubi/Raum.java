@@ -28,7 +28,7 @@ public abstract class Raum {
         @Override
         public void run() {
           do {
-          } while (!isFinished());
+          } while (isFinished() == 0);
         }
       };
 
@@ -378,7 +378,11 @@ public abstract class Raum {
 
   public abstract void start(boolean withPrompt);
 
-  public abstract boolean isFinished();
+    /**
+     * Methode zum wechseln der Räume
+     * @return -1 zum zurück gehen, 0 wenn raum nicht gewechselt werden soll und 1 wenn man weiter gehen möchte
+     */
+  public abstract int isFinished();
 
   public boolean hasEverything() {
     if (inventory.isInInventory(Dungeon.getDungeon().itemMap.get(Consts.BRECHEISEN)) && inventory.isInInventory(Dungeon.getDungeon().itemMap.get(Consts.SCHLÜSSEL))) {
@@ -422,5 +426,7 @@ public abstract class Raum {
   public void printText(String text) {
     System.out.println("[" + roomNumber + "], " + text);
   }
+
+
 
 }

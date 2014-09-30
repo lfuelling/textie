@@ -2,6 +2,7 @@ package de.micromata.azubi;
 
 public class Raum2 extends Raum {
     boolean west = false;
+    boolean north = true;
 
     public Raum2(Inventory inventory, int number, Item... items) {
         super(inventory, number, items);
@@ -9,27 +10,33 @@ public class Raum2 extends Raum {
 
     public void start(boolean withPrompt) {
         west = false;
-        System.out.println("Du kommst in einen weiteren dunklen Raum.");
+        System.out.println("Du kommst in einen dunklen Raum.");
         warten(withPrompt);
     }
 
     @Override
-    public boolean isFinished() {
+    public int isFinished() {
         // West wird in goWest gesetzt und ist wahr, wenn Feuerzeug und
         // Schlüssel im Inventar sind
         if(west) {
-            return true;
+            return 1;
         }
-        return false;
+        else if(north) {
+            return -1;
+        }
+        else{
+            return 0;
+        }
     }
 
     @Override
     public void goWest() {
-        if(inventory.isInInventory(Dungeon.getDungeon().itemMap.get(Consts.FEUERZEUG))) {
             west = true;
             System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
-        } else {
-            System.out.println("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");
-        }
+    }
+    @Override
+    public void goNorth(){
+        System.out.println("Du siehst eine Tür und gehst die Steintreppe dahinter hinab.");
+        north = true;
     }
 }
