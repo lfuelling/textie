@@ -203,7 +203,7 @@ public class TextieTest {
     public void TestB() {
         System.out.println();
         System.out.println();
-        System.err.println("Item Test.");
+        System.err.println("-- Item Test --");
         start();
         untersuche("raum");
         nimm("fackel");
