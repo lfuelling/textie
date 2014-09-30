@@ -39,6 +39,7 @@ public class TextieTest {
      */
     @Test
     public void TestA() {
+        System.err.println("Speedrun Test");
         nimm("fackel");
         Assert.assertEquals(1, dungeon.inventory.getInventory().size());
         gehe("süd");
@@ -55,6 +56,7 @@ public class TextieTest {
      */
     @Test
     public void TestC() {
+        System.err.println("QS Test, hier soll komischer Kram stehen.");
         untersuche("raum");
         nimm("fackel");
         Assert.assertEquals(1, dungeon.inventory.getInventory().size());
@@ -87,6 +89,7 @@ public class TextieTest {
      */
     @Test
     public void TestB() {
+        System.err.println("Item Test.");
         untersuche("raum");
 
         nimm("fackel");
