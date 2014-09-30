@@ -202,7 +202,9 @@ public abstract class Raum {
     } else {
         if(item.isPickable() == false || inventory.isInInventory(item)){
         String itemName = item.getName();
-        printText("Du willst '" + itemName + "' benutzen.");
+        if(Textie.diag == true){
+            printText("Du willst" + itemName + "benutzen");
+        }
         switch (itemName) {
             // Fackel und Feuerzeug sind besonders, da sie auch funktionen
             // aufrufen
@@ -424,7 +426,11 @@ public abstract class Raum {
   }
 
   public void printText(String text) {
-    System.out.println("[" + roomNumber + "], " + text);
+      if(Textie.diag == true){
+          System.out.println("[" + roomNumber + "], " + text);
+      } else {
+          System.out.println(text);
+      }
   }
 
 

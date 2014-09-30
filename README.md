@@ -16,17 +16,13 @@ Das Spiel entsteht im Rahmen unserer Ausbildung bei der [Micromata GmbH](https:/
 - vernichte [*gegenstand*]
 - gehe [nord | süd | ost | west]
 - rede [person]
-- gib [item]*
+- gib [item] (*funktioniert nur, wenn eine Person im Raum ist*)
 
 Alle Befehle und alle Items sollten klein geschrieben werden.
 
-## Mitmachen
+## Diagnosemodus
+Falls das Spiel nicht läuft wie erwartet, empfiehlt es sich vor dem Bugreport den Diagnosemodus zu nutzen. 
+Dieser Modus gibt zusätzliche informationen zum aktuellen Raum aus, die ziemlich hilfreich sein können.
 
-Wir sollen .textie allein entwickeln. Deswegen ist zum jetzigen Zeitpunkt nur Hilfe in von [Issues](https://github.com/lfuelling/textie/issues/new) erwünscht und gebraucht.
+Gestartet wird der Diagnosemodus, indem man ```-diag``` als Argument angibt.
 
-### Übersetzungen
-Übersetzungen werden wir erst später einführen. Dann wird es Textie auch auf englisch geben.
-
-
-## Sternchen
-* *gib funktioniert nur, wenn eine Person im Raum ist.*
