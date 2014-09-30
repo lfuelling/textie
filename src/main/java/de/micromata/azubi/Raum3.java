@@ -28,7 +28,11 @@ public class Raum3 extends Raum {
         // Raum3 durch benutzen der Falltür verlassen
         if(falltuerUsed == true) {
             return 1;
-        } else {
+        }
+        else if(east == true){
+            return -1;
+        }
+        else {
             return 0;
         }
     }
