@@ -122,6 +122,7 @@ public class TextieTest {
         nimm("brecheisen");
         System.out.println("Gehe in Raum 2");
         gehe("ost");
+        untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(1), dungeon.currentRaum);
         System.out.println("Gehe in Raum 3");
         gehe("west");
