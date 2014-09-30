@@ -30,6 +30,19 @@ public class TextieTest {
     }
 
 
+    /* BEISPIELTEST
+
+    @Test
+    public void TestX() {
+        System.out.println();
+        System.out.println();
+        System.err.println("Beispieltest");
+        start();
+
+    }
+
+     */
+
     /* TESTDURCHGÄNGE */
 
     /**
@@ -49,7 +62,6 @@ public class TextieTest {
         nimm("schwert");
         Assert.assertEquals(2, dungeon.inventory.getInventory().size());
         benutze("schwert");
-        System.out.print("\n\n");
     }
 
     /**
@@ -144,6 +156,17 @@ public class TextieTest {
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(3), dungeon.currentRaum);
         System.err.println("finished.");
+    }
+
+    @Test
+    public void TestE() {
+        System.out.println();
+        System.out.println();
+        System.err.println("Questtest");
+        start();
+        nimm("fackel");
+        gehe("süd");
+
     }
 
     /**
