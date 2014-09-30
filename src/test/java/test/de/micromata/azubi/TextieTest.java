@@ -84,6 +84,33 @@ public class TextieTest {
     }
 
     /**
+     * Der "durch die Räume gehen" Test. Das Programm geht einmal in jeden Raum und zurück und nimmt die Items mit, die Pflicht sind.
+     *
+     * @since <pre>Sep 30, 2014</pre>
+     */
+    @Test
+    public void TestD(){
+        System.err.println("DRG Test.");
+        untersuche("raum");
+        nimm("fackel");
+        Assert.assertEquals(1, dungeon.inventory.getInventory().size());
+        gehe("süd");
+        untersuche("raum");
+        Assert.assertEquals(dungeon.raums.get(1), dungeon.currentRaum);
+        nimm("feuerzeug");
+        gehe("nord");
+        Assert.assertEquals(dungeon.raums.get(0), dungeon.currentRaum);
+        gehe("süd");
+        untersuche("raum");
+        gehe("west");
+        benutze("feuerzeug");
+        untersuche("raum");
+        Assert.assertEquals(dungeon.raums.get(2), dungeon.currentRaum);
+        nimm("brecheisen");
+
+    }
+
+    /**
      * ItemTest
      *
      * @since <pre>Sep 26, 2014</pre>
