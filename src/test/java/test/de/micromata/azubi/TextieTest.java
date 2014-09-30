@@ -109,6 +109,7 @@ public class TextieTest {
         nimm("feuerzeug");
         System.out.println("Gehe in Raum 1");
         gehe("nord");
+        untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(0), dungeon.currentRaum);
         System.out.println("Gehe in Raum 2");
         gehe("süd");
