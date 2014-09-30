@@ -88,6 +88,8 @@ public class Human {
             } else {
                 System.out.println("Das brauche ich nicht.");
             }
+        } else {
+            System.out.println("Zu wenig Argumente");
         }
     }
 
