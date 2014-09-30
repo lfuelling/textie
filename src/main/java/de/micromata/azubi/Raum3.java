@@ -12,7 +12,7 @@ public class Raum3 extends Raum {
     }
 
     public void start(boolean withPrompt) {
-        boolean east = false;
+        east = false;
         ToggleItem fackel = (ToggleItem) Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
         if(fackel.getState() == true) {
             printText("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");

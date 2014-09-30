@@ -10,6 +10,7 @@ public class Raum2 extends Raum {
 
     public void start(boolean withPrompt) {
         west = false;
+        north = false;
         System.out.println("Du kommst in einen dunklen Raum.");
         warten(withPrompt);
     }

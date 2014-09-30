@@ -13,9 +13,9 @@ public class Raum1 extends Raum {
      * @param withPrompt
      */
     public void start(boolean withPrompt) {
+        Dungeon.getDungeon().printText("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
         south = false;
         west = false;
-        Dungeon.getDungeon().printText("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
         warten(withPrompt);
     }
 
@@ -23,7 +23,6 @@ public class Raum1 extends Raum {
   @Override
     public int isFinished() {
         if(south) {
-           //south = false;
            return 1;
         }
       else if(west)

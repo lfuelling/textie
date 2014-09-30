@@ -66,7 +66,7 @@ public class Dungeon {
         continue;
       }
       else if(currentRaum.isFinished() == 1) {
-          if (raums.listIterator(currentRaum.roomNumber-1).hasNext()) {
+          if (raums.listIterator(currentRaum.roomNumber).hasNext()) {
               currentRaum = raums.listIterator(currentRaum.roomNumber).next();
           } else {
 //              listIterator = raums.listIterator(1);
