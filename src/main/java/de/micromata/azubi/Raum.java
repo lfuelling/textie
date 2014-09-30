@@ -118,7 +118,6 @@ public abstract class Raum {
     return raumNummerString;
   }
 
-  @Override
   public boolean equals(Object obj) {
     return super.equals(obj);
   }

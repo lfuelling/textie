@@ -74,7 +74,7 @@ public class Dungeon {
           }
       }
         else if(currentRaum.isFinished() == -1) {
-          if (raums.listIterator(currentRaum.roomNumber-1).hasPrevious()) {
+          if (raums.listIterator(currentRaum.roomNumber - 1).hasPrevious()) {
               currentRaum = raums.listIterator(currentRaum.roomNumber-1).previous();
           } else {
               currentRaum = raums.getLast();
@@ -167,6 +167,8 @@ public class Dungeon {
 
   public void initRooms() {
     int counter = 1;
+
+    /*
     Raum raum = new Raum1(inventory, counter++, itemMap.get(Consts.FACKEL), itemMap.get(Consts.HANDTUCH), itemMap.get(Consts.TRUHE), itemMap.get(Consts.SCHALTER));
     raums.add(raum);
     currentRaum = raum;
@@ -176,8 +178,171 @@ public class Dungeon {
     raums.add(raum);
     raum = new Raum4(inventory, counter, itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK));
     raums.add(raum);
+    */
 
+    Raum raum = new Raum(inventory, counter ++, itemMap.get(Consts.FACKEL), itemMap.get(Consts.HANDTUCH), itemMap.get(Consts.TRUHE), itemMap.get(Consts.SCHALTER)) {
 
+        boolean south = false;
+        boolean west = false;
+
+        @Override
+        public void start(boolean withPrompt) {
+            Dungeon.getDungeon().printText("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
+            south = false;
+            west = false;
+            warten(withPrompt);
+        }
+
+        @Override
+        public int isFinished() {
+            if(south) {
+                return 1;
+            }
+            else if(west)
+            {
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        }
+
+        @Override
+        public void goSouth() {
+            south = true;
+            Dungeon.getDungeon().printText("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
+        }
+
+        @Override
+        public void goWest(){
+            ToggleItem schalter;
+            if (Dungeon.getDungeon().itemMap.get(Consts.SCHALTER).isToggle() == true) {
+                schalter = (ToggleItem) Dungeon.getDungeon().itemMap.get(Consts.SCHALTER);
+
+                if (schalter.getState() == true) {
+                    Dungeon.getDungeon().printText("Da ist eine Tür. Sie steht offen und du folgst der Steintreppe herunter.");
+                    west = true;
+                } else {
+                    Dungeon.getDungeon().printText("Da ist eine Tür. Du versuchst sie zu öffnen, doch es geht nicht.");
+                }
+            } else {
+                Dungeon.getDungeon().printText("Da ist eine Tür. Du versuchst sie zu öffnen, doch es geht nicht.");
+            }
+        }
+    };
+    raums.add(raum);
+    currentRaum = raum;
+    raum = new Raum(inventory, counter++, itemMap.get(Consts.SCHWERT), itemMap.get(Consts.FEUERZEUG), itemMap.get(Consts.STEIN)) {
+        boolean west = false;
+        boolean north = false;
+
+        public void start(boolean withPrompt) {
+            west = false;
+            north = false;
+            System.out.println("Du kommst in einen dunklen Raum.");
+            warten(withPrompt);
+        }
+
+        @Override
+        public int isFinished() {
+            // West wird in goWest gesetzt und ist wahr, wenn Feuerzeug und
+            // Schlüssel im Inventar sind
+            if(west) {
+                return 1;
+            }
+            else if(north) {
+                return -1;
+            }
+            else{
+                return 0;
+            }
+        }
+
+        @Override
+        public void goWest() {
+            west = true;
+            System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
+        }
+        @Override
+        public void goNorth(){
+            System.out.println("Du siehst eine Tür und gehst die Steintreppe dahinter hinab.");
+            north = true;
+        }
+    };
+    raums.add(raum);
+    raum = new Raum(inventory, counter++, itemMap.get(Consts.QUIETSCHEENTE), itemMap.get(Consts.WHITEBOARD), itemMap.get(Consts.BRECHEISEN), itemMap.get(Consts.FALLTÜR)) {
+        boolean east = false;
+
+        public void start(boolean withPrompt) {
+            east = false;
+            ToggleItem fackel = (ToggleItem) Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
+            if(fackel.getState() == true) {
+                printText("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
+                fackel.setState(false);
+            }
+            printText("Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.");
+
+            warten(withPrompt);
+        }
+
+        @Override
+        public int isFinished() {
+            // Raum3 durch benutzen der Falltür verlassen
+            if(falltuerUsed == true) {
+                return 1;
+            }
+            else if(east == true){
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        }
+        @Override
+        public void goEast(){
+            System.out.println("Du siehst eine Tür und gehst die Steintreppe dahinter hinab.");
+            east = true;
+        }
+    };
+    raums.add(raum);
+    raum = new Raum(inventory, counter, itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK)) {
+
+        boolean east = false;
+        public void start(boolean withPrompt) {
+            east = false;
+            Dungeon.getDungeon().printText("Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.");
+            warten(withPrompt);
+        }
+
+        @Override
+        public int isFinished() {
+            // east
+            if (east) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        }
+
+        @Override
+        public void goEast() {
+            ToggleItem schalter;
+            if (Dungeon.getDungeon().itemMap.get(Consts.SCHALTER).isToggle() == true) {
+                schalter = (ToggleItem) Dungeon.getDungeon().itemMap.get(Consts.SCHALTER);
+
+                if (schalter.getState() == true) {
+                    east = true;
+                    Dungeon.getDungeon().printText("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
+                } else {
+                    Dungeon.getDungeon().printText("Da ist eine Tür. Du versuchst sie zu öffnen, doch es geht nicht.");
+                }
+            } else {
+                Dungeon.getDungeon().printText("Da ist eine Tür. Du versuchst sie zu öffnen, doch es geht nicht.");
+            }
+        }
+    };
+    raums.add(raum);
   }
 
   private void initItems() {
