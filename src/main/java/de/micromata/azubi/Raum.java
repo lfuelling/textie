@@ -424,8 +424,9 @@ public abstract class Raum {
   public void printText(String text) {
       if(Textie.diag == true){
           System.out.println("[" + roomNumber + "], " + text);
+      } else {
+          System.out.println(text);
       }
-    System.out.println(text);
   }
 
 }
