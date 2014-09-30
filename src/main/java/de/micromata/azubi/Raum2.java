@@ -2,7 +2,7 @@ package de.micromata.azubi;
 
 public class Raum2 extends Raum {
     boolean west = false;
-    boolean north = true;
+    boolean north = false;
 
     public Raum2(Inventory inventory, int number, Item... items) {
         super(inventory, number, items);
