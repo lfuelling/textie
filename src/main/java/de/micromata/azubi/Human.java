@@ -20,8 +20,8 @@ public class Human {
     private String name;
     private boolean giveItem = false;
     //ArrayList<Item> questItems;
-    Item questItems;
-    Item rewarditem;
+    Item questItem;
+   // Item rewarditem;
    // String questItemName;
 
     public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item rewardItem, Item questItem) {
@@ -30,7 +30,7 @@ public class Human {
         this.dialog2 = dialog2;
         this.questText = questText;
         this.questDoneText = questDoneText;
-        this.questItems = questItem;
+        this.questItem = questItem;
       /*  for(Item questItems : questItem){
             this.questItems.add(questItems);
         }*/
