@@ -1,6 +1,7 @@
 package test.de.micromata.azubi;
 
 import de.micromata.azubi.Command;
+import de.micromata.azubi.Consts;
 import de.micromata.azubi.Dungeon;
 import de.micromata.azubi.Textie;
 import org.junit.*;
@@ -216,6 +217,8 @@ public class TextieTest {
         benutze("falltür");
         rede("alter mann");
         gib("brecheisen");
+        Assert.assertEquals(true, dungeon.inventory.isInInventory(dungeon.itemMap.get(Consts.SCHLÜSSEL)));
+        Assert.assertEquals(false, dungeon.inventory.isInInventory(dungeon.itemMap.get(Consts.BRECHEISEN)));
         Assert.assertEquals(3, dungeon.inventory.getInventory().size());
         untersuche("inventar");
         rede("alter mann");
