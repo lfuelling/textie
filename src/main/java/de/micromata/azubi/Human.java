@@ -72,7 +72,7 @@ public class Human {
     public void doGeben(String[] parsed_command, int count) {
         if(count == 2) {
             String itemToUse = IOUtils.convertToName(parsed_command[1]);
-            if(itemToUse.equals(questItem)) {
+            if(itemToUse.equals(questItem.getName())) {
                 if(Dungeon.getDungeon().inventory.giveItem(Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase()))) {
                     System.out.println(questDoneText);
                     questDone = true;
