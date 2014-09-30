@@ -39,6 +39,8 @@ public class TextieTest {
      */
     @Test
     public void TestA() {
+        System.out.println();
+        System.out.println();
         System.err.println("Speedrun Test");
         nimm("fackel");
         Assert.assertEquals(1, dungeon.inventory.getInventory().size());
@@ -56,6 +58,8 @@ public class TextieTest {
      */
     @Test
     public void TestC() {
+        System.out.println();
+        System.out.println();
         System.err.println("QS Test, hier soll komischer Kram stehen.");
         untersuche("raum");
         nimm("fackel");
@@ -90,6 +94,8 @@ public class TextieTest {
      */
     @Test
     public void TestD(){
+        System.out.println();
+        System.out.println();
         System.err.println("DRG Test.");
         untersuche("raum");
         nimm("fackel");
@@ -141,6 +147,8 @@ public class TextieTest {
      */
     @Test
     public void TestB() {
+        System.out.println();
+        System.out.println();
         System.err.println("Item Test.");
         untersuche("raum");
 
