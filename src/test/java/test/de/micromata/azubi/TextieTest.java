@@ -94,20 +94,44 @@ public class TextieTest {
         untersuche("raum");
         nimm("fackel");
         Assert.assertEquals(1, dungeon.inventory.getInventory().size());
+        System.out.println("Gehe in Raum 2");
         gehe("süd");
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(1), dungeon.currentRaum);
         nimm("feuerzeug");
+        System.out.println("Gehe in Raum 1");
         gehe("nord");
         Assert.assertEquals(dungeon.raums.get(0), dungeon.currentRaum);
+        System.out.println("Gehe in Raum 2");
         gehe("süd");
         untersuche("raum");
+        System.out.println("Gehe in Raum 3");
         gehe("west");
         benutze("feuerzeug");
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(2), dungeon.currentRaum);
         nimm("brecheisen");
-
+        System.out.println("Gehe in Raum 2");
+        gehe("ost");
+        Assert.assertEquals(dungeon.raums.get(1), dungeon.currentRaum);
+        System.out.println("Gehe in Raum 3");
+        gehe("west");
+        untersuche("raum");
+        Assert.assertEquals(dungeon.raums.get(2), dungeon.currentRaum);
+        System.out.println("Gehe in Raum 4");
+        benutze("falltür");
+        untersuche("raum");
+        Assert.assertEquals(dungeon.raums.get(3), dungeon.currentRaum);
+        benutze("schalter");
+        System.out.println("Gehe in Raum 1");
+        gehe("west");
+        untersuche("raum");
+        Assert.assertEquals(dungeon.raums.get(0), dungeon.currentRaum);
+        System.out.println("Gehe in Raum 4");
+        gehe("ost");
+        untersuche("raum");
+        Assert.assertEquals(dungeon.raums.get(3), dungeon.currentRaum);
+        System.err.println("finished.");
     }
 
     /**
