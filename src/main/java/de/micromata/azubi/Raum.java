@@ -203,7 +203,7 @@ public abstract class Raum {
         if(item.isPickable() == false || inventory.isInInventory(item)){
         String itemName = item.getName();
         if(Textie.diag == true){
-            printText("Du willst" + itemName + "benutzen");
+            printText("Du willst " + itemName + " benutzen");
         }
         switch (itemName) {
             // Fackel und Feuerzeug sind besonders, da sie auch funktionen
