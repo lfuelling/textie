@@ -6,6 +6,9 @@ package de.micromata.azubi;
  * Wir werden das später evtl. erweitern. Vorerst genügt das. Wichtig ist mir nur, dass die Quests funktionieren.
  */
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Human {
     // Anzahl der ausgegebenen Dialoge
     int dialogNumber = 0;
@@ -16,18 +19,22 @@ public class Human {
     private String questDoneText;
     private String name;
     private boolean giveItem = false;
-    Item questItem;
+    //ArrayList<Item> questItems;
+    Item questItems;
     Item rewarditem;
-    String questItemName;
+   // String questItemName;
 
-    public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item questItem, Item rewardItem) {
+    public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item rewardItem, Item questItem) {
         this.name = name;
         this.dialog1 = dialog1;
         this.dialog2 = dialog2;
         this.questText = questText;
         this.questDoneText = questDoneText;
-        this.questItem = questItem;
-        this.questItemName = questItem.getName();
+        this.questItems = questItem;
+      /*  for(Item questItems : questItem){
+            this.questItems.add(questItems);
+        }*/
+       // this.questItemName = questItem.getName();
         this.rewarditem = rewardItem;
     }
 
@@ -66,7 +73,7 @@ public class Human {
     public void doGeben(String[] parsed_command, int count) {
             if (count == 2) {
                 String itemToUse = IOUtils.convertToName(parsed_command[1]);
-                if (itemToUse.equals(questItemName)) {
+                if (itemToUse.equals(questItems)) {
                     if (Dungeon.getDungeon().inventory.giveItem(Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase()))) {
                         System.out.println(questDoneText);
                         questDone = true;

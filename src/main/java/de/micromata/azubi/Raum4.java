@@ -16,13 +16,14 @@ public class Raum4 extends Raum {
   }
 
   @Override
-  public boolean isFinished() {
+  public int isFinished() {
     // east
     if (east) {
-      Dungeon.getDungeon().printText("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
-      return true;
+      return 1;
     }
-    return false;
+    else {
+        return 0;
+    }
   }
 
   @Override
@@ -33,6 +34,7 @@ public class Raum4 extends Raum {
 
       if (schalter.getState() == true) {
         east = true;
+        Dungeon.getDungeon().printText("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
       } else {
         Dungeon.getDungeon().printText("Da ist eine Tür. Du versuchst sie zu öffnen, doch es geht nicht.");
       }

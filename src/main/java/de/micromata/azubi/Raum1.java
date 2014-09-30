@@ -2,6 +2,7 @@ package de.micromata.azubi;
 
 public class Raum1 extends Raum {
     boolean south = false;
+    boolean west = false;
 
     public Raum1(Inventory inventory, int number, Item... items) {
         super(inventory, number, items);
@@ -13,31 +14,49 @@ public class Raum1 extends Raum {
      */
     public void start(boolean withPrompt) {
         south = false;
+        west = false;
         Dungeon.getDungeon().printText("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
         warten(withPrompt);
     }
 
 
   @Override
-    public boolean isFinished() {
+    public int isFinished() {
         if(south) {
            //south = false;
-           return true;
+           return 1;
         }
-
-        return false;
+      else if(west)
+        {
+            return -1;
+        }
+      else {
+            return 0;
+        }
     }
-
 
     @Override
     public void goSouth() {
-        // Fackel muss im inventar sein, bevor south = true gesetzt wird
-        if(inventory.isInInventory(Dungeon.getDungeon().itemMap.get(Consts.FACKEL))) {
             south = true;
             Dungeon.getDungeon().printText("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
-        } else {
-            Dungeon.getDungeon().printText("Da ist eine Tür. Du gehst nicht hinaus, da du das Gefühl hast, noch nicht alles erledigt zu haben.");
-        }
-
     }
+
+    @Override
+    public void goWest(){
+    ToggleItem schalter;
+    if (Dungeon.getDungeon().itemMap.get(Consts.SCHALTER).isToggle() == true) {
+        schalter = (ToggleItem) Dungeon.getDungeon().itemMap.get(Consts.SCHALTER);
+
+        if (schalter.getState() == true) {
+            Dungeon.getDungeon().printText("Da ist eine Tür. Sie steht offen und du folgst der Steintreppe herunter.");
+            west = true;
+        } else {
+            Dungeon.getDungeon().printText("Da ist eine Tür. Du versuchst sie zu öffnen, doch es geht nicht.");
+        }
+    } else {
+        Dungeon.getDungeon().printText("Da ist eine Tür. Du versuchst sie zu öffnen, doch es geht nicht.");
+    }
+}
+
+
 }

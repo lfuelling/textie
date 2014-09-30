@@ -1,9 +1,6 @@
 package de.micromata.azubi;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.ListIterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by tung on 26.09.14.
@@ -17,13 +14,15 @@ public class Dungeon {
   public Inventory inventory = new Inventory();
   public Human currentHuman;
   public Player player = new Player(inventory, currentRaum, "Fremder", true);
+  public ListIterator<Raum> listIterator;
 
-    private static Dungeon dungeon;
+  private static Dungeon dungeon;
 
-  private Dungeon() {
+    private Dungeon() {
     initItems();
     initHumans(); // Humans benötigen Items
     initRooms();
+    listIterator = this.raums.listIterator(1);
   }
 
   public static Dungeon getDungeon() {
@@ -55,23 +54,32 @@ public class Dungeon {
             executeCommand(parsed_command, parsed_args);
         }
     }
-    } while (!currentRaum.isFinished());
+    } while (currentRaum.isFinished() == 0);
   }
 
   public void runGame(boolean withPrompt) {
     currentRaum = raums.getFirst();
-    ListIterator<Raum> listIterator = raums.listIterator(1);
     currentRaum.start(withPrompt);
 
     while (player.isAlive()) {
-      if (currentRaum.isFinished() == false) {
+      if (currentRaum.isFinished() == 0) {
         continue;
       }
-      if(listIterator.hasNext()) {
-        currentRaum = listIterator.next();
-      } else {
-        listIterator = raums.listIterator(1);
-        currentRaum = raums.getFirst();
+      else if(currentRaum.isFinished() == 1) {
+          if (listIterator.hasNext()) {
+              currentRaum = listIterator.next();
+          } else {
+//              listIterator = raums.listIterator(1);
+              currentRaum = raums.getFirst();
+          }
+      }
+        else if(currentRaum.isFinished() == -1) {
+          if (listIterator.hasPrevious()) {
+              currentRaum = listIterator.previous();
+              currentRaum = listIterator.previous();
+          } else {
+              currentRaum = raums.getLast();
+          }
       }
       if (currentRaum.roomNumber == 4) {
         setCurrentHuman(humanMap.get(Consts.ALTER_MANN));
@@ -228,12 +236,25 @@ public class Dungeon {
   private void initHumans() {
     humanMap.put(Consts.ALTER_MANN, new Human(
         "Gordon", "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...", "...",
-        "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.", itemMap.get(Consts.BRECHEISEN), itemMap.get(Consts.SCHLÜSSEL)));
+        "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.", itemMap.get(Consts.SCHLÜSSEL), itemMap.get(Consts.BRECHEISEN)));
   }
 
   public String[] parseInput(String command) {
 
       return command.split(" ", 2);
   }
+
+    public void prevRaum(){
+        if(listIterator.hasPrevious()) {
+            this.currentRaum = this.listIterator.previous();
+            currentRaum.start(true);
+        }
+        else{
+            currentRaum = raums.getLast();
+            currentRaum.start(true);
+        }
+
+    }
+
 
 }
