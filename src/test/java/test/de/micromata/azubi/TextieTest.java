@@ -12,7 +12,7 @@ import static org.junit.Assert.fail;
  * Textie Tester.
  *
  * @author Lukas F&uuml;lling
- * @version 1.2
+ * @version 1.3
  * @since <pre>Sep 25, 2014</pre>
  */
 public class TextieTest {
@@ -31,13 +31,18 @@ public class TextieTest {
     }
 
 
+    //
+    // TODO: Duplizierten Quellcode in Fuktionen auslagern (eg. geheRaum(3); )
+    //
+
+
     /* BEISPIELTEST
 
     @Test
     public void TestX() {
         System.out.println();
         System.out.println();
-        System.err.println("Beispieltest");
+        System.err.println("-- Beispieltest --");
         start();
 
     }
@@ -46,11 +51,16 @@ public class TextieTest {
 
     /* TESTDURCHGÄNGE */
 
+    /**
+     * Testet die korrekte Funktion der Karte.
+     *
+     * @since <pre>Oct 1, 2014</pre>
+     */
     @Test
     public void TestF() {
         System.out.println();
         System.out.println();
-        System.err.println("Kartentest");
+        System.err.println("-- Kartentest --");
         start();
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(0), dungeon.currentRaum);
@@ -64,7 +74,15 @@ public class TextieTest {
         gehe("west");
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(2), dungeon.currentRaum);
-        
+        nimm("brecheisen");
+        Assert.assertEquals(3, dungeon.inventory.getInventory().size());
+        benutze("falltür");
+        Assert.assertEquals(dungeon.raums.get(3), dungeon.currentRaum);
+        nimm("karte");
+        Assert.assertEquals(4, dungeon.inventory.getInventory().size());
+        untersuche("karte");
+        benutze("karte");
+        System.err.println("finished.");
     }
 
     /**
