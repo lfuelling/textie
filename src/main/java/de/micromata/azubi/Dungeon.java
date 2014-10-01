@@ -21,13 +21,12 @@ public class Dungeon {
   private static Dungeon dungeon;
 
     private Dungeon() {
-    initItems();
-    initHumans(); // Humans benötigen Items
-    initRooms();
-   // itemMap.put(Consts.KARTE, new Item("Karte", "Die Karte zeigt an, in welchem Raum man sich befindet.", "Du bist in Raum " + currentRaum.getNumberAsString(), true));
-   // karte = itemMap.get(Consts.KARTE);
+    }
 
-
+    public void init(){
+        initItems();
+        initHumans(); // Humans benötigen Items
+        initRooms();
     }
 
   public static Dungeon getDungeon() {
@@ -63,6 +62,7 @@ public class Dungeon {
   }
 
   public void runGame(boolean withPrompt) {
+      init();
     itemMap.put(Consts.KARTE, new Karte("Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert", true));
             raums.add(new Raum(inventory, 4, itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK), itemMap.get(Consts.KARTE)) {
 
