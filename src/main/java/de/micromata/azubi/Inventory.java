@@ -106,12 +106,19 @@ public class Inventory {
     return findItem(items) >= 0;
   }
 
-  public void setAlive(boolean state) {
-    this.alive = state;
-  }
+    /*public void setAlive(boolean state) {
+        this.alive = state;
+    }
+*/
+    public void setInventorySize(int slots) {
+        MAX_SLOTS_INVENTORY = MAX_SLOTS_INVENTORY + slots;
+    }
 
-  public void setInventorySize(int slots) {
-    MAX_SLOTS_INVENTORY = MAX_SLOTS_INVENTORY + slots;
-  }
+    public List<Item> getInventory() {
+        return inventory;
+    }
 
+    public void setInventory(List<Item> inventory) {
+        this.inventory = inventory;
+    }
 }
