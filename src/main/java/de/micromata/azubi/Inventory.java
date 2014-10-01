@@ -6,8 +6,10 @@ import java.util.List;
 
 public class Inventory {
 
-  private static int MAX_SLOTS_INVENTORY = 5;
 
+
+
+    private static int MAX_SLOTS_INVENTORY = 5;
   private boolean alive;
 
   // private int[] inventory;
@@ -22,7 +24,8 @@ public class Inventory {
     // this.inventory = new int[MAX_SLOTS_INVENTORY];
   }
 
-  public boolean isAlive() {
+
+    public boolean isAlive() {
     return this.alive;
   }
 

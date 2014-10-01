@@ -1,5 +1,8 @@
 package de.micromata.azubi;
 
+import flexjson.JSONDeserializer;
+import flexjson.JSONSerializer;
+
 import java.util.*;
 
 /**
@@ -14,19 +17,27 @@ public class Dungeon {
   public Inventory inventory = new Inventory();
   public Human currentHuman;
   public Player player = new Player(inventory, currentRaum, "Fremder", true);
-  public ListIterator listIterator;
+  Raum raum;
+
+
+
+    //TEST
+    String saved_dungeon;
+    //ende-Test
 
   private static Dungeon dungeon;
 
-  private Dungeon() {
-  }
 
-  public void init() {
+   private Dungeon() {
+
+    }
+
+public void init(){
     initItems();
     initHumans(); // Humans benötigen Items
     initRooms();
-    //listIterator = this.raums.listIterator(1);
-  }
+    }
+
 
   public static Dungeon getDungeon() {
     if (dungeon == null) {
@@ -61,6 +72,50 @@ public class Dungeon {
   }
 
   public void runGame(boolean withPrompt) {
+      init();
+    itemMap.put(Consts.KARTE, new Karte("Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert", true));
+            raums.add(new Raum(inventory, 4, itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK), itemMap.get(Consts.KARTE)) {
+
+                boolean east = false;
+
+                public void start(boolean withPrompt) {
+                    east = false;
+                    Dungeon.getDungeon().printText("Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.");
+                    warten(withPrompt);
+                }
+
+                @Override
+                public int isFinished() {
+                    // east
+                    if (east) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+
+                @Override
+                public void goEast() {
+                    ToggleItem schalter;
+                    if (Dungeon.getDungeon().itemMap.get(Consts.SCHALTER).isToggle() == true) {
+                        schalter = (ToggleItem) Dungeon.getDungeon().itemMap.get(Consts.SCHALTER);
+
+                        if (schalter.getState() == true) {
+                            east = true;
+                            Dungeon.getDungeon().printText("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
+                            Karte karte;
+                            if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
+                                karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
+                                karte.writeMap(Dungeon.getDungeon().currentRaum.getNumberAsString(), "OST");
+                            }
+                        } else {
+                            Dungeon.getDungeon().printText("Da ist eine Tür. Du versuchst sie zu öffnen, doch es geht nicht.");
+                        }
+                    } else {
+                        Dungeon.getDungeon().printText("Da ist eine Tür. Du versuchst sie zu öffnen, doch es geht nicht.");
+                    }
+                }
+            });
     currentRaum = raums.getFirst();
     currentRaum.start(withPrompt);
 
@@ -161,6 +216,15 @@ public class Dungeon {
               System.out.println("Hier gibt es niemandem, dem du etwas geben könntest");
           }
           break;
+          case Command.SPEICHERN:
+              JSONSerializer serializer = new JSONSerializer();
+              saved_dungeon = serializer.deepSerialize(Dungeon.getDungeon());
+              System.out.println("Gespeichert");
+              break;
+          case Command.LADEN:
+              setDungeon(new JSONDeserializer<Dungeon>().deserialize(saved_dungeon));
+              System.out.println("Geladen");
+              break;
         default:
           printText("Unbekannter Befehl: " + parsed_command[0]);
           break;
@@ -356,8 +420,8 @@ public class Dungeon {
     itemMap.put(Consts.FALLTÜR, new Item(Item.FALLTÜR, "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
     itemMap.put(Consts.WHITEBOARD, new Item(Item.WHITEBOARD, "Es steht \'FLIEH!\' mit Blut geschrieben darauf.", "Das fasse ich bestimmt nicht an!", false));
     itemMap.put(Consts.SCHALTER, new ToggleItem(
-        Item.SCHALTER, "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false,
-        false));
+            Item.SCHALTER, "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false,
+            false));
     itemMap.put(Consts.TRUHE, new StorageItem(
         Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true, itemMap.get(Consts.STEIN), itemMap.get(Consts.HANDTUCH))); //TODO: fill in actual Items
     itemMap.put(Consts.STEIN, new Item(Item.STEIN, "Du betrachtest den Stein. Er wirkt kalt.", "Hier gibt es nichts um den Stein zu benutzen.", true));

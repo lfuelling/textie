@@ -12,7 +12,8 @@ public class StorageItem extends Item {
     boolean lockState;
     String name;
 
-    public StorageItem() {
+
+    public StorageItem(){
 
     }
 

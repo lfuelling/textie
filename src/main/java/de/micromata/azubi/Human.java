@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Human {
+
+    public Human(){
+
+    }
     // Anzahl der ausgegebenen Dialoge
     int dialogNumber = 0;
     private boolean questDone = false;
@@ -23,10 +27,6 @@ public class Human {
     Item questItem;
     Item rewarditem;
     // String questItemName;
-
-    public Human() {
-
-    }
 
     public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item rewardItem, Item questItem) {
         this.name = name;

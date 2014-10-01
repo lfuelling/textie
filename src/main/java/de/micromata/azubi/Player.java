@@ -5,6 +5,10 @@ package de.micromata.azubi;
  */
 public class Player {
 
+    public Player(){
+
+    }
+
     public Inventory inventory;
     public Raum currentRaum;
 
