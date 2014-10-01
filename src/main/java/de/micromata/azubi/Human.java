@@ -6,9 +6,6 @@ package de.micromata.azubi;
  * Wir werden das später evtl. erweitern. Vorerst genügt das. Wichtig ist mir nur, dass die Quests funktionieren.
  */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class Human {
     // Anzahl der ausgegebenen Dialoge
     int dialogNumber = 0;

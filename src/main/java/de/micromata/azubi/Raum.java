@@ -1,7 +1,5 @@
 package de.micromata.azubi;
 
-import com.sun.tools.internal.jxc.ap.Const;
-
 import java.util.ArrayList;
 import java.util.List;
 
