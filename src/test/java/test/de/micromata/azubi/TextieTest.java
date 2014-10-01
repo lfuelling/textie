@@ -46,6 +46,27 @@ public class TextieTest {
 
     /* TESTDURCHGÄNGE */
 
+    @Test
+    public void TestF() {
+        System.out.println();
+        System.out.println();
+        System.err.println("Kartentest");
+        start();
+        untersuche("raum");
+        Assert.assertEquals(dungeon.raums.get(0), dungeon.currentRaum);
+        nimm("fackel");
+        Assert.assertEquals(1, dungeon.inventory.getInventory().size());
+        gehe("süd");
+        untersuche("raum");
+        Assert.assertEquals(dungeon.raums.get(1), dungeon.currentRaum);
+        nimm("feuerzeug");
+        Assert.assertEquals(2, dungeon.inventory.getInventory().size());
+        gehe("west");
+        untersuche("raum");
+        Assert.assertEquals(dungeon.raums.get(2), dungeon.currentRaum);
+        
+    }
+
     /**
      * Speedrun.
      *
