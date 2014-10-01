@@ -12,4 +12,6 @@ public interface Command {
     static final String GEHE = "gehe";
     static final String REDE = "rede";
     static final String GIB = "gib";
+    static final String SPEICHERN = "speichern";
+    static final String LADEN = "laden";
 }
