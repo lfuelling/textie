@@ -20,6 +20,10 @@ public class Human {
     Item rewarditem;
     String questItemName;
 
+    public Human() {
+
+    }
+
     public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item questItem, Item rewardItem) {
         this.name = name;
         this.dialog1 = dialog1;

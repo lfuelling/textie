@@ -1,18 +1,24 @@
 package de.micromata.azubi;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Raum {
+public abstract class Raum implements Serializable {
   protected List<Item> items = new ArrayList<Item>();
   protected Inventory inventory;
   protected boolean fackelUsed = false;
   protected boolean falltuerUsed = false;
-  protected int roomNumber;
+
+  protected int number;
+
+  public Raum() {
+
+  }
 
   public Raum(Inventory inventory, int number, Item... items1) {
     this.inventory = inventory;
-    roomNumber = number;
+    this.number = number;
 
     for (Item item : items1) {
       this.items.add(item);
@@ -110,11 +116,15 @@ public abstract class Raum {
   }
 
   public int getNumber() {
-    return roomNumber;
+    return number;
+  }
+
+  public void setNumber(int number) {
+    this.number = number;
   }
 
   public String getNumberAsString() {
-    String raumNummerString = String.valueOf(roomNumber);
+    String raumNummerString = String.valueOf(number);
     return raumNummerString;
   }
 
@@ -127,7 +137,7 @@ public abstract class Raum {
     if (count == 2) {
       switch (parsed_command[1].toLowerCase()) {
         case "raum":
-          if (roomNumber == 3) {
+          if (number == 3) {
             Item item = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
             if (item instanceof ToggleItem) {
               ToggleItem fackel = (ToggleItem) item;
@@ -142,7 +152,7 @@ public abstract class Raum {
           }
           break;
         case "inventar":
-          if (roomNumber == 3) {
+          if (number == 3) {
             Item item = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
             if (item instanceof ToggleItem) {
               ToggleItem fackel = (ToggleItem) item;
@@ -165,7 +175,7 @@ public abstract class Raum {
           }
           break;
         default:
-          if (roomNumber == 3) {
+          if (number == 3) {
             Item item = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
             if (item instanceof ToggleItem) {
               ToggleItem fackel = (ToggleItem) item;
@@ -300,7 +310,7 @@ public abstract class Raum {
             break;
           }
         default:
-          if (roomNumber == 3) {
+          if (number == 3) {
             Item item5 = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
             if (item5 instanceof ToggleItem) {
               ToggleItem fackel = (ToggleItem) item5;
@@ -415,7 +425,7 @@ public abstract class Raum {
   }
 
   public void printText(String text) {
-    System.out.println("[" + roomNumber + "], " + text);
+    System.out.println("[" + number + "], " + text);
   }
 
 }

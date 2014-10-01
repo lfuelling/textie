@@ -5,6 +5,10 @@ public class Raum4 extends Raum {
 
   boolean nord = false;
 
+  public Raum4() {
+    super();
+  }
+
   public Raum4(Inventory inventory, int number, Item... items) {
     super(inventory, number, items);
   }

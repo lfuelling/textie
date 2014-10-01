@@ -18,6 +18,7 @@ public class TextieTest {
     @Test
     public void testMain() throws Exception {
         dungeon = Dungeon.getDungeon();
+        dungeon.init();
         start().nimm("Fackel").gehe("süd").gehe("west");
     }
 

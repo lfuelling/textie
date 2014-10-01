@@ -7,7 +7,9 @@ package de.micromata.azubi;
 
 public class Textie {
     public static void main(String[] args) {
-      Dungeon.getDungeon().runGame(true);
+      Dungeon dungeon = Dungeon.getDungeon();
+      dungeon.init();
+      dungeon.runGame(true);
     }
 
 

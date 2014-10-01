@@ -20,6 +20,9 @@ public class Dungeon {
   private static Dungeon dungeon;
 
   private Dungeon() {
+  }
+
+  public void init() {
     initItems();
     initHumans(); // Humans benötigen Items
     initRooms();
@@ -62,7 +65,7 @@ public class Dungeon {
         listIterator = raums.listIterator(1);
         currentRaum = raums.getFirst();
       }
-      if (currentRaum.roomNumber == 4) {
+      if (currentRaum.number == 4) {
         setCurrentHuman(humanMap.get(Consts.ALTER_MANN));
       } else {
         setCurrentHuman(null);
@@ -197,7 +200,7 @@ public class Dungeon {
   }
 
   public void printText(String text) {
-    System.out.println(currentRaum == null ? text : "[" + currentRaum.roomNumber + "], " + text);
+    System.out.println(currentRaum == null ? text : "[" + currentRaum.number + "], " + text);
   }
 
   public void setCurrentHuman(Human hts) {
@@ -215,4 +218,11 @@ public class Dungeon {
     return command.split(" ", 2);
   }
 
+  public LinkedList<Raum> getRaums() {
+    return raums;
+  }
+
+  public void setRaums(LinkedList<Raum> raums) {
+    this.raums = raums;
+  }
 }
