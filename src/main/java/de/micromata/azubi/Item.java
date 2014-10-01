@@ -16,6 +16,15 @@ public class Item {
     public static final String HANDTUCH = "Handtuch";
 
     private String untersucheText = "";
+
+    public String getBenutzeText() {
+        return benutzeText;
+    }
+
+    public void setBenutzeText(String benutzeText) {
+        this.benutzeText = benutzeText;
+    }
+
     private String benutzeText;
     private String name;
     private boolean pickable;
@@ -52,6 +61,13 @@ public class Item {
     public boolean isToggle() {
         if(this instanceof ToggleItem) {
             return true;
+        }
+        return false;
+    }
+
+    public boolean isKarte(){
+        if(this instanceof Karte){
+            return  true;
         }
         return false;
     }

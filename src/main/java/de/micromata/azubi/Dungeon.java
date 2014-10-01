@@ -15,6 +15,8 @@ public class Dungeon {
   public Human currentHuman;
   public Player player = new Player(inventory, currentRaum, "Fremder", true);
   public ListIterator listIterator;
+  //Item karte;
+  Raum raum;
 
   private static Dungeon dungeon;
 
@@ -22,8 +24,11 @@ public class Dungeon {
     initItems();
     initHumans(); // Humans benötigen Items
     initRooms();
-    //listIterator = this.raums.listIterator(1);
-  }
+   // itemMap.put(Consts.KARTE, new Item("Karte", "Die Karte zeigt an, in welchem Raum man sich befindet.", "Du bist in Raum " + currentRaum.getNumberAsString(), true));
+   // karte = itemMap.get(Consts.KARTE);
+
+
+    }
 
   public static Dungeon getDungeon() {
     if (dungeon == null) {
@@ -58,6 +63,49 @@ public class Dungeon {
   }
 
   public void runGame(boolean withPrompt) {
+    itemMap.put(Consts.KARTE, new Karte("Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert", true));
+            raums.add(new Raum(inventory, 4, itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK), itemMap.get(Consts.KARTE)) {
+
+                boolean east = false;
+
+                public void start(boolean withPrompt) {
+                    east = false;
+                    Dungeon.getDungeon().printText("Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.");
+                    warten(withPrompt);
+                }
+
+                @Override
+                public int isFinished() {
+                    // east
+                    if (east) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+
+                @Override
+                public void goEast() {
+                    ToggleItem schalter;
+                    if (Dungeon.getDungeon().itemMap.get(Consts.SCHALTER).isToggle() == true) {
+                        schalter = (ToggleItem) Dungeon.getDungeon().itemMap.get(Consts.SCHALTER);
+
+                        if (schalter.getState() == true) {
+                            east = true;
+                            Dungeon.getDungeon().printText("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
+                            Karte karte;
+                            if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
+                                karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
+                                karte.writeMap(Dungeon.getDungeon().currentRaum.getNumberAsString(), "OST");
+                            }
+                        } else {
+                            Dungeon.getDungeon().printText("Da ist eine Tür. Du versuchst sie zu öffnen, doch es geht nicht.");
+                        }
+                    } else {
+                        Dungeon.getDungeon().printText("Da ist eine Tür. Du versuchst sie zu öffnen, doch es geht nicht.");
+                    }
+                }
+            });
     currentRaum = raums.getFirst();
     currentRaum.start(withPrompt);
 
@@ -180,7 +228,7 @@ public class Dungeon {
     raums.add(raum);
     */
 
-    Raum raum = new Raum(inventory, counter ++, itemMap.get(Consts.FACKEL), itemMap.get(Consts.HANDTUCH), itemMap.get(Consts.TRUHE), itemMap.get(Consts.SCHALTER)) {
+    raum = new Raum(inventory, counter ++, itemMap.get(Consts.FACKEL), itemMap.get(Consts.HANDTUCH), itemMap.get(Consts.TRUHE), itemMap.get(Consts.SCHALTER)) {
 
         boolean south = false;
         boolean west = false;
@@ -211,6 +259,11 @@ public class Dungeon {
         public void goSouth() {
             south = true;
             Dungeon.getDungeon().printText("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
+            Karte karte;
+            if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
+                karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
+                karte.writeMap(Dungeon.getDungeon().currentRaum.getNumberAsString(), "SÜD");
+            }
         }
 
         @Override
@@ -227,6 +280,11 @@ public class Dungeon {
                 }
             } else {
                 Dungeon.getDungeon().printText("Da ist eine Tür. Du versuchst sie zu öffnen, doch es geht nicht.");
+            }
+            Karte karte;
+            if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
+                karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
+                karte.writeMap(Dungeon.getDungeon().currentRaum.getNumberAsString(), "WEST");
             }
         }
     };
@@ -248,9 +306,11 @@ public class Dungeon {
             // West wird in goWest gesetzt und ist wahr, wenn Feuerzeug und
             // Schlüssel im Inventar sind
             if(west) {
+
                 return 1;
             }
             else if(north) {
+
                 return -1;
             }
             else{
@@ -262,11 +322,21 @@ public class Dungeon {
         public void goWest() {
             west = true;
             System.out.println("Da ist eine Tür. Du öffnest sie und gehst die Steintreppe dahinter hoch.");
+            Karte karte;
+            if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
+                karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
+                karte.writeMap(Dungeon.getDungeon().currentRaum.getNumberAsString(), "WEST");
+            }
         }
         @Override
         public void goNorth(){
             System.out.println("Du siehst eine Tür und gehst die Steintreppe dahinter hinab.");
             north = true;
+            Karte karte;
+            if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
+                karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
+                karte.writeMap(Dungeon.getDungeon().currentRaum.getNumberAsString(), "NORD");
+            }
         }
     };
     raums.add(raum);
@@ -302,10 +372,16 @@ public class Dungeon {
         public void goEast(){
             System.out.println("Du siehst eine Tür und gehst die Steintreppe dahinter hinab.");
             east = true;
+            Karte karte;
+            if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
+                karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
+                karte.writeMap(Dungeon.getDungeon().currentRaum.getNumberAsString(), "OST");
+            }
         }
     };
     raums.add(raum);
-    raum = new Raum(inventory, counter, itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK)) {
+   /*
+   raum = new Raum(inventory, counter, itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK), karte) {
 
         boolean east = false;
         public void start(boolean withPrompt) {
@@ -341,15 +417,14 @@ public class Dungeon {
                 Dungeon.getDungeon().printText("Da ist eine Tür. Du versuchst sie zu öffnen, doch es geht nicht.");
             }
         }
-    };
-    raums.add(raum);
+    };*/
+    //raums.add(raum);
   }
 
   private void initItems() {
     // TODO (Wenn wir den benutzeText der Items benutzen) Raumnummer
     // hinzufügen.
-    // itemMap.put(Consts.KARTE, new Item("Karte", "Die Karte zeigt an, in welchem Raum man sich befindet.", "Du bist in Raum " +
-    // currentRaum.getNumberAsString()));
+    //itemMap.put(Consts.KARTE, karte);
     itemMap.put(Consts.FALLTÜR, new Item(Item.FALLTÜR, "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
     itemMap.put(Consts.WHITEBOARD, new Item(Item.WHITEBOARD, "Es steht \'FLIEH!\' mit Blut geschrieben darauf.", "Das fasse ich bestimmt nicht an!", false));
     itemMap.put(Consts.SCHALTER, new ToggleItem(
@@ -407,19 +482,4 @@ public class Dungeon {
 
       return command.split(" ", 2);
   }
-/*
-    public void prevRaum(){
-        if(listIterator.hasPrevious()) {
-            this.currentRaum = this.listIterator.previous();
-            currentRaum.start(true);
-        }
-        else{
-            currentRaum = raums.getLast();
-            currentRaum.start(true);
-        }
-
-    }
-    */
-
-
 }

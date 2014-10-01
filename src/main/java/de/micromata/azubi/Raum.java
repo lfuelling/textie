@@ -1,5 +1,7 @@
 package de.micromata.azubi;
 
+import com.sun.tools.internal.jxc.ap.Const;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,7 +116,7 @@ public abstract class Raum {
   }
 
   public String getNumberAsString() {
-    String raumNummerString = String.valueOf(roomNumber);
+    String raumNummerString = String.valueOf(this.roomNumber);
     return raumNummerString;
   }
 
@@ -241,6 +243,11 @@ public abstract class Raum {
                             } else {
                                 if (find(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR)) != -128) {
                                     printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
+                                    Karte karte;
+                                    if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
+                                        karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
+                                        karte.writeMap(Dungeon.getDungeon().currentRaum.getNumberAsString(), "FALLTÜR");
+                                    }
                                     falltuerUsed = true;
                                     break;
                                 }
@@ -263,6 +270,11 @@ public abstract class Raum {
                     } else {
                         if (find(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR)) != -128 && hasEverything()) {
                             printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
+                            Karte karte;
+                            if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
+                                karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
+                                karte.writeMap(Dungeon.getDungeon().currentRaum.getNumberAsString(), "FALLTÜR");
+                            }
                             falltuerUsed = true;
                             break;
                         } else if (find(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR)) != -128) {
@@ -301,6 +313,13 @@ public abstract class Raum {
                     printText("Hier gibt es nichts, was man aufschließen könnte.");
                     break;
                 }
+            case "Karte":
+                Karte karte;
+                if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
+                    karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
+                    karte.setBenutzeText(karte.readMap()); //NOTE Muss vor dem default stehen!
+                }
+                else System.err.println("Fehler in der Karte!");
             default:
                 if (roomNumber == 3) {
                     Item item5 = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
