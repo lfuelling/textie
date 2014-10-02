@@ -25,7 +25,7 @@ public class DungeonTest {
 
   /**
    * Method: getDungeon()
-   */
+   *//*
   @Test
   public void testGetDungeon() throws Exception {
     Dungeon dungeon = Dungeon.getDungeon();
@@ -36,6 +36,6 @@ public class DungeonTest {
     Dungeon dungeon1 = new JSONDeserializer<Dungeon>().deserialize( jsonDungeon );
     System.out.println("curentRaum: "  + dungeon1.currentRaum.getNumber());
   }
-
+*/
 
 } 
