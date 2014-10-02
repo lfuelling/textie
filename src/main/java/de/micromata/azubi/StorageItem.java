@@ -11,6 +11,9 @@ public class StorageItem extends Item {
     boolean lockable;
     boolean lockState;
     String name;
+
+    public StorageItem() {}
+
     public StorageItem(String name, String untersucheText, String benutzeText, boolean pickable, boolean lockable, boolean initialLockState, Item... items) {
         super(name, untersucheText, benutzeText, pickable);
         for (Item item : items) {

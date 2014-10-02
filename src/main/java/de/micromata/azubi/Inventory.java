@@ -21,6 +21,7 @@ public class Inventory {
     public boolean isAlive() {
         return this.alive;
     }*/
+    public Inventory(){}
 
     public boolean addItem(Item item) {
         if(inventory.size() < MAX_SLOTS_INVENTORY && Dungeon.getDungeon().currentRaum.hasItem(item)) {

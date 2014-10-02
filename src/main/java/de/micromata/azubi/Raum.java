@@ -10,6 +10,10 @@ public abstract class Raum {
   protected boolean falltuerUsed = false;
   protected int roomNumber;
 
+  public Raum() {
+    //für flexjson
+  }
+
   public Raum(Inventory inventory, int number, Item... items1) {
     this.inventory = inventory;
     roomNumber = number;

@@ -10,6 +10,9 @@ public class Player {
 
     private String playerName;
     private boolean alive;
+    public Player() {
+
+    }
 
     public Player(Inventory inventory, Raum currentRaum, String playerName, boolean alive) {
         this.inventory = inventory;
