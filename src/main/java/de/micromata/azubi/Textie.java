@@ -12,7 +12,7 @@ import flexjson.JSONSerializer;
 public class Textie {
     public static boolean diag;
     public static String savegame;
-    int dialogNumber = 0;
+    static int dialogNumber = 0;
 
     public static void main(String[] args) {
 
