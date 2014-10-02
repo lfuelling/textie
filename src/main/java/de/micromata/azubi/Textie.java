@@ -12,6 +12,7 @@ import flexjson.JSONSerializer;
 public class Textie {
     public static boolean diag;
     public static String savegame;
+    int dialogNumber = 0;
 
     public static void main(String[] args) {
 
@@ -43,7 +44,7 @@ public class Textie {
         if (withPrompt == true) {
             Dungeon.getDungeon().player.prompt();
         } else {
-            System.out.println("Was willst du tun? ");
+            printText("Was willst du tun? ");
             Runnable warten = new Runnable() {
                 @Override
                 public void run() {
@@ -121,7 +122,7 @@ public class Textie {
                      doGeben(parsed_command, count);
                     }
                     else{
-                        System.out.println("Hier gibt es niemandem, dem du etwas geben könntest");
+                        printText("Hier gibt es niemandem, dem du etwas geben könntest");
                     }
                     break;
                 default:
@@ -138,9 +139,9 @@ public class Textie {
 
     public static void printText(String text) {
         if(Textie.diag == true){
-            System.out.println(Dungeon.getDungeon().currentRaum == null ? text : "[" + Dungeon.getDungeon().currentRaum.roomNumber + "], " + text);
+            printText(Dungeon.getDungeon().currentRaum == null ? text : "[" + Dungeon.getDungeon().currentRaum.roomNumber + "], " + text);
         } else {
-            System.out.println(text);
+            printText(text);
         }
     }
 
@@ -153,7 +154,7 @@ public class Textie {
                             ToggleItem schalter = (ToggleItem) Dungeon.getDungeon().itemMap.get(Consts.SCHALTER);
                             if(schalter.getState()){
                                 Dungeon.getDungeon().currentRaum.setFinished(1);
-                                System.out.println("Du siehst eine Tür und gehst die Treppe dahinter hinauf.");
+                                printText("Du siehst eine Tür und gehst die Treppe dahinter hinauf.");
                                 Karte karte;
                                 if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
                                     karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
@@ -162,14 +163,14 @@ public class Textie {
                             }
                             else{
                                 Dungeon.getDungeon().currentRaum.setFinished(0);
-                                System.out.println("Da ist eine Tür, du versuchst sie zu öffnen, doch es geht nicht.");
+                                printText("Da ist eine Tür, du versuchst sie zu öffnen, doch es geht nicht.");
                             }
                         }
 
                     }
                     else{
                     Dungeon.getDungeon().currentRaum.setFinished(1);
-                        System.out.println("Du siehst eine Tür und gehst die Treppe dahinter hinauf.");
+                        printText("Du siehst eine Tür und gehst die Treppe dahinter hinauf.");
                         Karte karte;
                         if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
                             karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
@@ -183,7 +184,7 @@ public class Textie {
                             ToggleItem schalter = (ToggleItem) Dungeon.getDungeon().itemMap.get(Consts.SCHALTER);
                             if(schalter.getState()){
                                 Dungeon.getDungeon().currentRaum.setFinished(-1);
-                                System.out.println("Du siehst eine Tür und gehst die Treppe dahinter hinab.");
+                                printText("Du siehst eine Tür und gehst die Treppe dahinter hinab.");
                                 Karte karte;
                                 if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
                                     karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
@@ -192,14 +193,14 @@ public class Textie {
                             }
                             else{
                                 Dungeon.getDungeon().currentRaum.setFinished(0);
-                                System.out.println("Da ist eine Tür, du versuchst sie zu öffnen, doch es geht nicht.");
+                                printText("Da ist eine Tür, du versuchst sie zu öffnen, doch es geht nicht.");
                             }
                         }
 
                     }
                     else {
                         Dungeon.getDungeon().currentRaum.setFinished(-1);
-                        System.out.println("Du siehst eine Tür und gehst die Treppe dahinter hinab.");
+                        printText("Du siehst eine Tür und gehst die Treppe dahinter hinab.");
                         Karte karte;
                         if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
                             karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
@@ -456,7 +457,7 @@ public class Textie {
                 }
             }
             else{
-                System.out.println("Du musst das Item im Inventar haben.");
+                printText("Du musst das Item im Inventar haben.");
             }
         }
     }
@@ -530,7 +531,7 @@ public class Textie {
         JSONSerializer serializer = new JSONSerializer();
         savegame = serializer.include("Human", "Item", "ToggleItem", "Karte", "StorageItem", "Raum", "Inventory", "Player", "raums").serialize(Dungeon.getDungeon());
         IOUtils.writeInFile(savegame);
-        System.out.println("Gespeichert!");
+        printText("Gespeichert!");
     }
 
     public static void doLaden() {
@@ -538,11 +539,11 @@ public class Textie {
         if(savegame != null) {
             //Dungeon.setDungeon(new JSONDeserializer<Dungeon>().deserialize(savegame));
             Dungeon dungeon1 = new JSONDeserializer<Dungeon>().deserialize(savegame);
-            System.out.println("Geladen!");
-            System.out.println("Raum: " + dungeon1.currentRaum.getNumber());
+            printText("Geladen!");
+            printText("Raum: " + dungeon1.currentRaum.getNumber());
         }
         else{
-            System.out.println("Wer nicht speichert, kann nichts laden");
+            printText("Wer nicht speichert, kann nichts laden");
         }
     }
 
@@ -609,13 +610,13 @@ public class Textie {
 
     public static void listInventory() {
         if(Dungeon.getDungeon().inventory.getInventory().size() > 0) {
-            System.out.println("In deiner Tasche befindet sich:");
+            printText("In deiner Tasche befindet sich:");
             for (Item items : Dungeon.getDungeon().inventory.getInventory()) {
                 String objectName = items.getName();
-                System.out.println("\t" + objectName);
+                printText("\t" + objectName);
             }
         } else {
-            System.out.println("Deine Tasche ist leer.");
+            printText("Deine Tasche ist leer.");
         }
     }
 
@@ -648,27 +649,26 @@ public class Textie {
         if(Dungeon.getDungeon().currentHuman.isQuestDone() == true) {
             if(Dungeon.getDungeon().currentHuman.isGaveItem() == true) {
                 if(recieveItem(Dungeon.getDungeon().currentHuman.getRewarditem())) {
-                    System.out.println("Hier, bitte schön.");
+                    printText("Hier, bitte schön.");
                     Dungeon.getDungeon().currentHuman.setGaveItem(false);
                 } else {
-                    System.out.println("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
+                    printText("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
                     Dungeon.getDungeon().currentHuman.setGaveItem(true);
                 }
             } else {
-                int dialogNumber = 0;
                 switch (dialogNumber) {
                     case 0:
-                        System.out.println(Dungeon.getDungeon().currentHuman.getDialog1());
+                        printText(Dungeon.getDungeon().currentHuman.getDialog1());
                         dialogNumber = 1;
                         break;
                     case 1:
-                        System.out.println(Dungeon.getDungeon().currentHuman.getDialog2());
+                        printText(Dungeon.getDungeon().currentHuman.getDialog2());
                         dialogNumber = 0;
                         break;
                 }
             }
         } else {
-            System.out.println(Dungeon.getDungeon().currentHuman.getQuestText());
+            printText(Dungeon.getDungeon().currentHuman.getQuestText());
         }
     }
 
@@ -677,22 +677,22 @@ public class Textie {
             String itemToUse = IOUtils.convertToName(parsed_command[1]);
             if(itemToUse.equals(Dungeon.getDungeon().currentHuman.getQuestItem().getName())) {
                 if(giveItem(Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase()))) {
-                    System.out.println(Dungeon.getDungeon().currentHuman.getQuestDoneText());
+                    printText(Dungeon.getDungeon().currentHuman.getQuestDoneText());
                     Dungeon.getDungeon().currentHuman.setQuestDone(true);
                     if(recieveItem(Dungeon.getDungeon().currentHuman.getRewarditem())) {
-                        System.out.println("Im Gegenzug bekommst du von mir auch etwas. Bitteschön.");
+                        printText("Im Gegenzug bekommst du von mir auch etwas. Bitteschön.");
                     } else {
-                        System.out.println("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
+                        printText("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
                         Dungeon.getDungeon().currentHuman.setGaveItem(true);
                     }
                 } else {
-                    System.out.println("Item nicht im Inventar.");
+                    printText("Item nicht im Inventar.");
                 }
             } else {
-                System.out.println("Das brauche ich nicht.");
+                printText("Das brauche ich nicht.");
             }
         } else {
-            System.out.println("Zu wenig Argumente");
+            printText("Zu wenig Argumente");
         }
     }
 
