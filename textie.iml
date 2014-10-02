@@ -22,6 +22,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.8.1" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.flexjson:flexjson:2.1" level="project" />
   </component>
 </module>
 
