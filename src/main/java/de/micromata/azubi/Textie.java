@@ -139,9 +139,9 @@ public class Textie {
 
     public static void printText(String text) {
         if(Textie.diag == true){
-            printText(Dungeon.getDungeon().currentRaum == null ? text : "[" + Dungeon.getDungeon().currentRaum.roomNumber + "], " + text);
+            System.out.println(Dungeon.getDungeon().currentRaum == null ? text : "[" + Dungeon.getDungeon().currentRaum.roomNumber + "], " + text);
         } else {
-            printText(text);
+            System.out.println(text);
         }
     }
 
