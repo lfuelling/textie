@@ -29,7 +29,9 @@ public class Item {
     private String name;
     private boolean pickable;
 
-    public Item(){}
+    public Item(){
+
+    }
 
     public Item(String name, String untersucheText, String benutzeText, boolean pickable) {
         this.name = name;

@@ -7,6 +7,11 @@ package de.micromata.azubi;
  */
 
 public class Human {
+
+    public Human() {
+
+    }
+
     // Anzahl der ausgegebenen Dialoge
     int dialogNumber = 0;
     private boolean questDone = false;
@@ -15,12 +20,12 @@ public class Human {
     private String questText;
     private String questDoneText;
     private String name;
-    private boolean giveItem = false;
+    private boolean gaveItem = false;
     //ArrayList<Item> questItems;
     Item questItem;
     Item rewarditem;
     // String questItemName;
-    public Human(){}
+
     public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item rewardItem, Item questItem) {
         this.name = name;
         this.dialog1 = dialog1;
@@ -39,55 +44,67 @@ public class Human {
         return this.name;
     }
 
-    void doReden() {
-        if(questDone == true) {
-            if(giveItem == true) {
-                if(Dungeon.getDungeon().inventory.recieveItem(rewarditem)) {
-                    System.out.println("Hier, bitte schön.");
-                    giveItem = false;
-                } else {
-                    System.out.println("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
-                    giveItem = true;
-                }
-            } else {
-                switch (dialogNumber) {
-                    case 0:
-                        System.out.println(dialog1);
-                        dialogNumber = 1;
-                        break;
-                    case 1:
-                        System.out.println(dialog2);
-                        dialogNumber = 0;
-                        break;
-                }
-            }
-        } else {
-            System.out.println(questText);
-        }
+    public boolean isQuestDone() {
+        return questDone;
     }
 
-    public void doGeben(String[] parsed_command, int count) {
-        if(count == 2) {
-            String itemToUse = IOUtils.convertToName(parsed_command[1]);
-            if(itemToUse.equals(questItem.getName())) {
-                if(Dungeon.getDungeon().inventory.giveItem(Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase()))) {
-                    System.out.println(questDoneText);
-                    questDone = true;
-                    if(Dungeon.getDungeon().inventory.recieveItem(rewarditem)) {
-                        System.out.println("Im Gegenzug bekommst du von mir auch etwas. Bitteschön.");
-                    } else {
-                        System.out.println("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
-                        giveItem = true;
-                    }
-                } else {
-                    System.out.println("Item nicht im Inventar.");
-                }
-            } else {
-                System.out.println("Das brauche ich nicht.");
-            }
-        } else {
-            System.out.println("Zu wenig Argumente");
-        }
+    public void setQuestDone(boolean questDone) {
+        this.questDone = questDone;
     }
 
+    public boolean isGaveItem() {
+        return gaveItem;
+    }
+
+    public void setGaveItem(boolean gaveItem) {
+        this.gaveItem = gaveItem;
+    }
+
+    public Item getRewarditem() {
+        return rewarditem;
+    }
+
+    public void setRewarditem(Item rewarditem) {
+        this.rewarditem = rewarditem;
+    }
+
+    public String getDialog1() {
+        return dialog1;
+    }
+
+    public void setDialog1(String dialog1) {
+        this.dialog1 = dialog1;
+    }
+
+    public String getDialog2() {
+        return dialog2;
+    }
+
+    public void setDialog2(String dialog2) {
+        this.dialog2 = dialog2;
+    }
+
+    public String getQuestText() {
+        return questText;
+    }
+
+    public void setQuestText(String questText) {
+        this.questText = questText;
+    }
+
+    public Item getQuestItem() {
+        return questItem;
+    }
+
+    public void setQuestItem(Item questItem) {
+        this.questItem = questItem;
+    }
+
+    public String getQuestDoneText() {
+        return questDoneText;
+    }
+
+    public void setQuestDoneText(String questDoneText) {
+        this.questDoneText = questDoneText;
+    }
 }

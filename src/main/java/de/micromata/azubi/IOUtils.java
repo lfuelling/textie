@@ -1,8 +1,6 @@
 package de.micromata.azubi;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class IOUtils {
 
@@ -29,6 +27,44 @@ public class IOUtils {
     public static String convertToName(String stc) {
         stc = stc.substring(0, 1).toUpperCase() + stc.substring(1).toLowerCase();
         return stc;
+    }
+
+    public static void writeInFile(String savegame_data){
+        File savegame_file = new File("Savegame.save");
+
+        try {
+            FileWriter writer = new FileWriter(savegame_file);
+
+            writer.write(savegame_data);
+
+            // Platformunabhängiger Zeilenumbruch wird in den Stream geschrieben
+            //writer.write(System.getProperty("line.separator"));
+
+            writer.flush();
+
+            // Schließt den Stream
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String readFromFile(){
+        String savegame = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("Savegame.save"));
+            String zeile;
+            try {
+                while ((zeile = br.readLine()) != null) {
+                    savegame = zeile;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        }
+        return savegame;
     }
 
 }

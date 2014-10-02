@@ -21,6 +21,7 @@ public class TextieTest {
     @Before
     public void testBefore() throws Exception {
         dungeon = Dungeon.getDungeon();
+        dungeon.init();
         Textie.diag = true;
     }
 
@@ -184,8 +185,8 @@ public class TextieTest {
         rede("alter mann");
         gib("brecheisen");
         untersuche("inventar");
-        Assert.assertEquals(true, dungeon.inventory.isInInventory(dungeon.itemMap.get(Consts.SCHLÜSSEL)));
-        Assert.assertEquals(false, dungeon.inventory.isInInventory(dungeon.itemMap.get(Consts.BRECHEISEN)));
+        Assert.assertEquals(true, Textie.isInInventory(dungeon.itemMap.get(Consts.SCHLÜSSEL)));
+        Assert.assertEquals(false, Textie.isInInventory(dungeon.itemMap.get(Consts.BRECHEISEN)));
         Assert.assertEquals(3, dungeon.inventory.getInventory().size());
         benutze("schalter");
         gehe("ost");
@@ -265,8 +266,8 @@ public class TextieTest {
         benutze("falltür");
         rede("alter mann");
         gib("brecheisen");
-        Assert.assertEquals(true, dungeon.inventory.isInInventory(dungeon.itemMap.get(Consts.SCHLÜSSEL)));
-        Assert.assertEquals(false, dungeon.inventory.isInInventory(dungeon.itemMap.get(Consts.BRECHEISEN)));
+        Assert.assertEquals(true, Textie.isInInventory(dungeon.itemMap.get(Consts.SCHLÜSSEL)));
+        Assert.assertEquals(false, Textie.isInInventory(dungeon.itemMap.get(Consts.BRECHEISEN)));
         Assert.assertEquals(3, dungeon.inventory.getInventory().size());
         untersuche("inventar");
         rede("alter mann");
@@ -296,7 +297,7 @@ public class TextieTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dungeon.executeCommand(new String[]{Command.GEHE, richtung}, new String[]{richtung});
+        Textie.executeCommand(new String[]{Command.GEHE, richtung}, new String[]{richtung});
         return this;
     }
 
@@ -306,7 +307,7 @@ public class TextieTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dungeon.executeCommand(new String[]{Command.NIMM, text}, new String[]{text});
+        Textie.executeCommand(new String[]{Command.NIMM, text}, new String[]{text});
         return this;
     }
 
@@ -333,7 +334,7 @@ public class TextieTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dungeon.executeCommand(new String[]{Command.BENUTZE, item}, new String[]{item});
+        Textie.executeCommand(new String[]{Command.BENUTZE, item}, new String[]{item});
         return this;
     }
 
@@ -343,7 +344,7 @@ public class TextieTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dungeon.executeCommand(new String[]{Command.UNTERSUCHE, item}, new String[]{item});
+        Textie.executeCommand(new String[]{Command.UNTERSUCHE, item}, new String[]{item});
         return this;
     }
 
@@ -353,7 +354,7 @@ public class TextieTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dungeon.executeCommand(new String[]{Command.REDE, human}, new String[]{human});
+        Textie.executeCommand(new String[]{Command.REDE, human}, new String[]{human});
         return this;
     }
 
@@ -363,7 +364,7 @@ public class TextieTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dungeon.executeCommand(new String[]{Command.GIB, item}, new String[]{item});
+        Textie.executeCommand(new String[]{Command.GIB, item}, new String[]{item});
         return this;
     }
 
@@ -373,7 +374,7 @@ public class TextieTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dungeon.executeCommand(new String[]{Command.VERNICHTE, item}, new String[]{item});
+        Textie.executeCommand(new String[]{Command.VERNICHTE, item}, new String[]{item});
         return this;
     }
 
@@ -383,7 +384,7 @@ public class TextieTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dungeon.executeCommand(new String[]{Command.HILFE}, new String[]{});
+        Textie.executeCommand(new String[]{Command.HILFE}, new String[]{});
         return this;
     }
 
