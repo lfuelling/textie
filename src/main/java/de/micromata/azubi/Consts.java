@@ -17,6 +17,7 @@ public class Consts {
     public static final String HANDTUCH = "HANDTUCH";
     public static final String SACK = "SACK";
     public static final String KARTE = "KARTE";
+    public static final String DIAMANT = "DIAMANT";
 
     //NPCs
 

@@ -180,8 +180,6 @@ public class Dungeon {
     itemMap.put(Consts.SCHALTER, new ToggleItem(
         Item.SCHALTER, "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false,
         false));
-    itemMap.put(Consts.TRUHE, new StorageItem(
-        Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true, itemMap.get(Consts.STEIN), itemMap.get(Consts.HANDTUCH))); //TODO: fill in actual Items
     itemMap.put(Consts.STEIN, new Item(Item.STEIN, "Du betrachtest den Stein. Er wirkt kalt.", "Hier gibt es nichts um den Stein zu benutzen.", true));
     itemMap.put(Consts.SCHLÜSSEL, new Item(
         Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true));
@@ -199,6 +197,11 @@ public class Dungeon {
         Item.FACKEL, "Du betrachtest die Fackel. Wie kann man die wohl anzünden?", "Du zündest deine Fackel mit dem Feuerzeug an.", true, false));
     itemMap.put(Consts.SACK, new Item(
         Item.SACK, "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
+    itemMap.put(Consts.DIAMANT, new Item(
+        Item.DIAMANT, "Ein glitzernder Diamant", "Du schaust zu, wie der Diamant das Licht bricht.", true
+    ));
+      itemMap.put(Consts.TRUHE, new StorageItem(
+              Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true, itemMap.get(Consts.STEIN), itemMap.get(Consts.DIAMANT))); //TODO: fill in actual Items
   }
 
   public void setCurrentHuman(Human hts) {

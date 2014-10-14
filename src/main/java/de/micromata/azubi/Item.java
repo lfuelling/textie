@@ -14,6 +14,7 @@ public class Item {
     public static final String WHITEBOARD = "Whiteboard";
     public static final String STEIN = "Stein";
     public static final String HANDTUCH = "Handtuch";
+    public static final String DIAMANT = "Diamant";
 
     private String untersucheText = "";
 
