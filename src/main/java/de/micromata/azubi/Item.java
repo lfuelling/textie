@@ -1,6 +1,8 @@
 package de.micromata.azubi;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable{
     public static final String SCHALTER = "Schalter";
     public static final String TRUHE = "Truhe";
     public static final String SCHLÜSSEL = "Schlüssel";
@@ -14,9 +16,17 @@ public class Item {
     public static final String WHITEBOARD = "Whiteboard";
     public static final String STEIN = "Stein";
     public static final String HANDTUCH = "Handtuch";
-    public static final String DIAMANT = "Diamant";
+    private static final long serialVersionUID = -2308071724210324323L;
 
-    private String untersucheText = "";
+    public String getUntersucheText() {
+        return untersucheText;
+    }
+
+    public void setUntersucheText(String untersucheText) {
+        this.untersucheText = untersucheText;
+    }
+
+    private String untersucheText;
 
     public String getBenutzeText() {
         return benutzeText;

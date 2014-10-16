@@ -30,7 +30,7 @@ public class IOUtils {
     }
 
     public static void writeInFile(String savegame_data){
-        File savegame_file = new File("Savegame.save");
+        File savegame_file = new File("Savegame.json");
 
         try {
             FileWriter writer = new FileWriter(savegame_file);
@@ -52,7 +52,7 @@ public class IOUtils {
     public static String readFromFile(){
         String savegame = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader("Savegame.save"));
+            BufferedReader br = new BufferedReader(new FileReader("Savegame.json"));
             String zeile;
             try {
                 while ((zeile = br.readLine()) != null) {

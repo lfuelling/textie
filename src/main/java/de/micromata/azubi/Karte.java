@@ -10,16 +10,21 @@ public class Karte extends Item {
 
 
 
+
         ArrayList<String> raumNummern = new ArrayList<String>();
         ArrayList<String> laufRichtung = new ArrayList<String>();
 
+
+    public Karte(){
+
+    }
 
 
     public Karte(String name, String untersucheText, String benutzeText, boolean pickable) {
         super(name, untersucheText, benutzeText, pickable);
     }
 
-    public void writeMap(String currentRaumNummer, String laufRichtung){
+    public void writeMap(int currentRaumNummer, String laufRichtung){
         this.laufRichtung.add("("+laufRichtung+")--");
         this.raumNummern.add("[Raum " + currentRaumNummer + "]--");
 

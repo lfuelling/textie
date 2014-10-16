@@ -6,7 +6,11 @@ package de.micromata.azubi;
  * Wir werden das später evtl. erweitern. Vorerst genügt das. Wichtig ist mir nur, dass die Quests funktionieren.
  */
 
-public class Human {
+import java.io.Serializable;
+
+public class Human implements Serializable{
+
+    private static final long serialVersionUID = -1984948626055306501L;
 
     public Human() {
 
