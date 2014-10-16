@@ -1,5 +1,7 @@
+#Savegame Files
 Savegame.*
 savegame.*
+
 *.class
 .idea/*
 .idea/workspace.xml
