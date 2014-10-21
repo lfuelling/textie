@@ -12,13 +12,13 @@ public class Raum implements Serializable{
     protected boolean falltuerUsed = false;
     protected int roomNumber;
     protected String willkommensNachricht;
-    protected Map<Richtung, Integer> verbindungen = new HashMap<Richtung, Integer>();
+    protected Map<Richtung, Raum> verbindungen = new HashMap<>();
     protected boolean leaveRoom = false;
 
     public Raum() {
     }
 
-    public Raum(int number, String willkommensNachricht, Map<Richtung, Integer> verbindungen, Item... items1) {
+    public Raum(int number, String willkommensNachricht, Item... items1) {
         this.roomNumber = number;
         this.verbindungen = verbindungen;
         this.willkommensNachricht = willkommensNachricht;
@@ -110,7 +110,7 @@ public class Raum implements Serializable{
     }
 
 
-    public Integer getRaumNr(Richtung richtung) {
+    public Raum getNextRoom(Richtung richtung) {
         return verbindungen.get(richtung);
     }
 
@@ -123,11 +123,11 @@ public class Raum implements Serializable{
         this.leaveRoom = leaveRoom;
     }
 
-    public Map<Richtung, Integer> getVerbindungen() {
+    public Map<Richtung, Raum> getVerbindungen() {
         return verbindungen;
     }
 
-    public void setVerbindungen(Map<Richtung, Integer> verbindungen) {
+    public void setVerbindungen(Map<Richtung, Raum> verbindungen) {
         this.verbindungen = verbindungen;
     }
 }
