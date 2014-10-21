@@ -10,23 +10,20 @@ public class Door {
     int uid;
     Richtung richtungRaum1;
     Richtung richtungRaum2;
-    Raum raum1;
-    Raum raum2;
+    Raum raum;
     boolean locked;
 
     /**
      *
      * @param UID The unique identifier we can use to define a key or a switch to a certain door.
      * @param richtung The orientation the door should have in the room.
-     * @param raum1 The room the door is placed in.
-     * @param raum2 The room the door leads to. (and where it's also placed in)
+     * @param raum The room the door is placed in.
      * @param initialLockState Defines if the door is locked at game launch.
      */
-    public Door(int UID, Richtung richtung, Raum raum1, Raum raum2, boolean initialLockState) {
+    public Door(int UID, Richtung richtung, Raum raum,boolean initialLockState) {
         this.uid = UID;
         this.richtungRaum1 = richtung;
-        this.raum1 = raum1;
-        this.raum2 = raum2;
+        this.raum = raum;
         this.locked = initialLockState;
         richtungRaum2 = Richtung.getOpposite(richtungRaum1);
     }
@@ -36,7 +33,7 @@ public class Door {
      */
     public void open(){
         if(locked = false){
-            raum1.setLeaveRoom(true);
+            raum.setLeaveRoom(true);
         } else {
             Textie.printText("Diese Tür ist verschlossen.");
         }
