@@ -42,15 +42,28 @@ public class Door {
         }
     }
 
+
+    /**
+     *
+     * @return Returns the door's UID
+     */
     public int getUid() {
         return uid;
     }
 
+    /**
+     *
+     * @param locked Sets the door's lock state
+     */
     public void setLocked(boolean locked) {
 
         this.locked = locked;
     }
 
+    /**
+     *
+     * @return Returns the door's lock state.
+     */
     public boolean isLocked() {
 
         return locked;
