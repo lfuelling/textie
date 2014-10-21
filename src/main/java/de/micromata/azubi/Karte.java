@@ -30,10 +30,10 @@ public class Karte extends Item {
 
     }
 
-    public String readMap(){
-
+    @Override
+    public void benutzen() {
         if(laufRichtung.size() != raumNummern.size()) {
-            return null;
+            return;
         }
 
         StringBuffer buf = new StringBuffer();
@@ -42,7 +42,7 @@ public class Karte extends Item {
             buf.append(raumNummern.get(i)).append(laufRichtung.get(i));
         }
 
-        return buf.toString();
+        Textie.printText(buf.toString());
     }
 
 
