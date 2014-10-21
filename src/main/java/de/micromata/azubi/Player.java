@@ -1,8 +1,5 @@
 package de.micromata.azubi;
 
-import flexjson.JSONDeserializer;
-import flexjson.JSONSerializer;
-
 import java.io.Serializable;
 
 /**
@@ -31,6 +28,7 @@ public class Player implements Serializable{
     }
 
     public Player(String playerName, boolean alive) {
+        //TODO spieler lebt immer
         //this.inventory = inventory;
         this.playerName = playerName;
         this.alive = alive;

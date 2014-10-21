@@ -19,6 +19,8 @@ public enum Richtung {
             return WEST;
         }
         else {
+
+            //FIXME
             return OST;
         }
     }

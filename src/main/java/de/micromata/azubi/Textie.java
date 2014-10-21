@@ -6,8 +6,6 @@ package de.micromata.azubi;
  *  Der Spieler darf entscheiden, was er tun möchte, doch der GameMaster entscheidet, was geschiet.
  */
 
-import flexjson.JSONDeserializer;
-import flexjson.JSONSerializer;
 
 import java.io.*;
 
@@ -422,11 +420,6 @@ public class Textie implements Serializable{
     }
 
     public static void doSpeichern() {
-        /*
-        JSONSerializer serializer = new JSONSerializer();
-        savegame = serializer.include("verbindungen").deepSerialize(Dungeon.getDungeon());
-        IOUtils.writeInFile(savegame);
-        */
 
         try (
                 OutputStream file = new FileOutputStream("savegame.save");
