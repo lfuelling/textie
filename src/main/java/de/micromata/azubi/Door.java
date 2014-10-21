@@ -14,7 +14,6 @@ public class Door {
     boolean locked;
 
     /**
-     *
      * @param UID The unique identifier we can use to define a key or a switch to a certain door.
      * @param richtung The orientation the door should have in the room.
      * @param raum The room the door is placed in.
@@ -41,7 +40,6 @@ public class Door {
 
 
     /**
-     *
      * @return Returns the door's UID
      */
     public int getUid() {
@@ -49,7 +47,6 @@ public class Door {
     }
 
     /**
-     *
      * @param locked Sets the door's lock state
      */
     public void setLocked(boolean locked) {
@@ -58,7 +55,6 @@ public class Door {
     }
 
     /**
-     *
      * @return Returns the door's lock state.
      */
     public boolean isLocked() {

@@ -4,7 +4,6 @@ package de.micromata.azubi;
  * This is a Trapdoor.
  * @version 1.0
  * @author Lukas F&uuml;lling
- *
  */
 public class Trapdoor {
     int uid;
@@ -43,7 +42,6 @@ public class Trapdoor {
     }
 
     /**
-     *
      * @param locked Sets the door's lock state
      */
     public void setLocked(boolean locked) {
@@ -52,7 +50,6 @@ public class Trapdoor {
     }
 
     /**
-     *
      * @return Returns the door's lock state.
      */
     public boolean isLocked() {
