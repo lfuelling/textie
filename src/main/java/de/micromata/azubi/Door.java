@@ -3,8 +3,7 @@ package de.micromata.azubi;
 /**
  * This defines a simple door.
  *
- * @author Lukas Fülling
- * @since 21.10.2014
+ * @author Lukas F&uuml;lling
  * @version 1.0
  */
 public class Door {
@@ -20,7 +19,7 @@ public class Door {
      * @param UID The unique identifier we can use to define a key or a switch to a certain door.
      * @param richtung The orientation the door should have in the room.
      * @param raum1 The room the door is placed in.
-     * @param raum2 The room the door leads to. (and where it's also placed in.
+     * @param raum2 The room the door leads to. (and where it's also placed in)
      * @param initialLockState Defines if the door is locked at game launch.
      */
     public Door(int UID, Richtung richtung, Raum raum1, Raum raum2, boolean initialLockState) {
@@ -33,11 +32,14 @@ public class Door {
     }
 
     /**
-     * Exits the current room and enters the new one.
+     * Exits the current room and enters the new one if the door is unlocked.
      */
     public void open(){
-        if()
-        raum1.setLeaveRoom(true);
+        if(locked = false){
+            raum1.setLeaveRoom(true);
+        } else {
+            Textie.printText("Diese Tür ist verschlossen.");
+        }
     }
 
     public int getUid() {
