@@ -2,8 +2,9 @@ package de.micromata.azubi;
 
 /**
  * This is a Trapdoor.
- * @version 1.0
+ *
  * @author Lukas F&uuml;lling
+ * @version 1.0
  */
 public class Trapdoor {
     int uid;
@@ -11,12 +12,13 @@ public class Trapdoor {
     boolean locked;
 
     /**
-     * @see de.micromata.azubi.Door
-     * @param UID The unique identifier we can use to define a key or a switch to a certain trapdoor.
-     * @param raum The room the door is placed in.
+     * @param UID              The unique identifier we can use to define a key or a switch to a certain trapdoor.
+     * @param raum             The room the door is placed in.
      * @param initialLockState Defines if the door is locked at game launch.
+     * @see de.micromata.azubi.Door
      */
     public Trapdoor(int UID, Raum raum, boolean initialLockState) {
+
         this.uid = UID;
         this.raum = raum;
         this.locked = initialLockState;
@@ -25,8 +27,9 @@ public class Trapdoor {
     /**
      * Exits the current room and enters the new one if the door is unlocked.
      */
-    public void open(){
-        if(locked = false){
+    public void open() {
+
+        if (locked = false) {
             raum.setLeaveRoom(true);
         } else {
             Textie.printText("Diese Tür ist verschlossen.");
@@ -34,10 +37,10 @@ public class Trapdoor {
     }
 
     /**
-     *
      * @return Returns the door's UID
      */
     public int getUid() {
+
         return uid;
     }
 
