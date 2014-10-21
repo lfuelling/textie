@@ -10,7 +10,7 @@ public class Door {
     int uid;
     Richtung richtungRaum1;
     Richtung richtungRaum2;
-    Raum raum;
+    int raumNr;
     boolean locked;
 
     /**
@@ -19,11 +19,11 @@ public class Door {
      * @param raum             The room the door is placed in.
      * @param initialLockState Defines if the door is locked at game launch.
      */
-    public Door(int UID, Richtung richtung, Raum raum, boolean initialLockState) {
+    public Door(int UID, Richtung richtung, int raumNr, boolean initialLockState) {
 
         this.uid = UID;
         this.richtungRaum1 = richtung;
-        this.raum = raum;
+        this.raumNr = raumNr;
         this.locked = initialLockState;
         richtungRaum2 = Richtung.getOpposite(richtungRaum1);
     }
@@ -34,7 +34,7 @@ public class Door {
     public void open() {
 
         if (locked = false) {
-            raum.setLeaveRoom(true);
+            Dungeon.getDungeon().getCurrentRaum().setLeaveRoom(true);
         } else {
             Textie.printText("Diese Tür ist verschlossen.");
         }
