@@ -152,7 +152,7 @@ public class Textie implements Serializable{
         lastPrintedText = text;
     }
 
-        static void doGehen(Richtung richtung) { //FIXME NullPointer wenn man "gehe [mist]" eingibt
+        static void doGehen(Richtung richtung) {
         Raum raum = Dungeon.getDungeon().getRaum(richtung);
         if (raum != null && Dungeon.getDungeon().raums.get(Dungeon.getDungeon().previousRoomNumber).isLeaveRoom()) {
             Dungeon.getDungeon().setRoomNumber(raum);

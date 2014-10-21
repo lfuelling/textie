@@ -242,9 +242,7 @@ public class Dungeon implements Serializable{
                     currentRaum.setLeaveRoom(true);
                     break;
             }
-        } else {
-            Textie.printText("Du bist gegen die Wand gelaufen.");
-        }
+
         previousRoomNumber = raums.indexOf(currentRaum);
         Karte karte;
         if (dungeon.player.getInventory().findItemByName("Karte") != null){
@@ -260,7 +258,10 @@ public class Dungeon implements Serializable{
         }
         return getNextRoom(currentRoomNumber);
 
-
+        } else {
+            Textie.printText("Du bist gegen die Wand gelaufen.");
+        }
+        return null;
     }
 
     private Raum getNextRoom(int currentRoomNumber) {
