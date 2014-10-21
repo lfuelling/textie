@@ -11,10 +11,6 @@ public class Raum implements Serializable{
     protected List<Item> items = new ArrayList<Item>();
     protected boolean falltuerUsed = false;
     protected int roomNumber;
-    protected int nord = 0;
-    protected int sued = 0;
-    protected int west = 0;
-    protected int ost = 0;
     protected String willkommensNachricht;
     protected Map<Richtung, Integer> verbindungen = new HashMap<Richtung, Integer>();
     protected boolean leaveRoom = false;

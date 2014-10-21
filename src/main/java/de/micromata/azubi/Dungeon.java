@@ -1,8 +1,5 @@
 package de.micromata.azubi;
 
-import flexjson.JSONDeserializer;
-import flexjson.JSONSerializer;
-
 import java.io.Serializable;
 import java.util.*;
 
@@ -13,7 +10,6 @@ public class Dungeon implements Serializable{
     private static final long serialVersionUID = -7870743513679247263L;
     public ArrayList<Raum> raums = new ArrayList<>();
     public int currentRoomNumber; //Index des aktuellen Raumes in der RaumListe
-    public static final boolean ALIVE = true;
     public Map<String, Item> itemMap = new HashMap<>();
     public Map<String, Human> humanMap = new HashMap<>();
     public Human currentHuman;
