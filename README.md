@@ -26,3 +26,6 @@ Dieser Modus gibt zusätzliche informationen zum aktuellen Raum aus, die ziemlic
 
 Gestartet wird der Diagnosemodus, indem man ```-diag``` als Argument angibt.
 
+## Entwickler
+- Es ist wichtig, language level 7.0 zu nutzen, weil wir Diamonds nutzen.
+
