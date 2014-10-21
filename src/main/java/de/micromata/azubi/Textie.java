@@ -173,7 +173,7 @@ public class Textie implements Serializable{
 
     static void doVernichte(Item item, int count) {
         if (count == 2) {
-            if (removeItemFromInventory(item)) {
+            if (Dungeon.getDungeon().player.getInventory().transferItem(Dungeon.getDungeon().getCurrentRaum().getInventory(), item)) {
                 printText(item.getName() + " vernichtet.");
                 return;
             } else {
@@ -209,17 +209,17 @@ public class Textie implements Serializable{
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
                             if (fackel.getState() == true) {
-                                listInventory();
+                                Dungeon.getDungeon().player.getInventory().listItems();
                             } else {
                                 printText("Du kannst nichts sehen!");
                             }
                         }
                     } else {
-                        listInventory();
+                        Dungeon.getDungeon().player.getInventory().listItems();
                     }
                     break;
                 case "truhe":
-                    if (isInRoom(Dungeon.getDungeon().itemMap.get(Consts.TRUHE))) {
+                    if (Dungeon.getDungeon().getCurrentRaum().getInventory().hasItem("Truhe")){
                         StorageItem truhe = (StorageItem) Dungeon.getDungeon().itemMap.get(Consts.TRUHE);
                         truhe.listItems();
                     } else {
@@ -262,7 +262,7 @@ public class Textie implements Serializable{
             printText("Das Item gibt es nicht.");
 
         } else {
-            if (item.isPickable() == false || isInInventory(item)) {
+            if (item.isPickable() == false || Dungeon.getDungeon().player.getInventory().hasItem(item.getName())) {
                 String itemName = item.getName();
                 if (Textie.diag == true) {
                     printText("Du willst " + itemName + " benutzen");
@@ -274,8 +274,8 @@ public class Textie implements Serializable{
                     // benutzbar sein, selbst wenn der Raum dunkel ist.
                     case "Fackel":// Dungeon.getDungeon().itemMap.get("FACKEL").getName():
                     case "Feuerzeug": // Dungeon.getDungeon().itemMap.get("FEUERZEUG").getName():
-                        int fackelSlot = findInInventory(Dungeon.getDungeon().itemMap.get(Consts.FACKEL));
-                        int feuerZeugSlot = findInInventory(Dungeon.getDungeon().itemMap.get(Consts.FEUERZEUG));
+                        int fackelSlot = Dungeon.getDungeon().player.getInventory().findItem(Dungeon.getDungeon().player.getInventory().findItemByName("Fackel"));
+                        int feuerZeugSlot = Dungeon.getDungeon().player.getInventory().findItem(Dungeon.getDungeon().player.getInventory().findItemByName("Feuerzeug"));
                         if (feuerZeugSlot < 0) {
                             printText("Du hast kein Feuerzeug.");
                             break;
@@ -301,7 +301,7 @@ public class Textie implements Serializable{
                                     printText("Das Objekt gibt es nicht.");
                                     break;
                                 } else {
-                                    if (isInRoom(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR))) {
+                                    if (Dungeon.getDungeon().getCurrentRaum().getInventory().hasItem("Falltür")) {
                                         printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
                                         doGehen(Richtung.FALLTUER);
                                         break;
@@ -315,7 +315,7 @@ public class Textie implements Serializable{
                     case "Sack":
                         Item sack = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
                         sack.benutzen();
-                        removeItemFromInventory(Dungeon.getDungeon().itemMap.get(Consts.SACK));
+                        Dungeon.getDungeon().player.getInventory().getInventory().remove(Dungeon.getDungeon().player.getInventory().findItemByName("Sack"));
                         Dungeon.getDungeon().player.getInventory().setInventorySize(2);
                         break;
                     case "Schalter":
@@ -328,8 +328,8 @@ public class Textie implements Serializable{
                         ende();
                         break;
                     case "Schlüssel":
-                        StorageItem truhe = (StorageItem) Dungeon.getDungeon().itemMap.get(Consts.TRUHE);
-                        if (Dungeon.getDungeon().getCurrentRaum().hasItem(Dungeon.getDungeon().itemMap.get(Consts.TRUHE))) {
+                        StorageItem truhe = (StorageItem) Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName("Truhe");
+                        if (Dungeon.getDungeon().getCurrentRaum().getInventory().hasItem("Truhe")) {
                             if (truhe.lockState == true) {
                                 truhe.lockState = false;
                                 printText("Du öffnest die Truhe mit dem Schlüssel.");
@@ -397,7 +397,7 @@ public class Textie implements Serializable{
             printText("Unbekanntes Item.");
         } else {
             if (item.isPickable()) {
-                if (addItemToInventory(item)) {
+                if (Dungeon.getDungeon().getCurrentRaum().getInventory().transferItem(Dungeon.getDungeon().player.getInventory(), item)) {
 
                     printText(item.getName() + " zum Inventar hinzugefügt.");
                 } else {
@@ -480,11 +480,13 @@ public class Textie implements Serializable{
 
 
     //RaumKram
+    /*
     public static boolean removeItemInRoom(Item item) {
         if (Dungeon.getDungeon().getCurrentRaum().items.remove(item))
             return true;
         return false;
     }
+
 
     public static boolean addItemToRoom(Item item) {
         if (Dungeon.getDungeon().getCurrentRaum().items.add(item)) {
@@ -498,28 +500,15 @@ public class Textie implements Serializable{
         return findInRoom(item) >= 0;
     }
 
-    /**
-     * @param item
-     * @return Returns -128 when the item is not in the room
-     */
     public static int findInRoom(Item item) {
         int i = -128;
         i = Dungeon.getDungeon().getCurrentRaum().items.indexOf(item);
         return i;
     }
+    */
 
 
     //InventarKram
-    public static boolean addItemToInventory(Item item) {
-        if (Dungeon.getDungeon().player.getInventory().getInventory().size() < Dungeon.getDungeon().player.getInventory().getInventorySize() && Dungeon.getDungeon().getCurrentRaum().hasItem(item)) {
-            Dungeon.getDungeon().player.getInventory().getInventory().add(item);
-            removeItemInRoom(item);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public static boolean addItemFromChestToInventory(Item item) {
         StorageItem dieTruhe = (StorageItem) Dungeon.getDungeon().itemMap.get(Consts.TRUHE);
         if (Dungeon.getDungeon().player.getInventory().getInventory().size() < Dungeon.getDungeon().player.getInventory().getInventorySize() && dieTruhe.hasItem(item)) {
@@ -531,45 +520,12 @@ public class Textie implements Serializable{
         }
     }
 
-    public static boolean removeItemFromInventory(Item item) {
-        if (Dungeon.getDungeon().player.getInventory().getInventory().remove(item) && addItemToRoom(item))
-            return true;
-        return false;
-    }
-
-    public static void listInventory() {
-        if (Dungeon.getDungeon().player.getInventory().getInventory().size() > 0) {
-
-            printText("In deiner Tasche befindet sich:");
-            for (Item items : Dungeon.getDungeon().player.getInventory().getInventory()) {
-                String objectName = items.getName();
-                printText("\t" + objectName);
-            }
-        } else {
-            printText("Deine Tasche ist leer.");
-        }
-    }
-
-    public static boolean isInInventory(Item items) {
-        return findInInventory(items) >= 0;
-    }
-
-    public static int findInInventory(Item items) {
-        int slot = -128;
-        slot = Dungeon.getDungeon().player.getInventory().getInventory().indexOf(items);
-        if (slot > -128) {
-            return slot;
-        }
-        return -128;
-    }
-
     public static boolean giveItem(Item item) {
         if (Dungeon.getDungeon().player.getInventory().getInventory().remove(item)) {
             return true;
         }
         return false;
     }
-
 
     //HumanKram
     static void doReden() {
@@ -631,6 +587,4 @@ public class Textie implements Serializable{
             return false;
         }
     }
-
-
 }

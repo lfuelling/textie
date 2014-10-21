@@ -23,9 +23,8 @@ public class Dungeon implements Serializable{
     }
 
     public void init() {
-        initItems();
-        initHumans(); // Humans benötigen Items
         initRooms();
+        initHumans(); // Humans benötigen Items
         initVerbindungen();
     }
 
@@ -52,14 +51,14 @@ public class Dungeon implements Serializable{
     }
 
     public void initRooms() {
-        raum = new Raum(1, "Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.", itemMap.get(Consts.FACKEL), itemMap.get(Consts.HANDTUCH), itemMap.get(Consts.TRUHE), itemMap.get(Consts.SCHALTER));
+        raum = new Raum(1, "Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
         raums.add(raum);
         currentRoomNumber = 1;
-        raum = new Raum(2, "Du kommst in einen dunklen Raum.", itemMap.get(Consts.SCHWERT), itemMap.get(Consts.FEUERZEUG), itemMap.get(Consts.STEIN));
+        raum = new Raum(2, "Du kommst in einen dunklen Raum.");
         raums.add(raum);
-        raum = new Raum(3, "Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.", itemMap.get(Consts.QUIETSCHEENTE), itemMap.get(Consts.WHITEBOARD), itemMap.get(Consts.BRECHEISEN), itemMap.get(Consts.FALLTÜR));
+        raum = new Raum(3, "Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.");
         raums.add(raum);
-        raum = new Raum(4, "Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.", itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK), itemMap.get(Consts.KARTE));
+        raum = new Raum(4, "Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.");
         raums.add(raum);
 
 
@@ -88,6 +87,42 @@ public class Dungeon implements Serializable{
         verbindungen = new HashMap<Richtung, Raum>();
         verbindungen.put(Richtung.OST, raums.get(0));
         raums.get(3).setVerbindungen(verbindungen);
+    }
+
+    public void initInventories(){
+        // Raum 1
+        Inventory inventory = new Inventory();
+        inventory.getInventory().add(new ToggleItem(Item.FACKEL, "Du betrachtest die Fackel. Wie kann man die wohl anzünden?", "Du zündest deine Fackel mit dem Feuerzeug an.", true, false));
+        inventory.getInventory().add(new Item(Item.HANDTUCH, "Das Handtuch sieht sehr flauschig aus.", "Du wischst dir den Angstschweiß von der Stirn.", true));
+        inventory.getInventory().add(new ToggleItem(Item.SCHALTER, "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false,false));
+        inventory.getInventory().add(new StorageItem(Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true, null, null)); //TODO Items einfügen
+        findRaumByNummer(1).setInventory(inventory);
+
+        //Raum 2
+        inventory = new Inventory();
+        inventory.getInventory().add(new Item(Item.STEIN, "Du betrachtest den Stein. Er wirkt kalt.", "Hier gibt es nichts um den Stein zu benutzen.", true));
+        inventory.getInventory().add(new Item(Item.SCHWERT, "Du betrachtest das Schwert. Es sieht sehr scharf aus.", "Du stichst dir das Schwert zwischen die Rippen und stirbst.", true));
+        inventory.getInventory().add(new Item(Item.FEUERZEUG, "Du betrachtest das Feuerzeug. Es wirkt zuverlässig.", "Du zündest deine Fackel mit dem Feuerzeug an.", true));
+        findRaumByNummer(2).setInventory(inventory);
+
+        //Raum 3
+        inventory = new Inventory();
+        inventory.getInventory().add(new Item(Item.FALLTÜR, "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
+        inventory.getInventory().add(new Item(Item.WHITEBOARD, "Es steht \'FLIEH!\' mit Blut geschrieben darauf.", "Das fasse ich bestimmt nicht an!", false));
+        inventory.getInventory().add(new Item(Item.BRECHEISEN, "Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.", "Du kratzt dich mit dem Brecheisen am Kopf", true));
+        inventory.getInventory().add(new Item(Item.QUIETSCHEENTE, "Die Ente schaut dich vorwurfsvoll an.", "Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst.", true));
+        findRaumByNummer(3).setInventory(inventory);
+
+        //Raum 4
+        inventory = new Inventory();
+        inventory.getInventory().add(new Karte("Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert", true));
+        inventory.getInventory().add(new Item(Item.SACK, "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
+        findRaumByNummer(4).setInventory(inventory);
+
+
+
+
+
 
 
     }
@@ -96,31 +131,20 @@ public class Dungeon implements Serializable{
         // TODO (Wenn wir den benutzeText der Items benutzen) Raumnummer
         // hinzufügen.
         //itemMap.put(Consts.KARTE, karte);
-        itemMap.put(Consts.FALLTÜR, new Item(Item.FALLTÜR, "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
-        itemMap.put(Consts.WHITEBOARD, new Item(Item.WHITEBOARD, "Es steht \'FLIEH!\' mit Blut geschrieben darauf.", "Das fasse ich bestimmt nicht an!", false));
-        itemMap.put(Consts.SCHALTER, new ToggleItem(
-                Item.SCHALTER, "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false,
-                false));
-        itemMap.put(Consts.TRUHE, new StorageItem(
-                Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true, itemMap.get(Consts.STEIN), itemMap.get(Consts.HANDTUCH))); //TODO: fill in actual Items
-        itemMap.put(Consts.STEIN, new Item(Item.STEIN, "Du betrachtest den Stein. Er wirkt kalt.", "Hier gibt es nichts um den Stein zu benutzen.", true));
-        itemMap.put(Consts.SCHLÜSSEL, new Item(
-                Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true));
-        itemMap.put(Consts.FEUERZEUG, new Item(
-                Item.FEUERZEUG, "Du betrachtest das Feuerzeug. Es wirkt zuverlässig.", "Du zündest deine Fackel mit dem Feuerzeug an.", true));
-        itemMap.put(Consts.SCHWERT, new Item(
-                Item.SCHWERT, "Du betrachtest das Schwert. Es sieht sehr scharf aus.", "Du stichst dir das Schwert zwischen die Rippen und stirbst.", true));
-        itemMap.put(Consts.BRECHEISEN, new Item(
-                Item.BRECHEISEN, "Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.", "Du kratzt dich mit dem Brecheisen am Kopf", true));
-        itemMap.put(Consts.QUIETSCHEENTE, new Item(
-                Item.QUIETSCHEENTE, "Die Ente schaut dich vorwurfsvoll an.", "Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst.",
-                true));
-        itemMap.put(Consts.HANDTUCH, new Item(Item.HANDTUCH, "Das Handtuch sieht sehr flauschig aus.", "Du wischst dir den Angstschweiß von der Stirn.", true));
-        itemMap.put(Consts.FACKEL, new ToggleItem(
-                Item.FACKEL, "Du betrachtest die Fackel. Wie kann man die wohl anzünden?", "Du zündest deine Fackel mit dem Feuerzeug an.", true, false));
-        itemMap.put(Consts.SACK, new Item(
-                Item.SACK, "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
-        itemMap.put(Consts.KARTE, new Karte("Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert", true));
+        //itemMap.put(Consts.FALLTÜR, new Item(Item.FALLTÜR, "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
+        //itemMap.put(Consts.WHITEBOARD, new Item(Item.WHITEBOARD, "Es steht \'FLIEH!\' mit Blut geschrieben darauf.", "Das fasse ich bestimmt nicht an!", false));
+        //itemMap.put(Consts.SCHALTER, new ToggleItem(Item.SCHALTER, "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false,false));
+        //itemMap.put(Consts.TRUHE, new StorageItem(Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true, itemMap.get(Consts.STEIN), itemMap.get(Consts.HANDTUCH))); //TODO: fill in actual Items
+        //itemMap.put(Consts.STEIN, new Item(Item.STEIN, "Du betrachtest den Stein. Er wirkt kalt.", "Hier gibt es nichts um den Stein zu benutzen.", true));
+        //itemMap.put(Consts.SCHLÜSSEL, new Item(Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true));
+        //itemMap.put(Consts.FEUERZEUG, new Item(Item.FEUERZEUG, "Du betrachtest das Feuerzeug. Es wirkt zuverlässig.", "Du zündest deine Fackel mit dem Feuerzeug an.", true));
+        //itemMap.put(Consts.SCHWERT, new Item(Item.SCHWERT, "Du betrachtest das Schwert. Es sieht sehr scharf aus.", "Du stichst dir das Schwert zwischen die Rippen und stirbst.", true));
+        //itemMap.put(Consts.BRECHEISEN, new Item(Item.BRECHEISEN, "Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.", "Du kratzt dich mit dem Brecheisen am Kopf", true));
+        //itemMap.put(Consts.QUIETSCHEENTE, new Item(Item.QUIETSCHEENTE, "Die Ente schaut dich vorwurfsvoll an.", "Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst.", true));
+        //itemMap.put(Consts.HANDTUCH, new Item(Item.HANDTUCH, "Das Handtuch sieht sehr flauschig aus.", "Du wischst dir den Angstschweiß von der Stirn.", true));
+        //itemMap.put(Consts.FACKEL, new ToggleItem(Item.FACKEL, "Du betrachtest die Fackel. Wie kann man die wohl anzünden?", "Du zündest deine Fackel mit dem Feuerzeug an.", true, false));
+        //itemMap.put(Consts.SACK, new Item(Item.SACK, "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
+        //itemMap.put(Consts.KARTE, new Karte("Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert", true));
     }
 
     public void setCurrentHuman(Human hts) {
@@ -131,7 +155,9 @@ public class Dungeon implements Serializable{
     private void initHumans() {
         humanMap.put(Consts.ALTER_MANN, new Human(
                 "Gordon", "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...", "...",
-                "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.", itemMap.get(Consts.SCHLÜSSEL), itemMap.get(Consts.BRECHEISEN)));
+                "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.",
+                new Item(Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true),
+                findRaumByNummer(1).getInventory().findItemByName("Brecheisen")));
     }
 
     public Raum getCurrentRaum() {
@@ -142,6 +168,18 @@ public class Dungeon implements Serializable{
         }
         return raums.get(0);
     }
+
+    public Raum findRaumByNummer(int raumNummer){
+        for (Raum raum : raums) {
+            if (raum.roomNumber == this.currentRoomNumber) {
+                return raum;
+            }
+        }
+        return null;
+    }
+
+
+
 
     public void setCurrentRaum(Raum raum) {
 

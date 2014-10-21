@@ -14,18 +14,14 @@ public class Raum implements Serializable{
     protected String willkommensNachricht;
     protected Map<Richtung, Raum> verbindungen = new HashMap<>();
     protected boolean leaveRoom = false;
+    protected Inventory inventory;
 
     public Raum() {
     }
 
-    public Raum(int number, String willkommensNachricht, Item... items1) {
+    public Raum(int number, String willkommensNachricht) {
         this.roomNumber = number;
-        this.verbindungen = verbindungen;
         this.willkommensNachricht = willkommensNachricht;
-
-        for (Item item : items1) {
-            this.items.add(item);
-        }
     }
 
     public void listItems() {
@@ -129,5 +125,13 @@ public class Raum implements Serializable{
 
     public void setVerbindungen(Map<Richtung, Raum> verbindungen) {
         this.verbindungen = verbindungen;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 }
