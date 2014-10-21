@@ -6,7 +6,7 @@
 
     <groupId>de.micromata.azubi</groupId>
     <artifactId>textie</artifactId>
-    <version>3.0</version>
+    <version>3.5-SNAPSHOT</version>
 
     <properties>
         <project.build.javaVersion>1.7</project.build.javaVersion>
