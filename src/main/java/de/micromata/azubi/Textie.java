@@ -13,6 +13,7 @@ public class Textie implements Serializable{
     private static final long serialVersionUID = -6980176018028225023L;
     public static boolean diag;
     public static String savegame;
+    public static String lastPrintedText = "";
     static int dialogNumber = 0;
 
     public static void main(String[] args) {
@@ -147,6 +148,8 @@ public class Textie implements Serializable{
         } else {
             System.out.println(text);
         }
+
+        lastPrintedText = text;
     }
 
     static void doGehen(Richtung richtung) {
@@ -587,4 +590,7 @@ public class Textie implements Serializable{
             return false;
         }
     }
+
+
+
 }

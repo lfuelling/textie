@@ -5,23 +5,21 @@ package de.micromata.azubi;
  */
 public enum Richtung {
     NORD, SUED, WEST, OST, FALLTUER;
+
     public static Richtung getByText(String text) {
         if ("süd".equals(text.toLowerCase()) || "sued".equals(text.toLowerCase())) {
             return SUED;
-        }
-        else if(text.toLowerCase().equals("falltür") || text.toLowerCase().equals("falltuer")){
+        } else if (text.toLowerCase().equals("falltür") || text.toLowerCase().equals("falltuer")) {
             return FALLTUER;
-        }
-        else if(text.toLowerCase().equals("nord")){
+        } else if (text.toLowerCase().equals("nord")) {
             return NORD;
-        }
-        else if(text.toLowerCase().equals("west")){
+        } else if (text.toLowerCase().equals("west")) {
             return WEST;
-        }
-        else {
-
-            //FIXME
+        } else if (text.toLowerCase().equals("ost")) {
             return OST;
+        } else {
+            return null;
         }
     }
 }
+
