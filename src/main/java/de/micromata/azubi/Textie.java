@@ -40,7 +40,11 @@ public class Textie implements Serializable{
         printText("Du bist aus deinem Traum erwacht und siehst, dass du");
         printText("in deinem Bett liegst. Du spürst dein Herz stark und schnell schlagen");
         printText("und bist froh, dass du aufgewacht bist.");
-        System.exit(0);
+        if(diag) {
+            printText("Programm wird aufgrund des Diagnosemodus nicht beendet. Bitte Ctrl+C drücken.");
+        } else {
+            System.exit(0);
+        }
         return true;
     }
 
