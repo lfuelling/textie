@@ -1,5 +1,6 @@
 package de.micromata.azubi;
 
+import javax.xml.soap.Text;
 import java.io.Serializable;
 import java.util.*;
 
@@ -34,7 +35,7 @@ public class Dungeon implements Serializable{
         //inventory.getInventory().add();
         //TODO Items einfügen
         //inventory.getInventory().add();
-        truhe.setInventory(inventory);
+//        truhe.setInventory(inventory);
     }
 
     public static Dungeon getDungeon() {
@@ -180,7 +181,7 @@ public class Dungeon implements Serializable{
 
     public Raum findRaumByNummer(int raumNummer){
         for (Raum raum : raums) {
-            if (raum.roomNumber == this.currentRoomNumber) {
+            if (raum.roomNumber == raumNummer) {
                 return raum;
             }
         }
@@ -245,8 +246,8 @@ public class Dungeon implements Serializable{
         }
         previousRoomNumber = raums.indexOf(currentRaum);
         Karte karte;
-        if (Dungeon.getDungeon().player.getInventory().findItemByName("Karte").isKarte() == true) {
-            karte = (Karte) Dungeon.getDungeon().player.getInventory().findItemByName("Karte");
+        if (Textie.chooseInventory("Karte").isKarte() == true) {
+            karte = (Karte) Textie.chooseInventory("Karte");
             karte.writeMap(currentRaum.getNumber(), richtung.toString());
         }
         if (currentRoomNumber == 4) {
@@ -267,8 +268,8 @@ public class Dungeon implements Serializable{
     }
 
     private static boolean checkSchalter() {
-        if (dungeon.getCurrentRaum().getInventory().findItemByName("Schalter").isToggle()) {
-            ToggleItem schalter = (ToggleItem) dungeon.getCurrentRaum().getInventory().findItemByName("Schalter");
+        if (Textie.chooseInventory("Schalter").isToggle()) {
+            ToggleItem schalter = (ToggleItem) Textie.chooseInventory("Schalter");
             if (schalter.getState() == false) {
                 Textie.printText("Da ist eine Tür, du versuchst sie zu öffnen, doch es geht nicht.");
                 return false;

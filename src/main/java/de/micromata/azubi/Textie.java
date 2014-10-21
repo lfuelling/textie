@@ -193,22 +193,22 @@ public class Textie implements Serializable{
             switch (parsed_command[1].toLowerCase()) {
                 case "raum":
                     if (Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
-                        Item item = Dungeon.getDungeon().player.getInventory().findItemByName("Fackel");
+                        Item item = chooseInventory("Fackel");
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
                             if (fackel.getState() == true) {
-                                Dungeon.getDungeon().getCurrentRaum().listItems();
+                                Dungeon.getDungeon().getCurrentRaum().getInventory().listItems();
                             } else {
                                 printText("Du kannst nichts sehen!");
                             }
                         }
                     } else {
-                        Dungeon.getDungeon().getCurrentRaum().listItems();
+                        Dungeon.getDungeon().getCurrentRaum().getInventory().listItems();
                     }
                     break;
                 case "inventar":
                     if (Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
-                        Item item = Dungeon.getDungeon().player.getInventory().findItemByName("Fackel");
+                        Item item = chooseInventory("Fackel");
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
                             if (fackel.getState() == true) {
@@ -236,7 +236,7 @@ public class Textie implements Serializable{
                             ToggleItem fackel = (ToggleItem) item;
                             if (fackel.getState() == true) {
                                 Item itemUSU = Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName(parsed_command[1]);
-                                Item itemUSU1 = Dungeon.getDungeon().player.getInventory().findItemByName(parsed_command[1]);
+                                Item itemUSU1 = chooseInventory(parsed_command[1]);
                                 if (itemUSU == null && itemUSU1 == null) {
                                     printText("Das Objekt gibt es nicht.");
                                 } else {
@@ -249,7 +249,7 @@ public class Textie implements Serializable{
                         }
                     } else {
                         Item itemUSU = Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName(parsed_command[1]);
-                        Item itemUSU1 = Dungeon.getDungeon().player.getInventory().findItemByName(parsed_command[1]);
+                        Item itemUSU1 = chooseInventory(parsed_command[1]);
                         if (itemUSU == null) {
                             printText("Das Objekt gibt es nicht.");
                         } else {
@@ -561,7 +561,7 @@ public class Textie implements Serializable{
         if (count == 2) {
             String itemToUse = IOUtils.convertToName(parsed_command[1]);
             if (itemToUse.equals(Dungeon.getDungeon().currentHuman.getQuestItem().getName())) {
-                if (giveItem(Dungeon.getDungeon().player.getInventory().findItemByName(parsed_command[1]))) {
+                if (giveItem(chooseInventory(parsed_command[1]))) {
                     printText(Dungeon.getDungeon().currentHuman.getQuestDoneText());
                     Dungeon.getDungeon().currentHuman.setQuestDone(true);
                     if (recieveItem(Dungeon.getDungeon().currentHuman.getRewarditem())) {
