@@ -63,7 +63,7 @@ public class Raum implements Serializable{
     public void start(boolean withPrompt) {
 
         if (roomNumber == 3) {
-            ToggleItem fackel = (ToggleItem) Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
+            ToggleItem fackel = (ToggleItem) inventory.findItemByName("Fackel");
             if (fackel.getState() == true) {
                 Textie.printText("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
                 fackel.setState(false);

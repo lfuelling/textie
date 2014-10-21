@@ -185,8 +185,8 @@ public class TextieTest {
         rede("alter mann");
         gib("brecheisen");
         untersuche("inventar");
-        Assert.assertEquals(true, Textie.isInInventory(dungeon.itemMap.get(Consts.SCHLÜSSEL)));
-        Assert.assertEquals(false, Textie.isInInventory(dungeon.itemMap.get(Consts.BRECHEISEN)));
+        Assert.assertEquals(true, dungeon.getCurrentRaum().getInventory().hasItem("Schlüssel"));
+        Assert.assertEquals(false, dungeon.getCurrentRaum().getInventory().hasItem("Brecheisen"));
         Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
         benutze("schalter");
         gehe("ost");
@@ -266,8 +266,8 @@ public class TextieTest {
         benutze("falltür");
         rede("alter mann");
         gib("brecheisen");
-        Assert.assertEquals(true, Textie.isInInventory(dungeon.itemMap.get(Consts.SCHLÜSSEL)));
-        Assert.assertEquals(false, Textie.isInInventory(dungeon.itemMap.get(Consts.BRECHEISEN)));
+        Assert.assertEquals(true, dungeon.getCurrentRaum().getInventory().hasItem("Schlüssel"));
+        Assert.assertEquals(false, dungeon.getCurrentRaum().getInventory().hasItem("Brecheisen"));
         Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
         untersuche("inventar");
         rede("alter mann");
