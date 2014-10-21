@@ -27,7 +27,7 @@ public class Dungeon implements Serializable{
     public void init() {
         initRooms();
         initInventories();
-        initHumans(); // Humans benötigen Items
+        initHumans();
         initVerbindungen();
         player.getInventory().setInventorySize(5);
         truhe = (StorageItem) findRaumByNummer(1).getInventory().findItemByName("Truhe");
@@ -35,7 +35,7 @@ public class Dungeon implements Serializable{
         //inventory.getInventory().add();
         //TODO Items einfügen
         //inventory.getInventory().add();
-//        truhe.setInventory(inventory);
+        truhe.setInventory(inventory);
     }
 
     public static Dungeon getDungeon() {
@@ -127,6 +127,7 @@ public class Dungeon implements Serializable{
         inventory = new Inventory();
         inventory.getInventory().add(new Karte("Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert", true));
         inventory.getInventory().add(new Item(Item.SACK, "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
+        inventory.getInventory().add(Dungeon.getDungeon().findRaumByNummer(1).getInventory().findItemByName("Schalter")); // Der SELBE Schalter wie in Raum1
         findRaumByNummer(4).setInventory(inventory);
 
 
@@ -167,7 +168,7 @@ public class Dungeon implements Serializable{
                 "Gordon", "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...", "...",
                 "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.",
                 new Item(Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true),
-                findRaumByNummer(1).getInventory().findItemByName("Brecheisen")));
+                findRaumByNummer(3).getInventory().findItemByName("Brecheisen")));
     }
 
     public Raum getCurrentRaum() {
@@ -246,8 +247,12 @@ public class Dungeon implements Serializable{
         }
         previousRoomNumber = raums.indexOf(currentRaum);
         Karte karte;
-        if (Textie.chooseInventory("Karte").isKarte() == true) {
-            karte = (Karte) Textie.chooseInventory("Karte");
+        if (dungeon.player.getInventory().findItemByName("Karte") != null){
+            karte = (Karte) dungeon.player.getInventory().findItemByName("Karte");
+            karte.writeMap(currentRaum.getNumber(), richtung.toString());
+        }
+        else if(dungeon.findRaumByNummer(4).getInventory().findItemByName("Karte") != null){
+            karte = (Karte) dungeon.findRaumByNummer(4).getInventory().findItemByName("Karte");
             karte.writeMap(currentRaum.getNumber(), richtung.toString());
         }
         if (currentRoomNumber == 4) {

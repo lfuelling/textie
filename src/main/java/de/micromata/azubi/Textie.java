@@ -152,7 +152,7 @@ public class Textie implements Serializable{
         lastPrintedText = text;
     }
 
-    static void doGehen(Richtung richtung) {
+        static void doGehen(Richtung richtung) { //FIXME NullPointer wenn man "gehe [mist]" eingibt
         Raum raum = Dungeon.getDungeon().getRaum(richtung);
         if (raum != null && Dungeon.getDungeon().raums.get(Dungeon.getDungeon().previousRoomNumber).isLeaveRoom()) {
             Dungeon.getDungeon().setRoomNumber(raum);
@@ -161,18 +161,6 @@ public class Textie implements Serializable{
         }
 
     }
-
-
-/*
-
-                        printText("Du siehst eine Tür und gehst die Treppe dahinter hinauf.");
-                        Karte karte;
-                        if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
-                            karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
-                            karte.writeMap(Dungeon.getDungeon().getCurrentRaum().getNumberAsString(), parsed_command[1].toUpperCase());
-                        }printText("Du siehst eine Tür und gehst die Treppe dahinter hinab.");
-        */
-
 
     static void doVernichte(Item item, int count) {
         if (count == 2) {
@@ -224,7 +212,7 @@ public class Textie implements Serializable{
                 case "truhe":
                     if (Dungeon.getDungeon().getCurrentRaum().getInventory().hasItem("Truhe")){
                         StorageItem truhe = (StorageItem) Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName("Truhe");
-                        truhe.listItems();
+                        truhe.getInventory().listItems();
                     } else {
                         printText("Hier ist keine Truhe");
                     }
@@ -300,7 +288,7 @@ public class Textie implements Serializable{
                             break;
                         }
                     case "Falltür":
-                        Item item5 = raumInventar.findItemByName("Fackel");
+                        Item item5 = chooseInventory("Fackel");
                         if (item5 instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item5;
                             if (fackel.getState() == true && Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
