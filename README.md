@@ -16,7 +16,7 @@ Das Spiel entsteht im Rahmen unserer Ausbildung bei der [Micromata GmbH](https:/
 - vernichte [*gegenstand*]
 - gehe [nord | süd | ost | west]
 - rede [person]
-- gib [item] (**ACHTUNG:** funktioniert nur, wenn eine Person im Raum ist.)
+- gib [item] - (**ACHTUNG:** funktioniert nur, wenn eine Person im Raum ist.)
 
 Alle Befehle und alle Items sollten klein geschrieben werden.
 
