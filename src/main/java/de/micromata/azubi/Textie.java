@@ -13,6 +13,7 @@ public class Textie implements Serializable{
     private static final long serialVersionUID = -6980176018028225023L;
     public static boolean diag;
     public static String savegame;
+    public static String lastPrintedText = "";
     static int dialogNumber = 0;
 
     public static void main(String[] args) {
@@ -143,6 +144,8 @@ public class Textie implements Serializable{
         } else {
             System.out.println(text);
         }
+
+        lastPrintedText = text;
     }
 
     static void doGehen(Richtung richtung) {
@@ -338,12 +341,6 @@ public class Textie implements Serializable{
                             printText("Hier gibt es nichts, was man aufschließen könnte.");
                             break;
                         }
-                    case "Karte":
-                        Karte karte;
-                        if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
-                            karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
-                            karte.setBenutzeText(karte.readMap()); //NOTE Muss vor dem default stehen!
-                        } else System.err.println("Fehler in der Karte!");
                     default:
                         if (Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
                             item5 = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);

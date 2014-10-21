@@ -18,10 +18,11 @@ public enum Richtung {
         else if(text.toLowerCase().equals("west")){
             return WEST;
         }
-        else {
-
-            //FIXME
+        else  if (text.toLowerCase().equals("ost")){
             return OST;
+        }
+        else {
+            return null;
         }
     }
 }

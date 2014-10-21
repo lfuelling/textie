@@ -62,7 +62,7 @@ public class Item implements Serializable{
     }
 
     public void benutzen() {
-        System.out.println(benutzeText);
+        Textie.printText(benutzeText);
     }
 
     public void untersuchen() {

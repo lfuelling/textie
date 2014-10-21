@@ -283,6 +283,73 @@ public class TextieTest {
         System.err.println("finished.");
     }
 
+    /*
+    * Test Map:  1/4/5/6/7
+    * Test Quest: Brief übergabe mit den neuen Items
+    */
+    @Test
+    public void testRaum4Bis7() {
+        start();
+        Assert.assertEquals(dungeon.raums.get(0), dungeon.getCurrentRaum());
+        benutze("schalter");
+        gehe("west");
+        Assert.assertEquals(dungeon.raums.get(3), dungeon.getCurrentRaum());
+        gehe("west");
+        Assert.assertEquals(dungeon.raums.get(4), dungeon.getCurrentRaum());
+        rede("NPC1"); // richtiger NPC Name muss eingetragen werden
+//        Assert.assertEquals(true, Textie.isInInventory(dungeon.itemMap.get(Consts.BRIEF)));
+        untersuche("brief");
+        benutze("falltür");
+        Assert.assertEquals(dungeon.raums.get(5), dungeon.getCurrentRaum());
+        untersuche("truhe");
+        nimm("axt");
+        untersuche("inventar");
+        Assert.assertEquals(2, dungeon.player.getInventory().getInventory().size());
+        benutze("axt");
+        gehe("ost");
+        Assert.assertEquals(dungeon.raums.get(6), dungeon.getCurrentRaum());
+        rede("NPC2"); //richtiger NPC Name muss eingetragen werden
+        untersuche("BehlohnungsItem"); // auch hier BehlohnungsItem ändern
+        untersuche("inventar");
+        Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
+        benutze("schalter");
+        gehe("süd");
+        Assert.assertEquals(dungeon.raums.get(3), dungeon.getCurrentRaum());
+        System.out.println("Ende.");
+    }
+    /* Karten Test
+     *Spieler läuft einmal durch den kompletten Dungeon und benutzt dabei Karte.
+     */
+    @Test
+    public void testKarte() {
+        start();
+        nimm("Fackel");
+        benutze("schalter");
+        Assert.assertEquals("Du hörst ein Rumpeln, als du den Schalter drückst.", Textie.lastPrintedText);
+        gehe("west");
+        nimm("karte");
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--",Textie.lastPrintedText);
+        gehe("ost");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--",Textie.lastPrintedText);
+        gehe("süd");
+        nimm("Feuerzeug");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--", Textie.lastPrintedText);
+        gehe("west");
+        benutze("Fackel");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--", Textie.lastPrintedText);
+        benutze("Falltür");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--", Textie.lastPrintedText);
+        benutze("Fackel");
+        gehe("ost");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--", Textie.lastPrintedText);
+    }
+
     /* SUBFUNKTIONEN */
 
     /**
