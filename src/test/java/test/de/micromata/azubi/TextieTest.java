@@ -16,12 +16,17 @@ import static org.junit.Assert.fail;
  * @since <pre>Sep 25, 2014</pre>
  */
 public class TextieTest {
+    public static final int AUTOMATIC_TESTING_TIME = 0;
+
+    public static final int MANUAL_TESTING_TIME = 2000;
+
     private static Dungeon dungeon;
+
+    private int testingTime = MANUAL_TESTING_TIME;
 
     @Before
     public void testBefore() throws Exception {
         dungeon = Dungeon.getDungeon();
-//        dungeon.init();
         Textie.diag = true;
     }
 
@@ -394,7 +399,7 @@ public class TextieTest {
 
     private TextieTest gehe(String richtung) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -404,7 +409,7 @@ public class TextieTest {
 
     private TextieTest nimm(String text) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -431,7 +436,7 @@ public class TextieTest {
 
     private TextieTest benutze(String item) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -441,7 +446,7 @@ public class TextieTest {
 
     private TextieTest untersuche(String item) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -451,7 +456,7 @@ public class TextieTest {
 
     private TextieTest rede(String human) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -461,7 +466,7 @@ public class TextieTest {
 
     private TextieTest gib(String item) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -471,7 +476,7 @@ public class TextieTest {
 
     private TextieTest vernichte(String item) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -481,7 +486,7 @@ public class TextieTest {
 
     private TextieTest hilfe() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
