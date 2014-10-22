@@ -9,26 +9,31 @@ import java.util.*;
  */
 public class Dungeon implements Serializable{
     private static final long serialVersionUID = -7870743513679247263L;
-    public ArrayList<Raum> raums = new ArrayList<>();
+    public ArrayList<Raum> raums;
     public int currentRoomNumber; //Index des aktuellen Raumes in der RaumListe
     //public Map<String, Item> itemMap = new HashMap<>();
-    public Map<String, Human> humanMap = new HashMap<>();
+    public Map<String, Human> humanMap;
     public Human currentHuman;
-    public Player player = new Player("Fremder", true);
+    public Player player;
     Raum raum;
-    public int previousRoomNumber = 1; // Index des vorherigen Raumes in der RaumListe
+    public int previousRoomNumber; // Index des vorherigen Raumes in der RaumListe
     public StorageItem truhe;
 
     private static Dungeon dungeon;
 
     private Dungeon() {
+        init();
     }
 
     public void init() {
+        player = new Player("Fremder", true);
+        previousRoomNumber = 1;
+
         initRooms();
         initInventories();
         initHumans();
         initVerbindungen();
+
         player.getInventory().setInventorySize(5);
         truhe = (StorageItem) findRaumByNummer(1).getInventory().findItemByName("Truhe");
         Inventory inventory = new Inventory();
@@ -61,6 +66,7 @@ public class Dungeon implements Serializable{
     }
 
     public void initRooms() {
+        raums = new ArrayList<>();
         raum = new Raum(1, "Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
         raums.add(raum);
         currentRoomNumber = 1;
@@ -127,7 +133,7 @@ public class Dungeon implements Serializable{
         inventory = new Inventory();
         inventory.getInventory().add(new Karte("Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert", true));
         inventory.getInventory().add(new Item(Item.SACK, "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
-        inventory.getInventory().add(Dungeon.getDungeon().findRaumByNummer(1).getInventory().findItemByName("Schalter")); // Der SELBE Schalter wie in Raum1
+        inventory.getInventory().add(findRaumByNummer(1).getInventory().findItemByName("Schalter")); // Der SELBE Schalter wie in Raum1
         findRaumByNummer(4).setInventory(inventory);
 
 
@@ -164,6 +170,7 @@ public class Dungeon implements Serializable{
 
 
     private void initHumans() {
+        humanMap = new HashMap<>();
         humanMap.put(Consts.ALTER_MANN, new Human(
                 "Gordon", "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...", "...",
                 "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.",

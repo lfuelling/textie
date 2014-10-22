@@ -29,7 +29,7 @@ public class Textie implements Serializable{
         }
 
         Dungeon dungeon = Dungeon.getDungeon();
-        dungeon.init();
+//        dungeon.init();
         dungeon.runGame(true);
         System.exit(0);
     }

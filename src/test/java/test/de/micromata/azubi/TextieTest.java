@@ -21,7 +21,7 @@ public class TextieTest {
     @Before
     public void testBefore() throws Exception {
         dungeon = Dungeon.getDungeon();
-        dungeon.init();
+//        dungeon.init();
         Textie.diag = true;
     }
 
@@ -52,7 +52,7 @@ public class TextieTest {
      * @since <pre>Sep 26, 2014</pre>
      */
     @Test
-    public void TestA() {
+    public void testSpeedrun() {
         System.out.println();
         System.out.println();
         System.err.println("-- Speedrun Test --");
@@ -71,7 +71,7 @@ public class TextieTest {
      * @since <pre>Sep 29, 2014</pre>
      */
     @Test
-    public void TestC() {
+    public void testFehler() {
         System.out.println();
         System.out.println();
         System.err.println("-- QS Test --");
@@ -109,7 +109,7 @@ public class TextieTest {
      * @since <pre>Sep 30, 2014</pre>
      */
     @Test
-    public void TestD() {
+    public void testDRG() {
         System.out.println();
         System.out.println();
         System.err.println("-- DRG Test --");
@@ -158,10 +158,11 @@ public class TextieTest {
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(3), dungeon.getCurrentRaum());
         System.err.println("finished.");
+        // Nach finished. ausgabe von untersuche raum/inventar ??
     }
 
     @Test
-    public void TestE() {
+    public void testQuest() {
         System.out.println();
         System.out.println();
         System.err.println("-- Questtest --");
@@ -185,7 +186,7 @@ public class TextieTest {
         rede("alter mann");
         gib("brecheisen");
         untersuche("inventar");
-        Assert.assertEquals(true, dungeon.getCurrentRaum().getInventory().hasItem("Schlüssel"));
+        Assert.assertEquals(true, dungeon.player.getInventory().hasItem("Schlüssel"));
         Assert.assertEquals(false, dungeon.getCurrentRaum().getInventory().hasItem("Brecheisen"));
         Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
         benutze("schalter");
@@ -193,6 +194,7 @@ public class TextieTest {
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(0), dungeon.getCurrentRaum());
         System.err.println("finished.");
+        // Untersuche Raum nach finished angezeigt
     }
 
     /**
@@ -201,7 +203,7 @@ public class TextieTest {
      * @since <pre>Sep 26, 2014</pre>
      */
     @Test
-    public void TestB() {
+    public void testItem() {
         System.out.println();
         System.out.println();
         System.err.println("-- Item Test --");
@@ -266,7 +268,7 @@ public class TextieTest {
         benutze("falltür");
         rede("alter mann");
         gib("brecheisen");
-        Assert.assertEquals(true, dungeon.getCurrentRaum().getInventory().hasItem("Schlüssel"));
+        Assert.assertEquals(true, dungeon.player.getInventory().hasItem("Schlüssel"));
         Assert.assertEquals(false, dungeon.getCurrentRaum().getInventory().hasItem("Brecheisen"));
         Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
         untersuche("inventar");
@@ -326,7 +328,6 @@ public class TextieTest {
         start();
         nimm("Fackel");
         benutze("schalter");
-        Assert.assertEquals("Du hörst ein Rumpeln, als du den Schalter drückst.", Textie.lastPrintedText);
         gehe("west");
         nimm("karte");
         benutze("karte");
@@ -351,7 +352,7 @@ public class TextieTest {
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--", Textie.lastPrintedText);
     }
     /*
-     * Testet die Karte auf Mitschreiben von falschen Richtungen
+     * Testet die Karte auf Mitschreiben von falschen Richtungen: SOLL FEHLSCHLAGEN !
      */
     @Test
     public void testKarteFalsch() {
@@ -366,10 +367,11 @@ public class TextieTest {
         Assert.assertEquals("[Raum 1]--(WEST)--", Textie.lastPrintedText);
         gehe("ost");
         benutze("Karte");
-        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)", Textie.lastPrintedText);
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--", Textie.lastPrintedText);
         gehe("nord");
         benutze("Karte");
-        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--(NORD)", Textie.lastPrintedText);
+        Assert.assertFalse("[Raum 1]--(WEST)--[Raum 4]--(OST)--(NORD)--".equals(Textie.lastPrintedText));
+        Assert.assertTrue("[Raum 1]--(WEST)--[Raum 4]--(OST)--".equals(Textie.lastPrintedText));
     }
 
 

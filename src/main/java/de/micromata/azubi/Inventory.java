@@ -42,12 +42,14 @@ public class Inventory implements Serializable{
     public void listItems() {
         if (this.getInventory().size() > 0) {
 
+            // FIXME inventar ist jetzt auch an räumen. semantisch falsch
             Textie.printText("In deiner Tasche befindet sich:");
             for (Item items : this.getInventory()) {
                 String objectName = items.getName();
                 Textie.printText("\t" + objectName);
             }
         } else {
+            // FIXME inventar ist jetzt auch an räumen. semantisch falsch
             Textie.printText("Deine Tasche ist leer.");
         }
     }
