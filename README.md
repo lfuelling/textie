@@ -16,7 +16,7 @@ Das Spiel entsteht im Rahmen unserer Ausbildung bei der [Micromata GmbH](https:/
 - vernichte [*gegenstand*]
 - gehe [nord | süd | ost | west]
 - rede [person]
-- gib [item] (*funktioniert nur, wenn eine Person im Raum ist*)
+- gib [item] - (**ACHTUNG:** funktioniert nur, wenn eine Person im Raum ist.)
 
 Alle Befehle und alle Items sollten klein geschrieben werden.
 
@@ -25,4 +25,7 @@ Falls das Spiel nicht läuft wie erwartet, empfiehlt es sich vor dem Bugreport d
 Dieser Modus gibt zusätzliche informationen zum aktuellen Raum aus, die ziemlich hilfreich sein können.
 
 Gestartet wird der Diagnosemodus, indem man ```-diag``` als Argument angibt.
+
+## Entwickler
+- Es ist wichtig, language level 7.0 zu nutzen, weil wir Diamonds nutzen.
 

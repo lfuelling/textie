@@ -26,6 +26,7 @@ public class Dungeon implements Serializable{
         initItems();
         initHumans(); // Humans benötigen Items
         initRooms();
+        initVerbindungen();
     }
 
     public static Dungeon getDungeon() {
@@ -36,11 +37,6 @@ public class Dungeon implements Serializable{
     }
 
     public void runGame(boolean withPrompt) {
-        itemMap.put(Consts.KARTE, new Karte("Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert", true));
-        Map<Richtung, Integer> verbindungen = new HashMap<>();
-        verbindungen.put(Richtung.OST, 1);
-        raums.add(new Raum(4, "Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.", verbindungen, itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK), itemMap.get(Consts.KARTE)));
-        raums.trimToSize();
         currentRoomNumber = 1;
         getCurrentRaum().start(withPrompt);
 
@@ -56,22 +52,43 @@ public class Dungeon implements Serializable{
     }
 
     public void initRooms() {
-        Map<Richtung, Integer> verbindungen = new HashMap<Richtung, Integer>();
-        verbindungen.put(Richtung.SUED, 2);
-        verbindungen.put(Richtung.WEST, 4);
-        raum = new Raum(1, "Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.", verbindungen, itemMap.get(Consts.FACKEL), itemMap.get(Consts.HANDTUCH), itemMap.get(Consts.TRUHE), itemMap.get(Consts.SCHALTER));
+        raum = new Raum(1, "Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.", itemMap.get(Consts.FACKEL), itemMap.get(Consts.HANDTUCH), itemMap.get(Consts.TRUHE), itemMap.get(Consts.SCHALTER));
         raums.add(raum);
         currentRoomNumber = 1;
-        verbindungen = new HashMap<Richtung, Integer>();
-        verbindungen.put(Richtung.NORD, 1);
-        verbindungen.put(Richtung.WEST, 3);
-        raum = new Raum(2, "Du kommst in einen dunklen Raum.", verbindungen, itemMap.get(Consts.SCHWERT), itemMap.get(Consts.FEUERZEUG), itemMap.get(Consts.STEIN));
+        raum = new Raum(2, "Du kommst in einen dunklen Raum.", itemMap.get(Consts.SCHWERT), itemMap.get(Consts.FEUERZEUG), itemMap.get(Consts.STEIN));
         raums.add(raum);
-        verbindungen = new HashMap<Richtung, Integer>();
-        verbindungen.put(Richtung.FALLTUER, 4);
-        verbindungen.put(Richtung.OST, 2);
-        raum = new Raum(3, "Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.", verbindungen, itemMap.get(Consts.QUIETSCHEENTE), itemMap.get(Consts.WHITEBOARD), itemMap.get(Consts.BRECHEISEN), itemMap.get(Consts.FALLTÜR));
+        raum = new Raum(3, "Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.", itemMap.get(Consts.QUIETSCHEENTE), itemMap.get(Consts.WHITEBOARD), itemMap.get(Consts.BRECHEISEN), itemMap.get(Consts.FALLTÜR));
         raums.add(raum);
+        raum = new Raum(4, "Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.", itemMap.get(Consts.SCHALTER), itemMap.get(Consts.SACK), itemMap.get(Consts.KARTE));
+        raums.add(raum);
+
+
+    }
+
+    public void initVerbindungen(){
+        //Raum 1
+        Map<Richtung, Raum> verbindungen = new HashMap<>();
+        verbindungen.put(Richtung.SUED, raums.get(1));
+        verbindungen.put(Richtung.WEST, raums.get(3));
+        raums.get(0).setVerbindungen(verbindungen);
+
+        //Raum 2
+        verbindungen = new HashMap<Richtung, Raum>();
+        verbindungen.put(Richtung.NORD, raums.get(0));
+        verbindungen.put(Richtung.WEST, raums.get(2));
+        raums.get(1).setVerbindungen(verbindungen);
+
+        //Raum 3
+        verbindungen = new HashMap<Richtung, Raum>();
+        verbindungen.put(Richtung.FALLTUER, raums.get(3));
+        verbindungen.put(Richtung.OST, raums.get(1));
+        raums.get(2).setVerbindungen(verbindungen);
+
+        //Raum 4
+        verbindungen = new HashMap<Richtung, Raum>();
+        verbindungen.put(Richtung.OST, raums.get(0));
+        raums.get(3).setVerbindungen(verbindungen);
+
 
     }
 
@@ -103,6 +120,7 @@ public class Dungeon implements Serializable{
                 Item.FACKEL, "Du betrachtest die Fackel. Wie kann man die wohl anzünden?", "Du zündest deine Fackel mit dem Feuerzeug an.", true, false));
         itemMap.put(Consts.SACK, new Item(
                 Item.SACK, "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
+        itemMap.put(Consts.KARTE, new Karte("Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert", true));
     }
 
     public void setCurrentHuman(Human hts) {
@@ -131,8 +149,8 @@ public class Dungeon implements Serializable{
 
     public Raum getRaum(Richtung richtung) {
         Raum currentRaum = getCurrentRaum();
-        Integer roomNr = currentRaum.getRaumNr(richtung);
-        if (roomNr != null) {
+        Raum nextRoom = currentRaum.getNextRoom(richtung);
+        if (nextRoom != null) {
                     /*
                     Hier Räume mit deren Nummern aufführen, die eine per Knopf verschlossene Tür haben
                     if(richtung == Richtung.RICHTUNG_IN_DER_DIE_TÜR_LIEGT){
@@ -144,14 +162,14 @@ public class Dungeon implements Serializable{
                     if (richtung == Richtung.WEST) {
                         if (checkSchalter()) {
                             Textie.printText("Du öffnest die Tür.");
-                            currentRoomNumber = roomNr;
+                            currentRoomNumber = nextRoom.getRoomNumber();
                             currentRaum.setLeaveRoom(true);
                         } else {
                             currentRaum.setLeaveRoom(false);
                             //es findet kein Raumwechsel statt
                         }
                     } else {
-                        currentRoomNumber = roomNr;
+                        currentRoomNumber = nextRoom.getRoomNumber();
                         currentRaum.setLeaveRoom(true);
                     }
                     break;
@@ -159,19 +177,19 @@ public class Dungeon implements Serializable{
                     if (richtung == Richtung.OST) {
                         if (checkSchalter()) {
                             Textie.printText("Du öffnest die Tür.");
-                            currentRoomNumber = roomNr;
+                            currentRoomNumber = nextRoom.getRoomNumber();
                             currentRaum.setLeaveRoom(true);
                         } else {
                             currentRaum.setLeaveRoom(false);
                             //es findet kein Raumwechsel statt
                         }
                     } else {
-                        currentRoomNumber = roomNr;
+                        currentRoomNumber = nextRoom.getRoomNumber();
                         raum.setLeaveRoom(true);
                     }
                     break;
                 default:
-                    currentRoomNumber = roomNr;
+                    currentRoomNumber = nextRoom.getRoomNumber();
                     currentRaum.setLeaveRoom(true);
                     break;
             }
