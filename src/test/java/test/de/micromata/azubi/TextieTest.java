@@ -317,6 +317,7 @@ public class TextieTest {
         Assert.assertEquals(dungeon.raums.get(3), dungeon.getCurrentRaum());
         System.out.println("Ende.");
     }
+
     /* Karten Test
      *Spieler läuft einmal durch den kompletten Dungeon und benutzt dabei Karte.
      */
@@ -348,6 +349,27 @@ public class TextieTest {
         gehe("ost");
         benutze("Karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--", Textie.lastPrintedText);
+    }
+    /*
+     * Testet die Karte auf Mitschreiben von falschen Richtungen
+     */
+    @Test
+    public void testKarteFalsch() {
+        start();
+        benutze("schalter");
+        gehe("west");
+        nimm("karte");
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--", Textie.lastPrintedText);
+        gehe("süd");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--", Textie.lastPrintedText);
+        gehe("ost");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)", Textie.lastPrintedText);
+        gehe("nord");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--(NORD)", Textie.lastPrintedText);
     }
 
 
