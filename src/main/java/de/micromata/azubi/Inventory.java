@@ -12,7 +12,7 @@ public class Inventory implements Serializable{
     public Inventory(){
     }
 
-    private static int MAX_SLOTS_INVENTORY = 5;
+    private static int MAX_SLOTS_INVENTORY = 99;
 
     private List<Item> inventory = new ArrayList<>();
 
@@ -77,7 +77,7 @@ public class Inventory implements Serializable{
 
     public Item findItemByName(String itemName){
         for (Item item : inventory) {
-            if (item.getName() == itemName) {
+            if (item.getName().equalsIgnoreCase(itemName)) {
                 return item;
             }
         }

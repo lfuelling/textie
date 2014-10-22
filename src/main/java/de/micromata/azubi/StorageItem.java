@@ -12,6 +12,10 @@ public class StorageItem extends Item {
     boolean lockState;
     String name;
 
+
+
+    Inventory inventory;
+
     public StorageItem() {
 
     }
@@ -61,6 +65,14 @@ public class StorageItem extends Item {
             System.out.println(name + " ist verschlossen.");
         }
 
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
 }

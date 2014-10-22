@@ -24,22 +24,6 @@ public class Raum implements Serializable{
         this.willkommensNachricht = willkommensNachricht;
     }
 
-    public void listItems() {
-        // printText("1. Item in List: " +
-        // this.items.get(1).getName());
-        Textie.printText("Im Raum befindet sich:");
-        for (Item item : items) {
-            if (item == null) {
-                Textie.printText("\tKein Objekt");
-            } else {
-                // String objectName = items.get(i).getName();
-                Textie.printText("\t" + item.getName());
-            }
-        }
-
-    }
-
-
     public boolean hasItem(Item item) {
         if (items.contains(item)) {
             return true;
@@ -63,7 +47,7 @@ public class Raum implements Serializable{
     public void start(boolean withPrompt) {
 
         if (roomNumber == 3) {
-            ToggleItem fackel = (ToggleItem) Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
+            ToggleItem fackel = (ToggleItem) inventory.findItemByName("Fackel");
             if (fackel.getState() == true) {
                 Textie.printText("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
                 fackel.setState(false);
