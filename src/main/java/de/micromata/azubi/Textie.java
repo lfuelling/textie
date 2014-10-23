@@ -185,12 +185,14 @@ public class Textie implements Serializable{
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
                             if (fackel.getState() == true) {
+                                Textie.printText("Im Raum befindet sich:");
                                 Dungeon.getDungeon().getCurrentRaum().getInventory().listItems();
                             } else {
                                 printText("Du kannst nichts sehen!");
                             }
                         }
                     } else {
+                        Textie.printText("Im Raum befindet sich:");
                         Dungeon.getDungeon().getCurrentRaum().getInventory().listItems();
                     }
                     break;
@@ -200,12 +202,14 @@ public class Textie implements Serializable{
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
                             if (fackel.getState() == true) {
+                                Textie.printText("In deiner Tasche befindet sich:");
                                 Dungeon.getDungeon().player.getInventory().listItems();
                             } else {
                                 printText("Du kannst nichts sehen!");
                             }
                         }
                     } else {
+                        Textie.printText("In deiner Tasche befindet sich:");
                         Dungeon.getDungeon().player.getInventory().listItems();
                     }
                     break;
