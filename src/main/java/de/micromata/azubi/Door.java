@@ -16,7 +16,7 @@ public class Door {
     /**
      * @param UID              The unique identifier we can use to define a key or a switch to a certain door.
      * @param richtung         The orientation the door should have in the room.
-     * @param raum             The room the door is placed in.
+     * @param raumNr           The room the door is placed in.
      * @param initialLockState Defines if the door is locked at game launch.
      */
     public Door(int UID, Richtung richtung, int raumNr, boolean initialLockState) {
@@ -33,7 +33,7 @@ public class Door {
      */
     public void open() {
 
-        if (locked = false) {
+        if(locked = false) {
             Dungeon.getDungeon().getCurrentRaum().setLeaveRoom(true);
         } else {
             Textie.printText("Diese Tür ist verschlossen.");
