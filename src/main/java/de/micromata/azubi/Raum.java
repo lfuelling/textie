@@ -12,37 +12,17 @@ public class Raum implements Serializable{
     protected boolean falltuerUsed = false;
     protected int roomNumber;
     protected String willkommensNachricht;
-    protected Map<Richtung, Integer> verbindungen = new HashMap<Richtung, Integer>();
+    protected Map<Richtung, Raum> verbindungen = new HashMap<>();
     protected boolean leaveRoom = false;
+    protected Inventory inventory;
 
     public Raum() {
     }
 
-    public Raum(int number, String willkommensNachricht, Map<Richtung, Integer> verbindungen, Item... items1) {
+    public Raum(int number, String willkommensNachricht) {
         this.roomNumber = number;
-        this.verbindungen = verbindungen;
         this.willkommensNachricht = willkommensNachricht;
-
-        for (Item item : items1) {
-            this.items.add(item);
-        }
     }
-
-    public void listItems() {
-        // printText("1. Item in List: " +
-        // this.items.get(1).getName());
-        Textie.printText("Im Raum befindet sich:");
-        for (Item item : items) {
-            if (item == null) {
-                Textie.printText("\tKein Objekt");
-            } else {
-                // String objectName = items.get(i).getName();
-                Textie.printText("\t" + item.getName());
-            }
-        }
-
-    }
-
 
     public boolean hasItem(Item item) {
         if (items.contains(item)) {
@@ -67,7 +47,7 @@ public class Raum implements Serializable{
     public void start(boolean withPrompt) {
 
         if (roomNumber == 3) {
-            ToggleItem fackel = (ToggleItem) Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
+            ToggleItem fackel = (ToggleItem) inventory.findItemByName("Fackel");
             if (fackel.getState() == true) {
                 Textie.printText("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
                 fackel.setState(false);
@@ -110,7 +90,7 @@ public class Raum implements Serializable{
     }
 
 
-    public Integer getRaumNr(Richtung richtung) {
+    public Raum getNextRoom(Richtung richtung) {
         return verbindungen.get(richtung);
     }
 
@@ -123,11 +103,19 @@ public class Raum implements Serializable{
         this.leaveRoom = leaveRoom;
     }
 
-    public Map<Richtung, Integer> getVerbindungen() {
+    public Map<Richtung, Raum> getVerbindungen() {
         return verbindungen;
     }
 
-    public void setVerbindungen(Map<Richtung, Integer> verbindungen) {
+    public void setVerbindungen(Map<Richtung, Raum> verbindungen) {
         this.verbindungen = verbindungen;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 }

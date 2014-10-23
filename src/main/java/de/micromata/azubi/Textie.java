@@ -13,6 +13,7 @@ public class Textie implements Serializable{
     private static final long serialVersionUID = -6980176018028225023L;
     public static boolean diag;
     public static String savegame;
+    public static String lastPrintedText = "";
     static int dialogNumber = 0;
 
     public static void main(String[] args) {
@@ -28,7 +29,7 @@ public class Textie implements Serializable{
         }
 
         Dungeon dungeon = Dungeon.getDungeon();
-        dungeon.init();
+//        dungeon.init();
         dungeon.runGame(true);
         System.exit(0);
     }
@@ -87,7 +88,7 @@ public class Textie implements Serializable{
         if (parsed_command.length < 2) {
 
         } else {
-            Item itemToUse = Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase());
+            Item itemToUse = chooseInventory(parsed_command[1]);
             switch (parsed_command[0]) {
                 case Command.HILFE:
                     printHelp();
@@ -96,7 +97,7 @@ public class Textie implements Serializable{
                     if (args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
                         switch (parsed_args[1].toLowerCase()) {
                             case "aus truhe":
-                                doTakeFromChest(Dungeon.getDungeon().itemMap.get(parsed_args[0].toUpperCase()));
+                                doTakeFromChest(Dungeon.getDungeon().truhe.getInventory().findItemByName(parsed_command[1]));
                                 break;
                             default:
                                 printText("Unbekanntes Item: " + parsed_command[1]);
@@ -147,9 +148,11 @@ public class Textie implements Serializable{
         } else {
             System.out.println(text);
         }
+
+        lastPrintedText = text;
     }
 
-    static void doGehen(Richtung richtung) {
+        static void doGehen(Richtung richtung) {
         Raum raum = Dungeon.getDungeon().getRaum(richtung);
         if (raum != null && Dungeon.getDungeon().raums.get(Dungeon.getDungeon().previousRoomNumber).isLeaveRoom()) {
             Dungeon.getDungeon().setRoomNumber(raum);
@@ -159,21 +162,9 @@ public class Textie implements Serializable{
 
     }
 
-
-/*
-
-                        printText("Du siehst eine Tür und gehst die Treppe dahinter hinauf.");
-                        Karte karte;
-                        if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
-                            karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
-                            karte.writeMap(Dungeon.getDungeon().getCurrentRaum().getNumberAsString(), parsed_command[1].toUpperCase());
-                        }printText("Du siehst eine Tür und gehst die Treppe dahinter hinab.");
-        */
-
-
     static void doVernichte(Item item, int count) {
         if (count == 2) {
-            if (removeItemFromInventory(item)) {
+            if (Dungeon.getDungeon().player.getInventory().transferItem(Dungeon.getDungeon().getCurrentRaum().getInventory(), item)) {
                 printText(item.getName() + " vernichtet.");
                 return;
             } else {
@@ -190,52 +181,54 @@ public class Textie implements Serializable{
             switch (parsed_command[1].toLowerCase()) {
                 case "raum":
                     if (Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
-                        Item item = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
+                        Item item = chooseInventory("Fackel");
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
                             if (fackel.getState() == true) {
-                                Dungeon.getDungeon().getCurrentRaum().listItems();
+                                Dungeon.getDungeon().getCurrentRaum().getInventory().listItems();
                             } else {
                                 printText("Du kannst nichts sehen!");
                             }
                         }
                     } else {
-                        Dungeon.getDungeon().getCurrentRaum().listItems();
+                        Dungeon.getDungeon().getCurrentRaum().getInventory().listItems();
                     }
                     break;
                 case "inventar":
                     if (Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
-                        Item item = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
+                        Item item = chooseInventory("Fackel");
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
                             if (fackel.getState() == true) {
-                                listInventory();
+                                Dungeon.getDungeon().player.getInventory().listItems();
                             } else {
                                 printText("Du kannst nichts sehen!");
                             }
                         }
                     } else {
-                        listInventory();
+                        Dungeon.getDungeon().player.getInventory().listItems();
                     }
                     break;
                 case "truhe":
-                    if (isInRoom(Dungeon.getDungeon().itemMap.get(Consts.TRUHE))) {
-                        StorageItem truhe = (StorageItem) Dungeon.getDungeon().itemMap.get(Consts.TRUHE);
-                        truhe.listItems();
+                    if (Dungeon.getDungeon().getCurrentRaum().getInventory().hasItem("Truhe")){
+                        StorageItem truhe = (StorageItem) Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName("Truhe");
+                        truhe.getInventory().listItems();
                     } else {
                         printText("Hier ist keine Truhe");
                     }
                     break;
                 default:
                     if (Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
-                        Item item = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
+                        Item item = Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName("Fackel");
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
                             if (fackel.getState() == true) {
-                                Item itemUSU = Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase());
-                                if (itemUSU == null) {
+                                Item itemUSU = Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName(parsed_command[1]);
+                                Item itemUSU1 = chooseInventory(parsed_command[1]);
+                                if (itemUSU == null && itemUSU1 == null) {
                                     printText("Das Objekt gibt es nicht.");
                                 } else {
+                                    itemUSU.untersuchen();
                                     itemUSU.untersuchen();
                                 }
                             } else {
@@ -243,7 +236,8 @@ public class Textie implements Serializable{
                             }
                         }
                     } else {
-                        Item itemUSU = Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase());
+                        Item itemUSU = Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName(parsed_command[1]);
+                        Item itemUSU1 = chooseInventory(parsed_command[1]);
                         if (itemUSU == null) {
                             printText("Das Objekt gibt es nicht.");
                         } else {
@@ -262,7 +256,9 @@ public class Textie implements Serializable{
             printText("Das Item gibt es nicht.");
 
         } else {
-            if (item.isPickable() == false || isInInventory(item)) {
+            Inventory raumInventar = Dungeon.getDungeon().getCurrentRaum().getInventory();
+            Inventory playerInventory = Dungeon.getDungeon().player.getInventory();
+            if (item.isPickable() == false || playerInventory.hasItem(item.getName())) {
                 String itemName = item.getName();
                 if (Textie.diag == true) {
                     printText("Du willst " + itemName + " benutzen");
@@ -274,8 +270,8 @@ public class Textie implements Serializable{
                     // benutzbar sein, selbst wenn der Raum dunkel ist.
                     case "Fackel":// Dungeon.getDungeon().itemMap.get("FACKEL").getName():
                     case "Feuerzeug": // Dungeon.getDungeon().itemMap.get("FEUERZEUG").getName():
-                        int fackelSlot = findInInventory(Dungeon.getDungeon().itemMap.get(Consts.FACKEL));
-                        int feuerZeugSlot = findInInventory(Dungeon.getDungeon().itemMap.get(Consts.FEUERZEUG));
+                        int fackelSlot = playerInventory.findItem(playerInventory.findItemByName("Fackel"));
+                        int feuerZeugSlot = playerInventory.findItem(playerInventory.findItemByName("Feuerzeug"));
                         if (feuerZeugSlot < 0) {
                             printText("Du hast kein Feuerzeug.");
                             break;
@@ -284,7 +280,7 @@ public class Textie implements Serializable{
                             break;
                         } else {
                             printText("Du zündest deine Fackel mit dem Feuerzeug an.");
-                            Item item2 = Dungeon.getDungeon().itemMap.get("FACKEL");
+                            Item item2 = playerInventory.findItemByName("Fackel");
                             if (item2 instanceof ToggleItem) {
                                 ToggleItem fackel = (ToggleItem) item2;
                                 fackel.setState(true);
@@ -292,16 +288,16 @@ public class Textie implements Serializable{
                             break;
                         }
                     case "Falltür":
-                        Item item5 = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
+                        Item item5 = chooseInventory("Fackel");
                         if (item5 instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item5;
                             if (fackel.getState() == true && Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
-                                Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
+                                Item itemToUse = item;
                                 if (itemToUse == null) {
                                     printText("Das Objekt gibt es nicht.");
                                     break;
                                 } else {
-                                    if (isInRoom(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR))) {
+                                    if (raumInventar.hasItem("Falltür")) {
                                         printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
                                         doGehen(Richtung.FALLTUER);
                                         break;
@@ -313,23 +309,23 @@ public class Textie implements Serializable{
                             }
                         }
                     case "Sack":
-                        Item sack = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
+                        Item sack = item;
                         sack.benutzen();
-                        removeItemFromInventory(Dungeon.getDungeon().itemMap.get(Consts.SACK));
-                        Dungeon.getDungeon().player.getInventory().setInventorySize(2);
+                        playerInventory.getInventory().remove(playerInventory.findItemByName("Sack"));
+                        playerInventory.setInventorySize(2);
                         break;
                     case "Schalter":
-                        ToggleItem schalter = (ToggleItem) Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
+                        ToggleItem schalter = (ToggleItem) item;
                         schalter.benutzen();
                         schalter.setState(true);
                         break;
                     case "Schwert":
-                        Dungeon.getDungeon().itemMap.get(Consts.SCHWERT).benutzen();
+                        playerInventory.findItemByName("Schwert").benutzen();
                         ende();
                         break;
                     case "Schlüssel":
-                        StorageItem truhe = (StorageItem) Dungeon.getDungeon().itemMap.get(Consts.TRUHE);
-                        if (Dungeon.getDungeon().getCurrentRaum().hasItem(Dungeon.getDungeon().itemMap.get(Consts.TRUHE))) {
+                        StorageItem truhe = (StorageItem) raumInventar.findItemByName("Truhe");
+                        if (raumInventar.hasItem("Truhe")) {
                             if (truhe.lockState == true) {
                                 truhe.lockState = false;
                                 printText("Du öffnest die Truhe mit dem Schlüssel.");
@@ -342,19 +338,13 @@ public class Textie implements Serializable{
                             printText("Hier gibt es nichts, was man aufschließen könnte.");
                             break;
                         }
-                    case "Karte":
-                        Karte karte;
-                        if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
-                            karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
-                            karte.setBenutzeText(karte.readMap()); //NOTE Muss vor dem default stehen!
-                        } else System.err.println("Fehler in der Karte!");
                     default:
                         if (Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
-                            item5 = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
+                            item5 = playerInventory.findItemByName("Fackel");
                             if (item5 instanceof ToggleItem) {
                                 ToggleItem fackel = (ToggleItem) item5;
                                 if (fackel.getState() == true) {
-                                    Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
+                                    Item itemToUse = item;
                                     if (itemToUse == null) {
                                         printText("Das Objekt gibt es nicht.");
                                     } else {
@@ -365,7 +355,7 @@ public class Textie implements Serializable{
                                 }
                             }
                         } else {
-                            Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
+                            Item itemToUse = item;
                             if (itemToUse == null) {
                                 printText("Das Objekt gibt es nicht.");
                             } else {
@@ -397,7 +387,7 @@ public class Textie implements Serializable{
             printText("Unbekanntes Item.");
         } else {
             if (item.isPickable()) {
-                if (addItemToInventory(item)) {
+                if (Dungeon.getDungeon().getCurrentRaum().getInventory().transferItem(Dungeon.getDungeon().player.getInventory(), item)) {
 
                     printText(item.getName() + " zum Inventar hinzugefügt.");
                 } else {
@@ -480,11 +470,13 @@ public class Textie implements Serializable{
 
 
     //RaumKram
+    /*
     public static boolean removeItemInRoom(Item item) {
         if (Dungeon.getDungeon().getCurrentRaum().items.remove(item))
             return true;
         return false;
     }
+
 
     public static boolean addItemToRoom(Item item) {
         if (Dungeon.getDungeon().getCurrentRaum().items.add(item)) {
@@ -498,30 +490,17 @@ public class Textie implements Serializable{
         return findInRoom(item) >= 0;
     }
 
-    /**
-     * @param item
-     * @return Returns -128 when the item is not in the room
-     */
     public static int findInRoom(Item item) {
         int i = -128;
         i = Dungeon.getDungeon().getCurrentRaum().items.indexOf(item);
         return i;
     }
+    */
 
 
     //InventarKram
-    public static boolean addItemToInventory(Item item) {
-        if (Dungeon.getDungeon().player.getInventory().getInventory().size() < Dungeon.getDungeon().player.getInventory().getInventorySize() && Dungeon.getDungeon().getCurrentRaum().hasItem(item)) {
-            Dungeon.getDungeon().player.getInventory().getInventory().add(item);
-            removeItemInRoom(item);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public static boolean addItemFromChestToInventory(Item item) {
-        StorageItem dieTruhe = (StorageItem) Dungeon.getDungeon().itemMap.get(Consts.TRUHE);
+        StorageItem dieTruhe = (StorageItem) Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName("Truhe");
         if (Dungeon.getDungeon().player.getInventory().getInventory().size() < Dungeon.getDungeon().player.getInventory().getInventorySize() && dieTruhe.hasItem(item)) {
             Dungeon.getDungeon().player.getInventory().getInventory().add(item);
             dieTruhe.removeItem(item);
@@ -531,45 +510,12 @@ public class Textie implements Serializable{
         }
     }
 
-    public static boolean removeItemFromInventory(Item item) {
-        if (Dungeon.getDungeon().player.getInventory().getInventory().remove(item) && addItemToRoom(item))
-            return true;
-        return false;
-    }
-
-    public static void listInventory() {
-        if (Dungeon.getDungeon().player.getInventory().getInventory().size() > 0) {
-
-            printText("In deiner Tasche befindet sich:");
-            for (Item items : Dungeon.getDungeon().player.getInventory().getInventory()) {
-                String objectName = items.getName();
-                printText("\t" + objectName);
-            }
-        } else {
-            printText("Deine Tasche ist leer.");
-        }
-    }
-
-    public static boolean isInInventory(Item items) {
-        return findInInventory(items) >= 0;
-    }
-
-    public static int findInInventory(Item items) {
-        int slot = -128;
-        slot = Dungeon.getDungeon().player.getInventory().getInventory().indexOf(items);
-        if (slot > -128) {
-            return slot;
-        }
-        return -128;
-    }
-
     public static boolean giveItem(Item item) {
         if (Dungeon.getDungeon().player.getInventory().getInventory().remove(item)) {
             return true;
         }
         return false;
     }
-
 
     //HumanKram
     static void doReden() {
@@ -603,7 +549,7 @@ public class Textie implements Serializable{
         if (count == 2) {
             String itemToUse = IOUtils.convertToName(parsed_command[1]);
             if (itemToUse.equals(Dungeon.getDungeon().currentHuman.getQuestItem().getName())) {
-                if (giveItem(Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase()))) {
+                if (giveItem(chooseInventory(parsed_command[1]))) {
                     printText(Dungeon.getDungeon().currentHuman.getQuestDoneText());
                     Dungeon.getDungeon().currentHuman.setQuestDone(true);
                     if (recieveItem(Dungeon.getDungeon().currentHuman.getRewarditem())) {
@@ -631,6 +577,15 @@ public class Textie implements Serializable{
             return false;
         }
     }
+    public static Item chooseInventory(String itemName){
+        Item item = null;
+        if(Dungeon.getDungeon().player.getInventory().findItemByName(itemName) != null){
+            item = Dungeon.getDungeon().player.getInventory().findItemByName(itemName);
+        }
+        else if(Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName(itemName) != null){
+            item = Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName(itemName);
+        }
 
-
+        return item;
+    }
 }

@@ -16,12 +16,17 @@ import static org.junit.Assert.fail;
  * @since <pre>Sep 25, 2014</pre>
  */
 public class TextieTest {
+    public static final int AUTOMATIC_TESTING_TIME = 0;
+
+    public static final int MANUAL_TESTING_TIME = 2000;
+
     private static Dungeon dungeon;
+
+    private int testingTime = MANUAL_TESTING_TIME;
 
     @Before
     public void testBefore() throws Exception {
         dungeon = Dungeon.getDungeon();
-        dungeon.init();
         Textie.diag = true;
     }
 
@@ -52,7 +57,7 @@ public class TextieTest {
      * @since <pre>Sep 26, 2014</pre>
      */
     @Test
-    public void TestA() {
+    public void testSpeedrun() {
         System.out.println();
         System.out.println();
         System.err.println("-- Speedrun Test --");
@@ -71,7 +76,7 @@ public class TextieTest {
      * @since <pre>Sep 29, 2014</pre>
      */
     @Test
-    public void TestC() {
+    public void testFehler() {
         System.out.println();
         System.out.println();
         System.err.println("-- QS Test --");
@@ -109,7 +114,7 @@ public class TextieTest {
      * @since <pre>Sep 30, 2014</pre>
      */
     @Test
-    public void TestD() {
+    public void testDRG() {
         System.out.println();
         System.out.println();
         System.err.println("-- DRG Test --");
@@ -158,10 +163,11 @@ public class TextieTest {
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(3), dungeon.getCurrentRaum());
         System.err.println("finished.");
+        // Nach finished. ausgabe von untersuche raum/inventar ??
     }
 
     @Test
-    public void TestE() {
+    public void testQuest() {
         System.out.println();
         System.out.println();
         System.err.println("-- Questtest --");
@@ -185,14 +191,15 @@ public class TextieTest {
         rede("alter mann");
         gib("brecheisen");
         untersuche("inventar");
-        Assert.assertEquals(true, Textie.isInInventory(dungeon.itemMap.get(Consts.SCHLÜSSEL)));
-        Assert.assertEquals(false, Textie.isInInventory(dungeon.itemMap.get(Consts.BRECHEISEN)));
+        Assert.assertEquals(true, dungeon.player.getInventory().hasItem("Schlüssel"));
+        Assert.assertEquals(false, dungeon.getCurrentRaum().getInventory().hasItem("Brecheisen"));
         Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
         benutze("schalter");
         gehe("ost");
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(0), dungeon.getCurrentRaum());
         System.err.println("finished.");
+        // Untersuche Raum nach finished angezeigt
     }
 
     /**
@@ -201,7 +208,7 @@ public class TextieTest {
      * @since <pre>Sep 26, 2014</pre>
      */
     @Test
-    public void TestB() {
+    public void testItem() {
         System.out.println();
         System.out.println();
         System.err.println("-- Item Test --");
@@ -266,8 +273,8 @@ public class TextieTest {
         benutze("falltür");
         rede("alter mann");
         gib("brecheisen");
-        Assert.assertEquals(true, Textie.isInInventory(dungeon.itemMap.get(Consts.SCHLÜSSEL)));
-        Assert.assertEquals(false, Textie.isInInventory(dungeon.itemMap.get(Consts.BRECHEISEN)));
+        Assert.assertEquals(true, dungeon.player.getInventory().hasItem("Schlüssel"));
+        Assert.assertEquals(false, dungeon.getCurrentRaum().getInventory().hasItem("Brecheisen"));
         Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
         untersuche("inventar");
         rede("alter mann");
@@ -283,6 +290,99 @@ public class TextieTest {
         System.err.println("finished.");
     }
 
+    /*
+   * Test Map:  1/4/5/6/7
+   * Test Quest: Brief übergabe mit den neuen Items
+   */
+    @Test
+    public void testRaum4Bis7() {
+        start();
+        Assert.assertEquals(dungeon.raums.get(0), dungeon.getCurrentRaum());
+        benutze("schalter");
+        gehe("west");
+        Assert.assertEquals(dungeon.raums.get(3), dungeon.getCurrentRaum());
+        gehe("west");
+        Assert.assertEquals(dungeon.raums.get(4), dungeon.getCurrentRaum());
+        rede("NPC1"); // richtiger NPC Name muss eingetragen werden
+//        Assert.assertEquals(true, Textie.isInInventory(dungeon.itemMap.get(Consts.BRIEF)));
+        untersuche("brief");
+        benutze("falltür");
+        Assert.assertEquals(dungeon.raums.get(5), dungeon.getCurrentRaum());
+        untersuche("truhe");
+        nimm("axt");
+        untersuche("inventar");
+        Assert.assertEquals(2, dungeon.player.getInventory().getInventory().size());
+        benutze("axt");
+        gehe("ost");
+        Assert.assertEquals(dungeon.raums.get(6), dungeon.getCurrentRaum());
+        rede("NPC2"); //richtiger NPC Name muss eingetragen werden
+        untersuche("BehlohnungsItem"); // auch hier BehlohnungsItem ändern
+        untersuche("inventar");
+        Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
+        benutze("schalter");
+        gehe("süd");
+        Assert.assertEquals(dungeon.raums.get(3), dungeon.getCurrentRaum());
+        System.out.println("Ende.");
+    }
+
+    /* Karten Test
+     *Spieler läuft einmal durch den kompletten Dungeon und benutzt dabei Karte.
+     */
+    @Test
+    public void testKarte() {
+        start();
+        nimm("Fackel");
+        benutze("schalter");
+        gehe("west");
+        nimm("karte");
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--",Textie.lastPrintedText);
+        gehe("ost");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--",Textie.lastPrintedText);
+        gehe("süd");
+        nimm("Feuerzeug");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--", Textie.lastPrintedText);
+        gehe("west");
+        benutze("Fackel");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--", Textie.lastPrintedText);
+        benutze("Falltür");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--", Textie.lastPrintedText);
+        benutze("Fackel");
+        gehe("ost");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--", Textie.lastPrintedText);
+    }
+    /*
+     * Testet die Karte auf Mitschreiben von falschen Richtungen: SOLL FEHLSCHLAGEN !
+     */
+    @Test
+    public void testKarteFalsch() {
+        start();
+        benutze("schalter");
+        gehe("west");
+        nimm("karte");
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--", Textie.lastPrintedText);
+        gehe("süd");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--", Textie.lastPrintedText);
+        gehe("ost");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--", Textie.lastPrintedText);
+        gehe("nord");
+        benutze("Karte");
+        Assert.assertFalse("[Raum 1]--(WEST)--[Raum 4]--(OST)--(NORD)--".equals(Textie.lastPrintedText));
+        Assert.assertTrue("[Raum 1]--(WEST)--[Raum 4]--(OST)--".equals(Textie.lastPrintedText));
+    }
+
+
+
+
+
     /* SUBFUNKTIONEN */
 
     /**
@@ -291,9 +391,15 @@ public class TextieTest {
      * @param richtung
      * @return gibt den Test weiter.
      */
+
+
+
+
+
+
     private TextieTest gehe(String richtung) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -303,7 +409,7 @@ public class TextieTest {
 
     private TextieTest nimm(String text) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -330,7 +436,7 @@ public class TextieTest {
 
     private TextieTest benutze(String item) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -340,7 +446,7 @@ public class TextieTest {
 
     private TextieTest untersuche(String item) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -350,7 +456,7 @@ public class TextieTest {
 
     private TextieTest rede(String human) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -360,7 +466,7 @@ public class TextieTest {
 
     private TextieTest gib(String item) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -370,7 +476,7 @@ public class TextieTest {
 
     private TextieTest vernichte(String item) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -380,7 +486,7 @@ public class TextieTest {
 
     private TextieTest hilfe() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(testingTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
