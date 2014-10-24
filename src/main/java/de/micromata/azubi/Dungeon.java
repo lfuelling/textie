@@ -44,8 +44,9 @@ public class Dungeon implements Serializable{
 
         //Truhe Raum 6
         truhe = (StorageItem) findRaumByNummer(6).getInventory().findItemByName("Truhe");
-        Inventory inventory1 = new Inventory();
-        truhe.setInventory(inventory1);
+        inventory = new Inventory();
+        inventory.getInventory().add(new Item("Axt","Eine scharfe Axt.","Du schlägst mit der Axt zu.", true));
+        truhe.setInventory(inventory);
     }
 
     public static Dungeon getDungeon() {
@@ -212,7 +213,17 @@ public class Dungeon implements Serializable{
                 "Gordon", "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...", "...",
                 "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.",
                 new Item(Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true),
-                findRaumByNummer(4).getInventory().findItemByName("Brecheisen")));
+                "Brecheisen"));
+        humanMap.put(Consts.JUNGE, new Human(
+                "Junge", "Kannst du mir helfen ?", "Ich suche einen Ausgang...",
+                "Hast du ein Handtuch ?", "Danke.",
+                new Item("Brief","Ein Brief","Bringen den Brief zur Frau", true),
+                "Handtuch"));
+        humanMap.put(Consts.FRAU, new Human (
+                "Frau", "", "",
+                "Hast du einen Brief?", "Danke",
+                new Item("Seil", "Ein stabiles Seil.","Du seilst dich ab.",true),
+                "Brief"));
     }
 
     public Raum getCurrentRaum() {
@@ -314,6 +325,12 @@ public class Dungeon implements Serializable{
         if (currentRoomNumber == 4) {
             currentHuman = humanMap.get(Consts.ALTER_MANN);
         }
+        if (currentRoomNumber == 5) {
+            currentHuman = humanMap.get(Consts.JUNGE);
+        }
+        if (currentRoomNumber == 7){
+            currentHuman = humanMap.get(Consts.FRAU);
+        }
         return getNextRoom(currentRoomNumber);
 
         } else {
@@ -346,7 +363,7 @@ public class Dungeon implements Serializable{
 
     public void setRoomNumber(Raum raum) {
         this.currentRoomNumber = raums.indexOf(raum) + 1;
-    }  //?
+    }
 
     public ArrayList<Raum> getRaums() {
         return raums;

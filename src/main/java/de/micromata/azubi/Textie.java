@@ -247,6 +247,11 @@ public class Textie implements Serializable{
                         } else {
                             itemUSU.untersuchen();
                         }
+                        if (itemUSU1 == null) {
+                            printText("Das Objekt gibt es nicht.");
+                        } else {
+                            itemUSU1.untersuchen();
+                        }
                     }
             }
         } else {
@@ -551,8 +556,9 @@ public class Textie implements Serializable{
 
     public static void doGeben(String[] parsed_command, int count) {
         if (count == 2) {
-            String itemToUse = IOUtils.convertToName(parsed_command[1]);
-            if (itemToUse.equals(Dungeon.getDungeon().currentHuman.getQuestItem().getName())) {
+            //String itemToUse = IOUtils.convertToName(parsed_command[1]);
+            Item itemToUse = chooseInventory(parsed_command[1]);
+            if (itemToUse.getName().equals(Dungeon.getDungeon().currentHuman.getQuestItem())) {
                 if (giveItem(chooseInventory(parsed_command[1]))) {
                     printText(Dungeon.getDungeon().currentHuman.getQuestDoneText());
                     Dungeon.getDungeon().currentHuman.setQuestDone(true);

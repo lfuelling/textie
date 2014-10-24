@@ -166,7 +166,6 @@ public class TextieTest {
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(3), dungeon.getCurrentRaum());
         System.err.println("finished.");
-        // Nach finished. ausgabe von untersuche raum/inventar ??
     }
 
     @Test
@@ -202,7 +201,6 @@ public class TextieTest {
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(0), dungeon.getCurrentRaum());
         System.err.println("finished.");
-        // Untersuche Raum nach finished angezeigt
     }
 
     /**
@@ -301,29 +299,32 @@ public class TextieTest {
     public void testRaum4Bis7() {
         start();
         Assert.assertEquals(dungeon.findRaumByNummer(1), dungeon.getCurrentRaum());
+        nimm("handtuch");
         benutze("schalter");
         gehe("west");
         Assert.assertEquals(dungeon.findRaumByNummer(4), dungeon.getCurrentRaum());
         gehe("west");
         untersuche("raum");
         Assert.assertEquals(dungeon.findRaumByNummer(5), dungeon.getCurrentRaum());
- //     rede("NPC1"); // richtiger NPC Name muss eingetragen werden
-//      Assert.assertEquals(true, Textie.isInInventory(dungeon.itemMap.get(Consts.BRIEF)));
-//      untersuche("brief");
+        rede("junge");
+        gib("handtuch");
+        Assert.assertEquals(true, dungeon.player.getInventory().hasItem("brief"));
+        untersuche("brief");  // funktionert noch nicht
         gehe("falltür");
         Assert.assertEquals(dungeon.findRaumByNummer(6), dungeon.getCurrentRaum());
         untersuche("truhe");
-      //  nimm("axt");
-      //  untersuche("inventar");
-     //   Assert.assertEquals(2, dungeon.player.getInventory().getInventory().size());
-     //   benutze("axt");
+//        nimm("axt");
+//        untersuche("inventar");
+//        Assert.assertEquals(2, dungeon.player.getInventory().getInventory().size());
+//        benutze("axt");
         gehe("ost");
         Assert.assertEquals(dungeon.findRaumByNummer(7), dungeon.getCurrentRaum());
         untersuche("raum");
-    //    rede("NPC2"); //richtiger NPC Name muss eingetragen werden
-    //    untersuche("BehlohnungsItem"); // auch hier BehlohnungsItem ändern
-    //    untersuche("inventar");
-    //     Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
+        untersuche("inventar");
+        rede("Frau");
+        gib("brief");
+        untersuche("seil"); //funktioniert noch nicht
+        untersuche("inventar");
         benutze("schalter");
         gehe("süd");
         Assert.assertEquals(dungeon.findRaumByNummer(4), dungeon.getCurrentRaum());

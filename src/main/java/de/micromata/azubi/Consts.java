@@ -20,4 +20,6 @@ public class Consts {
 
     //NPCs
     public static final String ALTER_MANN = "ALTER MANN";
+    public static final String JUNGE = "JUNGE";
+    public static final String FRAU = "FRAU";
 }
