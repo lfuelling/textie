@@ -83,11 +83,11 @@ public class Dungeon implements Serializable{
         raums.add(raum);
         raum = new Raum(4, "Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.");
         raums.add(raum);
-        raum = new Raum(5, "RAUM 5");
+        raum = new Raum(5, "Du kommst in einen Raum, in dem eine Junge steht.");
         raums.add(raum);
-        raum = new Raum(6, "RAUM 6");
+        raum = new Raum(6, "Du kommst in einen Raum mit einer Truhe.");
         raums.add(raum);
-        raum = new Raum(7, "RAUM 7");
+        raum = new Raum(7, "Du kommst in einen Raum, eine Frau steht mitten im Raum.");
         raums.add(raum);
     }
 
@@ -215,9 +215,9 @@ public class Dungeon implements Serializable{
                 new Item(Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true),
                 "Brecheisen"));
         humanMap.put(Consts.JUNGE, new Human(
-                "Junge", "Kannst du mir helfen ?", "Ich suche einen Ausgang...",
+                "Junge", "", "",
                 "Hast du ein Handtuch ?", "Danke.",
-                new Item("Brief","Ein Brief","Bringen den Brief zur Frau", true),
+                new Item("Brief","Ein Brief adressiert an eine Frau.","Bringe den Brief zu einer Frau.", true),
                 "Handtuch"));
         humanMap.put(Consts.FRAU, new Human (
                 "Frau", "", "",
