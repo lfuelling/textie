@@ -19,8 +19,7 @@ public class Consts {
     public static final String KARTE = "KARTE";
 
     //NPCs
-
     public static final String ALTER_MANN = "ALTER MANN";
-
-
+    public static final String JUNGE = "JUNGE";
+    public static final String FRAU = "FRAU";
 }

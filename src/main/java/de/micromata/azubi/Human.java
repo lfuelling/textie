@@ -26,17 +26,17 @@ public class Human implements Serializable{
     private String name;
     private boolean gaveItem = false;
     //ArrayList<Item> questItems;
-    Item questItem;
+    String questItem;
     Item rewarditem;
     // String questItemName;
 
-    public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item rewardItem, Item questItem) {
+    public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item rewardItem, String questItemName) {
         this.name = name;
         this.dialog1 = dialog1;
         this.dialog2 = dialog2;
         this.questText = questText;
         this.questDoneText = questDoneText;
-        this.questItem = questItem;
+        this.questItem = questItemName;
       /*  for(Item questItems : questItem){
             this.questItems.add(questItems);
         }*/
@@ -96,12 +96,12 @@ public class Human implements Serializable{
         this.questText = questText;
     }
 
-    public Item getQuestItem() {
+    public String getQuestItem() {
         return questItem;
     }
 
-    public void setQuestItem(Item questItem) {
-        this.questItem = questItem;
+    public void setQuestItem(String questItemName) {
+        this.questItem = questItemName;
     }
 
     public String getQuestDoneText() {

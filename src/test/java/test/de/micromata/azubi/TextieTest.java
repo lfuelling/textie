@@ -6,6 +6,9 @@ import de.micromata.azubi.Dungeon;
 import de.micromata.azubi.Textie;
 import org.junit.*;
 
+import javax.xml.soap.Text;
+import java.awt.*;
+
 import static org.junit.Assert.fail;
 
 /**
@@ -163,7 +166,6 @@ public class TextieTest {
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(3), dungeon.getCurrentRaum());
         System.err.println("finished.");
-        // Nach finished. ausgabe von untersuche raum/inventar ??
     }
 
     @Test
@@ -199,7 +201,6 @@ public class TextieTest {
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(0), dungeon.getCurrentRaum());
         System.err.println("finished.");
-        // Untersuche Raum nach finished angezeigt
     }
 
     /**
@@ -290,40 +291,43 @@ public class TextieTest {
         System.err.println("finished.");
     }
 
-    /*
+  /*
    * Test Map:  1/4/5/6/7
    * Test Quest: Brief übergabe mit den neuen Items
    */
     @Test
     public void testRaum4Bis7() {
         start();
-        Assert.assertEquals(dungeon.raums.get(0), dungeon.getCurrentRaum());
+        Assert.assertEquals(dungeon.findRaumByNummer(1), dungeon.getCurrentRaum());
+        nimm("handtuch");
         benutze("schalter");
         gehe("west");
-        Assert.assertEquals(dungeon.raums.get(3), dungeon.getCurrentRaum());
+        Assert.assertEquals(dungeon.findRaumByNummer(4), dungeon.getCurrentRaum());
         gehe("west");
         untersuche("raum");
-        Assert.assertEquals(dungeon.raums.get(4), dungeon.getCurrentRaum());
-        //rede("NPC1"); // richtiger NPC Name muss eingetragen werden
-//        Assert.assertEquals(true, Textie.isInInventory(dungeon.itemMap.get(Consts.BRIEF)));
-       //  untersuche("brief");
-        gehe("nord");
-        Assert.assertEquals(dungeon.raums.get(5), dungeon.getCurrentRaum());
-       // untersuche("truhe");
-      //  nimm("axt");
-      //  untersuche("inventar");
-     //   Assert.assertEquals(2, dungeon.player.getInventory().getInventory().size());
-     //   benutze("axt");
+        Assert.assertEquals(dungeon.findRaumByNummer(5), dungeon.getCurrentRaum());
+        rede("junge");
+        gib("handtuch");
+        Assert.assertEquals(true, dungeon.player.getInventory().hasItem("brief"));
+        untersuche("brief");  // funktionert noch nicht
+        gehe("falltür");
+        Assert.assertEquals(dungeon.findRaumByNummer(6), dungeon.getCurrentRaum());
+        untersuche("truhe");
+//        nimm("axt");
+//        untersuche("inventar");
+//        Assert.assertEquals(2, dungeon.player.getInventory().getInventory().size());
+//        benutze("axt");
         gehe("ost");
-        Assert.assertEquals(dungeon.raums.get(6), dungeon.getCurrentRaum());
+        Assert.assertEquals(dungeon.findRaumByNummer(7), dungeon.getCurrentRaum());
         untersuche("raum");
-    //    rede("NPC2"); //richtiger NPC Name muss eingetragen werden
-    //    untersuche("BehlohnungsItem"); // auch hier BehlohnungsItem ändern
-    //    untersuche("inventar");
-    //     Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
-    //    benutze("schalter");
+        untersuche("inventar");
+        rede("Frau");
+        gib("brief");
+        untersuche("seil"); //funktioniert noch nicht
+        untersuche("inventar");
+        benutze("schalter");
         gehe("süd");
-        Assert.assertEquals(dungeon.raums.get(3), dungeon.getCurrentRaum());
+        Assert.assertEquals(dungeon.findRaumByNummer(4), dungeon.getCurrentRaum());
         System.out.println("Ende.");
     }
 
@@ -338,10 +342,10 @@ public class TextieTest {
         gehe("west");
         nimm("karte");
         benutze("karte");
-        Assert.assertEquals("[Raum 1]--(WEST)--",Textie.lastPrintedText);
+        Assert.assertEquals("[Raum 1]--(WEST)--", Textie.lastPrintedText);
         gehe("ost");
         benutze("Karte");
-        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--",Textie.lastPrintedText);
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--", Textie.lastPrintedText);
         gehe("süd");
         nimm("Feuerzeug");
         benutze("Karte");
@@ -357,9 +361,29 @@ public class TextieTest {
         gehe("ost");
         benutze("Karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--", Textie.lastPrintedText);
+        gehe("west");
+        benutze("Karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--[Raum 1]--(WEST)--", Textie.lastPrintedText);
+        gehe("falltür");
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--[Raum 1]--(WEST)--", Textie.lastPrintedText);
+        gehe("west");
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--[Raum 1]--(WEST)--[Raum 4]--(WEST)--",Textie.lastPrintedText);
+        gehe("falltuer");
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--", Textie.lastPrintedText);
+        gehe("ost");
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--", Textie.lastPrintedText);
+        benutze("schalter");
+        gehe("süd");
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--[Raum 7]--(SUED)--", Textie.lastPrintedText);
     }
+
     /*
-     * Testet die Karte auf Mitschreiben von falschen Richtungen: SOLL FEHLSCHLAGEN !
+     * Testet die Karte auf Mitschreiben von falschen Richtungen:
      */
     @Test
     public void testKarteFalsch() {
