@@ -76,33 +76,57 @@ public class Dungeon implements Serializable{
         raums.add(raum);
         raum = new Raum(4, "Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.");
         raums.add(raum);
-
+        raum = new Raum(5, "RAUM 5");
+        raums.add(raum);
+        raum = new Raum(6, "RAUM 6");
+        raums.add(raum);
+        raum = new Raum(7, "RAUM 7");
+        raums.add(raum);
 
     }
 
     public void initVerbindungen(){
         //Raum 1
         Map<Richtung, Raum> verbindungen = new HashMap<>();
-        verbindungen.put(Richtung.SUED, raums.get(1));
-        verbindungen.put(Richtung.WEST, raums.get(3));
-        raums.get(0).setVerbindungen(verbindungen);
+        verbindungen.put(Richtung.SUED, raums.get(2));
+        verbindungen.put(Richtung.WEST, raums.get(4));
+        findRaumByNummer(1).setVerbindungen(verbindungen);
 
         //Raum 2
         verbindungen = new HashMap<Richtung, Raum>();
-        verbindungen.put(Richtung.NORD, raums.get(0));
-        verbindungen.put(Richtung.WEST, raums.get(2));
-        raums.get(1).setVerbindungen(verbindungen);
+        verbindungen.put(Richtung.NORD, raums.get(1));
+        verbindungen.put(Richtung.WEST, raums.get(3));
+        findRaumByNummer(2).setVerbindungen(verbindungen);
 
         //Raum 3
         verbindungen = new HashMap<Richtung, Raum>();
-        verbindungen.put(Richtung.FALLTUER, raums.get(3));
-        verbindungen.put(Richtung.OST, raums.get(1));
-        raums.get(2).setVerbindungen(verbindungen);
+        verbindungen.put(Richtung.FALLTUER, raums.get(4));
+        verbindungen.put(Richtung.OST, raums.get(2));
+        findRaumByNummer(3).setVerbindungen(verbindungen);
 
         //Raum 4
         verbindungen = new HashMap<Richtung, Raum>();
-        verbindungen.put(Richtung.OST, raums.get(0));
-        raums.get(3).setVerbindungen(verbindungen);
+        verbindungen.put(Richtung.OST, findRaumByNummer(1));
+        verbindungen.put(Richtung.WEST,findRaumByNummer(5));
+        verbindungen.put(Richtung.NORD, findRaumByNummer(7));
+        findRaumByNummer(4).setVerbindungen(verbindungen);
+
+        //Raum 5
+        verbindungen = new HashMap<Richtung, Raum>();
+        verbindungen.put(Richtung.OST, findRaumByNummer(4));
+        verbindungen.put(Richtung.NORD, findRaumByNummer(6));
+        findRaumByNummer(5).setVerbindungen(verbindungen);
+
+        //Raum 6
+        verbindungen = new HashMap<Richtung, Raum>();
+        verbindungen.put(Richtung.OST, findRaumByNummer(7));
+        findRaumByNummer(6).setVerbindungen(verbindungen);
+
+        //Raum 7
+        verbindungen = new HashMap<Richtung, Raum>();
+        verbindungen.put(Richtung.SUED, raums.get(4));
+        verbindungen.put(Richtung.WEST, raums.get(6));
+        findRaumByNummer(7).setVerbindungen(verbindungen);
     }
 
     public void initInventories(){
@@ -136,12 +160,19 @@ public class Dungeon implements Serializable{
         inventory.getInventory().add(findRaumByNummer(1).getInventory().findItemByName("Schalter")); // Der SELBE Schalter wie in Raum1
         findRaumByNummer(4).setInventory(inventory);
 
+        //Raum 5
+        inventory = new Inventory();
+        inventory.getInventory().add(new Item(Item.FALLTÜR, "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
+        findRaumByNummer(5).setInventory(inventory);
 
+        //Raum 6
+        inventory = new Inventory();
+        inventory.getInventory().add(new StorageItem(Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true, null, null));
+        findRaumByNummer(6).setInventory(inventory);
 
-
-
-
-
+        //Raum 7
+        inventory = new Inventory();
+        findRaumByNummer(7).setInventory(inventory);
     }
 
     private void initItems() {
