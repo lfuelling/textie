@@ -289,7 +289,7 @@ public class Dungeon implements Serializable{
                         }
                     } else {
                         currentRoomNumber = nextRoom.getRoomNumber();
-                        raum.setLeaveRoom(true);
+                        currentRaum.setLeaveRoom(true);
                     }
                     break;
                 case 7:
@@ -303,7 +303,7 @@ public class Dungeon implements Serializable{
                         }
                 } else {
                         currentRoomNumber = nextRoom.getRoomNumber();
-                        raum.setLeaveRoom(true);
+                        currentRaum.setLeaveRoom(true);
                 }
                 break;
               default:

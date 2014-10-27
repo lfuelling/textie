@@ -309,7 +309,7 @@ public class TextieTest {
         rede("junge");
         gib("handtuch");
         Assert.assertEquals(true, dungeon.player.getInventory().hasItem("brief"));
-        untersuche("brief");  // funktionert noch nicht
+        untersuche("brief");
         gehe("falltür");
         Assert.assertEquals(dungeon.findRaumByNummer(6), dungeon.getCurrentRaum());
         untersuche("truhe");
@@ -323,7 +323,7 @@ public class TextieTest {
         untersuche("inventar");
         rede("Frau");
         gib("brief");
-        untersuche("seil"); //funktioniert noch nicht
+        untersuche("seil");
         untersuche("inventar");
         benutze("schalter");
         gehe("süd");
