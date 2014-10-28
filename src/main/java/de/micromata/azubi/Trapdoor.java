@@ -17,7 +17,7 @@ public class Trapdoor {
      * @param initialLockState Defines if the door is locked at game launch.
      * @see de.micromata.azubi.Door
      */
-    public Trapdoor(int UID, Raum raum, boolean initialLockState) {
+    public Trapdoor(int UID,boolean initialLockState) {
 
         this.uid = UID;
         this.raum = raum;
