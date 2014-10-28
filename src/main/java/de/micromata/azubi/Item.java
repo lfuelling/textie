@@ -39,19 +39,23 @@ public class Item implements Serializable{
     private String benutzeText;
     private String name;
     private boolean pickable;
+    private int itemID;
 
     public Item(){
 
     }
 
+
   /**
-   *
+   * @param itemID The item ID
    * @param name Item name
    * @param untersucheText Text which is printed when you inspect the item.
    * @param benutzeText Text which is printed when you use the item.
    * @param pickable Is the item pickable?
    */
-    public Item(String name, String untersucheText, String benutzeText, boolean pickable) {
+    public Item(int itemID, String name, String untersucheText, String benutzeText, boolean pickable) {
+        this.itemID = itemID;
+
         this.name = name;
         this.untersucheText = untersucheText;
         this.benutzeText = benutzeText;

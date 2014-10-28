@@ -12,6 +12,8 @@ public class StorageItem extends Item {
     boolean lockable;
     boolean lockState;
     String name;
+    int itemID;
+
 
 
 
@@ -21,8 +23,10 @@ public class StorageItem extends Item {
 
     }
 
+
   /**
    * Initializes a new storageItem
+   * @param itemID The item's ID
    * @param name Name of the Item
    * @param untersucheText The inspection text
    * @param benutzeText The use text
@@ -31,14 +35,15 @@ public class StorageItem extends Item {
    * @param initialLockState What is it initial lock state?
    * @param items What does it contain?
    */
-    public StorageItem(String name, String untersucheText, String benutzeText, boolean pickable, boolean lockable, boolean initialLockState, Item... items) {
-        super(name, untersucheText, benutzeText, pickable);
+    public StorageItem(int itemID,String name, String untersucheText, String benutzeText, boolean pickable, boolean lockable, boolean initialLockState, Item... items) {
+        super(itemID, name, untersucheText, benutzeText, pickable);
         for (Item item : items) {
             this.items.add(item);
         }
         this.lockable = lockable;
         this.lockState = initialLockState;
         this.name = name;
+        this.itemID = itemID;
     }
 
   /**

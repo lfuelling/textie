@@ -20,9 +20,9 @@ public class Karte extends Item {
    * @param benutzeText Text which is replaced by the map's output.
    * @param pickable Is it pickable? (yes)
    */
-  public Karte(String name, String untersucheText, String benutzeText) {
+  public Karte(int id, String name, String untersucheText, String benutzeText) {
 
-    super(name, untersucheText, benutzeText, true);
+    super(id, name, untersucheText, benutzeText, true);
   }
 
   /**
