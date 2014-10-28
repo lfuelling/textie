@@ -5,7 +5,10 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Created by tung on 26.09.14.
+ * @author Tung Ngo (t.ngo@micromata.de)
+ * @author Lukas Fülling (l.fuelling@micromata.de)
+ * @author Julian Siebert (j.siebert@micromata.de)
+ * @see java.io.Serializable
  */
 public class Dungeon implements Serializable{
     private static final long serialVersionUID = -7870743513679247263L;
@@ -25,6 +28,10 @@ public class Dungeon implements Serializable{
         init();
     }
 
+
+  /**
+   * Initializes the game
+   */
     public void init() {
         player = new Player("Fremder", true);
         previousRoomNumber = 1;
@@ -56,6 +63,10 @@ public class Dungeon implements Serializable{
         return dungeon;
     }
 
+  /**
+   * Starts the game.
+   * @param withPrompt Set to <code>true</code>, if you want a prompt.
+   */
     public void runGame(boolean withPrompt) {
         currentRoomNumber = 1;
         getCurrentRaum().start(withPrompt);
@@ -72,6 +83,9 @@ public class Dungeon implements Serializable{
         Textie.ende();
     }
 
+  /**
+   * Initializes the rooms.
+   */
     public void initRooms() {
         raums = new ArrayList<>();
         raum = new Raum(1, "Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.");
@@ -83,14 +97,17 @@ public class Dungeon implements Serializable{
         raums.add(raum);
         raum = new Raum(4, "Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.");
         raums.add(raum);
-        raum = new Raum(5, "RAUM 5");
+        raum = new Raum(5, "Du kommst in einen Raum, in dem eine Junge steht.");
         raums.add(raum);
-        raum = new Raum(6, "RAUM 6");
+        raum = new Raum(6, "Du kommst in einen Raum mit einer Truhe.");
         raums.add(raum);
-        raum = new Raum(7, "RAUM 7");
+        raum = new Raum(7, "Du kommst in einen Raum, eine Frau steht mitten im Raum.");
         raums.add(raum);
     }
 
+  /**
+   * Initializes the connections between the rooms.
+   */
     public void initVerbindungen(){
         //Raum 1
         Map<Richtung, Raum> verbindungen = new HashMap<>();
@@ -135,6 +152,9 @@ public class Dungeon implements Serializable{
         findRaumByNummer(7).setVerbindungen(verbindungen);
     }
 
+  /**
+   * Initializes the inventories of the rooms.
+   */
     public void initInventories(){
         // Raum 1
         Inventory inventory = new Inventory();
@@ -182,31 +202,18 @@ public class Dungeon implements Serializable{
         findRaumByNummer(7).setInventory(inventory);
     }
 
-    private void initItems() {
-        // TODO (Wenn wir den benutzeText der Items benutzen) Raumnummer
-        // hinzufügen.
-        //itemMap.put(Consts.KARTE, karte);
-        //itemMap.put(Consts.FALLTÜR, new Item(Item.FALLTÜR, "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
-        //itemMap.put(Consts.WHITEBOARD, new Item(Item.WHITEBOARD, "Es steht \'FLIEH!\' mit Blut geschrieben darauf.", "Das fasse ich bestimmt nicht an!", false));
-        //itemMap.put(Consts.SCHALTER, new ToggleItem(Item.SCHALTER, "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false,false));
-        //itemMap.put(Consts.TRUHE, new StorageItem(Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true, itemMap.get(Consts.STEIN), itemMap.get(Consts.HANDTUCH))); //TODO: fill in actual Items
-        //itemMap.put(Consts.STEIN, new Item(Item.STEIN, "Du betrachtest den Stein. Er wirkt kalt.", "Hier gibt es nichts um den Stein zu benutzen.", true));
-        //itemMap.put(Consts.SCHLÜSSEL, new Item(Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true));
-        //itemMap.put(Consts.FEUERZEUG, new Item(Item.FEUERZEUG, "Du betrachtest das Feuerzeug. Es wirkt zuverlässig.", "Du zündest deine Fackel mit dem Feuerzeug an.", true));
-        //itemMap.put(Consts.SCHWERT, new Item(Item.SCHWERT, "Du betrachtest das Schwert. Es sieht sehr scharf aus.", "Du stichst dir das Schwert zwischen die Rippen und stirbst.", true));
-        //itemMap.put(Consts.BRECHEISEN, new Item(Item.BRECHEISEN, "Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.", "Du kratzt dich mit dem Brecheisen am Kopf", true));
-        //itemMap.put(Consts.QUIETSCHEENTE, new Item(Item.QUIETSCHEENTE, "Die Ente schaut dich vorwurfsvoll an.", "Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst.", true));
-        //itemMap.put(Consts.HANDTUCH, new Item(Item.HANDTUCH, "Das Handtuch sieht sehr flauschig aus.", "Du wischst dir den Angstschweiß von der Stirn.", true));
-        //itemMap.put(Consts.FACKEL, new ToggleItem(Item.FACKEL, "Du betrachtest die Fackel. Wie kann man die wohl anzünden?", "Du zündest deine Fackel mit dem Feuerzeug an.", true, false));
-        //itemMap.put(Consts.SACK, new Item(Item.SACK, "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
-        //itemMap.put(Consts.KARTE, new Karte("Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert", true));
-    }
-
+  /**
+   * Sets the current human.
+   * @param hts The human to set.
+   */
     public void setCurrentHuman(Human hts) {
         currentHuman = hts;
     }
 
-
+  /**
+   * Initializes the humans.
+   * @deprecated
+   */
     private void initHumans() {
         humanMap = new HashMap<>();
         humanMap.put(Consts.ALTER_MANN, new Human(
@@ -215,9 +222,9 @@ public class Dungeon implements Serializable{
                 new Item(Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true),
                 "Brecheisen"));
         humanMap.put(Consts.JUNGE, new Human(
-                "Junge", "Kannst du mir helfen ?", "Ich suche einen Ausgang...",
+                "Junge", "", "",
                 "Hast du ein Handtuch ?", "Danke.",
-                new Item("Brief","Ein Brief","Bringen den Brief zur Frau", true),
+                new Item("Brief","Ein Brief adressiert an eine Frau.","Bringe den Brief zu einer Frau.", true),
                 "Handtuch"));
         humanMap.put(Consts.FRAU, new Human (
                 "Frau", "", "",
@@ -226,6 +233,10 @@ public class Dungeon implements Serializable{
                 "Brief"));
     }
 
+  /**
+   *
+   * @return Returns the current room.
+   */
     public Raum getCurrentRaum() {
         for (Raum raum : raums) {
             if (raum.roomNumber == this.currentRoomNumber) {
@@ -235,6 +246,11 @@ public class Dungeon implements Serializable{
         return raums.get(0);
     }
 
+  /**
+   * Helps you finding a room by it's number.
+   * @param raumNummer The number of the room you're searching
+   * @return Returns the room you're searching.
+   */
     public Raum findRaumByNummer(int raumNummer){
         for (Raum raum : raums) {
             if (raum.roomNumber == raumNummer) {
@@ -251,6 +267,11 @@ public class Dungeon implements Serializable{
 
     }
 
+  /**
+   * Walking routine.
+   * @param richtung the direction you're going to.
+   * @return Returns the room you'll get into or null if there isn't any room in this direction.
+   */
     public Raum getRaum(Richtung richtung) {
         Raum currentRaum = getCurrentRaum();
         Raum nextRoom = currentRaum.getNextRoom(richtung);
@@ -289,7 +310,7 @@ public class Dungeon implements Serializable{
                         }
                     } else {
                         currentRoomNumber = nextRoom.getRoomNumber();
-                        raum.setLeaveRoom(true);
+                        currentRaum.setLeaveRoom(true);
                     }
                     break;
                 case 7:
@@ -303,7 +324,7 @@ public class Dungeon implements Serializable{
                         }
                 } else {
                         currentRoomNumber = nextRoom.getRoomNumber();
-                        raum.setLeaveRoom(true);
+                        currentRaum.setLeaveRoom(true);
                 }
                 break;
               default:
@@ -339,6 +360,12 @@ public class Dungeon implements Serializable{
         return null;
     }
 
+  /**
+   * Helps you find the room which comes after the current.
+   * @param currentRoomNumber The number of the current room.
+   * @return Returns the new room.
+   * @see de.micromata.azubi.Dungeon#findRaumByNummer(int)
+   */
     private Raum getNextRoom(int currentRoomNumber) {
         for (Raum raum : raums) {
             if (raum.roomNumber == currentRoomNumber) {
@@ -348,6 +375,10 @@ public class Dungeon implements Serializable{
         return raums.get(0);
     }
 
+  /**
+   *
+   * @return Returns the state of the switch.
+   */
     private static boolean checkSchalter() {
         if (Textie.chooseInventory("Schalter").isToggle()) {
             ToggleItem schalter = (ToggleItem) Textie.chooseInventory("Schalter");

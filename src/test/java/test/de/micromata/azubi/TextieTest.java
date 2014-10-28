@@ -300,34 +300,50 @@ public class TextieTest {
         start();
         Assert.assertEquals(dungeon.findRaumByNummer(1), dungeon.getCurrentRaum());
         nimm("handtuch");
+        untersuche("handtuch");
+        benutze("handtuch");
+        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
         benutze("schalter");
         gehe("west");
         Assert.assertEquals(dungeon.findRaumByNummer(4), dungeon.getCurrentRaum());
+        nimm("karte");
         gehe("west");
         untersuche("raum");
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--", Textie.lastPrintedText);
         Assert.assertEquals(dungeon.findRaumByNummer(5), dungeon.getCurrentRaum());
         rede("junge");
         gib("handtuch");
         Assert.assertEquals(true, dungeon.player.getInventory().hasItem("brief"));
-        untersuche("brief");  // funktionert noch nicht
+        untersuche("brief");
+        benutze("brief");
         gehe("falltür");
         Assert.assertEquals(dungeon.findRaumByNummer(6), dungeon.getCurrentRaum());
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--",Textie.lastPrintedText);
         untersuche("truhe");
-//        nimm("axt");
+//        nimm("axt"); //Truhe fixen
 //        untersuche("inventar");
 //        Assert.assertEquals(2, dungeon.player.getInventory().getInventory().size());
 //        benutze("axt");
         gehe("ost");
         Assert.assertEquals(dungeon.findRaumByNummer(7), dungeon.getCurrentRaum());
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--",Textie.lastPrintedText);
         untersuche("raum");
         untersuche("inventar");
-        rede("Frau");
+        rede("frau");
         gib("brief");
-        untersuche("seil"); //funktioniert noch nicht
+        untersuche("seil");
         untersuche("inventar");
         benutze("schalter");
         gehe("süd");
         Assert.assertEquals(dungeon.findRaumByNummer(4), dungeon.getCurrentRaum());
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--[Raum 7]--(SUED)--",Textie.lastPrintedText);
+        gehe("ost");
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--[Raum 7]--(SUED)--[Raum 4]--(OST)--",Textie.lastPrintedText);
         System.out.println("Ende.");
     }
 
@@ -380,6 +396,9 @@ public class TextieTest {
         gehe("süd");
         benutze("karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--[Raum 7]--(SUED)--", Textie.lastPrintedText);
+        gehe("ost");
+        benutze("karte");
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--[Raum 7]--(SUED)--[Raum 4]--(OST)--", Textie.lastPrintedText);
     }
 
     /*

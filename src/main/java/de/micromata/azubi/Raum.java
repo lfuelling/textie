@@ -36,8 +36,7 @@ public class Raum implements Serializable{
     }
 
     public String getNumberAsString() {
-        String raumNummerString = String.valueOf(this.roomNumber);
-        return raumNummerString;
+        return String.valueOf(this.roomNumber);
     }
 
     public boolean equals(Object obj) {

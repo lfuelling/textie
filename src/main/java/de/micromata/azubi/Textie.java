@@ -9,7 +9,7 @@ package de.micromata.azubi;
 
 import java.io.*;
 
-public class Textie implements Serializable{
+public class Textie implements Serializable {
     private static final long serialVersionUID = -6980176018028225023L;
     public static boolean diag;
     public static String savegame;
@@ -39,7 +39,7 @@ public class Textie implements Serializable{
         printText("Du bist aus deinem Traum erwacht und siehst, dass du");
         printText("in deinem Bett liegst. Du spürst dein Herz stark und schnell schlagen");
         printText("und bist froh, dass du aufgewacht bist.");
-        if(diag) {
+        if (diag) {
             printText("Programm wird aufgrund des Diagnosemodus nicht beendet. Bitte Ctrl+C drücken.");
         } else {
             System.exit(0);
@@ -152,7 +152,7 @@ public class Textie implements Serializable{
         lastPrintedText = text;
     }
 
-        static void doGehen(Richtung richtung) {
+    static void doGehen(Richtung richtung) {
         Raum raum = Dungeon.getDungeon().getRaum(richtung);
         if (raum != null && Dungeon.getDungeon().raums.get(Dungeon.getDungeon().previousRoomNumber).isLeaveRoom()) {
             Dungeon.getDungeon().setRoomNumber(raum);
@@ -214,7 +214,7 @@ public class Textie implements Serializable{
                     }
                     break;
                 case "truhe":
-                    if (Dungeon.getDungeon().getCurrentRaum().getInventory().hasItem("Truhe")){
+                    if (Dungeon.getDungeon().getCurrentRaum().getInventory().hasItem("Truhe")) {
                         StorageItem truhe = (StorageItem) Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName("Truhe");
                         truhe.getInventory().listItems();
                     } else {
@@ -242,15 +242,15 @@ public class Textie implements Serializable{
                     } else {
                         Item itemUSU = Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName(parsed_command[1]);
                         Item itemUSU1 = chooseInventory(parsed_command[1]);
+
                         if (itemUSU == null) {
-                            printText("Das Objekt gibt es nicht.");
+                            if (itemUSU1 == null) {
+                                printText("Das Objekt gibt es nicht.");
+                            } else {
+                                itemUSU1.untersuchen();
+                            }
                         } else {
                             itemUSU.untersuchen();
-                        }
-                        if (itemUSU1 == null) {
-                            printText("Das Objekt gibt es nicht.");
-                        } else {
-                            itemUSU1.untersuchen();
                         }
                     }
             }
@@ -424,13 +424,12 @@ public class Textie implements Serializable{
                 OutputStream file = new FileOutputStream("savegame.save");
                 OutputStream buffer = new BufferedOutputStream(file);
                 ObjectOutput output = new ObjectOutputStream(buffer);
-        ){
+        ) {
             output.writeObject(Dungeon.getDungeon());
             output.close();
-        }
-        catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
@@ -439,23 +438,20 @@ public class Textie implements Serializable{
 
     public static void doLaden() {
 
-        try(
+        try (
                 InputStream file = new FileInputStream("savegame.save");
                 InputStream buffer = new BufferedInputStream(file);
-                ObjectInput input = new ObjectInputStream (buffer);
-        ){
+                ObjectInput input = new ObjectInputStream(buffer);
+        ) {
             //deserialize the List
-            Dungeon loadedDungeon = (Dungeon)input.readObject();
+            Dungeon loadedDungeon = (Dungeon) input.readObject();
             Dungeon.setDungeon(loadedDungeon);
 
-        }
-        catch(ClassNotFoundException ex){
+        } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
-        }
-        catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
@@ -587,12 +583,12 @@ public class Textie implements Serializable{
             return false;
         }
     }
-    public static Item chooseInventory(String itemName){
+
+    public static Item chooseInventory(String itemName) {
         Item item = null;
-        if(Dungeon.getDungeon().player.getInventory().findItemByName(itemName) != null){
+        if (Dungeon.getDungeon().player.getInventory().findItemByName(itemName) != null) {
             item = Dungeon.getDungeon().player.getInventory().findItemByName(itemName);
-        }
-        else if(Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName(itemName) != null){
+        } else if (Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName(itemName) != null) {
             item = Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName(itemName);
         }
 
