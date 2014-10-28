@@ -44,6 +44,13 @@ public class Item implements Serializable{
 
     }
 
+  /**
+   *
+   * @param name Item name
+   * @param untersucheText Text which is printed when you inspect the item.
+   * @param benutzeText Text which is printed when you use the item.
+   * @param pickable Is the item pickable?
+   */
     public Item(String name, String untersucheText, String benutzeText, boolean pickable) {
         this.name = name;
         this.untersucheText = untersucheText;
@@ -51,20 +58,34 @@ public class Item implements Serializable{
         this.pickable = pickable;
     }
 
+  /**
+   *
+   * @return Returns true if the Item is pickable
+   */
     public boolean isPickable() {
         return this.pickable;
     }
 
+  /**
+   *
+   * @return Returns the Item name.
+   */
     public String getName() {
 
         return this.name;
         // return getObjectName(objectID);
     }
 
+  /**
+   * prints the benutzeText
+   */
     public void benutzen() {
         System.out.println(benutzeText);
     }
 
+  /**
+   * prints the untersucheText
+   */
     public void untersuchen() {
         if(untersucheText.equals("") == true) {
             // TODO itemgeschlechter hinzufügen und Text anpassen
@@ -73,6 +94,10 @@ public class Item implements Serializable{
         System.out.println(untersucheText);
     }
 
+  /**
+   *
+   * @return Returns true if the Item is a switch.
+   */
     public boolean isToggle() {
         if(this instanceof ToggleItem) {
             return true;
@@ -80,6 +105,10 @@ public class Item implements Serializable{
         return false;
     }
 
+  /**
+   *
+   * @return Returns true if the Item is a map.
+   */
     public boolean isKarte(){
         if(this instanceof Karte){
             return  true;
