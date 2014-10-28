@@ -14,7 +14,7 @@ import static org.junit.Assert.fail;
 /**
  * Textie Tester.
  *
- * @author Lukas F&uuml;lling (l.fuelling@micromata.de
+ * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
  * @version 1.4
  * @since <pre>Sep 25, 2014</pre>
  */
@@ -571,7 +571,7 @@ public class TextieTest {
    * Gibt die hilfe aus.
    *
    * @return gibt den Test weiter.
-   * @see de.micromata.azubi.Textie#printHelp() 
+   * @see de.micromata.azubi.Textie#printHelp()
    */
     private TextieTest hilfe() {
         try {
