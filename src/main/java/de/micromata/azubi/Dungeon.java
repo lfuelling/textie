@@ -1,9 +1,10 @@
 package de.micromata.azubi;
 
-import javax.xml.soap.Text;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Tung Ngo (t.ngo@micromata.de)
@@ -144,47 +145,54 @@ public class Dungeon implements Serializable {
     public void initInventories() {
         // Raum 1
         Inventory inventory = new Inventory();
-        inventory.getInventory().add(new ToggleItem(Item.FACKEL, "Du betrachtest die Fackel. Wie kann man die wohl anzünden?", "Du zündest deine Fackel mit dem Feuerzeug an.", true, false));
-        inventory.getInventory().add(new Item(Item.HANDTUCH, "Das Handtuch sieht sehr flauschig aus.", "Du wischst dir den Angstschweiß von der Stirn.", true));
-        inventory.getInventory().add(new ToggleItem(Item.SCHALTER, "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false, false));
-        inventory.getInventory().add(new StorageItem(Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true));
+
+
+        inventory.getInventory().add(new ToggleItem(1, Item.FACKEL, "Du betrachtest die Fackel. Wie kann man die wohl anzünden?", "Du zündest deine Fackel mit dem Feuerzeug an.", true, false));
+        inventory.getInventory().add(new Item(2, Item.HANDTUCH, "Das Handtuch sieht sehr flauschig aus.", "Du wischst dir den Angstschweiß von der Stirn.", true));
+        inventory.getInventory().add(new ToggleItem(3, Item.SCHALTER, "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false, false));
+        inventory.getInventory().add(new StorageItem(4, Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true));
         findRaumByNummer(1).setInventory(inventory);
 
         //Raum 2
         inventory = new Inventory();
-        inventory.getInventory().add(new Item(Item.STEIN, "Du betrachtest den Stein. Er wirkt kalt.", "Hier gibt es nichts um den Stein zu benutzen.", true));
-        inventory.getInventory().add(new Item(Item.SCHWERT, "Du betrachtest das Schwert. Es sieht sehr scharf aus.", "Du stichst dir das Schwert zwischen die Rippen und stirbst.", true));
-        inventory.getInventory().add(new Item(Item.FEUERZEUG, "Du betrachtest das Feuerzeug. Es wirkt zuverlässig.", "Du zündest deine Fackel mit dem Feuerzeug an.", true));
+        inventory.getInventory().add(new Item(5, Item.STEIN, "Du betrachtest den Stein. Er wirkt kalt.", "Hier gibt es nichts um den Stein zu benutzen.", true));
+        inventory.getInventory().add(new Item(6, Item.SCHWERT, "Du betrachtest das Schwert. Es sieht sehr scharf aus.", "Du stichst dir das Schwert zwischen die Rippen und stirbst.", true));
+        inventory.getInventory().add(new Item(7, Item.FEUERZEUG, "Du betrachtest das Feuerzeug. Es wirkt zuverlässig.", "Du zündest deine Fackel mit dem Feuerzeug an.", true));
         findRaumByNummer(2).setInventory(inventory);
 
         //Raum 3
         inventory = new Inventory();
-        inventory.getInventory().add(new Item(Item.FALLTÜR, "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
-        inventory.getInventory().add(new Item(Item.WHITEBOARD, "Es steht \'FLIEH!\' mit Blut geschrieben darauf.", "Das fasse ich bestimmt nicht an!", false));
-        inventory.getInventory().add(new Item(Item.BRECHEISEN, "Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.", "Du kratzt dich mit dem Brecheisen am Kopf", true));
-        inventory.getInventory().add(new Item(Item.QUIETSCHEENTE, "Die Ente schaut dich vorwurfsvoll an.", "Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst.", true));
+        inventory.getInventory().add(new Item(8, Item.FALLTÜR, "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
+        inventory.getInventory().add(new Item(9, Item.WHITEBOARD, "Es steht \'FLIEH!\' mit Blut geschrieben darauf.", "Das fasse ich bestimmt nicht an!", false));
+        inventory.getInventory().add(new Item(10, Item.BRECHEISEN, "Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.", "Du kratzt dich mit dem Brecheisen am Kopf", true));
+        inventory.getInventory().add(new Item(11, Item.QUIETSCHEENTE, "Die Ente schaut dich vorwurfsvoll an.", "Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst.", true));
         findRaumByNummer(3).setInventory(inventory);
 
         //Raum 4
         inventory = new Inventory();
-        inventory.getInventory().add(new Karte("Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert"));
-        inventory.getInventory().add(new Item(Item.SACK, "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
+
+        inventory.getInventory().add(new Karte(20, "Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert"));
+        inventory.getInventory().add(new Item(12, Item.SACK, "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
+
         inventory.getInventory().add(findRaumByNummer(1).getInventory().findItemByName("Schalter")); // Der SELBE Schalter wie in Raum1
         findRaumByNummer(4).setInventory(inventory);
 
         //Raum 5
         inventory = new Inventory();
-        inventory.getInventory().add(new Item(Item.FALLTÜR, "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
+
+        inventory.getInventory().add(new Item(13, Item.FALLTÜR, "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
         findRaumByNummer(5).setInventory(inventory);
 
         //Raum 6
         inventory = new Inventory();
-        inventory.getInventory().add(new StorageItem(Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, false));
+        inventory.getInventory().add(new StorageItem(14, Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true));
         findRaumByNummer(6).setInventory(inventory);
 
         //Raum 7
         inventory = new Inventory();
-        inventory.getInventory().add(new ToggleItem(Item.SCHALTER, "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false, false));
+
+        inventory.getInventory().add(new ToggleItem(15, Item.SCHALTER, "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false, false));
+
         findRaumByNummer(7).setInventory(inventory);
 
         //Truhe Raum1
@@ -198,7 +206,7 @@ public class Dungeon implements Serializable {
         //Truhe Raum 6
         truhe = (StorageItem) findRaumByNummer(6).getInventory().findItemByName("Truhe");
         inventory = new Inventory();
-        inventory.getInventory().add(new Item("Axt", "Eine scharfe Axt.", "Du schlägst mit der Axt zu.", true));
+        inventory.getInventory().add(new Item(19, "Axt", "Eine scharfe Axt.", "Du schlägst mit der Axt zu.", true));
         truhe.setInventory(inventory);
     }
 
@@ -210,17 +218,21 @@ public class Dungeon implements Serializable {
         findRaumByNummer(4).setHuman(new Human(
                 "Gordon", "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...", "...",
                 "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.",
-                new Item(Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true),
+                new Item(16, Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true),
                 "Brecheisen"));
         findRaumByNummer(5).setHuman(new Human(
                 "Junge", "", "",
                 "Hast du ein Handtuch ?", "Danke.",
-                new Item("Brief", "Ein Brief adressiert an eine Frau.", "Bringe den Brief zu einer Frau.", true),
+
+                new Item(17, "Brief", "Ein Brief adressiert an eine Frau.", "Bringe den Brief zu einer Frau.", true),
+
                 "Handtuch"));
         findRaumByNummer(7).setHuman(new Human(
                 "Frau", "", "",
                 "Hast du einen Brief?", "Danke",
-                new Item("Seil", "Ein stabiles Seil.", "Du seilst dich ab.", true),
+
+                new Item(18, "Seil", "Ein stabiles Seil.", "Du seilst dich ab.", true),
+
                 "Brief"));
     }
 
