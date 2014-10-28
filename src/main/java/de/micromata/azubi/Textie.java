@@ -124,7 +124,7 @@ public class Textie implements Serializable {
                     doReden();
                     break;
                 case Command.GIB:
-                    if (Dungeon.getDungeon().currentHuman != null) {
+                    if (Dungeon.getDungeon().getCurrentRaum().getHuman() != null) {
                         doGeben(parsed_command, count);
                     } else {
                         printText("Hier gibt es niemandem, dem du etwas geben könntest");
@@ -524,45 +524,45 @@ public class Textie implements Serializable {
 
     //HumanKram
     static void doReden() {
-        if (Dungeon.getDungeon().currentHuman.isQuestDone() == true) {
-            if (Dungeon.getDungeon().currentHuman.isGaveItem() == true) {
-                if (recieveItem(Dungeon.getDungeon().currentHuman.getRewarditem())) {
+        if (Dungeon.getDungeon().getCurrentRaum().getHuman().isQuestDone() == true) {
+            if (Dungeon.getDungeon().getCurrentRaum().getHuman().isGaveItem() == true) {
+                if (recieveItem(Dungeon.getDungeon().getCurrentRaum().getHuman().getRewarditem())) {
                     printText("Hier, bitte schön.");
-                    Dungeon.getDungeon().currentHuman.setGaveItem(false);
+                    Dungeon.getDungeon().getCurrentRaum().getHuman().setGaveItem(false);
                 } else {
                     printText("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
-                    Dungeon.getDungeon().currentHuman.setGaveItem(true);
+                    Dungeon.getDungeon().getCurrentRaum().getHuman().setGaveItem(true);
                 }
             } else {
                 switch (dialogNumber) {
                     case 0:
-                        printText(Dungeon.getDungeon().currentHuman.getDialog1());
+                        printText(Dungeon.getDungeon().getCurrentRaum().getHuman().getDialog1());
                         dialogNumber = 1;
                         break;
                     case 1:
-                        printText(Dungeon.getDungeon().currentHuman.getDialog2());
+                        printText(Dungeon.getDungeon().getCurrentRaum().getHuman().getDialog2());
                         dialogNumber = 0;
                         break;
                 }
             }
         } else {
-            printText(Dungeon.getDungeon().currentHuman.getQuestText());
+            printText(Dungeon.getDungeon().getCurrentRaum().getHuman().getQuestText());
         }
     }
 
     public static void doGeben(String[] parsed_command, int count) {
         if (count == 2) {
-            //String itemToUse = IOUtils.convertToName(parsed_command[1]);
-            Item itemToUse = chooseInventory(parsed_command[1]);
-            if (itemToUse.getName().equals(Dungeon.getDungeon().currentHuman.getQuestItem())) {
+            String itemToUse = IOUtils.convertToName(parsed_command[1]);
+            //Item itemToUse = chooseInventory(parsed_command[1]);
+            if (itemToUse.equals(Dungeon.getDungeon().getCurrentRaum().getHuman().getQuestItem())) {
                 if (giveItem(chooseInventory(parsed_command[1]))) {
-                    printText(Dungeon.getDungeon().currentHuman.getQuestDoneText());
-                    Dungeon.getDungeon().currentHuman.setQuestDone(true);
-                    if (recieveItem(Dungeon.getDungeon().currentHuman.getRewarditem())) {
+                    printText(Dungeon.getDungeon().getCurrentRaum().getHuman().getQuestDoneText());
+                    Dungeon.getDungeon().getCurrentRaum().getHuman().setQuestDone(true);
+                    if (recieveItem(Dungeon.getDungeon().getCurrentRaum().getHuman().getRewarditem())) {
                         printText("Im Gegenzug bekommst du von mir auch etwas. Bitteschön.");
                     } else {
                         printText("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
-                        Dungeon.getDungeon().currentHuman.setGaveItem(true);
+                        Dungeon.getDungeon().getCurrentRaum().getHuman().setGaveItem(true);
                     }
                 } else {
                     printText("Item nicht im Inventar.");
@@ -591,7 +591,6 @@ public class Textie implements Serializable {
         } else if (Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName(itemName) != null) {
             item = Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName(itemName);
         }
-
         return item;
     }
 }

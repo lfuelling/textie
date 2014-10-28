@@ -15,6 +15,7 @@ public class Raum implements Serializable{
     protected Map<Richtung, Raum> verbindungen = new HashMap<>();
     protected boolean leaveRoom = false;
     protected Inventory inventory;
+    private Human human;
 
     public Raum() {
     }
@@ -117,4 +118,13 @@ public class Raum implements Serializable{
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
+
+    public void setHuman(Human human) {
+        this.human = human;
+    }
+
+    public Human getHuman() {
+        return human;
+    }
+
 }
