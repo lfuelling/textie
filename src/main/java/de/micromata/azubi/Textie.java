@@ -107,7 +107,13 @@ public class Textie implements Serializable {
                     if (args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
                         switch (parsed_args[1].toLowerCase()) {
                             case "aus truhe":
-                                doTakeFromChest(Dungeon.getDungeon().truhe.getInventory().findItemByName(parsed_command[1]));
+                                StorageItem truhe = (StorageItem) Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName("Truhe");
+                                if(truhe != null) {
+                                    doTakeFromChest(truhe.getInventory().findItemByName(parsed_args[0]));
+                                }
+                                else{
+                                    printText("Hier gibt es keine Truhe");
+                                }
                                 break;
                             default:
                                 printText("Unbekanntes Item: " + parsed_command[1]);
@@ -564,9 +570,8 @@ public class Textie implements Serializable {
    */
     public static boolean addItemFromChestToInventory(Item item) {
         StorageItem dieTruhe = (StorageItem) Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName("Truhe");
-        if (Dungeon.getDungeon().player.getInventory().getInventory().size() < Dungeon.getDungeon().player.getInventory().getInventorySize() && dieTruhe.hasItem(item)) {
-            Dungeon.getDungeon().player.getInventory().getInventory().add(item);
-            dieTruhe.removeItem(item);
+        if (Dungeon.getDungeon().player.getInventory().getInventory().size() < Dungeon.getDungeon().player.getInventory().getInventorySize() && dieTruhe.getInventory().hasItem(item.getName())) {
+            dieTruhe.getInventory().transferItem(Dungeon.getDungeon().player.getInventory(), item);
             return true;
         } else {
             return false;

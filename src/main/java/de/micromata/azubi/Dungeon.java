@@ -21,7 +21,7 @@ public class Dungeon implements Serializable {
     Raum raum;
     Door door;
     public int previousRoomNumber; // Index des vorherigen Raumes in der RaumListe
-    public StorageItem truhe;
+    private StorageItem truhe;
 
     private static Dungeon dungeon;
 
@@ -41,22 +41,7 @@ public class Dungeon implements Serializable {
         initInventories();
         initHumans();
         initVerbindungen();
-
         player.getInventory().setInventorySize(5);
-        truhe = (StorageItem) findRaumByNummer(1).getInventory().findItemByName("Truhe");
-        Inventory inventory = new Inventory();
-        //inventory.getInventory().add();
-        //TODO Items einfügen
-        //inventory.getInventory().add();
-        truhe.setInventory(inventory);
-
-        //Truhe Raum 6
-        truhe = (StorageItem) findRaumByNummer(6).getInventory().findItemByName("Truhe");
-        inventory = new Inventory();
-
-        inventory.getInventory().add(new Item(19, "Axt", "Eine scharfe Axt.", "Du schlägst mit der Axt zu.", true));
-
-        truhe.setInventory(inventory);
     }
 
     public static Dungeon getDungeon() {
@@ -165,7 +150,7 @@ public class Dungeon implements Serializable {
         inventory.getInventory().add(new ToggleItem(1, Item.FACKEL, "Du betrachtest die Fackel. Wie kann man die wohl anzünden?", "Du zündest deine Fackel mit dem Feuerzeug an.", true, false));
         inventory.getInventory().add(new Item(2, Item.HANDTUCH, "Das Handtuch sieht sehr flauschig aus.", "Du wischst dir den Angstschweiß von der Stirn.", true));
         inventory.getInventory().add(new ToggleItem(3, Item.SCHALTER, "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false, false));
-        inventory.getInventory().add(new StorageItem(4, Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true, null, null)); //TODO Items einfügen
+        inventory.getInventory().add(new StorageItem(4, Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true));
         findRaumByNummer(1).setInventory(inventory);
 
         //Raum 2
@@ -198,13 +183,27 @@ public class Dungeon implements Serializable {
 
         //Raum 6
         inventory = new Inventory();
-        inventory.getInventory().add(new StorageItem(14, Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true, null, null));
+        inventory.getInventory().add(new StorageItem(14, Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true));
         findRaumByNummer(6).setInventory(inventory);
 
         //Raum 7
         inventory = new Inventory();
         inventory.getInventory().add(new ToggleItem(15, Item.SCHALTER, "Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false, false));
         findRaumByNummer(7).setInventory(inventory);
+
+        //Truhe Raum1
+        truhe = (StorageItem) findRaumByNummer(1).getInventory().findItemByName("Truhe");
+        inventory = new Inventory();
+        //inventory.getInventory().add();
+        //TODO Items einfügen
+        //inventory.getInventory().add();
+        truhe.setInventory(inventory);
+
+        //Truhe Raum 6
+        truhe = (StorageItem) findRaumByNummer(6).getInventory().findItemByName("Truhe");
+        inventory = new Inventory();
+        inventory.getInventory().add(new Item(19, "Axt", "Eine scharfe Axt.", "Du schlägst mit der Axt zu.", true));
+        truhe.setInventory(inventory);
     }
     /**
      * Initializes the doors.
