@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Lukas Fülling (l.fuelling@micromata.de)
+ * @author Julian Siebert (j.siebert@micromata.de)
+ */
 public class Raum implements Serializable{
     private static final long serialVersionUID = -2269575363024102428L;
     protected List<Item> items = new ArrayList<Item>();
@@ -19,11 +23,22 @@ public class Raum implements Serializable{
     public Raum() {
     }
 
+  /**
+   *
+   * @param number The number of the room
+   * @param willkommensNachricht The message you get, when you enter the room.
+   */
     public Raum(int number, String willkommensNachricht) {
         this.roomNumber = number;
         this.willkommensNachricht = willkommensNachricht;
     }
 
+  /**
+   *
+   * @param item The Item you search
+   * @return True if the item is in there.
+   * @deprecated
+   */
     public boolean hasItem(Item item) {
         if (items.contains(item)) {
             return true;
@@ -31,18 +46,34 @@ public class Raum implements Serializable{
         return false;
     }
 
+  /**
+   *
+   * @return The room number.
+   */
     public int getNumber() {
         return roomNumber;
     }
 
+  /**
+   *
+   * @return The Room number as a string.
+   */
     public String getNumberAsString() {
         return String.valueOf(this.roomNumber);
     }
 
+  /**
+   * @param obj An Object
+   * @return True if the object is the same.
+   */
     public boolean equals(Object obj) {
         return super.equals(obj);
     }
 
+  /**
+   * Starts a room.
+   * @param withPrompt Set to <code>true</code>, if you want a prompt.
+   */
     public void start(boolean withPrompt) {
 
         if (roomNumber == 3) {
@@ -56,64 +87,123 @@ public class Raum implements Serializable{
         Textie.warten(withPrompt);
     }
 
+  /**
+   * @deprecated
+   * @return True if the trapdoor is used.
+   */
     public boolean isFalltuerUsed() {
         return falltuerUsed;
     }
 
+  /**
+   * @deprecated
+   * @param falltuerUsed Set if the trpaddor was used.
+   */
     public void setFalltuerUsed(boolean falltuerUsed) {
         this.falltuerUsed = falltuerUsed;
     }
 
+  /**
+   *
+   * @return The room number
+   */
     public int getRoomNumber() {
         return roomNumber;
     }
 
+  /**
+   * @deprecated
+   * @param roomNumber sets the room number.
+   */
     public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
     }
 
+  /**
+   *
+   * @return The intro message.
+   */
     public String getWillkommensNachricht() {
         return willkommensNachricht;
     }
 
+  /**
+   * @deprecated
+   * @param willkommensNachricht the intro message.
+   */
     public void setWillkommensNachricht(String willkommensNachricht) {
         this.willkommensNachricht = willkommensNachricht;
     }
 
+  /**
+   * @deprecated
+   * @return Items.
+   */
     public List<Item> getItems() {
         return items;
     }
 
+  /**
+   * @deprecated
+   * @param items set some Items
+   */
     public void setItems(List<Item> items) {
         this.items = items;
     }
 
-
+  /**
+   * Get the next room.
+   * @param richtung The direction from where you want the next room.
+   * @return The next room.
+   */
     public Raum getNextRoom(Richtung richtung) {
         return verbindungen.get(richtung);
     }
 
-
+  /**
+   * Is the room being leaved?
+   * @return True if the room is to be leaved.
+   */
     public boolean isLeaveRoom() {
         return leaveRoom;
     }
 
+  /**
+   *
+   * @param leaveRoom you want to go?
+   */
     public void setLeaveRoom(boolean leaveRoom) {
         this.leaveRoom = leaveRoom;
     }
 
+  /**
+   * @deprecated
+   * @return A map.
+   */
     public Map<Richtung, Raum> getVerbindungen() {
         return verbindungen;
     }
 
+  /**
+   *
+   * @param verbindungen Set some connections.
+   */
     public void setVerbindungen(Map<Richtung, Raum> verbindungen) {
         this.verbindungen = verbindungen;
     }
 
+  /**
+   *
+   * @return The inventory of the room.
+   */
     public Inventory getInventory() {
         return inventory;
     }
 
+  /**
+   *
+   * @param inventory The inventory of the room.
+   */
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }

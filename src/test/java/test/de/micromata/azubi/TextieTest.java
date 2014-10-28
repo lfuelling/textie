@@ -15,7 +15,7 @@ import static org.junit.Assert.fail;
  * Textie Tester.
  *
  * @author Lukas F&uuml;lling
- * @version 1.2
+ * @version 1.4
  * @since <pre>Sep 25, 2014</pre>
  */
 public class TextieTest {

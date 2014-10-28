@@ -86,7 +86,7 @@ public class StorageItem extends Item {
         }
 
     }
-    
+
     public Inventory getInventory() {
         return inventory;
     }
