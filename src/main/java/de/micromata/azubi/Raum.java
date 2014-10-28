@@ -20,6 +20,7 @@ public class Raum implements Serializable{
     protected boolean leaveRoom = false;
     protected Inventory inventory;
     private Human human;
+    private ArrayList<Door> doors;
 
     public Raum() {
     }
@@ -137,28 +138,12 @@ public class Raum implements Serializable{
     }
 
   /**
-   * @deprecated
-   * @return Items.
-   */
-    public List<Item> getItems() {
-        return items;
-    }
-
-  /**
-   * @deprecated
-   * @param items set some Items
-   */
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
-  /**
    * Get the next room.
-   * @param richtung The direction from where you want the next room.
+   * @param door The door in the current room you want to going trough
    * @return The next room.
    */
-    public Raum getNextRoom(Richtung richtung) {
-        return verbindungen.get(richtung);
+    public Raum getNextRoom(Door door) {
+        return Dungeon.getDungeon().findRaumByNummer(door.raumNr);
     }
 
   /**
@@ -217,4 +202,17 @@ public class Raum implements Serializable{
         return human;
     }
 
+    public Door findDoorByDirection(Richtung richtung) {
+
+        for (Door door : this.doors) {
+            if (door.richtungRaum1.equals(richtung)){
+                return door;
+            }
+        }
+        return null;
+    }
+
+    public void setDoors(ArrayList<Door> doors) {
+        this.doors = doors;
+    }
 }

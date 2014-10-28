@@ -186,12 +186,17 @@ public class Textie implements Serializable {
      * @param richtung the direction you want to go.
      */
     static void doGehen(Richtung richtung) {
+
+
+
+
         Raum raum = Dungeon.getDungeon().getRaum(richtung);
         if (raum != null && Dungeon.getDungeon().raums.get(Dungeon.getDungeon().previousRoomNumber).isLeaveRoom()) {
             Dungeon.getDungeon().setRoomNumber(raum);
             Dungeon.getDungeon().getCurrentRaum().setLeaveRoom(false);
             Textie.printText(Dungeon.getDungeon().getCurrentRaum().getWillkommensNachricht());
         }
+
 
     }
 
