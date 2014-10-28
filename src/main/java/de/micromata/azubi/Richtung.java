@@ -1,7 +1,8 @@
 package de.micromata.azubi;
 
 /**
- * Created by jsiebert on 14.10.14.
+ * @author Julian Siebert (j.siebert@micromata.de)
+ * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
  */
 public enum Richtung {
     NORD, SUED, WEST, OST, FALLTUER;
