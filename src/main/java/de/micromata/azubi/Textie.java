@@ -186,11 +186,16 @@ public class Textie implements Serializable {
      * @param richtung the direction you want to go.
      */
     static void doGehen(Richtung richtung) {
-        Raum raum = Dungeon.getDungeon().getRaum(richtung);
-        if (raum != null && Dungeon.getDungeon().raums.get(Dungeon.getDungeon().previousRoomNumber).isLeaveRoom()) {
-            Dungeon.getDungeon().setRoomNumber(raum);
-            Dungeon.getDungeon().getCurrentRaum().setLeaveRoom(false);
-            Textie.printText(Dungeon.getDungeon().getCurrentRaum().getWillkommensNachricht());
+        if(Dungeon.getDungeon().getCurrentRaum().getNumber()==6 && Dungeon.getDungeon().getCurrentRaum().getNextRoom(richtung) == null){
+            printText("Der Weg wird durch eine Holzbarrikade versperrt.");
+        }
+        else {
+            Raum raum = Dungeon.getDungeon().getRaum(richtung);
+            if (raum != null && Dungeon.getDungeon().raums.get(Dungeon.getDungeon().previousRoomNumber).isLeaveRoom()) {
+                Dungeon.getDungeon().setRoomNumber(raum);
+                Dungeon.getDungeon().getCurrentRaum().setLeaveRoom(false);
+                Textie.printText(Dungeon.getDungeon().getCurrentRaum().getWillkommensNachricht());
+            }
         }
 
     }
@@ -371,6 +376,15 @@ public class Textie implements Serializable {
                                 break;
                             }
                         }
+                    case "Axt":
+                        Item axt = item;
+                        if(Dungeon.getDungeon().getCurrentRaum().getNumber()==6) {
+                            Dungeon.getDungeon().getCurrentRaum().verbindungen.put(Richtung.OST, Dungeon.getDungeon().findRaumByNummer(7));
+                            axt.benutzen();
+                        } else {
+                            Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum");
+                        }
+                        break;
                     case "Sack":
                         Item sack = item;
                         sack.benutzen();

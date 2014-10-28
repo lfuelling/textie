@@ -20,7 +20,6 @@ public class Trapdoor {
     public Trapdoor(int UID,boolean initialLockState) {
 
         this.uid = UID;
-        this.raum = raum;
         this.locked = initialLockState;
     }
 

@@ -131,7 +131,7 @@ public class Dungeon implements Serializable {
 
         //Raum 6
         verbindungen = new HashMap<Richtung, Raum>();
-        verbindungen.put(Richtung.OST, findRaumByNummer(7));
+        //verbindungen.put(Richtung.OST, findRaumByNummer(7));
         findRaumByNummer(6).setVerbindungen(verbindungen);
 
         //Raum 7
@@ -177,13 +177,12 @@ public class Dungeon implements Serializable {
 
         //Raum 5
         inventory = new Inventory();
-
         inventory.getInventory().add(new Item(13, Item.FALLTÜR, "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
         findRaumByNummer(5).setInventory(inventory);
 
         //Raum 6
         inventory = new Inventory();
-        inventory.getInventory().add(new StorageItem(14, Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true));
+        inventory.getInventory().add(new StorageItem(14, Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, false));
         findRaumByNummer(6).setInventory(inventory);
 
         //Raum 7
@@ -257,8 +256,7 @@ public class Dungeon implements Serializable {
         findRaumByNummer(4).setHuman(new Human(
                 "Gordon", "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...", "...",
                 "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.",
-                new Item(16, Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true),
-                "Brecheisen"));
+                new Item(16, Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true), "Brecheisen"));
         findRaumByNummer(5).setHuman(new Human(
                 "Junge", "", "",
                 "Hast du ein Handtuch ?", "Danke.",
@@ -270,9 +268,7 @@ public class Dungeon implements Serializable {
                 "Frau", "", "",
                 "Hast du einen Brief?", "Danke",
 
-                new Item(18, "Seil", "Ein stabiles Seil.", "Du seilst dich ab.", true),
-
-                "Brief"));
+                new Item(18, "Seil", "Ein stabiles Seil.", "Du seilst dich ab.", true), "Brief"));
     }
 
 
