@@ -1,14 +1,12 @@
 
 package de.micromata.azubi;
 
-/*
- *  Das ist der GameMaster
- *  Der Spieler darf entscheiden, was er tun möchte, doch der GameMaster entscheidet, was geschiet.
- */
-
-
 import java.io.*;
 
+/**
+ * @author Lukas Fülling (l.fuelling@micromata.de)
+ * @author Julian Siebert (j.siebert@micromata.de)
+ */
 public class Textie implements Serializable {
     private static final long serialVersionUID = -6980176018028225023L;
     public static boolean diag;
@@ -34,6 +32,10 @@ public class Textie implements Serializable {
         System.exit(0);
     }
 
+  /**
+   * End of the game.
+   * @return Returns true if you're in diag mode.
+   */
     public static boolean ende() {
         printText("Herzlichen Glückwunsch !");
         printText("Du bist aus deinem Traum erwacht und siehst, dass du");
@@ -47,6 +49,10 @@ public class Textie implements Serializable {
         return true;
     }
 
+  /**
+   * @see de.micromata.azubi.Dungeon#runGame(boolean)
+   * @param withPrompt Set to <code>true</code>, if you want a prompt.
+   */
     public static void warten(boolean withPrompt) {
         if (withPrompt == true) {
             Dungeon.getDungeon().player.prompt();
@@ -66,7 +72,11 @@ public class Textie implements Serializable {
     }
 
 
-    //Befehlsverarbeitung
+  /**
+   * Executes the commands.
+   * @param parsed_command Command split at the first space.
+   * @param parsed_args Arguments of the command split by the first space.
+   */
     public static void executeCommand(String[] parsed_command, String[] parsed_args) {
         if (Dungeon.getDungeon().getCurrentRaum() == null) {
             System.err.println("currentRaum nicht da");
@@ -137,11 +147,20 @@ public class Textie implements Serializable {
         }
     }
 
+  /**
+   * Splits the input at the first space.
+   * @param command The command you want to execute.
+   * @return Returns a string array containing a maximum size of two strings.
+   */
     public static String[] parseInput(String command) {
 
         return command.split(" ", 2);
     }
 
+  /**
+   * Prints some text. If diag mode is active, it will print the number of the current room.
+   * @param text The text you want to print.
+   */
     public static void printText(String text) {
         if (Textie.diag == true) {
             System.out.println(Dungeon.getDungeon().getCurrentRaum() == null ? text : "[" + Dungeon.getDungeon().getCurrentRaum().roomNumber + "], " + text);
@@ -152,6 +171,10 @@ public class Textie implements Serializable {
         lastPrintedText = text;
     }
 
+  /**
+   * Let's you walk.
+   * @param richtung the direction you want to go.
+   */
     static void doGehen(Richtung richtung) {
         Raum raum = Dungeon.getDungeon().getRaum(richtung);
         if (raum != null && Dungeon.getDungeon().raums.get(Dungeon.getDungeon().previousRoomNumber).isLeaveRoom()) {
@@ -162,6 +185,11 @@ public class Textie implements Serializable {
 
     }
 
+  /**
+   * Throwas away an Item.
+   * @param item The item to throw away.
+   * @param count The size of the parsed_command String[]
+   */
     static void doVernichte(Item item, int count) {
         if (count == 2) {
             if (Dungeon.getDungeon().player.getInventory().transferItem(Dungeon.getDungeon().getCurrentRaum().getInventory(), item)) {
@@ -176,6 +204,11 @@ public class Textie implements Serializable {
         }
     }
 
+  /**
+   * Let's you inspect an item.
+   * @param parsed_command The String[]
+   * @param count THe size of the String[]
+   */
     static void doUntersuche(String[] parsed_command, int count) {
         if (count == 2) {
             switch (parsed_command[1].toLowerCase()) {
@@ -259,6 +292,10 @@ public class Textie implements Serializable {
         }
     }
 
+  /**
+   * Lets you use an item.
+   * @param item The item to use.
+   */
     static void doBenutze(Item item) {
         if (item == null) {
 
@@ -378,6 +415,10 @@ public class Textie implements Serializable {
         }
     }
 
+  /**
+   * Let's you take stuff from a chest.
+   * @param item The item to take.
+   */
     static void doTakeFromChest(Item item) {
         if (item.isPickable()) {
             if (addItemFromChestToInventory(item)) {
@@ -391,6 +432,10 @@ public class Textie implements Serializable {
         }
     }
 
+  /**
+   * Pick up an item from the floor.
+   * @param item The item to pick up.
+   */
     static void doNimm(Item item) {
         if (item == null) {
             printText("Unbekanntes Item.");
@@ -408,6 +453,9 @@ public class Textie implements Serializable {
         }
     }
 
+  /**
+   * Prints the help.
+   */
     static void printHelp() {
         printText("Mögliche Befehle:");
         printText("\thilfe -> Zeigt diese Hilfe");
@@ -418,6 +466,9 @@ public class Textie implements Serializable {
         printText("\tgehe [nord/süd/ost/west] -> In eine Richtung gehen");
     }
 
+  /**
+   * Saves.
+   */
     public static void doSpeichern() {
 
         try (
@@ -436,6 +487,9 @@ public class Textie implements Serializable {
         printText("Gespeichert!");
     }
 
+  /**
+   * Loads
+   */
     public static void doLaden() {
 
         try (
@@ -503,7 +557,11 @@ public class Textie implements Serializable {
     */
 
 
-    //InventarKram
+  /**
+   * Best name ever.
+   * @param item Item to take.
+   * @return Returns true, if you can pick up the item.
+   */
     public static boolean addItemFromChestToInventory(Item item) {
         StorageItem dieTruhe = (StorageItem) Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName("Truhe");
         if (Dungeon.getDungeon().player.getInventory().getInventory().size() < Dungeon.getDungeon().player.getInventory().getInventorySize() && dieTruhe.hasItem(item)) {
@@ -515,14 +573,21 @@ public class Textie implements Serializable {
         }
     }
 
-    public static boolean giveItem(Item item) {
+  /**
+   * Give someone an item.
+   * @param item Item to give.
+   * @return Returns true, if you were able to give that item.
+   */
+  public static boolean giveItem(Item item) {
         if (Dungeon.getDungeon().player.getInventory().getInventory().remove(item)) {
             return true;
         }
         return false;
     }
 
-    //HumanKram
+  /**
+   * Talk to someone.
+   */
     static void doReden() {
         if (Dungeon.getDungeon().currentHuman.isQuestDone() == true) {
             if (Dungeon.getDungeon().currentHuman.isGaveItem() == true) {
@@ -550,6 +615,11 @@ public class Textie implements Serializable {
         }
     }
 
+  /**
+   * Give someone an item.
+   * @param parsed_command The String[]
+   * @param count The size of the String[]
+   */
     public static void doGeben(String[] parsed_command, int count) {
         if (count == 2) {
             //String itemToUse = IOUtils.convertToName(parsed_command[1]);
@@ -575,6 +645,11 @@ public class Textie implements Serializable {
         }
     }
 
+  /**
+   * Get an Item.
+   * @param item The item you want.
+   * @return Returns true if you could take it.
+   */
     public static boolean recieveItem(Item item) {
         if (Dungeon.getDungeon().player.getInventory().getInventory().size() < Dungeon.getDungeon().player.getInventory().getInventorySize()) {
             Dungeon.getDungeon().player.getInventory().getInventory().add(item);
@@ -584,6 +659,11 @@ public class Textie implements Serializable {
         }
     }
 
+  /**
+   * Chooses an Inventory.
+   * @param itemName the item you search.
+   * @return Returns the item.
+   */
     public static Item chooseInventory(String itemName) {
         Item item = null;
         if (Dungeon.getDungeon().player.getInventory().findItemByName(itemName) != null) {
