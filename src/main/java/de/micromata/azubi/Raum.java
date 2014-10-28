@@ -215,4 +215,8 @@ public class Raum implements Serializable{
     public void setDoors(ArrayList<Door> doors) {
         this.doors = doors;
     }
+
+    public ArrayList<Door> getDoors() {
+        return doors;
+    }
 }

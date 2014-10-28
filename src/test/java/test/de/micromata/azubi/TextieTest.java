@@ -14,8 +14,8 @@ import static org.junit.Assert.fail;
 /**
  * Textie Tester.
  *
- * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
- * @version 1.4
+ * @author Lukas F&uuml;lling
+ * @version 2.0
  * @since <pre>Sep 25, 2014</pre>
  */
 public class TextieTest {
@@ -325,10 +325,10 @@ public class TextieTest {
         benutze("karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--",Textie.lastPrintedText);
         untersuche("truhe");
-//        nimm("axt"); //Truhe fixen
-//        untersuche("inventar");
-//        Assert.assertEquals(2, dungeon.player.getInventory().getInventory().size());
-//        benutze("axt");
+        nimm("aus truhe axt");
+        untersuche("inventar");
+        Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
+        benutze("axt");
         gehe("ost");
         Assert.assertEquals(dungeon.findRaumByNummer(7), dungeon.getCurrentRaum());
         benutze("karte");
@@ -427,11 +427,6 @@ public class TextieTest {
         Assert.assertFalse("[Raum 1]--(WEST)--[Raum 4]--(OST)--(NORD)--".equals(Textie.lastPrintedText));
         Assert.assertTrue("[Raum 1]--(WEST)--[Raum 4]--(OST)--".equals(Textie.lastPrintedText));
     }
-
-
-
-
-
     /* SUBFUNKTIONEN */
 
     /**
@@ -464,7 +459,7 @@ public class TextieTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Textie.executeCommand(new String[]{Command.NIMM, text}, new String[]{text});
+        Textie.executeCommand(new String[]{Command.NIMM,text}, new String[]{text});
         return this;
     }
 
