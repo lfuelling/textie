@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * @author Tung Ngo (t.ngo@micromata.de)
- * @author Lukas Fülling (l.fuelling@micromata.de)
+ * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
  * @author Julian Siebert (j.siebert@micromata.de)
  * @see java.io.Serializable
  */
@@ -264,11 +264,6 @@ public class Dungeon implements Serializable {
         return null;
     }
 
-
-    public void setCurrentRaum(Raum raum) {
-
-    }
-
     /**
      * Walking routine.
      *
@@ -389,34 +384,9 @@ public class Dungeon implements Serializable {
         this.currentRoomNumber = raums.indexOf(raum) + 1;
     }
 
-    public ArrayList<Raum> getRaums() {
-        return raums;
-    }
-
-    public void setRaums(ArrayList<Raum> raums) {
-        this.raums = raums;
-    }
-
-    /*
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
-    */
     public static void setDungeon(Dungeon dungeon) {
         Dungeon.dungeon = dungeon;
 
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 
 }

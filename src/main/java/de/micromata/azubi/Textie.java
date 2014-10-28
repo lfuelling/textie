@@ -4,7 +4,7 @@ package de.micromata.azubi;
 import java.io.*;
 
 /**
- * @author Lukas Fülling (l.fuelling@micromata.de)
+ * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
  * @author Julian Siebert (j.siebert@micromata.de)
  */
 public class Textie implements Serializable {

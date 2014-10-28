@@ -14,7 +14,7 @@ import static org.junit.Assert.fail;
 /**
  * Textie Tester.
  *
- * @author Lukas F&uuml;lling
+ * @author Lukas F&uuml;lling (l.fuelling@micromata.de
  * @version 1.4
  * @since <pre>Sep 25, 2014</pre>
  */
@@ -168,6 +168,9 @@ public class TextieTest {
         System.err.println("finished.");
     }
 
+  /**
+   * Dieser Test löst die Quest (Reim)
+   */
     @Test
     public void testQuest() {
         System.out.println();
@@ -291,7 +294,7 @@ public class TextieTest {
         System.err.println("finished.");
     }
 
-  /*
+  /**
    * Test Map:  1/4/5/6/7
    * Test Quest: Brief übergabe mit den neuen Items
    */
@@ -347,8 +350,9 @@ public class TextieTest {
         System.out.println("Ende.");
     }
 
-    /* Karten Test
-     *Spieler läuft einmal durch den kompletten Dungeon und benutzt dabei Karte.
+    /**
+     * Karten Test
+     * Spieler läuft einmal durch den kompletten Dungeon und benutzt dabei Karte.
      */
     @Test
     public void testKarte() {
@@ -401,7 +405,7 @@ public class TextieTest {
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--[Raum 7]--(SUED)--[Raum 4]--(OST)--", Textie.lastPrintedText);
     }
 
-    /*
+    /**
      * Testet die Karte auf Mitschreiben von falschen Richtungen:
      */
     @Test
@@ -435,13 +439,8 @@ public class TextieTest {
      *
      * @param richtung
      * @return gibt den Test weiter.
+     * @see de.micromata.azubi.Textie#doGehen(de.micromata.azubi.Richtung)
      */
-
-
-
-
-
-
     private TextieTest gehe(String richtung) {
         try {
             Thread.sleep(testingTime);
@@ -452,6 +451,13 @@ public class TextieTest {
         return this;
     }
 
+  /**
+   * Lässt den Spieler ein item nehmen.
+   *
+   * @param text Was soll der Spieler nehmen?
+   * @return gibt den Test weiter.
+   * @see de.micromata.azubi.Textie#doNimm(de.micromata.azubi.Item)
+   */
     private TextieTest nimm(String text) {
         try {
             Thread.sleep(testingTime);
@@ -462,6 +468,10 @@ public class TextieTest {
         return this;
     }
 
+  /**
+   * Startet das SPiel
+   * @return gibt den Test weiter
+   */
     private TextieTest start() {
 
         Runnable runGame = new Runnable() {
@@ -489,6 +499,13 @@ public class TextieTest {
         return this;
     }
 
+  /**
+   * Lässt den Spieler ein Item untersuchen.
+   *
+   * @param item
+   * @return gibt den Test weiter.
+   * @see de.micromata.azubi.Textie#doUntersuche(String[], int)
+   */
     private TextieTest untersuche(String item) {
         try {
             Thread.sleep(testingTime);
@@ -499,6 +516,13 @@ public class TextieTest {
         return this;
     }
 
+  /**
+   * Lässt den Spieler mit einem Menschen reden.
+   *
+   * @param human
+   * @return gibt den Test weiter.
+   * @see de.micromata.azubi.Textie#doReden()
+   */
     private TextieTest rede(String human) {
         try {
             Thread.sleep(testingTime);
@@ -509,6 +533,13 @@ public class TextieTest {
         return this;
     }
 
+  /**
+   * Lässt den Spieler ein Item übergeben.
+   *
+   * @param item
+   * @return gibt den Test weiter.
+   * @see de.micromata.azubi.Textie#doGeben(String[], int)
+   */
     private TextieTest gib(String item) {
         try {
             Thread.sleep(testingTime);
@@ -519,6 +550,13 @@ public class TextieTest {
         return this;
     }
 
+  /**
+   * Lässt den Spieler ein Item wegwerfen.
+   *
+   * @param item
+   * @return gibt den Test weiter.
+   * @see de.micromata.azubi.Textie#doVernichte(de.micromata.azubi.Item, int)
+   */
     private TextieTest vernichte(String item) {
         try {
             Thread.sleep(testingTime);
@@ -529,6 +567,12 @@ public class TextieTest {
         return this;
     }
 
+  /**
+   * Gibt die hilfe aus.
+   *
+   * @return gibt den Test weiter.
+   * @see de.micromata.azubi.Textie#printHelp() 
+   */
     private TextieTest hilfe() {
         try {
             Thread.sleep(testingTime);

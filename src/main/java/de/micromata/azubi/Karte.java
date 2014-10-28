@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * @author Julian Siebert (j.siebert@micromata.de)
- * @author Lukas Fülling (lf.fuelling@micromata.de)
+ * @author Lukas F&uuml;lling (lf.fuelling@micromata.de)
  * @see de.micromata.azubi.Item
  */
 public class Karte extends Item {
