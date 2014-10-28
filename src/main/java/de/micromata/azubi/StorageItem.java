@@ -11,6 +11,8 @@ public class StorageItem extends Item {
     boolean lockable;
     boolean lockState;
     String name;
+    int itemID;
+
 
 
 
@@ -21,14 +23,15 @@ public class StorageItem extends Item {
     }
 
 
-    public StorageItem(String name, String untersucheText, String benutzeText, boolean pickable, boolean lockable, boolean initialLockState, Item... items) {
-        super(name, untersucheText, benutzeText, pickable);
+    public StorageItem(int itemID,String name, String untersucheText, String benutzeText, boolean pickable, boolean lockable, boolean initialLockState, Item... items) {
+        super(itemID, name, untersucheText, benutzeText, pickable);
         for (Item item : items) {
             this.items.add(item);
         }
         this.lockable = lockable;
         this.lockState = initialLockState;
         this.name = name;
+        this.itemID = itemID;
     }
 
     public boolean hasItem(Item item) {

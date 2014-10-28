@@ -3,14 +3,14 @@ package de.micromata.azubi;
 public class ToggleItem extends Item {
 
     private boolean state;
-
+    private int itemID;
     public ToggleItem() {
 
     }
 
 
-    public ToggleItem(String name, String untersucheText, String benutzeText, boolean pickable, boolean state) {
-        super(name, untersucheText, benutzeText, pickable);
+    public ToggleItem(int itemID, String name, String untersucheText, String benutzeText, boolean pickable, boolean state) {
+        super(itemID, name, untersucheText, benutzeText, pickable);
         state = this.state;
     }
 
@@ -21,4 +21,5 @@ public class ToggleItem extends Item {
     public void setState(boolean stateToSet) {
         state = stateToSet;
     }
+          
 }

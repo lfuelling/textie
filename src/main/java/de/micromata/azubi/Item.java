@@ -39,12 +39,14 @@ public class Item implements Serializable{
     private String benutzeText;
     private String name;
     private boolean pickable;
+    private int itemID;
 
     public Item(){
 
     }
 
-    public Item(String name, String untersucheText, String benutzeText, boolean pickable) {
+    public Item(int itemID, String name, String untersucheText, String benutzeText, boolean pickable) {
+        this.itemID = itemID;
         this.name = name;
         this.untersucheText = untersucheText;
         this.benutzeText = benutzeText;
