@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by lfuelling on 24.09.14.
+ * @author Lukas Fülling (l.fuelling@micromata.de)
+ * @see de.micromata.azubi.Item
  */
 public class StorageItem extends Item {
     protected List<Item> items = new ArrayList<Item>();
@@ -20,7 +21,16 @@ public class StorageItem extends Item {
 
     }
 
-
+  /**
+   * Initializes a new storageItem
+   * @param name Name of the Item
+   * @param untersucheText The inspection text
+   * @param benutzeText The use text
+   * @param pickable Is it pickable?
+   * @param lockable Is it lockable?
+   * @param initialLockState What is it initial lock state?
+   * @param items What does it contain?
+   */
     public StorageItem(String name, String untersucheText, String benutzeText, boolean pickable, boolean lockable, boolean initialLockState, Item... items) {
         super(name, untersucheText, benutzeText, pickable);
         for (Item item : items) {
@@ -31,6 +41,11 @@ public class StorageItem extends Item {
         this.name = name;
     }
 
+  /**
+   *
+   * @param item the item you search
+   * @return Returns true if the item is in there.
+   */
     public boolean hasItem(Item item) {
         if(items.contains(item)) {
             return true;
@@ -38,6 +53,11 @@ public class StorageItem extends Item {
         return false;
     }
 
+  /**
+   *
+   * @param item The Item you want to remove
+   * @return True if the Item was removed.
+   */
     public boolean removeItem(Item item) {
         if(lockable == false || lockState == false) {
             if(items.remove(item)) {
@@ -66,7 +86,7 @@ public class StorageItem extends Item {
         }
 
     }
-
+    
     public Inventory getInventory() {
         return inventory;
     }
