@@ -395,7 +395,7 @@ public class Textie implements Serializable {
                     case "Schalter":
                         ToggleItem schalter = (ToggleItem) item;
                         schalter.benutzen();
-                        schalter.setState(true);
+                        schalter.toggleState();
                         break;
                     case "Schwert":
                         playerInventory.findItemByName("Schwert").benutzen();
