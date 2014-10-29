@@ -495,10 +495,12 @@ public class Textie implements Serializable {
         printText("Mögliche Befehle:");
         printText("\thilfe -> Zeigt diese Hilfe");
         printText("\tnimm [gegenstand] -> Gegenstand zum Inventar hinzufügen");
+        printText("\tnimm [gegenstand] aus truhe -> Gegenstand aus Truhe zum Inventar hinzufügen");
         printText("\tbenutze [gegenstand] -> Gegenstand benutzen");
         printText("\tuntersuche [gegenstand/raum/inventar] -> Gegenstand, Raum oder Inventar untersuchen");
         printText("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen");
         printText("\tgehe [nord/süd/ost/west] -> In eine Richtung gehen");
+        printText("\trede [person] -> Rede mit einer Person");
     }
 
     /**

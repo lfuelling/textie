@@ -99,7 +99,7 @@ public class Raum implements Serializable{
 
   /**
    * @deprecated
-   * @param falltuerUsed Set if the trpaddor was used.
+   * @param falltuerUsed Set if the trapadoor was used.
    */
     public void setFalltuerUsed(boolean falltuerUsed) {
         this.falltuerUsed = falltuerUsed;

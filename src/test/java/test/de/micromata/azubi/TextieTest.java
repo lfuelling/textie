@@ -159,6 +159,7 @@ public class TextieTest {
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(0), dungeon.getCurrentRaum());
         System.out.println("Gehe in Raum 4");
+        benutze("schalter");
         gehe("west");
         untersuche("raum");
         Assert.assertEquals(dungeon.raums.get(3), dungeon.getCurrentRaum());
@@ -283,6 +284,7 @@ public class TextieTest {
         untersuche("schalter");
         benutze("schalter");
         System.err.println("\nGehe in Raum 1\n");
+        benutze("schalter");
         gehe("ost");
         untersuche("inventar");
         benutze("schlüssel");
@@ -341,6 +343,7 @@ public class TextieTest {
         Assert.assertEquals(dungeon.findRaumByNummer(4), dungeon.getCurrentRaum());
         benutze("karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--[Raum 7]--(SUED)--",Textie.lastPrintedText);
+        benutze("schalter");
         gehe("ost");
         benutze("karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--[Raum 7]--(SUED)--[Raum 4]--(OST)--",Textie.lastPrintedText);
@@ -360,6 +363,7 @@ public class TextieTest {
         nimm("karte");
         benutze("karte");
         Assert.assertEquals("[Raum 1]--(WEST)--", Textie.lastPrintedText);
+        benutze("schalter");
         gehe("ost");
         benutze("Karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--", Textie.lastPrintedText);
@@ -390,6 +394,8 @@ public class TextieTest {
         gehe("falltuer");
         benutze("karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--", Textie.lastPrintedText);
+        nimm("axt aus truhe");
+        benutze("axt");
         gehe("ost");
         benutze("karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--[Raum 1]--(SUED)--[Raum 2]--(WEST)--[Raum 3]--(FALLTUER)--[Raum 4]--(OST)--[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--", Textie.lastPrintedText);
@@ -416,6 +422,7 @@ public class TextieTest {
         gehe("süd");
         benutze("Karte");
         Assert.assertEquals("[Raum 1]--(WEST)--", Textie.lastPrintedText);
+        benutze("schalter");
         gehe("ost");
         benutze("Karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--", Textie.lastPrintedText);

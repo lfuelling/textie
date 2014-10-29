@@ -244,7 +244,7 @@ public class Dungeon implements Serializable {
         doors = new ArrayList<>();
         door = new Door(6, Richtung.NORD, 7, true);
         doors.add(door);
-        door = new Door(7, Richtung.OST, 1, false);
+        door = new Door(7, Richtung.OST, 1, true);
         doors.add(door);
         door = new Door(8, Richtung.WEST, 5, false);
         doors.add(door);
@@ -272,7 +272,7 @@ public class Dungeon implements Serializable {
         doors = new ArrayList<>();
         door = new Door(12, Richtung.WEST, 6, false);
         doors.add(door);
-        door = new Door(13, Richtung.SUED, 4, false);
+        door = new Door(13, Richtung.SUED, 4, true);
         doors.add(door);
         findRaumByNummer(7).setDoors(doors);
     }
