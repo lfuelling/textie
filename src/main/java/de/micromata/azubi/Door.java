@@ -9,14 +9,14 @@ package de.micromata.azubi;
 public class Door {
     int uid;
     Richtung richtungRaum1;
-    Richtung richtungRaum2;
+    //Richtung richtungRaum2;
     int raumNr;
     boolean locked;
 
     /**
      * @param UID              The unique identifier we can use to define a key or a switch to a certain door.
      * @param richtung         The orientation the door should have in the room.
-     * @param raumNr           The room the door is placed in.
+     * @param raumNr           The room you come, when you go through
      * @param initialLockState Defines if the door is locked at game launch.
      */
     public Door(int UID, Richtung richtung, int raumNr, boolean initialLockState) {
@@ -25,7 +25,7 @@ public class Door {
         this.richtungRaum1 = richtung;
         this.raumNr = raumNr;
         this.locked = initialLockState;
-        richtungRaum2 = Richtung.getOpposite(richtungRaum1);
+        //richtungRaum2 = Richtung.getOpposite(richtungRaum1);
     }
 
     /**

@@ -186,7 +186,7 @@ public class Textie implements Serializable {
      * @param richtung the direction you want to go.
      */
     static void doGehen(Richtung richtung) {
-        if(Dungeon.getDungeon().getCurrentRaum().getNumber()==6 && Dungeon.getDungeon().getCurrentRaum().getNextRoom(richtung) == null){
+        if(Dungeon.getDungeon().getCurrentRaum().getNumber()==6 && Dungeon.getDungeon().getCurrentRaum().getNextRoom(Dungeon.getDungeon().getCurrentRaum().findDoorByDirection(richtung)) == null){
             printText("Der Weg wird durch eine Holzbarrikade versperrt.");
         }
         else {
@@ -197,6 +197,7 @@ public class Textie implements Serializable {
                 Textie.printText(Dungeon.getDungeon().getCurrentRaum().getWillkommensNachricht());
             }
         }
+
 
     }
 
@@ -379,7 +380,7 @@ public class Textie implements Serializable {
                     case "Axt":
                         Item axt = item;
                         if(Dungeon.getDungeon().getCurrentRaum().getNumber()==6) {
-                            Dungeon.getDungeon().getCurrentRaum().verbindungen.put(Richtung.OST, Dungeon.getDungeon().findRaumByNummer(7));
+                            Dungeon.getDungeon().getCurrentRaum().getDoors().add(new Door(11, Richtung.OST, 7, false));
                             axt.benutzen();
                         } else {
                             Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum");
@@ -394,7 +395,7 @@ public class Textie implements Serializable {
                     case "Schalter":
                         ToggleItem schalter = (ToggleItem) item;
                         schalter.benutzen();
-                        schalter.setState(true);
+                        schalter.toggleState();
                         break;
                     case "Schwert":
                         playerInventory.findItemByName("Schwert").benutzen();
