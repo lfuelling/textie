@@ -89,6 +89,7 @@ public class Raum implements Serializable{
         Textie.warten(withPrompt);
     }
 
+
   /**
    *
    * @return The room number
@@ -191,5 +192,13 @@ public class Raum implements Serializable{
 
     public ArrayList<Door> getDoors() {
         return doors;
+    }
+    public Door findDoorByUID(int UID){
+        for (Door door: this.doors){
+            if(door.getUid() == UID){
+                return door;
+            }
+        }
+        return null;
     }
 }
