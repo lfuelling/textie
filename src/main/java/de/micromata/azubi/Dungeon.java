@@ -20,7 +20,7 @@ public class Dungeon implements Serializable {
     Raum raum;
     public int previousRoomNumber; // Index des vorherigen Raumes in der RaumListe
     private StorageItem truhe;
-
+    public HashMap <ToggleItem,Door> doorSchalter = new HashMap<>();
     private static Dungeon dungeon;
 
     private Dungeon() {
@@ -38,6 +38,7 @@ public class Dungeon implements Serializable {
         initInventories();
         initHumans();
         initDoors();
+        initDoorSchalter();
         player.getInventory().setInventorySize(5);
     }
 
@@ -140,6 +141,11 @@ public class Dungeon implements Serializable {
         findRaumByNummer(7).setVerbindungen(verbindungen);
     }
 
+    public void initDoorSchalter() {
+        doorSchalter.put((ToggleItem)findRaumByNummer(1).getInventory().findItemByUID(3), findRaumByNummer(1).findDoorByUID(2));
+        doorSchalter.put((ToggleItem)findRaumByNummer(4).getInventory().findItemByUID(21),findRaumByNummer(4).findDoorByUID(7));
+        doorSchalter.put((ToggleItem)findRaumByNummer(7).getInventory().findItemByUID(15),findRaumByNummer(7).findDoorByUID(13));
+    }
     /**
      * Initializes the inventories of the rooms.
      */
@@ -171,7 +177,7 @@ public class Dungeon implements Serializable {
         inventory = new Inventory();
         inventory.getInventory().add(new Karte(20, "Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert"));
         inventory.getInventory().add(new Item(12, Item.SACK, "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
-        inventory.getInventory().add(findRaumByNummer(1).getInventory().findItemByName("Schalter")); // Der SELBE Schalter wie in Raum1
+        inventory.getInventory().add(new ToggleItem(21, Item.SCHALTER,"Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false, false));
         findRaumByNummer(4).setInventory(inventory);
 
         //Raum 5
@@ -214,7 +220,7 @@ public class Dungeon implements Serializable {
         doors = new ArrayList<>();
         door = new Door(1, Richtung.SUED, 2, false);
         doors.add(door);
-        door = new Door(2, Richtung.WEST, 4, false);
+        door = new Door(2, Richtung.WEST, 4, true);
         doors.add(door);
         findRaumByNummer(1).setDoors(doors);
 

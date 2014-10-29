@@ -33,7 +33,7 @@ public class Door {
      */
     public void open() {
 
-        if(locked = false) {
+        if (locked = false) {
             Dungeon.getDungeon().getCurrentRaum().setLeaveRoom(true);
         } else {
             Textie.printText("Diese Tür ist verschlossen.");
@@ -64,4 +64,13 @@ public class Door {
 
         return locked;
     }
+
+    public void toogleLock() {
+        if (locked == true) {
+            locked = false;
+        } else {
+            locked = true;
+        }
+    }
+
 }

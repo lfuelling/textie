@@ -144,4 +144,12 @@ public class Inventory implements Serializable {
     }
   }
 
+    public Item findItemByUID(int UID) {
+        for(Item item : inventory){
+            if(item.getItemID() == UID ) {
+                return item;
+            }
+        }
+        return null;
+    }
 }

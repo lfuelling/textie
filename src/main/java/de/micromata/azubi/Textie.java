@@ -396,6 +396,7 @@ public class Textie implements Serializable {
                         ToggleItem schalter = (ToggleItem) item;
                         schalter.benutzen();
                         schalter.toggleState();
+                        Dungeon.getDungeon().doorSchalter.get(schalter).toogleLock();
                         break;
                     case "Schwert":
                         playerInventory.findItemByName("Schwert").benutzen();
