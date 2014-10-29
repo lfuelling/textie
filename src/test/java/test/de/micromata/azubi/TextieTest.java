@@ -1,9 +1,6 @@
 package test.de.micromata.azubi;
 
-import de.micromata.azubi.Command;
-import de.micromata.azubi.Consts;
-import de.micromata.azubi.Dungeon;
-import de.micromata.azubi.Textie;
+import de.micromata.azubi.*;
 import org.junit.*;
 
 import javax.xml.soap.Text;
@@ -323,9 +320,9 @@ public class TextieTest {
         gehe("falltür");
         Assert.assertEquals(dungeon.findRaumByNummer(6), dungeon.getCurrentRaum());
         benutze("karte");
-        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--",Textie.lastPrintedText);
+        Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--", Textie.lastPrintedText);
         untersuche("truhe");
-        nimm("aus truhe axt");
+        nimm("axt aus truhe");
         untersuche("inventar");
         Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
         benutze("axt");
@@ -459,9 +456,18 @@ public class TextieTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Textie.executeCommand(new String[]{Command.NIMM,text}, new String[]{text});
-        return this;
+        String[] text2 = Textie.parseInput(text);
+        if (text.endsWith("aus truhe")){
+            StorageItem truhe = (StorageItem) Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName("Truhe");
+            Textie.doTakeFromChest(truhe.getInventory().findItemByName(text2[0]));
+            return this;
+        } else {
+            Textie.executeCommand(new String[]{Command.NIMM, text}, new String[]{text});
+            return this;
+        }
+
     }
+
 
   /**
    * Startet das SPiel

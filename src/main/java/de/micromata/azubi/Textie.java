@@ -451,7 +451,7 @@ public class Textie implements Serializable {
      *
      * @param item The item to take.
      */
-    static void doTakeFromChest(Item item) {
+    static public void doTakeFromChest(Item item) {
         if (item.isPickable()) {
             if (addItemFromChestToInventory(item)) {
 
