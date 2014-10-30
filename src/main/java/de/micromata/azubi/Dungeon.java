@@ -15,14 +15,12 @@ import java.util.Map;
 public class Dungeon implements Serializable {
     private static final long serialVersionUID = -7870743513679247263L;
     public ArrayList<Raum> raums;
-    public ArrayList<Door> doors;
     public int currentRoomNumber; //Index des aktuellen Raumes in der RaumListe
     public Player player;
     Raum raum;
-    Door door;
     public int previousRoomNumber; // Index des vorherigen Raumes in der RaumListe
     private StorageItem truhe;
-
+    public HashMap <ToggleItem,Door> doorSchalter = new HashMap<>();
     private static Dungeon dungeon;
 
     private Dungeon() {
@@ -36,14 +34,19 @@ public class Dungeon implements Serializable {
     public void init() {
         player = new Player("Fremder", true);
         previousRoomNumber = 1;
-
         initRooms();
         initInventories();
         initHumans();
-        initVerbindungen();
+        initDoors();
+        initDoorSchalter();
         player.getInventory().setInventorySize(5);
     }
 
+    /**
+     * The Dungeon is the world you play in
+     *
+     * @return The world
+     */
     public static Dungeon getDungeon() {
         if (dungeon == null) {
             dungeon = new Dungeon();
@@ -96,6 +99,8 @@ public class Dungeon implements Serializable {
 
     /**
      * Initializes the connections between the rooms.
+     *
+     * @deprecated
      */
     public void initVerbindungen() {
         //Raum 1
@@ -131,7 +136,7 @@ public class Dungeon implements Serializable {
 
         //Raum 6
         verbindungen = new HashMap<Richtung, Raum>();
-        verbindungen.put(Richtung.OST, findRaumByNummer(7));
+        //verbindungen.put(Richtung.OST, findRaumByNummer(7));
         findRaumByNummer(6).setVerbindungen(verbindungen);
 
         //Raum 7
@@ -141,8 +146,13 @@ public class Dungeon implements Serializable {
         findRaumByNummer(7).setVerbindungen(verbindungen);
     }
 
+    public void initDoorSchalter() {
+        doorSchalter.put((ToggleItem)findRaumByNummer(1).getInventory().findItemByUID(3), findRaumByNummer(1).findDoorByUID(2));
+        doorSchalter.put((ToggleItem)findRaumByNummer(4).getInventory().findItemByUID(21),findRaumByNummer(4).findDoorByUID(7));
+        doorSchalter.put((ToggleItem)findRaumByNummer(7).getInventory().findItemByUID(15),findRaumByNummer(7).findDoorByUID(13));
+    }
     /**
-     * Initializes the inventories of the rooms.
+     * Initializes the inventories of the rooms and of the chests
      */
     public void initInventories() {
         // Raum 1
@@ -172,18 +182,17 @@ public class Dungeon implements Serializable {
         inventory = new Inventory();
         inventory.getInventory().add(new Karte(20, "Karte", "Das ist eine Karte, sie zeigt deinen Laufweg.", "Benutzetext wird bei benutzung geändert"));
         inventory.getInventory().add(new Item(12, Item.SACK, "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.", "Du bindest den Sack an deinen Rucksack.", true));
-        inventory.getInventory().add(findRaumByNummer(1).getInventory().findItemByName("Schalter")); // Der SELBE Schalter wie in Raum1
+        inventory.getInventory().add(new ToggleItem(21, Item.SCHALTER,"Da ist ein kleiner Schalter an der Wand.", "Du hörst ein Rumpeln, als du den Schalter drückst.", false, false));
         findRaumByNummer(4).setInventory(inventory);
 
         //Raum 5
         inventory = new Inventory();
-
         inventory.getInventory().add(new Item(13, Item.FALLTÜR, "Da ist eine Falltür", "Du schlüpfst durch die Falltür in den darunterliegenden Raum.", false));
         findRaumByNummer(5).setInventory(inventory);
 
         //Raum 6
         inventory = new Inventory();
-        inventory.getInventory().add(new StorageItem(14, Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, true));
+        inventory.getInventory().add(new StorageItem(14, Item.TRUHE, "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.", "Du kannst die Truhe nicht öffnen.", false, true, false));
         findRaumByNummer(6).setInventory(inventory);
 
         //Raum 7
@@ -205,51 +214,74 @@ public class Dungeon implements Serializable {
         inventory.getInventory().add(new Item(19, "Axt", "Eine scharfe Axt.", "Du schlägst mit der Axt zu.", true));
         truhe.setInventory(inventory);
     }
+
     /**
      * Initializes the doors.
      */
     public void initDoors() {
-         doors = new ArrayList<>();
-         // Raum 1
-         door = new Door(1,Richtung.SUED,1,false);
-         doors.add(door);
-         door = new Door(2,Richtung.WEST,1,false);
-         doors.add(door);
+        Door door;
+        ArrayList<Door> doors;
+        // Raum 1
+        doors = new ArrayList<>();
+        door = new Door(1, Richtung.SUED, 2, false);
+        doors.add(door);
+        door = new Door(2, Richtung.WEST, 4, true);
+        doors.add(door);
+        findRaumByNummer(1).setDoors(doors);
 
-         //Raum 2
-         door = new Door(3,Richtung.NORD,2,false);
-         doors.add(door);
-         door = new Door(4,Richtung.WEST,2,false);
-         doors.add(door);
+        //Raum 2
+        doors = new ArrayList<>();
+        door = new Door(3, Richtung.NORD, 1, false);
+        doors.add(door);
+        door = new Door(4, Richtung.WEST, 3, false);
+        doors.add(door);
+        findRaumByNummer(2).setDoors(doors);
 
-         //Raum 3
-         door = new Door(5,Richtung.OST,3,false);
-         doors.add(door);
+        //Raum 3
+        doors = new ArrayList<>();
+        door = new Door(5, Richtung.OST, 2, false);
+        doors.add(door);
+        door = new Door(9, Richtung.FALLTUER, 4, false); //FIXME noch eine normale Tür
+        doors.add(door);
+        findRaumByNummer(3).setDoors(doors);
 
-         // Raum 4
-         door = new Door(6,Richtung.NORD,4,false);
-         doors.add(door);
-         door = new Door(7,Richtung.OST,4,false);
-         doors.add(door);
-         door = new Door(8,Richtung.WEST,4,false);
-         doors.add(door);
+        // Raum 4
+        doors = new ArrayList<>();
+        door = new Door(6, Richtung.NORD, 7, true);
+        doors.add(door);
+        door = new Door(7, Richtung.OST, 1, true);
+        doors.add(door);
+        door = new Door(8, Richtung.WEST, 5, false);
+        doors.add(door);
+        findRaumByNummer(4).setDoors(doors);
 
-         // Raum 5
-         door = new Door(9,Richtung.OST,5,false);
-         doors.add(door);
-         door = new Door(10,Richtung.NORD,5,false);
-         doors.add(door);
+        // Raum 5
+        doors = new ArrayList<>();
+        door = new Door(9, Richtung.OST, 4, false);
+        doors.add(door);
+        door = new Door(10, Richtung.FALLTUER, 6, false);
+        doors.add(door);
+        findRaumByNummer(5).setDoors(doors);
 
-         //Raum 6
-         door = new Door(11,Richtung.OST,6,false);
-         doors.add(door);
 
-         //Raum 7
-         door = new Door(12,Richtung.WEST,7,false);
-         doors.add(door);
-         door = new Door(13,Richtung.SUED,7,false);
-         doors.add(door);
+        //Raum 6
+        doors = new ArrayList<>();
+        /*Tür wird erst gesetzt, wenn man mit der Axt die Barrikade zerschlägt.
+        door = new Door(11, Richtung.OST, 7, false);
+        doors.add(door);
+        */
+        findRaumByNummer(6).setDoors(doors);
+
+
+        //Raum 7
+        doors = new ArrayList<>();
+        door = new Door(12, Richtung.WEST, 6, false);
+        doors.add(door);
+        door = new Door(13, Richtung.SUED, 4, true);
+        doors.add(door);
+        findRaumByNummer(7).setDoors(doors);
     }
+
     /**
      * Initializes the humans.
      */
@@ -257,8 +289,7 @@ public class Dungeon implements Serializable {
         findRaumByNummer(4).setHuman(new Human(
                 "Gordon", "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...", "...",
                 "Ich suche ein Brecheisen. Hast du eins?", "Sehr gut. Danke dir.",
-                new Item(16, Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true),
-                "Brecheisen"));
+                new Item(16, Item.SCHLÜSSEL, "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?", "Hier gibt es nichts um den Schlüssel zu benutzen.", true), "Brecheisen"));
         findRaumByNummer(5).setHuman(new Human(
                 "Junge", "", "",
                 "Hast du ein Handtuch ?", "Danke.",
@@ -270,9 +301,7 @@ public class Dungeon implements Serializable {
                 "Frau", "", "",
                 "Hast du einen Brief?", "Danke",
 
-                new Item(18, "Seil", "Ein stabiles Seil.", "Du seilst dich ab.", true),
-
-                "Brief"));
+                new Item(18, "Seil", "Ein stabiles Seil.", "Du seilst dich ab.", true), "Brief"));
     }
 
 
@@ -306,86 +335,49 @@ public class Dungeon implements Serializable {
     /**
      * Walking routine.
      *
-     * @param richtung the direction you're going to.
+     * @param richtung The direction you want to go
      * @return Returns the room you'll get into or null if there isn't any room in this direction.
      */
     public Raum getRaum(Richtung richtung) {
         Raum currentRaum = getCurrentRaum();
-        Raum nextRoom = currentRaum.getNextRoom(richtung);
-        if (nextRoom != null) {
+        Door door = currentRaum.findDoorByDirection(richtung);
+        if (door == null) {
+            Textie.printText("Diese Richtung gibt es nicht.");
+
+        } else {
+            Raum nextRoom = currentRaum.getNextRoom(door);
+            if (nextRoom != null) {
                     /*
                     Hier Räume mit deren Nummern aufführen, die eine per Knopf verschlossene Tür haben
                     if(richtung == Richtung.RICHTUNG_IN_DER_DIE_TÜR_LIEGT){
                     checkSchalter(dungeon, richtung);
                     }
                     */
-            switch (dungeon.getCurrentRaum().getNumber()) {
-                case 1:
-                    if (richtung == Richtung.WEST) {
-                        if (checkSchalter()) {
-                            Textie.printText("Du öffnest die Tür.");
-                            currentRoomNumber = nextRoom.getRoomNumber();
-                            currentRaum.setLeaveRoom(true);
-                        } else {
-                            currentRaum.setLeaveRoom(false);
-                            //es findet kein Raumwechsel statt
-                        }
-                    } else {
-                        currentRoomNumber = nextRoom.getRoomNumber();
-                        currentRaum.setLeaveRoom(true);
-                    }
-                    break;
-                case 4:
-                    if (richtung == Richtung.OST || richtung == Richtung.NORD) { // Durch betätigen Schalter in Raum 1 öffnet sich auch Raum 7
-                        if (checkSchalter()) {
-                            Textie.printText("Du öffnest die Tür.");
-                            currentRoomNumber = nextRoom.getRoomNumber();
-                            currentRaum.setLeaveRoom(true);
-                        } else {
-                            currentRaum.setLeaveRoom(false);
-                            //es findet kein Raumwechsel statt
-                        }
-                    } else {
-                        currentRoomNumber = nextRoom.getRoomNumber();
-                        currentRaum.setLeaveRoom(true);
-                    }
-                    break;
-                case 7:
-                    if (richtung == Richtung.SUED) {
-                        if (checkSchalter()) {
-                            Textie.printText("Du öffnest die Tür.");
-                            currentRoomNumber = nextRoom.getRoomNumber();
-                            currentRaum.setLeaveRoom(true);
-                        } else {
-                            currentRaum.setLeaveRoom(false);
-                        }
-                    } else {
-                        currentRoomNumber = nextRoom.getRoomNumber();
-                        currentRaum.setLeaveRoom(true);
-                    }
-                    break;
-                default:
+                if (door.isLocked() == true) {
+                    currentRaum.setLeaveRoom(false);
+                    Textie.printText("Tür verschlossen.");
+                } else {
+                    Textie.printText("Du öffnest die Tür");
                     currentRoomNumber = nextRoom.getRoomNumber();
                     currentRaum.setLeaveRoom(true);
-                    break;
+                    previousRoomNumber = raums.indexOf(currentRaum);
+                    Karte karte;
+                    if (dungeon.player.getInventory().findItemByName("Karte") != null) {
+                        karte = (Karte) dungeon.player.getInventory().findItemByName("Karte");
+                        karte.writeMap(currentRaum.getNumber(), door.richtungRaum1.toString());
+                    } else if (dungeon.findRaumByNummer(4).getInventory().findItemByName("Karte") != null) {
+                        karte = (Karte) dungeon.findRaumByNummer(4).getInventory().findItemByName("Karte");
+                        karte.writeMap(currentRaum.getNumber(), door.richtungRaum1.toString());
+                    }
+                    return getNextRoom(currentRoomNumber);
+                }
+            } else {
+                Textie.printText("Du bist gegen die Wand gelaufen.");
             }
-
-            previousRoomNumber = raums.indexOf(currentRaum);
-            Karte karte;
-            if (dungeon.player.getInventory().findItemByName("Karte") != null) {
-                karte = (Karte) dungeon.player.getInventory().findItemByName("Karte");
-                karte.writeMap(currentRaum.getNumber(), richtung.toString());
-            } else if (dungeon.findRaumByNummer(4).getInventory().findItemByName("Karte") != null) {
-                karte = (Karte) dungeon.findRaumByNummer(4).getInventory().findItemByName("Karte");
-                karte.writeMap(currentRaum.getNumber(), richtung.toString());
-            }
-            return getNextRoom(currentRoomNumber);
-
-        } else {
-            Textie.printText("Du bist gegen die Wand gelaufen.");
         }
         return null;
     }
+
 
     /**
      * Helps you find the room which comes after the current.
@@ -423,9 +415,14 @@ public class Dungeon implements Serializable {
         this.currentRoomNumber = raums.indexOf(raum) + 1;
     }
 
+    /**
+     * Sets the world you play in
+     * It's for savegamestuff
+     *
+     * @param dungeon The world object
+     */
     public static void setDungeon(Dungeon dungeon) {
         Dungeon.dungeon = dungeon;
 
     }
-
 }

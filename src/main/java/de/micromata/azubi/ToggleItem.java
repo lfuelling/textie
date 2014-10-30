@@ -21,5 +21,14 @@ public class ToggleItem extends Item {
     public void setState(boolean stateToSet) {
         state = stateToSet;
     }
+
+    public void toggleState(){
+        if(state == false){
+            state = true;
+        }
+        else{
+            state = false;
+        }
+    }
           
 }

@@ -13,14 +13,12 @@ public class Trapdoor {
 
     /**
      * @param UID              The unique identifier we can use to define a key or a switch to a certain trapdoor.
-     * @param raum             The room the door is placed in.
      * @param initialLockState Defines if the door is locked at game launch.
      * @see de.micromata.azubi.Door
      */
     public Trapdoor(int UID,boolean initialLockState) {
 
         this.uid = UID;
-        this.raum = raum;
         this.locked = initialLockState;
     }
 

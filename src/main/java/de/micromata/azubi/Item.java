@@ -39,6 +39,11 @@ public class Item implements Serializable{
     private String benutzeText;
     private String name;
     private boolean pickable;
+
+    public int getItemID() {
+        return itemID;
+    }
+
     private int itemID;
 
     public Item(){
@@ -119,5 +124,6 @@ public class Item implements Serializable{
         }
         return false;
     }
+
 
 }

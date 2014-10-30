@@ -20,6 +20,7 @@ public class Raum implements Serializable{
     protected boolean leaveRoom = false;
     protected Inventory inventory;
     private Human human;
+    private ArrayList<Door> doors;
 
     public Raum() {
     }
@@ -88,21 +89,6 @@ public class Raum implements Serializable{
         Textie.warten(withPrompt);
     }
 
-  /**
-   * @deprecated
-   * @return True if the trapdoor is used.
-   */
-    public boolean isFalltuerUsed() {
-        return falltuerUsed;
-    }
-
-  /**
-   * @deprecated
-   * @param falltuerUsed Set if the trpaddor was used.
-   */
-    public void setFalltuerUsed(boolean falltuerUsed) {
-        this.falltuerUsed = falltuerUsed;
-    }
 
   /**
    *
@@ -110,14 +96,6 @@ public class Raum implements Serializable{
    */
     public int getRoomNumber() {
         return roomNumber;
-    }
-
-  /**
-   * @deprecated
-   * @param roomNumber sets the room number.
-   */
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
     }
 
   /**
@@ -129,36 +107,12 @@ public class Raum implements Serializable{
     }
 
   /**
-   * @deprecated
-   * @param willkommensNachricht the intro message.
-   */
-    public void setWillkommensNachricht(String willkommensNachricht) {
-        this.willkommensNachricht = willkommensNachricht;
-    }
-
-  /**
-   * @deprecated
-   * @return Items.
-   */
-    public List<Item> getItems() {
-        return items;
-    }
-
-  /**
-   * @deprecated
-   * @param items set some Items
-   */
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
-  /**
    * Get the next room.
-   * @param richtung The direction from where you want the next room.
+   * @param door The door in the current room you want to going trough
    * @return The next room.
    */
-    public Raum getNextRoom(Richtung richtung) {
-        return verbindungen.get(richtung);
+    public Raum getNextRoom(Door door) {
+        return Dungeon.getDungeon().findRaumByNummer(door.raumNr);
     }
 
   /**
@@ -175,14 +129,6 @@ public class Raum implements Serializable{
    */
     public void setLeaveRoom(boolean leaveRoom) {
         this.leaveRoom = leaveRoom;
-    }
-
-  /**
-   * @deprecated
-   * @return A map.
-   */
-    public Map<Richtung, Raum> getVerbindungen() {
-        return verbindungen;
     }
 
   /**
@@ -209,12 +155,50 @@ public class Raum implements Serializable{
         this.inventory = inventory;
     }
 
+    /**
+     * Places a human into the room
+     * @param human The Human you want to place in the Room
+     */
     public void setHuman(Human human) {
         this.human = human;
     }
 
+    /**
+     *
+     * @return Returns the Human in the room
+     */
     public Human getHuman() {
         return human;
     }
 
+    /**
+     *
+     * @param richtung The direction you want to go
+     * @return The door which is in the direction you asked
+     */
+    public Door findDoorByDirection(Richtung richtung) {
+
+        for (Door door : this.doors) {
+            if (door.richtungRaum1.equals(richtung)){
+                return door;
+            }
+        }
+        return null;
+    }
+
+    public void setDoors(ArrayList<Door> doors) {
+        this.doors = doors;
+    }
+
+    public ArrayList<Door> getDoors() {
+        return doors;
+    }
+    public Door findDoorByUID(int UID){
+        for (Door door: this.doors){
+            if(door.getUid() == UID){
+                return door;
+            }
+        }
+        return null;
+    }
 }

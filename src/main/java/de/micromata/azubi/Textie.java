@@ -186,17 +186,23 @@ public class Textie implements Serializable {
      * @param richtung the direction you want to go.
      */
     static void doGehen(Richtung richtung) {
-        Raum raum = Dungeon.getDungeon().getRaum(richtung);
-        if (raum != null && Dungeon.getDungeon().raums.get(Dungeon.getDungeon().previousRoomNumber).isLeaveRoom()) {
-            Dungeon.getDungeon().setRoomNumber(raum);
-            Dungeon.getDungeon().getCurrentRaum().setLeaveRoom(false);
-            Textie.printText(Dungeon.getDungeon().getCurrentRaum().getWillkommensNachricht());
+        if(Dungeon.getDungeon().getCurrentRaum().getNumber()==6 && Dungeon.getDungeon().getCurrentRaum().getNextRoom(Dungeon.getDungeon().getCurrentRaum().findDoorByDirection(richtung)) == null){
+            printText("Der Weg wird durch eine Holzbarrikade versperrt.");
         }
+        else {
+            Raum raum = Dungeon.getDungeon().getRaum(richtung);
+            if (raum != null && Dungeon.getDungeon().raums.get(Dungeon.getDungeon().previousRoomNumber).isLeaveRoom()) {
+                Dungeon.getDungeon().setRoomNumber(raum);
+                Dungeon.getDungeon().getCurrentRaum().setLeaveRoom(false);
+                Textie.printText(Dungeon.getDungeon().getCurrentRaum().getWillkommensNachricht());
+            }
+        }
+
 
     }
 
     /**
-     * Throwas away an Item.
+     * Throws away an Item.
      *
      * @param item  The item to throw away.
      * @param count The size of the parsed_command String[]
@@ -371,6 +377,15 @@ public class Textie implements Serializable {
                                 break;
                             }
                         }
+                    case "Axt":
+                        Item axt = item;
+                        if(Dungeon.getDungeon().getCurrentRaum().getNumber()==6) {
+                            Dungeon.getDungeon().getCurrentRaum().getDoors().add(new Door(11, Richtung.OST, 7, false));
+                            axt.benutzen();
+                        } else {
+                            Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum");
+                        }
+                        break;
                     case "Sack":
                         Item sack = item;
                         sack.benutzen();
@@ -380,7 +395,8 @@ public class Textie implements Serializable {
                     case "Schalter":
                         ToggleItem schalter = (ToggleItem) item;
                         schalter.benutzen();
-                        schalter.setState(true);
+                        schalter.toggleState();
+                        Dungeon.getDungeon().doorSchalter.get(schalter).toogleLock();
                         break;
                     case "Schwert":
                         playerInventory.findItemByName("Schwert").benutzen();
@@ -437,7 +453,7 @@ public class Textie implements Serializable {
      *
      * @param item The item to take.
      */
-    static void doTakeFromChest(Item item) {
+    static public void doTakeFromChest(Item item) {
         if (item.isPickable()) {
             if (addItemFromChestToInventory(item)) {
 
@@ -479,10 +495,12 @@ public class Textie implements Serializable {
         printText("Mögliche Befehle:");
         printText("\thilfe -> Zeigt diese Hilfe");
         printText("\tnimm [gegenstand] -> Gegenstand zum Inventar hinzufügen");
+        printText("\tnimm [gegenstand] aus truhe -> Gegenstand aus Truhe zum Inventar hinzufügen");
         printText("\tbenutze [gegenstand] -> Gegenstand benutzen");
         printText("\tuntersuche [gegenstand/raum/inventar] -> Gegenstand, Raum oder Inventar untersuchen");
         printText("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen");
         printText("\tgehe [nord/süd/ost/west] -> In eine Richtung gehen");
+        printText("\trede [person] -> Rede mit einer Person");
     }
 
     /**
@@ -545,36 +563,6 @@ public class Textie implements Serializable {
         }
         */
     }
-
-
-    //RaumKram
-    /*
-    public static boolean removeItemInRoom(Item item) {
-        if (Dungeon.getDungeon().getCurrentRaum().items.remove(item))
-            return true;
-        return false;
-    }
-
-
-    public static boolean addItemToRoom(Item item) {
-        if (Dungeon.getDungeon().getCurrentRaum().items.add(item)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static boolean isInRoom(Item item) {
-        return findInRoom(item) >= 0;
-    }
-
-    public static int findInRoom(Item item) {
-        int i = -128;
-        i = Dungeon.getDungeon().getCurrentRaum().items.indexOf(item);
-        return i;
-    }
-    */
-
 
     /**
      * Best name ever.
