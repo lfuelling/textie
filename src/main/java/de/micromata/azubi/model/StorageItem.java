@@ -1,11 +1,8 @@
-package de.micromata.azubi;
-
-import java.util.ArrayList;
-import java.util.List;
+package de.micromata.azubi.model;
 
 /**
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
- * @see de.micromata.azubi.Item
+ * @see Item
  */
 public class StorageItem extends Item {
     boolean lockable;
@@ -46,4 +43,11 @@ public class StorageItem extends Item {
         this.inventory = inventory;
     }
 
+    public boolean getLockState() {
+        return lockState;
+    }
+
+    public void setLockState(boolean lockState) {
+        this.lockState = lockState;
+    }
 }

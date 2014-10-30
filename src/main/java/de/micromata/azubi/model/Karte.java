@@ -1,11 +1,13 @@
-package de.micromata.azubi;
+package de.micromata.azubi.model;
+
+import de.micromata.azubi.Textie;
 
 import java.util.ArrayList;
 
 /**
  * @author Julian Siebert (j.siebert@micromata.de)
  * @author Lukas F&uuml;lling (lf.fuelling@micromata.de)
- * @see de.micromata.azubi.Item
+ * @see Item
  */
 public class Karte extends Item {
 
