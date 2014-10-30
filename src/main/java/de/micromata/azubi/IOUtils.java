@@ -2,6 +2,10 @@ package de.micromata.azubi;
 
 import java.io.*;
 
+/**
+ * @author Lukas Füllimg (l.fuelling@micromata.de)
+ * @version 1.2
+ */
 public class IOUtils {
 
     public static String readLine(String promt) {
@@ -22,13 +26,16 @@ public class IOUtils {
     /**
      * @param string to convert
      * @return Returns the string which was given as parameter where the first letter is uppercase and every other is lowercase (ex. "LuKaS MaEd DiS" => "Lukas maed dis")
-     * @author Lukas F&uuml;lling
      */
     public static String convertToName(String stc) {
         stc = stc.substring(0, 1).toUpperCase() + stc.substring(1).toLowerCase();
         return stc;
     }
 
+  /**
+   * @deprecated
+   * @param savegame_data
+   */
     public static void writeInFile(String savegame_data){
         File savegame_file = new File("Savegame.json");
 
@@ -49,6 +56,10 @@ public class IOUtils {
         }
     }
 
+  /**
+   * @deprecated
+   * @return File contents.
+   */
     public static String readFromFile(){
         String savegame = "";
         try {

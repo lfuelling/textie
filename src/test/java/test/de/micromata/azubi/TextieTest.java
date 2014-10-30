@@ -27,12 +27,19 @@ public class TextieTest {
 
     private int testingTime = MANUAL_TESTING_TIME;
 
+  /**
+   * Kram, der vor jedem Test ausgeführt wird.
+   * @throws Exception
+   */
     @Before
     public void testBefore() throws Exception {
         dungeon = Dungeon.getDungeon();
         Textie.diag = true;
     }
 
+  /**
+   * Dungeon zurücksetzen.
+   */
     @After
     public void testAfter() {
         dungeon.setDungeon(null);
