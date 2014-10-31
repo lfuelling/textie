@@ -22,6 +22,7 @@ public class Item implements Serializable{
     private boolean pickable; //TODO kommt raus
     private String untersucheText;
     private int itemID;
+    private long uid;
 
     public int getItemID() {
         return itemID;
@@ -131,5 +132,9 @@ public class Item implements Serializable{
 
     public void setPickable(boolean pickable) {
         this.pickable = pickable;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
     }
 }

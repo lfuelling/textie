@@ -9,7 +9,7 @@ import de.micromata.azubi.Textie;
  * @version 1.0
  */
 public class Door {
-    int uid;
+    long uid;
     private Raum nextRoom;
     boolean locked;
     private Richtung richtung;
@@ -45,7 +45,7 @@ public class Door {
     /**
      * @return Returns the door's UID
      */
-    public int getUid() {
+    public long getUid() {
 
         return uid;
     }
@@ -88,5 +88,9 @@ public class Door {
 
     public Richtung getRichtung() {
         return richtung;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
     }
 }

@@ -1,5 +1,6 @@
 package de.micromata.azubi.builder;
 
+import de.micromata.azubi.Utils;
 import de.micromata.azubi.model.*;
 
 /**
@@ -30,6 +31,7 @@ public class DoorBuilder implements Builder<Door> {
 
     @Override
     public DoorBuilder build() {
+        door.setUid(Utils.nextId());
         door.setRichtung(richtung);
         door.setNextRoom(nextRoom);
         door.setLocked(locked);

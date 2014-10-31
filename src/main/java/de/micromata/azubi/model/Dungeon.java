@@ -17,6 +17,11 @@ public class Dungeon implements Serializable {
     private ArrayList<Raum> raums = new ArrayList<>();
     private int currentRoomNumber; //Index des aktuellen Raumes in der RaumListe FIXME In Spieler
     private Player player;
+    //TODO
+    public HashMap<ToggleItem, Door> getDoorSchalter() {
+        return doorSchalter;
+    }
+
     private HashMap <ToggleItem,Door> doorSchalter = new HashMap<>();//FIXME ab in den Raum
     private static Dungeon dungeon;
 
@@ -58,7 +63,9 @@ public class Dungeon implements Serializable {
      */
     public void runGame(boolean withPrompt) {
         currentRoomNumber = 1;
+        initDoorSchalter();
         getCurrentRaum().start(withPrompt);
+
 
         while (player.isAlive()) {
             if (getCurrentRaum().isLeaveRoom() == false) {
@@ -95,13 +102,13 @@ public class Dungeon implements Serializable {
         raum = new Raum(7, "Du kommst in einen Raum, eine Frau steht mitten im Raum.");
         raums.add(raum);
     }
-
+    */
     public void initDoorSchalter() {
-        doorSchalter.put((ToggleItem)findRaumByNummer(1).getInventory().findItemByUID(3), findRaumByNummer(1).findDoorByUID(2));
-        doorSchalter.put((ToggleItem)findRaumByNummer(4).getInventory().findItemByUID(21),findRaumByNummer(4).findDoorByUID(7));
-        doorSchalter.put((ToggleItem)findRaumByNummer(7).getInventory().findItemByUID(15),findRaumByNummer(7).findDoorByUID(13));
+        doorSchalter.put((ToggleItem)findRaumByNummer(1).getInventory().findItemByName("Schalter"), findRaumByNummer(1).findDoorByDirection(Richtung.WEST));
+        doorSchalter.put((ToggleItem)findRaumByNummer(4).getInventory().findItemByName("Schalter"), findRaumByNummer(4).findDoorByDirection(Richtung.OST));
+        doorSchalter.put((ToggleItem)findRaumByNummer(7).getInventory().findItemByName("Schalter"), findRaumByNummer(7).findDoorByDirection(Richtung.SUED));
     }
-
+    /*
     public void initInventories() {
         StorageItem truhe;
         // Raum 1
