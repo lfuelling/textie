@@ -18,7 +18,6 @@ public class Karte extends Item {
    * @param name Item Name
    * @param untersucheText Text which is printed when you inspect the map.
    * @param benutzeText Text which is replaced by the map's output.
-   * @param pickable Is it pickable? (yes)
    */
   public Karte(int id, String name, String untersucheText, String benutzeText) {
 

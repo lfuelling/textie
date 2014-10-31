@@ -361,14 +361,14 @@ public class Dungeon implements Serializable {
                     currentRoomNumber = nextRoom.getRoomNumber();
                     currentRaum.setLeaveRoom(true);
                     previousRoomNumber = raums.indexOf(currentRaum);
-                    Karte karte;
-                    if (dungeon.player.getInventory().findItemByName("Karte") != null) {
-                        karte = (Karte) dungeon.player.getInventory().findItemByName("Karte");
-                        karte.writeMap(currentRaum.getNumber(), door.richtungRaum1.toString());
-                    } else if (dungeon.findRaumByNummer(4).getInventory().findItemByName("Karte") != null) {
-                        karte = (Karte) dungeon.findRaumByNummer(4).getInventory().findItemByName("Karte");
-                        karte.writeMap(currentRaum.getNumber(), door.richtungRaum1.toString());
-                    }
+                  Karte karte;
+                  if (dungeon.player.getInventory().findItemByName("Karte") != null) {
+                    karte = (Karte) dungeon.player.getInventory().findItemByName("Karte");
+                    karte.writeMap(currentRaum.getNumber(), door.richtungRaum1.toString());
+                  } else if (dungeon.findRaumByNummer(4).getInventory().findItemByName("Karte") != null) {
+                    karte = (Karte) dungeon.findRaumByNummer(4).getInventory().findItemByName("Karte");
+                    karte.writeMap(currentRaum.getNumber(), door.richtungRaum1.toString());
+                  }
                     return getNextRoom(currentRoomNumber);
                 }
             } else {

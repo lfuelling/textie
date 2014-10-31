@@ -181,7 +181,7 @@ public class Textie implements Serializable {
     }
 
     /**
-     * Let's you walk.
+     * Lets you walk.
      *
      * @param richtung the direction you want to go.
      */
@@ -222,7 +222,7 @@ public class Textie implements Serializable {
     }
 
     /**
-     * Let's you inspect an item.
+     * Lets you inspect an item.
      *
      * @param parsed_command The String[]
      * @param count          THe size of the String[]
