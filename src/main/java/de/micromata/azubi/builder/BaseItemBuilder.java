@@ -11,6 +11,7 @@ public abstract class BaseItemBuilder implements Builder<Item> {
     private String benutzeText;
     private String name;
     private String untersucheText;
+    private boolean pickable;
 
     public BaseItemBuilder(){
         this.item = createInstance();
@@ -33,11 +34,17 @@ public abstract class BaseItemBuilder implements Builder<Item> {
         return this;
     }
 
+    public BaseItemBuilder setPickable(boolean pickable){
+        this.pickable = pickable;
+        return this;
+    }
+
     @Override
     public BaseItemBuilder build() {
         item.setName(name);
         item.setBenutzeText(benutzeText);
         item.setUntersucheText(untersucheText);
+        item.setPickable(pickable);
         return this;
     }
 

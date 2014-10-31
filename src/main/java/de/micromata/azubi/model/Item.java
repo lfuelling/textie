@@ -128,4 +128,8 @@ public class Item implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setPickable(boolean pickable) {
+        this.pickable = pickable;
+    }
 }
