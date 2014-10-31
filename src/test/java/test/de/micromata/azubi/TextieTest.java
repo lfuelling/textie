@@ -1,85 +1,111 @@
 package test.de.micromata.azubi;
 
-import de.micromata.azubi.*;
+import java.util.concurrent.ExecutorService;
+
+import de.micromata.azubi.Command;
+import de.micromata.azubi.Textie;
 import de.micromata.azubi.model.Dungeon;
 import de.micromata.azubi.model.StorageItem;
-import org.junit.*;
 
-import static org.junit.Assert.fail;
+import java.util.concurrent.Executors;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Textie Tester.
- *
+ * 
  * @author Lukas F&uuml;lling
  * @version 2.0
- * @since <pre>Sep 25, 2014</pre>
+ * @since <pre>
+ * Sep 25, 2014
+ * </pre>
  */
 public class TextieTest {
-    public static final int AUTOMATIC_TESTING_TIME = 0;
+	private Dungeon dungeon;
+	/**
+	 * Kram, der vor jedem Test ausgeführt wird.
+	 * 
+	 * @throws Exception
+	 */
+	@Before
+	public void testBefore() throws Exception {
+		dungeon = Dungeon.getDungeon();
+		Textie.diag = true;
+	}
 
-    public static final int MANUAL_TESTING_TIME = 2000;
+	/**
+	 * Dungeon zurücksetzen.
+	 */
+	@After
+	public void testAfter() {
+		Dungeon.setDungeon(null);
+	}
 
-    private static Dungeon dungeon;
+	/*
+	 * BEISPIELTEST
+	 * 
+	 * @Test public void TestX() { System.out.println(); System.out.println();
+	 * System.err.println("Beispieltest"); start();
+	 * 
+	 * }
+	 */
 
-    private int testingTime = MANUAL_TESTING_TIME;
+	/* TESTDURCHGÄNGE */
 
-  /**
-   * Kram, der vor jedem Test ausgeführt wird.
-   * @throws Exception
-   */
-    @Before
-    public void testBefore() throws Exception {
-        dungeon = Dungeon.getDungeon();
-        Textie.diag = true;
-    }
-
-  /**
-   * Dungeon zurücksetzen.
-   */
-    @After
-    public void testAfter() {
-        dungeon.setDungeon(null);
-    }
-
-
-    /* BEISPIELTEST
-
-    @Test
-    public void TestX() {
-        System.out.println();
-        System.out.println();
-        System.err.println("Beispieltest");
-        start();
-
-    }
-
-     */
-
-    /* TESTDURCHGÄNGE */
-
-    /**
-     * Speedrun.
-     *
-     * @since <pre>Sep 26, 2014</pre>
-     */
-    @Test
-    public void testSpeedrun() {
-        System.out.println();
-        System.out.println();
-        System.err.println("-- Speedrun Test --");
-        start();
-        nimm("fackel");
+	/**
+	 * Speedrun.
+	 * 
+	 * @since <pre>
+	 * Sep 26, 2014
+	 * </pre>
+	 */
+	@Test
+	public void testSpeedrun() {
+		System.out.println();
+		System.out.println();
+		System.err.println("-- Speedrun Test --");
+		start();
+		nimm("fackel");
+		untersuche("inventar");
         Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         gehe("süd");
         nimm("schwert");
         Assert.assertEquals(2, dungeon.getPlayer().getInventory().getSize());
-        benutze("schwert");
-    }
+		benutze("schwert");
+	}
 
-    /**
-     * Komischer Test, der Sachen testet, die es nicht geben sollte.
-     *
-     * @since <pre>Sep 29, 2014</pre>
+	/**
+	 * Speedrun.
+	 * 
+	 * @since <pre>
+	 * Sep 26, 2014
+	 * </pre>
+	 */
+	@Test
+	public void testSave() {
+		System.out.println();
+		System.out.println();
+		System.err.println("-- Save Test --");
+		start();
+		nimm("fackel");
+		untersuche("inventar");
+		Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
+		gehe("süd");
+		nimm("schwert");
+		Assert.assertEquals(2, dungeon.getPlayer().getInventory().getSize());
+		save();
+		benutze("schwert");
+	}
+	
+	/**
+	 * Komischer Test, der Sachen testet, die es nicht geben sollte.
+	 * 
+	 * @since <pre>
+	 * Sep 29, 2014
+	 * </pre>
      */
     @Test
     public void testFehler() {
@@ -115,10 +141,13 @@ public class TextieTest {
         System.err.println("finished.");
     }
 
-    /**
-     * Der "durch die Räume gehen" Test. Das Programm geht einmal in jeden Raum und zurück und nimmt die Items mit, die Pflicht sind.
-     *
-     * @since <pre>Sep 30, 2014</pre>
+	/**
+	 * Der "durch die Räume gehen" Test. Das Programm geht einmal in jeden Raum
+	 * und zurück und nimmt die Items mit, die Pflicht sind.
+	 * 
+	 * @since <pre>
+	 * Sep 30, 2014
+	 * </pre>
      */
     @Test
     public void testDRG() {
@@ -324,7 +353,8 @@ public class TextieTest {
         untersuche("raum");
         benutze("karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--", Textie.lastPrintedText);
-        Assert.assertEquals(dungeon.findRaumByNummer(5), dungeon.getCurrentRaum());
+		Assert.assertEquals(dungeon.findRaumByNummer(5),
+				dungeon.getCurrentRaum());
         rede("junge");
         gib("handtuch");
         Assert.assertEquals(true, dungeon.getPlayer().getInventory().hasItem("brief"));
@@ -332,7 +362,7 @@ public class TextieTest {
         benutze("brief");
         gehe("falltür");
         Assert.assertEquals(dungeon.findRaumByNummer(6), dungeon.getCurrentRaum());
-        benutze("karte");
+		benutze("karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--", Textie.lastPrintedText);
         untersuche("truhe");
         nimm("axt aus truhe");
@@ -341,7 +371,7 @@ public class TextieTest {
         benutze("axt");
         gehe("ost");
         Assert.assertEquals(dungeon.findRaumByNummer(7), dungeon.getCurrentRaum());
-        benutze("karte");
+		benutze("karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--",Textie.lastPrintedText);
         untersuche("raum");
         untersuche("inventar");
@@ -451,155 +481,152 @@ public class TextieTest {
      * @return gibt den Test weiter.
      * @see de.micromata.azubi.Textie#doGehen(de.micromata.azubi.model.Richtung)
      */
-    private TextieTest gehe(String richtung) {
-        try {
-            Thread.sleep(testingTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Textie.executeCommand(new String[]{Command.GEHE, richtung}, new String[]{richtung});
-        return this;
-    }
 
-  /**
-   * Lässt den Spieler ein item nehmen.
-   *
-   * @param text Was soll der Spieler nehmen?
-   * @return gibt den Test weiter.
-   * @see de.micromata.azubi.Textie#doNimm(de.micromata.azubi.model.Item)
-   */
-    private TextieTest nimm(String text) {
-        try {
-            Thread.sleep(testingTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        String[] text2 = Textie.parseInput(text);
-        if (text.endsWith("aus truhe")){
-            StorageItem truhe = (StorageItem) Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName("Truhe");
-            Textie.doTakeFromChest(truhe.getInventory().findItemByName(text2[0]));
-            return this;
-        } else {
-            Textie.executeCommand(new String[]{Command.NIMM, text}, new String[]{text});
-            return this;
-        }
+	/**
+	 * Lässt den Spieler gehen.
+	 * 
+	 * @param richtung
+	 * @return gibt den Test weiter.
+	 * @see de.micromata.azubi.Textie#doGehen(de.micromata.azubi.Richtung)
+	 */
+	private TextieTest gehe(String richtung) {
+		Textie.executeCommand(new String[] { Command.GEHE, richtung },
+				new String[] { richtung });
+		Thread.yield();
+		return this;
+	}
 
-    }
+	/**
+	 * Lässt den Spieler ein item nehmen.
+	 * 
+	 * @param text
+	 *            Was soll der Spieler nehmen?
+	 * @return gibt den Test weiter.
+	 * @see de.micromata.azubi.Textie#doNimm(de.micromata.azubi.Item)
+	 */
+	private TextieTest nimm(String text) {
+		String[] text2 = Textie.parseInput(text);
+		if (text.endsWith("aus truhe")) {
+			StorageItem truhe = (StorageItem) Dungeon.getDungeon()
+					.getCurrentRaum().getInventory().findItemByName("Truhe");
+			Textie.doTakeFromChest(truhe.getInventory()
+					.findItemByName(text2[0]));
 
+		} else {
+			Textie.executeCommand(new String[] { Command.NIMM, text },
+					new String[] { text });
+		}
+		Thread.yield();
+		return this;
 
-  /**
-   * Startet das SPiel
-   * @return gibt den Test weiter
-   */
-    private TextieTest start() {
+	}
 
-        Runnable runGame = new Runnable() {
-            @Override
-            public void run() {
-                do {
-                    dungeon.runGame(false);
-                } while (!Dungeon.getDungeon().getPlayer().isAlive());
-            }
-        };
+	ExecutorService executor = Executors.newSingleThreadExecutor();
 
-        Thread thread = new Thread(runGame);
-        thread.start();
+	/**
+	 * Startet das SPiel
+	 * 
+	 * @return gibt den Test weiter
+	 */
+	private TextieTest start() {
 
-        return this;
-    }
+		Runnable runGame = new Runnable() {
+			@Override
+			public void run() {
+				do {
+					dungeon.runGame(false);
+				} while (!Dungeon.getDungeon().getPlayer().isAlive());
+			}
+		};
+		executor.submit(runGame);
+		return this;
+	}
 
-    private TextieTest benutze(String item) {
-        try {
-            Thread.sleep(testingTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Textie.executeCommand(new String[]{Command.BENUTZE, item}, new String[]{item});
-        return this;
-    }
+	private TextieTest save() {
+		Textie.executeCommand(new String[] { "speichern" }, new String[] {});
+		Thread.yield();
+		return this;
+	}
+	
+	private TextieTest load() {
+		Textie.executeCommand(new String[] { "laden" }, new String[] {});
+		Thread.yield();
+		return this;
+	}
+	
+	private TextieTest benutze(String item) {
+		Textie.executeCommand(new String[] { Command.BENUTZE, item },
+				new String[] { item });
+		Thread.yield();
+		return this;
+	}
 
-  /**
-   * Lässt den Spieler ein Item untersuchen.
-   *
-   * @param item
-   * @return gibt den Test weiter.
-   * @see de.micromata.azubi.Textie#doUntersuche(String[], int)
-   */
-    private TextieTest untersuche(String item) {
-        try {
-            Thread.sleep(testingTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Textie.executeCommand(new String[]{Command.UNTERSUCHE, item}, new String[]{item});
-        return this;
-    }
+	/**
+	 * Lässt den Spieler ein Item untersuchen.
+	 * 
+	 * @param item
+	 * @return gibt den Test weiter.
+	 * @see de.micromata.azubi.Textie#doUntersuche(String[], int)
+	 */
+	private TextieTest untersuche(String item) {
+		Textie.executeCommand(new String[] { Command.UNTERSUCHE, item },
+				new String[] { item });
+		 Thread.yield();
+		return this;
+	}
 
-  /**
-   * Lässt den Spieler mit einem Menschen reden.
-   *
-   * @param human
-   * @return gibt den Test weiter.
-   * @see de.micromata.azubi.Textie#doReden()
-   */
-    private TextieTest rede(String human) {
-        try {
-            Thread.sleep(testingTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Textie.executeCommand(new String[]{Command.REDE, human}, new String[]{human});
-        return this;
-    }
+	/**
+	 * Lässt den Spieler mit einem Menschen reden.
+	 * 
+	 * @param human
+	 * @return gibt den Test weiter.
+	 * @see de.micromata.azubi.Textie#doReden()
+	 */
+	private TextieTest rede(String human) {
+		Textie.executeCommand(new String[] { Command.REDE, human },
+				new String[] { human });
+		 Thread.yield();
+		return this;
+	}
 
-  /**
-   * Lässt den Spieler ein Item übergeben.
-   *
-   * @param item
-   * @return gibt den Test weiter.
-   * @see de.micromata.azubi.Textie#doGeben(String[], int)
-   */
-    private TextieTest gib(String item) {
-        try {
-            Thread.sleep(testingTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Textie.executeCommand(new String[]{Command.GIB, item}, new String[]{item});
-        return this;
-    }
+	/**
+	 * Lässt den Spieler ein Item übergeben.
+	 * 
+	 * @param item
+	 * @return gibt den Test weiter.
+	 * @see de.micromata.azubi.Textie#doGeben(String[], int)
+	 */
+	private TextieTest gib(String item) {
+		Textie.executeCommand(new String[] { Command.GIB, item },
+				new String[] { item });
+		 Thread.yield();
+		return this;
+	}
 
-  /**
-   * Lässt den Spieler ein Item wegwerfen.
-   *
-   * @param item
-   * @return gibt den Test weiter.
-   * @see de.micromata.azubi.Textie#doVernichte(de.micromata.azubi.model.Item, int)
-   */
-    private TextieTest vernichte(String item) {
-        try {
-            Thread.sleep(testingTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Textie.executeCommand(new String[]{Command.VERNICHTE, item}, new String[]{item});
-        return this;
-    }
+	/**
+	 * Lässt den Spieler ein Item wegwerfen.
+	 * 
+	 * @param item
+	 * @return gibt den Test weiter.
+	 * @see de.micromata.azubi.Textie#doVernichte(de.micromata.azubi.Item, int)
+	 */
+	private TextieTest vernichte(String item) {
+		Textie.executeCommand(new String[] { Command.VERNICHTE, item },
+				new String[] { item });
+		 Thread.yield();
+		return this;
+	}
 
-  /**
-   * Gibt die hilfe aus.
-   *
-   * @return gibt den Test weiter.
-   * @see de.micromata.azubi.Textie#printHelp()
-   */
-    private TextieTest hilfe() {
-        try {
-            Thread.sleep(testingTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Textie.executeCommand(new String[]{Command.HILFE}, new String[]{});
-        return this;
-    }
+	/**
+	 * Gibt die hilfe aus.
+	 * 
+	 * @return gibt den Test weiter.
+	 * @see de.micromata.azubi.Textie#printHelp()
+	 */
+	private TextieTest hilfe() {
+		Textie.executeCommand(new String[] { Command.HILFE }, new String[] {});
+		Thread.yield();
+		return this;
+	}
 
-} 
+}
