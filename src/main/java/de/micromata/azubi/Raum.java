@@ -80,7 +80,7 @@ public class Raum implements Serializable{
 
         if (roomNumber == 3) {
             ToggleItem fackel = (ToggleItem) inventory.findItemByName("Fackel");
-            if (fackel.getState() == true) {
+            if (fackel != null && fackel.getState() == true) {
                 Textie.printText("Ein Windstoß sorgt dafür, dass die Fackel ausgeht.");
                 fackel.setState(false);
             }
