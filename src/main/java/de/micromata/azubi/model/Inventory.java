@@ -36,7 +36,7 @@ public class Inventory implements Serializable {
             }
             items.removeAll(remove);
         }
-
+        // FIXME +5 für Spieler wird auf 198 + 5 gesetzt!!!!
         maxSlots = maxSlots + slots; //FIXME Zusätzliche Methode zum vergrößern
     }
 

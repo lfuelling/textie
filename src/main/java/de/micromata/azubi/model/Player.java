@@ -31,7 +31,7 @@ public class Player implements Serializable {
                 String[] parsed_command = Textie.parseInput(command);
                
                 String[] parsed_args = new String[2];
-                if (parsed_command[1] == null) {
+                if (parsed_command.length == 1 || parsed_command[1] == null) {
                     parsed_args[0] = "nichts";
                 } else {
                     parsed_args = Textie.parseInput(parsed_command[1]);

@@ -9,10 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DungeonBuilder implements Builder<Dungeon>{
-    Dungeon dungeon = Dungeon.getDungeon();
+    Dungeon dungeon;
     PlayerBuilder pb;
     List<RaumBuilder> rbs = new ArrayList<>();
 
+    public DungeonBuilder(Dungeon dungeon) {
+    	this.dungeon = dungeon;
+    }
+    
     public DungeonBuilder addRoom(RaumBuilder rm) {
         rbs.add(rm);
         return this;
