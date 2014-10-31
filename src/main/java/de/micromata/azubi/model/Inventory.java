@@ -14,9 +14,11 @@ import java.util.List;
 public class Inventory implements Serializable {
 
     private static final long serialVersionUID = -706607514666174299L;
-    public static int MAX_SLOTS_INVENTORY = 99;
+    
+    public final static int MAX_SLOTS_INVENTORY = 99;
 
     private List<Item> items = new ArrayList<>();
+    private int maxSlots = MAX_SLOTS_INVENTORY;
 
     /**
      * Sets the size of the items
@@ -35,7 +37,7 @@ public class Inventory implements Serializable {
             items.removeAll(remove);
         }
 
-        MAX_SLOTS_INVENTORY = MAX_SLOTS_INVENTORY + slots; //FIXME Zusätzliche Methode zum vergrößern
+        maxSlots = maxSlots + slots; //FIXME Zusätzliche Methode zum vergrößern
     }
 
     /**
