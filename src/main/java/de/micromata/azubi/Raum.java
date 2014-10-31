@@ -89,21 +89,6 @@ public class Raum implements Serializable{
         Textie.warten(withPrompt);
     }
 
-  /**
-   * @deprecated
-   * @return True if the trapdoor is used.
-   */
-    public boolean isFalltuerUsed() {
-        return falltuerUsed;
-    }
-
-  /**
-   * @deprecated
-   * @param falltuerUsed Set if the trapadoor was used.
-   */
-    public void setFalltuerUsed(boolean falltuerUsed) {
-        this.falltuerUsed = falltuerUsed;
-    }
 
   /**
    *
@@ -114,27 +99,11 @@ public class Raum implements Serializable{
     }
 
   /**
-   * @deprecated
-   * @param roomNumber sets the room number.
-   */
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
-  /**
    *
    * @return The intro message.
    */
     public String getWillkommensNachricht() {
         return willkommensNachricht;
-    }
-
-  /**
-   * @deprecated
-   * @param willkommensNachricht the intro message.
-   */
-    public void setWillkommensNachricht(String willkommensNachricht) {
-        this.willkommensNachricht = willkommensNachricht;
     }
 
   /**
@@ -163,14 +132,6 @@ public class Raum implements Serializable{
     }
 
   /**
-   * @deprecated
-   * @return A map.
-   */
-    public Map<Richtung, Raum> getVerbindungen() {
-        return verbindungen;
-    }
-
-  /**
    *
    * @param verbindungen Set some connections.
    */
@@ -194,14 +155,27 @@ public class Raum implements Serializable{
         this.inventory = inventory;
     }
 
+    /**
+     * Places a human into the room
+     * @param human The Human you want to place in the Room
+     */
     public void setHuman(Human human) {
         this.human = human;
     }
 
+    /**
+     *
+     * @return Returns the Human in the room
+     */
     public Human getHuman() {
         return human;
     }
 
+    /**
+     *
+     * @param richtung The direction you want to go
+     * @return The door which is in the direction you asked
+     */
     public Door findDoorByDirection(Richtung richtung) {
 
         for (Door door : this.doors) {

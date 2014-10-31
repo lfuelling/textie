@@ -42,6 +42,11 @@ public class Dungeon implements Serializable {
         player.getInventory().setInventorySize(5);
     }
 
+    /**
+     * The Dungeon is the world you play in
+     *
+     * @return The world
+     */
     public static Dungeon getDungeon() {
         if (dungeon == null) {
             dungeon = new Dungeon();
@@ -147,7 +152,7 @@ public class Dungeon implements Serializable {
         doorSchalter.put((ToggleItem)findRaumByNummer(7).getInventory().findItemByUID(15),findRaumByNummer(7).findDoorByUID(13));
     }
     /**
-     * Initializes the inventories of the rooms.
+     * Initializes the inventories of the rooms and of the chests
      */
     public void initInventories() {
         // Raum 1
@@ -410,6 +415,12 @@ public class Dungeon implements Serializable {
         this.currentRoomNumber = raums.indexOf(raum) + 1;
     }
 
+    /**
+     * Sets the world you play in
+     * It's for savegamestuff
+     *
+     * @param dungeon The world object
+     */
     public static void setDungeon(Dungeon dungeon) {
         Dungeon.dungeon = dungeon;
 

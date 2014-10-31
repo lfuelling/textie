@@ -202,7 +202,7 @@ public class Textie implements Serializable {
     }
 
     /**
-     * Throwas away an Item.
+     * Throws away an Item.
      *
      * @param item  The item to throw away.
      * @param count The size of the parsed_command String[]
@@ -563,36 +563,6 @@ public class Textie implements Serializable {
         }
         */
     }
-
-
-    //RaumKram
-    /*
-    public static boolean removeItemInRoom(Item item) {
-        if (Dungeon.getDungeon().getCurrentRaum().items.remove(item))
-            return true;
-        return false;
-    }
-
-
-    public static boolean addItemToRoom(Item item) {
-        if (Dungeon.getDungeon().getCurrentRaum().items.add(item)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static boolean isInRoom(Item item) {
-        return findInRoom(item) >= 0;
-    }
-
-    public static int findInRoom(Item item) {
-        int i = -128;
-        i = Dungeon.getDungeon().getCurrentRaum().items.indexOf(item);
-        return i;
-    }
-    */
-
 
     /**
      * Best name ever.
