@@ -79,6 +79,31 @@ public class TextieTest {
 	}
 
 	/**
+	 * Speedrun.
+	 * 
+	 * @since <pre>
+	 * Sep 26, 2014
+	 * </pre>
+	 */
+	@Test
+	public void testSave() {
+		System.out.println();
+		System.out.println();
+		System.err.println("-- Save Test --");
+		start();
+		nimm("fackel");
+		untersuche("inventar");
+		Assert.assertEquals(1, dungeon.player.getInventory().getInventory()
+				.size());
+		gehe("süd");
+		nimm("schwert");
+		Assert.assertEquals(2, dungeon.player.getInventory().getInventory()
+				.size());
+		save();
+		benutze("schwert");
+	}
+	
+	/**
 	 * Komischer Test, der Sachen testet, die es nicht geben sollte.
 	 * 
 	 * @since <pre>
@@ -588,6 +613,18 @@ public class TextieTest {
 		return this;
 	}
 
+	private TextieTest save() {
+		Textie.executeCommand(new String[] { "speichern" }, new String[] {});
+		Thread.yield();
+		return this;
+	}
+	
+	private TextieTest load() {
+		Textie.executeCommand(new String[] { "laden" }, new String[] {});
+		Thread.yield();
+		return this;
+	}
+	
 	private TextieTest benutze(String item) {
 		Textie.executeCommand(new String[] { Command.BENUTZE, item },
 				new String[] { item });
