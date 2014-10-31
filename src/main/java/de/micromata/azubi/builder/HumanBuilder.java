@@ -15,7 +15,7 @@ public class HumanBuilder implements Builder<Human> {
     private String questDoneText;
     private String name;
     private String questItem;
-    private ItemBuilder rewarditem;
+    private BaseItemBuilder rewarditem;
 
     public HumanBuilder setHumanName(String name){
         this.name = name;
@@ -48,7 +48,7 @@ public class HumanBuilder implements Builder<Human> {
         return this;
     }
 
-    public HumanBuilder setRewarditem(ItemBuilder rewarditem) {
+    public HumanBuilder setRewarditem(BaseItemBuilder rewarditem) {
         this.rewarditem = rewarditem;
         return this;
     }

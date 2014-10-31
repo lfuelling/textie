@@ -10,9 +10,9 @@ import de.micromata.azubi.Textie;
  */
 public class Door {
     int uid;
-    Richtung richtungRaum1;
+    private Richtung richtungRaum1;
     //Richtung richtungRaum2;
-    Raum nextRoom;
+    private Raum nextRoom;
     boolean locked;
     private Richtung richtung;
 
@@ -82,5 +82,13 @@ public class Door {
 
     public void setNextRoom(Raum nextRoom) {
         this.nextRoom = nextRoom;
+    }
+
+    public Raum getNextRoom() {
+        return nextRoom;
+    }
+
+    public Richtung getRichtung() {
+        return richtung;
     }
 }

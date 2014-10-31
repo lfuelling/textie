@@ -16,6 +16,7 @@ public class Player implements Serializable {
     private String name;
     private Inventory inventory;
     private boolean alive;
+    private Raum position;
 
 
 
@@ -59,19 +60,28 @@ public class Player implements Serializable {
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
+    
     public Inventory getInventory() {
         return inventory;
     }
 
-
     public boolean isAlive() {
         return alive;
     }
+
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Raum getPosition() {
+        return position;
+    }
+
+    public void setPosition(Raum position) {
+        this.position = position;
     }
 }

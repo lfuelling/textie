@@ -4,8 +4,7 @@ import de.micromata.azubi.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 /**
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
@@ -19,7 +18,7 @@ public class Raum implements Serializable{
     protected boolean leaveRoom = false;
     protected Inventory inventory;
     private Human human;
-    private ArrayList<Door> doors;
+    private ArrayList<Door> doors = new ArrayList<>();
 
     public Raum() {
     }
@@ -82,7 +81,7 @@ public class Raum implements Serializable{
    * @return The next room.
    */
     public Raum getNextRoom(Door door) {
-        return Dungeon.getDungeon().findRaumByNummer(door.raumNr);
+        return door.getNextRoom();
     }
 
   /**
@@ -154,7 +153,7 @@ public class Raum implements Serializable{
     public Door findDoorByDirection(Richtung richtung) {
 
         for (Door door : this.doors) {
-            if (door.richtungRaum1.equals(richtung)){
+            if (door.getRichtung().equals(richtung)){
                 return door;
             }
         }

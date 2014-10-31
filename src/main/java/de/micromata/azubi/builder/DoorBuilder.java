@@ -17,8 +17,8 @@ public class DoorBuilder implements Builder<Door> {
         return this;
     }
 
-    public DoorBuilder setNextRoom(int numberOfConnectedRoom){
-        this.nextRoom = Dungeon.getDungeon().findRaumByNummer(numberOfConnectedRoom); // Kann ich hier schon auf Dungeon zugreifen?
+    public DoorBuilder setNextRoom(Raum connectedRoom){
+        this.nextRoom = connectedRoom;
         return this;
     }
 

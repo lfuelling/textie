@@ -40,14 +40,51 @@ public class Textie implements Serializable {
         DungeonBuilder dungeonBuilder = new DungeonBuilder().add(fremder);
         RaumBuilder raum1 = new RaumBuilder().addRoomNumber(1).addwillkommensNachricht("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.")
                 .addInventory(new InventarBuilder()
-                        .addItem(new ItemBuilder().setName("Fackel").setUntersucheText("Du betrachtest die Fackel. Wie kann man die wohl anzünden?").setBenutzeText("Du zündest deine Fackel mit dem Feuerzeug an.").build())
-                        .addItem(new ItemBuilder().setName("Handtuch").setUntersucheText("Das Handtuch sieht sehr flauschig aus.").setBenutzeText("Du wischst dir den Angstschweiß von der Stirn.").build()))
-                //TODO weitere Items hinzufügen
-                // Muss für ToggleItem usw ebenfalls ein Builder erst
-                .addDoor(new DoorBuilder().setRichtung(Richtung.SUED).setNextRoom(2).setLock(true).build())
-                .addDoor(new DoorBuilder().setRichtung(Richtung.WEST).setNextRoom(4).setLock(true).build())
+                        .addItem(new ToggleItemBuilder().setState(false).setName("Fackel").setUntersucheText("Du betrachtest die Fackel. Wie kann man die wohl anzünden?").setBenutzeText("Du zündest deine Fackel mit dem Feuerzeug an.").build())
+                        .addItem(new ItemBuilder().setName("Handtuch").setUntersucheText("Das Handtuch sieht sehr flauschig aus.").setBenutzeText("Du wischst dir den Angstschweiß von der Stirn.").build())
+                        .addItem(new StorageItemBuilder().setLockState(true).setInventarBuilder(new InventarBuilder().build()).setName("Truhe").setUntersucheText("Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.").setBenutzeText("Du kannst die Truhe nicht öffnen.").build())
+                        .addItem(new ToggleItemBuilder().setState(false).setName("Schalter").setUntersucheText("Da ist ein kleiner Schalter an der Wand.").setBenutzeText("Du hörst ein Rumpeln, als du den Schalter drückst.").build())
+                        .build())
                 .build();
-        dungeonBuilder.addRoom(raum1);
+
+        RaumBuilder raum2 = new RaumBuilder().addRoomNumber(2).addwillkommensNachricht("Du kommst in einen dunklen Raum.")
+                .addInventory(new InventarBuilder()
+                        .addItem(new ItemBuilder().setName("Stein").setUntersucheText("Du betrachtest den Stein. Er wirkt kalt.").setBenutzeText("Du wirfst den Stein vor dir auf den Boden und hebst ihn wieder auf. Was ein Spaß.").build())
+                        .addItem(new ItemBuilder().setName("Schwert").setUntersucheText("Du betrachtest das Schwert. Es sieht sehr scharf aus.").setBenutzeText("Du stichst dir das Schwert zwischen die Rippen und stirbst.").build())
+                        .addItem(new ItemBuilder().setName("Feuerzeug").setUntersucheText("Du betrachtest das Feuerzeug. Es wirkt zuverlässig.").setBenutzeText("Du zündest deine Fackel mit dem Feuerzeug an.").build()).build())
+                .build();
+
+        RaumBuilder raum3 = new RaumBuilder().addRoomNumber(3).addwillkommensNachricht("Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.")
+                .addInventory(new InventarBuilder()
+                    .addItem(new ItemBuilder().setName("Falltür").setUntersucheText("Da ist eine Falltür").setBenutzeText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.").build())
+                    .addItem(new ItemBuilder().setName("Whiteboard").setUntersucheText("Es steht \'FLIEH!\' mit Blut geschrieben darauf.").setBenutzeText("Das fasse ich bestimmt nicht an!").build())
+                    .addItem(new ItemBuilder().setName("Brecheisen").setUntersucheText("Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.").setBenutzeText("Du kratzt dich mit dem Brecheisen am Kopf").build())
+                    .addItem(new ItemBuilder().setName("Quietscheente").setUntersucheText("Die Ente schaut dich vorwurfsvoll an.").setBenutzeText("Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst.").build())
+                .build())
+        .build();
+
+        RaumBuilder raum4 = new RaumBuilder().addRoomNumber(4).addwillkommensNachricht("Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.")
+                .addHuman(new HumanBuilder().setHumanName("Gordon").setDialog1("Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...").setDialog2("...").setQuestDoneText("Sehr gut. Danke dir.").setQuestText("Ich suche ein Brecheisen. Hast du eins?").setQuestItem("Brecheisen").setRewarditem(new ItemBuilder().setName("Schlüssel").setUntersucheText("Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?").setBenutzeText("Hier gibt es nichts um den Schlüssel zu benutzen.").build()).build())
+                .addInventory(new InventarBuilder()
+                        .addItem(new ItemBuilder().setName("Sack").setUntersucheText("Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.").setBenutzeText("Du bindest den Sack an deinen Rucksack.").build())
+                        .addItem(new ToggleItemBuilder().setState(false).setName("Schalter").setUntersucheText("Da ist ein kleiner Schalter an der Wand.").setBenutzeText("Du hörst ein Rumpeln, als du den Schalter drückst.").build())
+                        .addItem(new KartenBuilder().setName("Karte").setUntersucheText("Das ist eine Karte, sie zeigt deinen Laufweg.").build()).build())
+        .build();
+
+        raum1.addDoor(new DoorBuilder().setRichtung(Richtung.SUED).setNextRoom(raum2.get()).setLock(false).build())
+                .addDoor(new DoorBuilder().setRichtung(Richtung.WEST).setNextRoom(raum4.get()).setLock(true).build()).build();
+
+        raum2.addDoor(new DoorBuilder().setRichtung(Richtung.WEST).setNextRoom(raum3.get()).setLock(false).build())
+                .addDoor(new DoorBuilder().setRichtung(Richtung.NORD).setNextRoom(raum1.get()).setLock(false).build()).build();
+
+        raum3.addDoor(new DoorBuilder().setRichtung(Richtung.FALLTUER).setNextRoom(raum4.get()).build())
+                .addDoor(new DoorBuilder().setRichtung(Richtung.OST).setNextRoom(raum2.get()).build()).build();
+
+        raum4.addDoor(new DoorBuilder().setRichtung(Richtung.OST).setNextRoom(raum1.get()).build()).build();
+
+
+
+        dungeonBuilder.addRoom(raum1).addRoom(raum2).addRoom(raum3).addRoom(raum4);
 
         return dungeonBuilder.build().get();
     }
@@ -211,9 +248,10 @@ public class Textie implements Serializable {
         if (Dungeon.getDungeon().getCurrentRaum().getRoomNumber() == 6 && Dungeon.getDungeon().getCurrentRaum().getNextRoom(Dungeon.getDungeon().getCurrentRaum().findDoorByDirection(richtung)) == null) {
             printText("Der Weg wird durch eine Holzbarrikade versperrt.");
         } else {
-            Raum raum = Dungeon.getDungeon().getRaum(richtung);
-            if (raum != null && Dungeon.getDungeon().getRooms().get(Dungeon.getDungeon().previousRoomNumber).isLeaveRoom()) {
-                Dungeon.getDungeon().setRoomNumber(raum);
+            int roomNumber = Dungeon.getDungeon().getCurrentRaum().getRoomNumber();
+            Raum nextRoom = Dungeon.getDungeon().getRaum(richtung);
+            if (nextRoom != null && Dungeon.getDungeon().findRaumByNummer(roomNumber).isLeaveRoom()) {
+                Dungeon.getDungeon().setRoomNumber(nextRoom);
                 Dungeon.getDungeon().getCurrentRaum().setLeaveRoom(false);
                 Textie.printText(Dungeon.getDungeon().getCurrentRaum().getWillkommensNachricht());
             }
@@ -401,7 +439,7 @@ public class Textie implements Serializable {
                     case "Axt":
                         Item axt = item;
                         if (Dungeon.getDungeon().getCurrentRaum().getRoomNumber() == 6) {
-                            Dungeon.getDungeon().getCurrentRaum().getDoors().add(new Door(11, Richtung.OST, 7, false));
+                           //FIXME Dungeon.getDungeon().getCurrentRaum().getDoors().add(new Door(11, Richtung.OST, 7, false));
                             axt.benutzen();
                         } else {
                             Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum");
@@ -414,10 +452,12 @@ public class Textie implements Serializable {
                         playerInventory.setInventorySize(2);
                         break;
                     case "Schalter":
+                        /*FIXME
                         ToggleItem schalter = (ToggleItem) item;
                         schalter.benutzen();
                         schalter.toggleState();
                         Dungeon.getDungeon().doorSchalter.get(schalter).toogleLock();
+                        FIXME*/
                         break;
                     case "Schwert":
                         playerInventory.findItemByName("Schwert").benutzen();
@@ -497,7 +537,7 @@ public class Textie implements Serializable {
             printText("Unbekanntes Item.");
         } else {
             if (item.isPickable()) {
-                if (Dungeon.getDungeon().getCurrentRaum().getInventory().transferItem(Dungeon.getDungeon().player.getInventory(), item)) {
+                if (Dungeon.getDungeon().getCurrentRaum().getInventory().transferItem(Dungeon.getDungeon().getPlayer().getInventory(), item)) {
 
                     printText(item.getName() + " zum Inventar hinzugefügt.");
                 } else {

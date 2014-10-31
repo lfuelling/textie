@@ -5,34 +5,30 @@ import de.micromata.azubi.model.Dungeon;
 /**
  * Created by jsiebert on 30.10.14.
  */
+import java.util.ArrayList;
+import java.util.List;
+
 public class DungeonBuilder implements Builder<Dungeon>{
     Dungeon dungeon = Dungeon.getDungeon();
+    PlayerBuilder pb;
+    List<RaumBuilder> rbs = new ArrayList<>();
 
     public DungeonBuilder addRoom(RaumBuilder rm) {
-        dungeon.getRooms().add(rm.get());
+        rbs.add(rm);
         return this;
     }
 
     public DungeonBuilder add(PlayerBuilder pb) {
-        dungeon.setPlayer(pb.get());
+        this.pb = pb;
         return this;
     }
 
     @Override
-    public Builder<Dungeon> build() {
-        //dungeon.init();
-        /*
-         public void init() {
-         player = new Player("Fremder", true);
-         previousRoomNumber = 1;
-         initRooms();
-         initInventories();
-         initHumans();
-         initDoors();
-         initDoorSchalter();
-
-         }
-         */
+    public DungeonBuilder build() {
+        for(RaumBuilder rb : rbs){
+            dungeon.getRooms().add(rb.get());
+        }
+        dungeon.setPlayer(pb.get());
         return this;
     }
 

@@ -10,14 +10,14 @@ import de.micromata.azubi.model.Inventory;
 public class InventarBuilder implements Builder<Inventory>{
     private int size = Inventory.MAX_SLOTS_INVENTORY;
     private Inventory inventory = new Inventory();
-    private List<ItemBuilder> ibs = new ArrayList<>();
+    private List<BaseItemBuilder> ibs = new ArrayList<>();
 
     public InventarBuilder addSize(int size){
         this.size = size;
         return this;
     }
 
-    public InventarBuilder addItem(ItemBuilder ib){
+    public InventarBuilder addItem(BaseItemBuilder ib){
         ibs.add(ib);
         return this;
     }
@@ -27,7 +27,7 @@ public class InventarBuilder implements Builder<Inventory>{
     @Override
     public InventarBuilder build() {
         inventory.setInventorySize(size);
-        for(ItemBuilder ib : ibs) {
+        for(BaseItemBuilder ib : ibs) {
             inventory.addItem(ib.get());
         }
         return this;
