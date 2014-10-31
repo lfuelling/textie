@@ -1,10 +1,10 @@
-package de.micromata.azubi;
+package de.micromata.azubi.model;
+
+import de.micromata.azubi.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 
 /**
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
@@ -12,15 +12,13 @@ import java.util.Map;
  */
 public class Raum implements Serializable{
     private static final long serialVersionUID = -2269575363024102428L;
-    protected List<Item> items = new ArrayList<Item>();
-    protected boolean falltuerUsed = false;
     protected int roomNumber;
     protected String willkommensNachricht;
-    protected Map<Richtung, Raum> verbindungen = new HashMap<>();
+    //protected Map<Richtung, Raum> verbindungen = new HashMap<>();
     protected boolean leaveRoom = false;
     protected Inventory inventory;
     private Human human;
-    private ArrayList<Door> doors;
+    private ArrayList<Door> doors = new ArrayList<>();
 
     public Raum() {
     }
@@ -33,35 +31,6 @@ public class Raum implements Serializable{
     public Raum(int number, String willkommensNachricht) {
         this.roomNumber = number;
         this.willkommensNachricht = willkommensNachricht;
-    }
-
-  /**
-   *
-   * @param item The Item you search
-   * @return True if the item is in there.
-   * @deprecated
-   */
-    public boolean hasItem(Item item) {
-        if (items.contains(item)) {
-            return true;
-        }
-        return false;
-    }
-
-  /**
-   *
-   * @return The room number.
-   */
-    public int getNumber() {
-        return roomNumber;
-    }
-
-  /**
-   *
-   * @return The Room number as a string.
-   */
-    public String getNumberAsString() {
-        return String.valueOf(this.roomNumber);
     }
 
   /**
@@ -112,7 +81,7 @@ public class Raum implements Serializable{
    * @return The next room.
    */
     public Raum getNextRoom(Door door) {
-        return Dungeon.getDungeon().findRaumByNummer(door.raumNr);
+        return door.getNextRoom();
     }
 
   /**
@@ -131,13 +100,18 @@ public class Raum implements Serializable{
         this.leaveRoom = leaveRoom;
     }
 
-  /**
+    public void setWillkommensNachricht(String willkommensNachricht) {
+        this.willkommensNachricht = willkommensNachricht;
+    }
+
+    /**
    *
    * @param verbindungen Set some connections.
-   */
+
     public void setVerbindungen(Map<Richtung, Raum> verbindungen) {
         this.verbindungen = verbindungen;
     }
+    */
 
   /**
    *
@@ -179,15 +153,15 @@ public class Raum implements Serializable{
     public Door findDoorByDirection(Richtung richtung) {
 
         for (Door door : this.doors) {
-            if (door.richtungRaum1.equals(richtung)){
+            if (door.getRichtung().equals(richtung)){
                 return door;
             }
         }
         return null;
     }
 
-    public void setDoors(ArrayList<Door> doors) {
-        this.doors = doors;
+    public void addDoorToDoors(Door door) {
+        this.doors.add(door);
     }
 
     public ArrayList<Door> getDoors() {
@@ -200,5 +174,9 @@ public class Raum implements Serializable{
             }
         }
         return null;
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
     }
 }

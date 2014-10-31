@@ -1,4 +1,4 @@
-package de.micromata.azubi;
+package de.micromata.azubi.model;
 
 public class ToggleItem extends Item {
 

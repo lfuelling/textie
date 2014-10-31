@@ -1,4 +1,4 @@
-package de.micromata.azubi;
+package de.micromata.azubi.model;
 
 
 /*
@@ -25,10 +25,8 @@ public class Human implements Serializable{
     private String questDoneText;
     private String name;
     private boolean gaveItem = false;
-    //ArrayList<Item> questItems;
-    String questItem;
-    Item rewarditem;
-    // String questItemName;
+    private String questItem;
+    private Item rewarditem;
 
     public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item rewardItem, String questItemName) {
         this.name = name;
@@ -110,5 +108,9 @@ public class Human implements Serializable{
 
     public void setQuestDoneText(String questDoneText) {
         this.questDoneText = questDoneText;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

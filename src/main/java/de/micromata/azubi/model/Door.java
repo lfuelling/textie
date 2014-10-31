@@ -1,4 +1,6 @@
-package de.micromata.azubi;
+package de.micromata.azubi.model;
+
+import de.micromata.azubi.Textie;
 
 /**
  * This defines a simple door.
@@ -7,27 +9,26 @@ package de.micromata.azubi;
  * @version 1.0
  */
 public class Door {
-    int uid;
-    Richtung richtungRaum1;
-    //Richtung richtungRaum2;
-    int raumNr;
+    long uid;
+    private Raum nextRoom;
     boolean locked;
+    private Richtung richtung;
 
     /**
      * @param UID              The unique identifier we can use to define a key or a switch to a certain door.
      * @param richtung         The orientation the door should have in the room.
      * @param raumNr           The room you come, when you go through
      * @param initialLockState Defines if the door is locked at game launch.
-     */
+
     public Door(int UID, Richtung richtung, int raumNr, boolean initialLockState) {
 
         this.uid = UID;
         this.richtungRaum1 = richtung;
-        this.raumNr = raumNr;
+        this.nextRoom = nextRoom;
         this.locked = initialLockState;
         //richtungRaum2 = Richtung.getOpposite(richtungRaum1);
     }
-
+    */
     /**
      * Exits the current room and enters the new one if the door is unlocked.
      */
@@ -44,7 +45,7 @@ public class Door {
     /**
      * @return Returns the door's UID
      */
-    public int getUid() {
+    public long getUid() {
 
         return uid;
     }
@@ -73,4 +74,23 @@ public class Door {
         }
     }
 
+    public void setRichtung(Richtung richtung) {
+        this.richtung = richtung;
+    }
+
+    public void setNextRoom(Raum nextRoom) {
+        this.nextRoom = nextRoom;
+    }
+
+    public Raum getNextRoom() {
+        return nextRoom;
+    }
+
+    public Richtung getRichtung() {
+        return richtung;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
 }

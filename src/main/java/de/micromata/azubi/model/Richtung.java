@@ -1,4 +1,4 @@
-package de.micromata.azubi;
+package de.micromata.azubi.model;
 
 /**
  * @author Julian Siebert (j.siebert@micromata.de)
