@@ -177,20 +177,20 @@ public class TextieTest {
         start();
         nimm("fackel");
         gehe("süd");
+        Assert.assertEquals(dungeon.findRaumByNummer(2), dungeon.getCurrentRaum());
         untersuche("raum");
-        Assert.assertEquals(dungeon.raums.get(1), dungeon.getCurrentRaum());
         Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
         nimm("feuerzeug");
         Assert.assertEquals(2, dungeon.player.getInventory().getInventory().size());
         gehe("west");
         benutze("fackel");
         untersuche("raum");
-        Assert.assertEquals(dungeon.raums.get(2), dungeon.getCurrentRaum());
+        Assert.assertEquals(dungeon.findRaumByNummer(3), dungeon.getCurrentRaum());
         nimm("brecheisen");
         Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
         benutze("falltür");
         untersuche("raum");
-        Assert.assertEquals(dungeon.raums.get(3), dungeon.getCurrentRaum());
+        Assert.assertEquals(dungeon.findRaumByNummer(4), dungeon.getCurrentRaum());
         rede("alter mann");
         gib("brecheisen");
         untersuche("inventar");
@@ -200,7 +200,7 @@ public class TextieTest {
         benutze("schalter");
         gehe("ost");
         untersuche("raum");
-        Assert.assertEquals(dungeon.raums.get(0), dungeon.getCurrentRaum());
+        Assert.assertEquals(dungeon.findRaumByNummer(1), dungeon.getCurrentRaum());
         System.err.println("finished.");
     }
 
