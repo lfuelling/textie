@@ -1,11 +1,13 @@
-package de.micromata.azubi;
+package de.micromata.azubi.model;
+
+import de.micromata.azubi.Textie;
 
 import java.util.ArrayList;
 
 /**
  * @author Julian Siebert (j.siebert@micromata.de)
  * @author Lukas F&uuml;lling (lf.fuelling@micromata.de)
- * @see de.micromata.azubi.Item
+ * @see Item
  */
 public class Karte extends Item {
 
@@ -19,10 +21,12 @@ public class Karte extends Item {
    * @param untersucheText Text which is printed when you inspect the map.
    * @param benutzeText Text which is replaced by the map's output.
    */
+  /*
   public Karte(int id, String name, String untersucheText, String benutzeText) {
 
     super(id, name, untersucheText, benutzeText, true);
   }
+  */
 
   /**
    * Add another field to the map's output.

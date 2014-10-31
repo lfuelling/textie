@@ -1,10 +1,9 @@
 package test.de.micromata.azubi;
 
 import de.micromata.azubi.*;
+import de.micromata.azubi.model.Dungeon;
+import de.micromata.azubi.model.StorageItem;
 import org.junit.*;
-
-import javax.xml.soap.Text;
-import java.awt.*;
 
 import static org.junit.Assert.fail;
 
@@ -70,11 +69,10 @@ public class TextieTest {
         System.err.println("-- Speedrun Test --");
         start();
         nimm("fackel");
-        untersuche("inventar");
-        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         gehe("süd");
         nimm("schwert");
-        Assert.assertEquals(2, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(2, dungeon.getPlayer().getInventory().getSize());
         benutze("schwert");
     }
 
@@ -92,27 +90,27 @@ public class TextieTest {
         untersuche("raum");
         nimm("fackel");
         untersuche("inventar");
-        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         nimm("");
-        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         nimm("lizard");
-        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         nimm("234hjfkjvn932");
-        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         nimm("0xD47B34T"); // Dat Beat :3
         benutze("hfsejinefsi");
-        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         untersuche("");
         benutze("");
         untersuche("sdfghjklhgfd");
-        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         nimm("whiteboard");
         nimm("brecheisen"); //Darf nicht sein, da das Ding nicht in Raum 1 ist.
-        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         gehe("süd");
         nimm("truhe");
         untersuche("truhe");
-        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         hilfe();
         System.err.println("finished.");
     }
@@ -131,7 +129,7 @@ public class TextieTest {
         untersuche("raum");
         nimm("fackel");
         untersuche("inventar");
-        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         System.out.println("Gehe in Raum 2");
         gehe("süd");
         untersuche("raum");
@@ -163,6 +161,9 @@ public class TextieTest {
         benutze("falltür");
         untersuche("raum");
         Assert.assertEquals(dungeon.findRaumByNummer(4), dungeon.getCurrentRaum());
+        System.out.println("Gehe in Raum 4");
+        benutze("falltür");
+        untersuche("raum");
         benutze("schalter");
         System.out.println("Gehe in Raum 1");
         gehe("ost");
@@ -189,24 +190,24 @@ public class TextieTest {
         gehe("süd");
         Assert.assertEquals(dungeon.findRaumByNummer(2), dungeon.getCurrentRaum());
         untersuche("raum");
-        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         nimm("feuerzeug");
-        Assert.assertEquals(2, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(2, dungeon.getPlayer().getInventory().getSize());
         gehe("west");
         benutze("fackel");
         untersuche("raum");
         Assert.assertEquals(dungeon.findRaumByNummer(3), dungeon.getCurrentRaum());
         nimm("brecheisen");
-        Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(3, dungeon.getPlayer().getInventory().getSize());
         benutze("falltür");
         untersuche("raum");
         Assert.assertEquals(dungeon.findRaumByNummer(4), dungeon.getCurrentRaum());
         rede("alter mann");
         gib("brecheisen");
         untersuche("inventar");
-        Assert.assertEquals(true, dungeon.player.getInventory().hasItem("Schlüssel"));
+        Assert.assertEquals(true, dungeon.getPlayer().getInventory().hasItem("Schlüssel"));
         Assert.assertEquals(false, dungeon.getCurrentRaum().getInventory().hasItem("Brecheisen"));
-        Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(3, dungeon.getPlayer().getInventory().getSize());
         benutze("schalter");
         gehe("ost");
         untersuche("raum");
@@ -242,7 +243,7 @@ public class TextieTest {
         vernichte("handtuch");
         untersuche("raum");
         untersuche("inventar");
-        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         System.err.println("\nGehe in Raum 2\n");
         gehe("süd");
         untersuche("raum");
@@ -262,7 +263,7 @@ public class TextieTest {
         nimm("schwert");
         untersuche("schwert");
         vernichte("schwert");
-        Assert.assertEquals(2, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(2, dungeon.getPlayer().getInventory().getSize());
         System.err.println("\nGehe in Raum 3\n");
         gehe("west");
         untersuche("raum");
@@ -280,14 +281,14 @@ public class TextieTest {
         untersuche("quietscheente");
         benutze("quietscheente");
         vernichte("quietscheente");
-        Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(3, dungeon.getPlayer().getInventory().getSize());
         System.err.println("\nGehe in Raum 4\n");
         benutze("falltür");
         rede("alter mann");
         gib("brecheisen");
-        Assert.assertEquals(true, dungeon.player.getInventory().hasItem("Schlüssel"));
+        Assert.assertEquals(true, dungeon.getPlayer().getInventory().hasItem("Schlüssel"));
         Assert.assertEquals(false, dungeon.getCurrentRaum().getInventory().hasItem("Brecheisen"));
-        Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(3, dungeon.getPlayer().getInventory().getSize());
         untersuche("inventar");
         rede("alter mann");
         rede("alter mann");
@@ -314,8 +315,7 @@ public class TextieTest {
         nimm("handtuch");
         untersuche("handtuch");
         benutze("handtuch");
-        untersuche("inventar");
-        Assert.assertEquals(1, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(1, dungeon.getPlayer().getInventory().getSize());
         benutze("schalter");
         gehe("west");
         Assert.assertEquals(dungeon.findRaumByNummer(4), dungeon.getCurrentRaum());
@@ -327,7 +327,7 @@ public class TextieTest {
         Assert.assertEquals(dungeon.findRaumByNummer(5), dungeon.getCurrentRaum());
         rede("junge");
         gib("handtuch");
-        Assert.assertEquals(true, dungeon.player.getInventory().hasItem("brief"));
+        Assert.assertEquals(true, dungeon.getPlayer().getInventory().hasItem("brief"));
         untersuche("brief");
         benutze("brief");
         gehe("falltür");
@@ -337,7 +337,7 @@ public class TextieTest {
         untersuche("truhe");
         nimm("axt aus truhe");
         untersuche("inventar");
-        Assert.assertEquals(3, dungeon.player.getInventory().getInventory().size());
+        Assert.assertEquals(3, dungeon.getPlayer().getInventory().getSize());
         benutze("axt");
         gehe("ost");
         Assert.assertEquals(dungeon.findRaumByNummer(7), dungeon.getCurrentRaum());
@@ -449,7 +449,7 @@ public class TextieTest {
      *
      * @param richtung
      * @return gibt den Test weiter.
-     * @see de.micromata.azubi.Textie#doGehen(de.micromata.azubi.Richtung)
+     * @see de.micromata.azubi.Textie#doGehen(de.micromata.azubi.model.Richtung)
      */
     private TextieTest gehe(String richtung) {
         try {
@@ -466,7 +466,7 @@ public class TextieTest {
    *
    * @param text Was soll der Spieler nehmen?
    * @return gibt den Test weiter.
-   * @see de.micromata.azubi.Textie#doNimm(de.micromata.azubi.Item)
+   * @see de.micromata.azubi.Textie#doNimm(de.micromata.azubi.model.Item)
    */
     private TextieTest nimm(String text) {
         try {
@@ -498,7 +498,7 @@ public class TextieTest {
             public void run() {
                 do {
                     dungeon.runGame(false);
-                } while (!Dungeon.getDungeon().player.isAlive());
+                } while (!Dungeon.getDungeon().getPlayer().isAlive());
             }
         };
 
@@ -574,7 +574,7 @@ public class TextieTest {
    *
    * @param item
    * @return gibt den Test weiter.
-   * @see de.micromata.azubi.Textie#doVernichte(de.micromata.azubi.Item, int)
+   * @see de.micromata.azubi.Textie#doVernichte(de.micromata.azubi.model.Item, int)
    */
     private TextieTest vernichte(String item) {
         try {

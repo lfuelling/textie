@@ -1,4 +1,4 @@
-package de.micromata.azubi;
+package de.micromata.azubi.model;
 
 import java.io.Serializable;
 
@@ -17,34 +17,18 @@ public class Item implements Serializable{
     public static final String STEIN = "Stein";
     public static final String HANDTUCH = "Handtuch";
     private static final long serialVersionUID = -2308071724210324323L;
-
-    public String getUntersucheText() {
-        return untersucheText;
-    }
-
-    public void setUntersucheText(String untersucheText) {
-        this.untersucheText = untersucheText;
-    }
-
-    private String untersucheText;
-
-    public String getBenutzeText() {
-        return benutzeText;
-    }
-
-    public void setBenutzeText(String benutzeText) {
-        this.benutzeText = benutzeText;
-    }
-
     private String benutzeText;
     private String name;
-    private boolean pickable;
+    private boolean pickable; //TODO kommt raus
+    private String untersucheText;
+    private int itemID;
+    private long uid;
 
     public int getItemID() {
         return itemID;
     }
 
-    private int itemID;
+
 
     public Item(){
 
@@ -125,5 +109,32 @@ public class Item implements Serializable{
         return false;
     }
 
+    public String getUntersucheText() {
+        return untersucheText;
+    }
 
+    public void setUntersucheText(String untersucheText) {
+        this.untersucheText = untersucheText;
+    }
+
+    public String getBenutzeText() {
+        return benutzeText;
+    }
+
+    public void setBenutzeText(String benutzeText) {
+        this.benutzeText = benutzeText;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPickable(boolean pickable) {
+        this.pickable = pickable;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
 }
