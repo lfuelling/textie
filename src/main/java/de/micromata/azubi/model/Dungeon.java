@@ -17,11 +17,6 @@ public class Dungeon implements Serializable {
     private ArrayList<Raum> raums = new ArrayList<>();
     private int currentRoomNumber; //Index des aktuellen Raumes in der RaumListe FIXME In Spieler
     private Player player;
-    //TODO
-    public HashMap<ToggleItem, Door> getDoorSchalter() {
-        return doorSchalter;
-    }
-
     private HashMap <ToggleItem,Door> doorSchalter = new HashMap<>();//FIXME ab in den Raum
     private static Dungeon dungeon;
 
@@ -384,5 +379,10 @@ public class Dungeon implements Serializable {
 
     public Player getPlayer() {
         return player;
+    }
+
+    //TODO
+    public HashMap<ToggleItem, Door> getDoorSchalter() {
+        return doorSchalter;
     }
 }
