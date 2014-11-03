@@ -126,4 +126,9 @@ public class Item implements Serializable{
     public void setUid(long uid) {
         this.uid = uid;
     }
+
+
+    public void setBenutzeText(String benutzeText) {
+        this.benutzeText = benutzeText;
+    }
 }
