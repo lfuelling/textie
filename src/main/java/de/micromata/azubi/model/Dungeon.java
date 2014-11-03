@@ -98,7 +98,8 @@ public class Dungeon implements Serializable {
 
         RaumBuilder raum5 = new RaumBuilder().addRoomNumber(5).addwillkommensNachricht("Du kommst in einen Raum, in dem eine Junge steht.")
                  .addHuman(new HumanBuilder().setHumanName("Junge").setDialog1("Ich suche meine Mutter.").setDialog2("Finde sie!").setQuestDoneText("Danke").setQuestText("Hier ein Brief bring ihn zu einer Frau.").setQuestItem("Handtuch").setRewarditem(new ItemBuilder().setName("Brief").setPickable(true).setBenutzeText("Bringe den Brief zu einer Frau").setUntersucheText("Ein Brief adressiert an eine Frau.").build()).build())
-                 .addInventory(new InventarBuilder().build()).build();
+                 .addInventory(new InventarBuilder()
+                 .addItem(new ItemBuilder().setName("Falltür").setPickable(false).setUntersucheText("Da ist eine Falltür").setBenutzeText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.").build()).build()).build();
 
         RaumBuilder raum6 = new RaumBuilder().addRoomNumber(6).addwillkommensNachricht("Du kommst in einen Raum mit einer Truhe.")
                 .addInventory(new InventarBuilder().addItem(new StorageItemBuilder().setLockState(false).setInventarBuilder(new InventarBuilder().addItem(new ItemBuilder().setName("Axt").setPickable(true).setBenutzeText("Du schlägst mit der Axt zu.").setUntersucheText("Eine scharfe Axt.").build()).build()).setName("Truhe").setBenutzeText("Du versuchst die Truhe zu öffnen.").setUntersucheText("Ein große Truhe aus Holz.")).build()).build();
