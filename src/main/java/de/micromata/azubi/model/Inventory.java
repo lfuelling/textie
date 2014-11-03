@@ -115,7 +115,7 @@ public class Inventory implements Serializable {
         return -128;
     }
 
-    public Item findItemByName(String itemName) {
+    public Item findItemByName(String itemName) throws NullPointerException {
 
         for (Item item : items) {
             if (item.getName().equalsIgnoreCase(itemName)) {
