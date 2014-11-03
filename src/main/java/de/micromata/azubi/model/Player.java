@@ -29,30 +29,14 @@ public class Player implements Serializable {
             if (command.equals("")) {
             } else {
                 String[] parsed_command = Textie.parseInput(command);
-                if (parsed_command.length < 2) {
-                    switch (parsed_command[0].toLowerCase()) {
-                        case "hilfe":
-                            Textie.printHelp();
-                            break;
-                        case "speichern":
-                            Textie.doSpeichern();
-                            break;
-                        case "laden":
-                            Textie.doLaden();
-                            break;
-                        default:
-                            Textie.printText("Unbekannter Befehl oder fehlende Argumente: " + parsed_command[0]);
-                            break;
-                    }
+               
+                String[] parsed_args = new String[2];
+                if (parsed_command.length == 1 || parsed_command[1] == null) {
+                    parsed_args[0] = "nichts";
                 } else {
-                    String[] parsed_args = new String[2];
-                    if (parsed_command[1] == null) {
-                        parsed_args[0] = "nichts";
-                    } else {
-                        parsed_args = Textie.parseInput(parsed_command[1]);
-                    }
-                    Textie.executeCommand(parsed_command, parsed_args);
+                    parsed_args = Textie.parseInput(parsed_command[1]);
                 }
+                Textie.executeCommand(parsed_command, parsed_args);
             }
         } while (Dungeon.getDungeon().getCurrentRaum().isLeaveRoom() == false);
     }
@@ -61,6 +45,7 @@ public class Player implements Serializable {
         this.inventory = inventory;
     }
     
+		// this.inventory = inventory;
     public Inventory getInventory() {
         return inventory;
     }
