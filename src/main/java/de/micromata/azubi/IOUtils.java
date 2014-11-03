@@ -24,7 +24,7 @@ public class IOUtils {
     }
 
     /**
-     * @param string to convert
+     * @param stc <b>S</b>tring <b>T</b>o <b>C</b>onvert
      * @return Returns the string which was given as parameter where the first letter is uppercase and every other is lowercase (ex. "LuKaS MaEd DiS" => "Lukas maed dis")
      */
     public static String convertToName(String stc) {
@@ -77,7 +77,6 @@ public class IOUtils {
         }
         return savegame;
     }
-    
-    
+
 
 }

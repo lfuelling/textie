@@ -27,7 +27,7 @@ public class StorageItem extends Item {
    */
 
     public StorageItem(int itemID, String name, String untersucheText, String benutzeText, boolean pickable, boolean lockable, boolean initialLockState) {
-        super(itemID, name, untersucheText, benutzeText, pickable);
+        super(itemID, name, untersucheText, benutzeText);
         //this.lockable = lockable;
         this.lockState = initialLockState;
         this.itemID = itemID;

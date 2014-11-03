@@ -1,6 +1,7 @@
 package de.micromata.azubi.model;
 
 
+import de.micromata.azubi.IOUtils;
 import de.micromata.azubi.Textie;
 import de.micromata.azubi.builder.*;
 
@@ -141,6 +142,7 @@ public class Dungeon implements Serializable {
      * @param withPrompt Set to <code>true</code>, if you want a prompt.
      */
     public void runGame(boolean withPrompt) {
+        IOUtils.loadConfig();
         currentRoomNumber = 1;
         initDoorSchalter();
         getCurrentRaum().start(withPrompt);

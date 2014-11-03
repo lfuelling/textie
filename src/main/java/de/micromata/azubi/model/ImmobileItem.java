@@ -13,9 +13,6 @@ public class ImmobileItem extends Item {
 
 
 
-  public ImmobileItem(int itemID, String name, String untersucheText, String benutzeText) {
-    super(itemID, name, untersucheText, benutzeText);
-  }
 
 
   /**
