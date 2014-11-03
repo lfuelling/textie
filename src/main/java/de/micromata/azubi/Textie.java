@@ -80,7 +80,6 @@ public class Textie implements Serializable {
 
             Dungeon.getDungeon().getPlayer().prompt();
         } else {
-            printText("Was willst du tun? ");
 //            Runnable warten = new Runnable() {
 //                @Override
 //                public void run() {
