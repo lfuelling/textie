@@ -19,7 +19,6 @@ public class Item implements Serializable{
     private static final long serialVersionUID = -2308071724210324323L;
     private String benutzeText;
     private String name;
-    private boolean pickable; //TODO kommt raus
     private String untersucheText;
     private int itemID;
     private long uid;
@@ -42,13 +41,12 @@ public class Item implements Serializable{
    * @param benutzeText Text which is printed when you use the item.
    * @param pickable Is the item pickable?
    */
-    public Item(int itemID, String name, String untersucheText, String benutzeText, boolean pickable) {
+    public Item(int itemID, String name, String untersucheText, String benutzeText) {
         this.itemID = itemID;
 
         this.name = name;
         this.untersucheText = untersucheText;
         this.benutzeText = benutzeText;
-        this.pickable = pickable;
     }
 
   /**
@@ -56,7 +54,7 @@ public class Item implements Serializable{
    * @return Returns true if the Item is pickable
    */
     public boolean isPickable() {
-        return this.pickable;
+        return true;
     }
 
   /**
@@ -121,17 +119,8 @@ public class Item implements Serializable{
         return benutzeText;
     }
 
-    public void setBenutzeText(String benutzeText) {
-        this.benutzeText = benutzeText;
-    }
-
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setPickable(boolean pickable) {
-        this.pickable = pickable;
     }
 
     public void setUid(long uid) {

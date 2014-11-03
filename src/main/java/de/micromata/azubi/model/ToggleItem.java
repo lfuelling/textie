@@ -9,9 +9,10 @@ public class ToggleItem extends Item {
     }
 
 
-    public ToggleItem(int itemID, String name, String untersucheText, String benutzeText, boolean pickable, boolean state) {
-        super(itemID, name, untersucheText, benutzeText, pickable);
-        state = this.state;
+    public ToggleItem(int itemID, String name, String untersucheText, String benutzeText, boolean state) {
+        super(itemID, name, untersucheText, benutzeText);
+        this.state = state;
+        this.itemID = itemID;
     }
 
     public boolean getState() {
