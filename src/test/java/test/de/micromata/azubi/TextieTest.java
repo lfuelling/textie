@@ -360,9 +360,9 @@ public class TextieTest {
         Assert.assertEquals(true, dungeon.getPlayer().getInventory().hasItem("brief"));
         untersuche("brief");
         benutze("brief");
-        gehe("falltür");
+        benutze("falltür");
         Assert.assertEquals(dungeon.findRaumByNummer(6), dungeon.getCurrentRaum());
-		benutze("karte");
+        benutze("karte");
         Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--", Textie.lastPrintedText);
         untersuche("truhe");
         nimm("axt aus truhe");

@@ -7,7 +7,6 @@ package de.micromata.azubi.model;
 public class StorageItem extends Item {
     //boolean lockable;
     boolean lockState;
-    String name;
     int itemID;
     Inventory inventory;
 
@@ -31,7 +30,6 @@ public class StorageItem extends Item {
         super(itemID, name, untersucheText, benutzeText, pickable);
         //this.lockable = lockable;
         this.lockState = initialLockState;
-        this.name = name;
         this.itemID = itemID;
     }
 

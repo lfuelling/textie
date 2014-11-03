@@ -51,7 +51,6 @@ public class Textie implements Serializable {
         System.exit(0);
     }
 
-    
 
     /**
      * End of the game.
@@ -121,21 +120,21 @@ public class Textie implements Serializable {
             }
         }
         if (parsed_command.length < 2) {
-        	switch (parsed_command[0].toLowerCase()) {
-			case "hilfe":
-				Textie.printHelp();
-				break;
-			case "speichern":
-				Textie.doSpeichern();
-				break;
-			case "laden":
-				Textie.doLaden();
-				break;
-			default:
-				Textie.printText("Unbekannter Befehl oder fehlende Argumente: "
-						+ parsed_command[0]);
-				break;
-			}
+            switch (parsed_command[0].toLowerCase()) {
+                case "hilfe":
+                    Textie.printHelp();
+                    break;
+                case "speichern":
+                    Textie.doSpeichern();
+                    break;
+                case "laden":
+                    Textie.doLaden();
+                    break;
+                default:
+                    Textie.printText("Unbekannter Befehl oder fehlende Argumente: "
+                            + parsed_command[0]);
+                    break;
+            }
         } else {
             Item itemToUse = chooseInventory(parsed_command[1]);
             switch (parsed_command[0]) {
@@ -148,12 +147,12 @@ public class Textie implements Serializable {
                             case "aus truhe":
                                 StorageItem truhe = (StorageItem) Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName("Truhe");
                                 if (truhe != null) {
-                                  try {
-                                    doTakeFromChest(truhe.getInventory().findItemByName(parsed_args[0]));
-                                  } catch(NullPointerException e){
-                                    printText("Item nicht gefunden.");
-                                    break;
-                                  }
+                                    try {
+                                        doTakeFromChest(truhe.getInventory().findItemByName(parsed_args[0]));
+                                    } catch (NullPointerException e) {
+                                        printText("Item nicht gefunden.");
+                                        break;
+                                    }
                                 } else {
                                     printText("Hier gibt es keine Truhe");
                                 }
@@ -399,10 +398,14 @@ public class Textie implements Serializable {
                             break;
                         }
                     case "Falltür":
+                        ToggleItem fackel = null;
                         Item item5 = chooseInventory("Fackel");
                         if (item5 instanceof ToggleItem) {
-                            ToggleItem fackel = (ToggleItem) item5;
-                            if (fackel.getState() == true && Dungeon.getDungeon().getCurrentRaum().getRoomNumber() == 3) {
+                            fackel = (ToggleItem) item5;
+                        }
+                            if (fackel != null && fackel.getState() == false && Dungeon.getDungeon().getCurrentRaum().getRoomNumber() == 3) {
+                                printText("Du kannst nichts sehen!");
+                            } else {
                                 Item itemToUse = item;
                                 if (itemToUse == null) {
                                     printText("Das Objekt gibt es nicht.");
@@ -414,15 +417,13 @@ public class Textie implements Serializable {
                                         break;
                                     }
                                 }
-                            } else {
-                                printText("Du kannst nichts sehen!");
                                 break;
                             }
-                        }
+                            break;
                     case "Axt":
                         Item axt = item;
                         if (Dungeon.getDungeon().getCurrentRaum().getRoomNumber() == 6) {
-                            //FIXME Dungeon.getDungeon().getCurrentRaum().getDoors().add(new Door(11, Richtung.OST, 7, false));
+                            Dungeon.getDungeon().getCurrentRaum().getDoors().add(new DoorBuilder().setRichtung(Richtung.OST).setLock(false).setNextRoom(Dungeon.getDungeon().findRaumByNummer(7)).build().get());
                             axt.benutzen();
                         } else {
                             Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum");
@@ -465,7 +466,7 @@ public class Textie implements Serializable {
                         if (Dungeon.getDungeon().getCurrentRaum().getRoomNumber() == 3) {
                             item5 = playerInventory.findItemByName("Fackel");
                             if (item5 instanceof ToggleItem) {
-                                ToggleItem fackel = (ToggleItem) item5;
+                                fackel = (ToggleItem) item5;
                                 if (fackel.getState() == true) {
                                     Item itemToUse = item;
                                     if (itemToUse == null) {

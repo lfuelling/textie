@@ -27,7 +27,6 @@ public class KartenBuilder extends BaseItemBuilder {
     @Override
     protected Item createInstance() {
         karte = new Karte();
-        System.out.println("Das Item ist eine Karte");
         return karte;
     }
 }
