@@ -15,7 +15,6 @@ public class StorageItemBuilder extends BaseItemBuilder {
     @Override
     protected Item createInstance() {
         storageItem = new StorageItem();
-        System.out.println("Das Item ist ein StorageItem");
         return storageItem;
     }
 

@@ -148,7 +148,12 @@ public class Textie implements Serializable {
                             case "aus truhe":
                                 StorageItem truhe = (StorageItem) Dungeon.getDungeon().getCurrentRaum().getInventory().findItemByName("Truhe");
                                 if (truhe != null) {
+                                  try {
                                     doTakeFromChest(truhe.getInventory().findItemByName(parsed_args[0]));
+                                  } catch(NullPointerException e){
+                                    printText("Item nicht gefunden.");
+                                    break;
+                                  }
                                 } else {
                                     printText("Hier gibt es keine Truhe");
                                 }

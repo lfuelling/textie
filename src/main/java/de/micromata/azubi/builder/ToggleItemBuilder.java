@@ -14,7 +14,6 @@ public class ToggleItemBuilder extends BaseItemBuilder{
     @Override
     protected Item createInstance() {
         this.item = new ToggleItem();
-        System.out.println("Das Item ist ein ToggleItem");
         return item;
     }
 

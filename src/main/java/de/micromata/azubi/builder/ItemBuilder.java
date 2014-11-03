@@ -10,7 +10,6 @@ public class ItemBuilder extends BaseItemBuilder{
 
     @Override
     protected Item createInstance() {
-        System.out.println("Das Item ist ein Item");
         return new Item();
     }
 }
