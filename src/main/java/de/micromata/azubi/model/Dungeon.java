@@ -2,16 +2,7 @@ package de.micromata.azubi.model;
 
 
 import de.micromata.azubi.Textie;
-import de.micromata.azubi.builder.DoorBuilder;
-import de.micromata.azubi.builder.DungeonBuilder;
-import de.micromata.azubi.builder.HumanBuilder;
-import de.micromata.azubi.builder.InventarBuilder;
-import de.micromata.azubi.builder.ItemBuilder;
-import de.micromata.azubi.builder.KartenBuilder;
-import de.micromata.azubi.builder.PlayerBuilder;
-import de.micromata.azubi.builder.RaumBuilder;
-import de.micromata.azubi.builder.StorageItemBuilder;
-import de.micromata.azubi.builder.ToggleItemBuilder;
+import de.micromata.azubi.builder.*;
 
 import java.io.Serializable;
 import java.util.*;

@@ -399,30 +399,38 @@ public class Textie implements Serializable {
                             break;
                         }
                     case "Falltür":
-                        Item item5 = chooseInventory("Fackel");
-                        if (item5 instanceof ToggleItem) {
-                            ToggleItem fackel = (ToggleItem) item5;
-                            if (fackel.getState() == true && Dungeon.getDungeon().getCurrentRaum().getRoomNumber() == 3) {
-                                Item itemToUse = item;
-                                if (itemToUse == null) {
-                                    printText("Das Objekt gibt es nicht.");
-                                    break;
-                                } else {
-                                    if (raumInventar.hasItem("Falltür")) {
-                                        printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
-                                        doGehen(Richtung.FALLTUER);
+                        if(Dungeon.getDungeon().getCurrentRaum().getInventory().hasItem("Falltür")) {
+                            Item item5 = chooseInventory("Fackel");
+                            if (item5 instanceof ToggleItem) {
+                                ToggleItem fackel = (ToggleItem) item5;
+                                if (fackel.getState() == true && Dungeon.getDungeon().getCurrentRaum().getRoomNumber() == 3) {
+                                    Item itemToUse = item;
+                                    if (itemToUse == null) {
+                                        printText("Das Objekt gibt es nicht.");
                                         break;
+                                    } else {
+                                        if (raumInventar.hasItem("Falltür")) {
+                                            printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
+                                            doGehen(Richtung.FALLTUER);
+                                            break;
+                                        }
                                     }
+                                } else {
+                                    printText("Du kannst nichts sehen!");
+                                    break;
                                 }
-                            } else {
-                                printText("Du kannst nichts sehen!");
+
                                 break;
                             }
                         }
+                        else{
+                            printText("Hier gibt es keine Falltür.");
+                        }
+                        break;
                     case "Axt":
                         Item axt = item;
                         if (Dungeon.getDungeon().getCurrentRaum().getRoomNumber() == 6) {
-                            //FIXME Dungeon.getDungeon().getCurrentRaum().getDoors().add(new Door(11, Richtung.OST, 7, false));
+                            Dungeon.getDungeon().getCurrentRaum().getDoors().add(new DoorBuilder().setRichtung(Richtung.OST).setLock(false).setNextRoom(Dungeon.getDungeon().findRaumByNummer(7)).build().get());
                             axt.benutzen();
                         } else {
                             Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum");
@@ -463,7 +471,7 @@ public class Textie implements Serializable {
                         }
                     default:
                         if (Dungeon.getDungeon().getCurrentRaum().getRoomNumber() == 3) {
-                            item5 = playerInventory.findItemByName("Fackel");
+                           Item item5 = playerInventory.findItemByName("Fackel");
                             if (item5 instanceof ToggleItem) {
                                 ToggleItem fackel = (ToggleItem) item5;
                                 if (fackel.getState() == true) {
