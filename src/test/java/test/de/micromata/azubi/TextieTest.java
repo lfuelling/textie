@@ -310,6 +310,9 @@ public class TextieTest {
    */
     @Test
     public void testRaum4Bis7() {
+        System.out.println();
+        System.out.println();
+        System.err.println("-- Raum 4-7 Test --");
         start();
         Assert.assertEquals(dungeon.findRaumByNummer(1), dungeon.getCurrentRaum());
         nimm("handtuch");
@@ -368,6 +371,9 @@ public class TextieTest {
      */
     @Test
     public void testKarte() {
+        System.out.println();
+        System.out.println();
+        System.err.println("-- Kartentest --");
         start();
         nimm("Fackel");
         benutze("schalter");
@@ -425,6 +431,9 @@ public class TextieTest {
      */
     @Test
     public void testKarteFalsch() {
+        System.out.println();
+        System.out.println();
+        System.err.println("-- Karte falsch Test(oder so) --");
         start();
         benutze("schalter");
         gehe("west");
@@ -481,7 +490,7 @@ public class TextieTest {
 			StorageItem truhe = (StorageItem) dungeon
 					.getCurrentRaum().getInventory().findItemByName("Truhe");
 			dungeon.doTakeFromChest(truhe.getInventory()
-					.findItemByName(text2[0]));
+                    .findItemByName(text2[0]));
 
 		} else {
 			Textie.executeCommand(new String[] { Command.NIMM, text },
