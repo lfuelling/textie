@@ -17,7 +17,6 @@ public class Human implements Serializable{
     }
 
     // Anzahl der ausgegebenen Dialoge
-    int dialogNumber = 0;
     private boolean questDone = false;
     private String dialog1;
     private String dialog2;
@@ -27,6 +26,7 @@ public class Human implements Serializable{
     private boolean gaveItem = false;
     private String questItem;
     private Item rewarditem;
+    private int dialogNumber = 0;
 
     public Human(String name, String dialog1, String dialog2, String questText, String questDoneText, Item rewardItem, String questItemName) {
         this.name = name;
@@ -112,5 +112,13 @@ public class Human implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getDialogNumber() {
+        return dialogNumber;
+    }
+
+    public void setDialogNumber(int dialogNumber) {
+        this.dialogNumber = dialogNumber;
     }
 }

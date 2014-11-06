@@ -73,15 +73,15 @@ public class Inventory implements Serializable {
     /**
      * Lists the items.
      */
-    public void listItems() {
+    public void listItems(Dungeon dungeon) {
 
         if (this.items.size() > 0) {
             for (Item items : this.items) {
                 String objectName = items.getName();
-                Textie.printText("\t" + objectName);
+                Textie.printText("\t" + objectName, dungeon);
             }
         } else {
-            Textie.printText("Nichts.");
+            Textie.printText("Nichts.", dungeon);
         }
     }
 

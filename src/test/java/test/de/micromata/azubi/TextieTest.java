@@ -32,7 +32,7 @@ public class TextieTest {
 	 */
 	@Before
 	public void testBefore() throws Exception {
-		dungeon = Dungeon.getDungeon();
+		dungeon = Dungeon.createDungeon();
 		Textie.diag = true;
 	}
 
@@ -41,7 +41,7 @@ public class TextieTest {
 	 */
 	@After
 	public void testAfter() {
-		Dungeon.setDungeon(null);
+		//Dungeon.setDungeon(null);
 	}
 
 	/*
@@ -73,7 +73,8 @@ public class TextieTest {
 		out = out.gehe("süd").next().nimm("schwert").next();
 		Assert.assertEquals(2, dungeon.getPlayer().getInventory().getSize());
 		out.benutze("schwert").next();
-		// FIXME !! Assert.assertEquals(false, dungeon.getPlayer().isAlive());
+		// FIXME !!
+		Assert.assertEquals(false, dungeon.getPlayer().isAlive());
 	}
 
 	/**
@@ -163,9 +164,6 @@ public class TextieTest {
         benutze("falltür");
         untersuche("raum");
         Assert.assertEquals(dungeon.findRaumByNummer(4), dungeon.getCurrentRaum());
-        System.out.println("Gehe in Raum 4");
-        benutze("falltür");
-        untersuche("raum");
         benutze("schalter");
         System.out.println("Gehe in Raum 1");
         gehe("ost");
@@ -464,7 +462,7 @@ public class TextieTest {
 	 */
 	private TextieTest gehe(String richtung) {
 		Textie.executeCommand(new String[] { Command.GEHE, richtung },
-				new String[] { richtung });
+				new String[] { richtung }, dungeon);
 		Thread.yield();
 		return this;
 	}
@@ -480,14 +478,14 @@ public class TextieTest {
 	private TextieTest nimm(String text) {
 		String[] text2 = Textie.parseInput(text);
 		if (text.endsWith("aus truhe")) {
-			StorageItem truhe = (StorageItem) Dungeon.getDungeon()
+			StorageItem truhe = (StorageItem) dungeon
 					.getCurrentRaum().getInventory().findItemByName("Truhe");
-			Textie.doTakeFromChest(truhe.getInventory()
+			dungeon.doTakeFromChest(truhe.getInventory()
 					.findItemByName(text2[0]));
 
 		} else {
 			Textie.executeCommand(new String[] { Command.NIMM, text },
-					new String[] { text });
+					new String[] { text }, dungeon);
 		}
 		Thread.yield();
 		return this;
@@ -497,7 +495,7 @@ public class TextieTest {
 	ExecutorService executor = Executors.newSingleThreadExecutor();
 
 	/**
-	 * Startet das SPiel
+	 * Startet das Spiel
 	 * 
 	 * @return gibt den Test weiter
 	 */
@@ -508,7 +506,7 @@ public class TextieTest {
 			public void run() {
 				do {
 					dungeon.runGame();
-				} while (!Dungeon.getDungeon().getPlayer().isAlive());
+				} while (!dungeon.getPlayer().isAlive());
 			}
 		};
 		executor.submit(runGame);
@@ -516,20 +514,20 @@ public class TextieTest {
 	}
 
 	private TextieTest save() {
-		Textie.executeCommand(new String[] { "speichern" }, new String[] {});
+		Textie.executeCommand(new String[] { "speichern" }, new String[] {}, dungeon);
 		Thread.yield();
 		return this;
 	}
 	
 	private TextieTest load() {
-		Textie.executeCommand(new String[] { "laden" }, new String[] {});
+		Textie.executeCommand(new String[] { "laden" }, new String[] {},dungeon);
 		Thread.yield();
 		return this;
 	}
 	
 	private TextieTest benutze(String item) {
 		Textie.executeCommand(new String[] { Command.BENUTZE, item },
-				new String[] { item });
+				new String[] { item }, dungeon);
 		Thread.yield();
 		return this;
 	}
@@ -543,7 +541,7 @@ public class TextieTest {
 	 */
 	private TextieTest untersuche(String item) {
 		Textie.executeCommand(new String[] { Command.UNTERSUCHE, item },
-				new String[] { item });
+				new String[] { item }, dungeon);
 		 Thread.yield();
 		return this;
 	}
@@ -557,7 +555,7 @@ public class TextieTest {
 	 */
 	private TextieTest rede(String human) {
 		Textie.executeCommand(new String[] { Command.REDE, human },
-				new String[] { human });
+				new String[] { human }, dungeon);
 		 Thread.yield();
 		return this;
 	}
@@ -571,7 +569,7 @@ public class TextieTest {
 	 */
 	private TextieTest gib(String item) {
 		Textie.executeCommand(new String[] { Command.GIB, item },
-				new String[] { item });
+				new String[] { item }, dungeon);
 		 Thread.yield();
 		return this;
 	}
@@ -585,7 +583,7 @@ public class TextieTest {
 	 */
 	private TextieTest vernichte(String item) {
 		Textie.executeCommand(new String[] { Command.VERNICHTE, item },
-				new String[] { item });
+				new String[] { item }, dungeon);
 		 Thread.yield();
 		return this;
 	}

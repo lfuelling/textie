@@ -20,31 +20,6 @@ public class Player implements Serializable {
 
 
 
-
-
-
-    public void prompt() {
-        do {
-            String command = IOUtils.readLine("Was willst du tun? ");
-            try{
-              if (command.equals("")) {
-              } else {
-                String[] parsed_command = Textie.parseInput(command);
-
-                String[] parsed_args = new String[2];
-                if (parsed_command.length == 1 || parsed_command[1] == null) {
-                  parsed_args[0] = "nichts";
-                } else {
-                  parsed_args = Textie.parseInput(parsed_command[1]);
-                }
-                Textie.executeCommand(parsed_command, parsed_args);
-              }
-            } catch(NullPointerException){
-              Textie.printText("Keine Eingabe.");
-            }
-        } while (Dungeon.getDungeon().getCurrentRaum().isLeaveRoom() == false);
-    }
-
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }

@@ -11,8 +11,9 @@ import de.micromata.azubi.Textie;
 public class Door {
     long uid;
     private Raum nextRoom;
-    boolean locked;
+    private boolean locked;
     private Richtung richtung;
+    private Raum currentRoom;
 
     /**
      * @param UID              The unique identifier we can use to define a key or a switch to a certain door.
@@ -35,7 +36,7 @@ public class Door {
     public void open() {
 
         if (locked = false) {
-            Dungeon.getDungeon().getCurrentRaum().setLeaveRoom(true);
+            currentRoom.setLeaveRoom(true);
         } else {
             Textie.printText("Diese Tür ist verschlossen.");
         }
@@ -92,5 +93,9 @@ public class Door {
 
     public void setUid(long uid) {
         this.uid = uid;
+    }
+
+    public void setCurrentRoom(Raum currentRoom) {
+        this.currentRoom = currentRoom;
     }
 }

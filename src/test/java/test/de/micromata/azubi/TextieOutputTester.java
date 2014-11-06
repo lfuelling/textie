@@ -29,11 +29,11 @@ public class TextieOutputTester {
 	 * 
 	 * @param richtung
 	 * @return gibt den Test weiter.
-	 * @see de.micromata.azubi.Textie#doGehen(de.micromata.azubi.Richtung)
+	 * @see de.micromata.azubi.model.Dungeon#doGehen(de.micromata.azubi.model.Richtung)
 	 */
 	public TextieInputTester gehe(String richtung) {
 		Textie.executeCommand(new String[] { Command.GEHE, richtung },
-				new String[] { richtung });
+				new String[] { richtung }, dungeon);
 		return new TextieInputTester(this.dungeon);
 	}
 
@@ -43,19 +43,19 @@ public class TextieOutputTester {
 	 * @param text
 	 *            Was soll der Spieler nehmen?
 	 * @return gibt den Test weiter.
-	 * @see de.micromata.azubi.Textie#doNimm(de.micromata.azubi.Item)
+	 * @see de.micromata.azubi.model.Dungeon#doNimm(de.micromata.azubi.model.Item)
 	 */
 	public TextieInputTester nimm(String text) {
 		String[] text2 = Textie.parseInput(text);
 		if (text.endsWith("aus truhe")) {
-			StorageItem truhe = (StorageItem) Dungeon.getDungeon()
+			StorageItem truhe = (StorageItem) dungeon
 					.getCurrentRaum().getInventory().findItemByName("Truhe");
-			Textie.doTakeFromChest(truhe.getInventory()
+			dungeon.doTakeFromChest(truhe.getInventory()
 					.findItemByName(text2[0]));
 
 		} else {
 			Textie.executeCommand(new String[] { Command.NIMM, text },
-					new String[] { text });
+					new String[] { text }, dungeon);
 		}
 		return new TextieInputTester(this.dungeon);
 
@@ -63,7 +63,7 @@ public class TextieOutputTester {
 
 	public TextieInputTester benutze(String item) {
 		Textie.executeCommand(new String[] { Command.BENUTZE, item },
-				new String[] { item });
+				new String[] { item }, dungeon);
 		return new TextieInputTester(this.dungeon);
 	}
 
@@ -72,11 +72,11 @@ public class TextieOutputTester {
 	 * 
 	 * @param item
 	 * @return gibt den Test weiter.
-	 * @see de.micromata.azubi.Textie#doUntersuche(String[], int)
+	 * @see de.micromata.azubi.model.Dungeon#doUntersuche(String[], int)
 	 */
 	public TextieInputTester untersuche(String item) {
 		Textie.executeCommand(new String[] { Command.UNTERSUCHE, item },
-				new String[] { item });
+				new String[] { item },dungeon);
 		return new TextieInputTester(this.dungeon);
 	}
 
@@ -85,11 +85,11 @@ public class TextieOutputTester {
 	 * 
 	 * @param human
 	 * @return gibt den Test weiter.
-	 * @see de.micromata.azubi.Textie#doReden()
+	 * @see de.micromata.azubi.model.Dungeon#doReden()
 	 */
 	public TextieInputTester rede(String human) {
 		Textie.executeCommand(new String[] { Command.REDE, human },
-				new String[] { human });
+				new String[] { human }, dungeon);
 		return new TextieInputTester(this.dungeon);
 	}
 
@@ -98,11 +98,11 @@ public class TextieOutputTester {
 	 * 
 	 * @param item
 	 * @return gibt den Test weiter.
-	 * @see de.micromata.azubi.Textie#doGeben(String[], int)
+	 * @see de.micromata.azubi.model.Dungeon#doGeben(String[], int)
 	 */
 	public TextieInputTester gib(String item) {
 		Textie.executeCommand(new String[] { Command.GIB, item },
-				new String[] { item });
+				new String[] { item }, dungeon);
 		return new TextieInputTester(this.dungeon);
 	}
 
@@ -111,11 +111,11 @@ public class TextieOutputTester {
 	 * 
 	 * @param item
 	 * @return gibt den Test weiter.
-	 * @see de.micromata.azubi.Textie#doVernichte(de.micromata.azubi.Item, int)
+	 * @see de.micromata.azubi.model.Dungeon#doVernichte(de.micromata.azubi.model.Item, int)
 	 */
 	public TextieInputTester vernichte(String item) {
 		Textie.executeCommand(new String[] { Command.VERNICHTE, item },
-				new String[] { item });
+				new String[] { item }, dungeon);
 		return new TextieInputTester(this.dungeon);
 	}
 
@@ -123,10 +123,10 @@ public class TextieOutputTester {
 	 * Gibt die hilfe aus.
 	 * 
 	 * @return gibt den Test weiter.
-	 * @see de.micromata.azubi.Textie#printHelp()
+	 * @see de.micromata.azubi.Textie#printHelp(dungeon)
 	 */
 	public TextieInputTester hilfe() {
-		Textie.executeCommand(new String[] { Command.HILFE }, new String[] {});
+		Textie.executeCommand(new String[] { Command.HILFE }, new String[] {}, dungeon);
 		return new TextieInputTester(this.dungeon);
 	}
 }

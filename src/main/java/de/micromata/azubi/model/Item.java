@@ -22,6 +22,7 @@ public class Item implements Serializable{
     private String untersucheText;
     private int itemID;
     private long uid;
+    private boolean pickable; // FIXME muss eigentlich wieder raus
 
     public int getItemID() {
         return itemID;
@@ -39,11 +40,10 @@ public class Item implements Serializable{
    * @param name Item name
    * @param untersucheText Text which is printed when you inspect the item.
    * @param benutzeText Text which is printed when you use the item.
-   * @param pickable Is the item pickable?
+   * @deprecated Use the builder instead
    */
     public Item(int itemID, String name, String untersucheText, String benutzeText) {
         this.itemID = itemID;
-
         this.name = name;
         this.untersucheText = untersucheText;
         this.benutzeText = benutzeText;
@@ -53,8 +53,12 @@ public class Item implements Serializable{
    *
    * @return Returns true if the Item is pickable
    */
-    public boolean isPickable() {
-        return true;
+    public boolean isPickable() { //FIXME !!
+        if(pickable == true){
+            return true;
+        }else{
+            return false;
+        }
     }
 
   /**
@@ -130,5 +134,9 @@ public class Item implements Serializable{
 
     public void setBenutzeText(String benutzeText) {
         this.benutzeText = benutzeText;
+    }
+
+    public void setPickable(boolean pickable) {
+        this.pickable = pickable;
     }
 }

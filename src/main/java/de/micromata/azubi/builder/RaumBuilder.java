@@ -1,6 +1,7 @@
 package de.micromata.azubi.builder;
 
 import de.micromata.azubi.model.Door;
+import de.micromata.azubi.model.Dungeon;
 import de.micromata.azubi.model.Inventory;
 import de.micromata.azubi.model.Raum;
 import java.util.*;
@@ -10,14 +11,16 @@ import java.util.*;
  */
 public class RaumBuilder implements Builder<Raum> {
 
-    private Raum raum = new Raum();
+    private Raum raum;
     private InventarBuilder ib = new InventarBuilder();
     private String willkommensNachricht;
     private int roomNumber;
     private List<DoorBuilder> dbs = new ArrayList<>();
     private HumanBuilder hb = new HumanBuilder();
 
-
+    public RaumBuilder(Dungeon dungeon){
+        raum = new Raum(dungeon);
+    }
 
 
     public RaumBuilder addInventory(InventarBuilder ib){
