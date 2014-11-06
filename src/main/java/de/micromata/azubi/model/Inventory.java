@@ -140,6 +140,10 @@ public class Inventory implements Serializable {
      * @return True if the item was transferred.
      */
     public boolean transferItem(Inventory target, Item itemToTransfer) {
+        if(itemToTransfer.isPickable() == false){
+            Textie.printText("Du kannst dieses Item nicht aufheben.");
+            return false;
+        }
         if ((target.getSize() < target.maxSlots) == false) {
             return false;
         }

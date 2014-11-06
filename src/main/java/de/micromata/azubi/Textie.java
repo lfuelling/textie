@@ -136,27 +136,32 @@ public class Textie implements Serializable {
                     printHelp(dungeon);
                     break;
                 case Command.NIMM:
-                    if (args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
-                        switch (parsed_args[1].toLowerCase()) {
-                            case "aus truhe":
-                                StorageItem truhe = (StorageItem) dungeon.getCurrentRaum().getInventory().findItemByName("Truhe");
-                                if (truhe != null) {
-                                    try {
-                                        dungeon.doTakeFromChest(truhe.getInventory().findItemByName(parsed_args[0]));
-                                    } catch (NullPointerException e) {
-                                        printText("Item nicht gefunden.", dungeon);
-                                        break;
-                                    }
-                                } else {
-                                    printText("Hier gibt es keine Truhe", dungeon);
-                                }
-                                break;
-                            default:
-                                printText("Unbekanntes Item: " + parsed_command[1], dungeon);
-                                break;
-                        }
+                    if (itemToUse == null) {
+                        printText("Du musst ein Item angeben.");
                     } else {
-                        dungeon.doNimm(itemToUse);
+                        if (args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
+                            switch (parsed_args[1].toLowerCase()) {
+                                case "aus truhe":
+                                    StorageItem truhe = (StorageItem) dungeon.getCurrentRaum().getInventory().findItemByName("Truhe");
+                                    if (truhe != null) {
+                                        try {
+                                            truhe.getInventory().transferItem(dungeon.getPlayer().getInventory(),
+                                                    truhe.getInventory().findItemByName(parsed_args[0]));
+                                        } catch (NullPointerException e) {
+                                            printText("Item nicht gefunden.", dungeon);
+                                            break;
+                                        }
+                                    } else {
+                                        printText("Hier gibt es keine Truhe", dungeon);
+                                    }
+                                    break;
+                                default:
+                                    printText("Unbekanntes Item: " + parsed_command[1], dungeon);
+                                    break;
+                            }
+                        } else {
+                            dungeon.getCurrentRaum().getInventory().transferItem(dungeon.getPlayer().getInventory(), dungeon.getCurrentRaum().getInventory().findItemByName(parsed_command[1]));
+                        }
                     }
                     break;
                 case Command.BENUTZE:
@@ -192,7 +197,7 @@ public class Textie implements Serializable {
     public static void prompt(Dungeon dungeon) {
         do {
             String command = IOUtils.readLine("Was willst du tun? ");
-            try{
+            try {
                 if (command.equals("")) {
                 } else {
                     String[] parsed_command = Textie.parseInput(command);
@@ -205,7 +210,7 @@ public class Textie implements Serializable {
                     }
                     Textie.executeCommand(parsed_command, parsed_args, dungeon);
                 }
-            } catch(NullPointerException e){
+            } catch (NullPointerException e) {
                 Textie.printText("Keine Eingabe.");
             }
         } while (dungeon.getCurrentRaum().isLeaveRoom() == false);
@@ -245,8 +250,6 @@ public class Textie implements Serializable {
     public static void printText(String text) {
         Textie.printText(text, null);
     }
-
-
 
 
     /**
