@@ -1,18 +1,19 @@
 package de.micromata.azubi;
 
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
 
-import de.micromata.azubi.builder.DoorBuilder;
-import de.micromata.azubi.builder.DungeonBuilder;
-import de.micromata.azubi.builder.HumanBuilder;
-import de.micromata.azubi.builder.InventarBuilder;
-import de.micromata.azubi.builder.ItemBuilder;
-import de.micromata.azubi.builder.KartenBuilder;
-import de.micromata.azubi.builder.PlayerBuilder;
-import de.micromata.azubi.builder.RaumBuilder;
-import de.micromata.azubi.builder.StorageItemBuilder;
-import de.micromata.azubi.builder.ToggleItemBuilder;
 import de.micromata.azubi.model.Dungeon;
 import de.micromata.azubi.model.Inventory;
 import de.micromata.azubi.model.Item;
@@ -20,7 +21,6 @@ import de.micromata.azubi.model.Raum;
 import de.micromata.azubi.model.Richtung;
 import de.micromata.azubi.model.StorageItem;
 import de.micromata.azubi.model.ToggleItem;
-import de.micromata.azubi.Command;
 
 /**
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
@@ -47,7 +47,7 @@ public class Textie implements Serializable {
         }
 
         Dungeon dungeon = Dungeon.getDungeon();
-        dungeon.runGame(true);
+        dungeon.runGame();
         System.exit(0);
     }
 
