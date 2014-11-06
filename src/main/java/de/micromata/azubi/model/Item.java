@@ -1,5 +1,7 @@
 package de.micromata.azubi.model;
 
+import de.micromata.azubi.Textie;
+
 import java.io.Serializable;
 
 public class Item implements Serializable{
@@ -75,7 +77,7 @@ public class Item implements Serializable{
    * prints the benutzeText
    */
     public void benutzen() {
-        System.out.println(benutzeText);
+        Textie.printText(benutzeText);
     }
 
   /**
@@ -86,7 +88,7 @@ public class Item implements Serializable{
             // TODO itemgeschlechter hinzufügen und Text anpassen
             System.out.println("Da ist ein/e " + this.getName() + ".");
         }
-        System.out.println(untersucheText);
+        Textie.printText(untersucheText);
     }
 
   /**
