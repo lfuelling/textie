@@ -20,6 +20,8 @@ public class Raum implements Serializable{
     private Human human;
     private Dungeon dungeon;
     private ArrayList<Door> doors = new ArrayList<>();
+    private Ghost ghost;
+
 
     public Raum(Dungeon dungeon) {
         this.dungeon = dungeon;
@@ -182,4 +184,9 @@ public class Raum implements Serializable{
     public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
     }
+
+    public void setGhost(Ghost ghost) {
+        this.ghost = ghost;
+    }
+
 }

@@ -14,7 +14,7 @@ import java.util.List;
 public class Inventory implements Serializable {
 
     private static final long serialVersionUID = -706607514666174299L;
-    
+
     public final static int MAX_SLOTS_INVENTORY = 99;
 
     private List<Item> items = new ArrayList<>();
@@ -36,16 +36,25 @@ public class Inventory implements Serializable {
             }
             items.removeAll(remove);
         }
-        // FIXME +5 für Spieler wird auf 198 + 5 gesetzt!!!!
-        maxSlots = maxSlots + slots; //FIXME Zusätzliche Methode zum vergrößern
+        maxSlots = slots;
+    }
+
+    /**
+     * Increases the size(slots) of the inventory
+     * @param slots Slots to add
+     * @return The new size of the inventory
+     */
+    public int increaseMaxSlots(int slots){
+        maxSlots += slots;
+        return maxSlots;
     }
 
     /**
      * @return The size of the items.
      */
-    public int getInventorySize() {
+    public int getMaxSlots() {
 
-        return MAX_SLOTS_INVENTORY;
+        return maxSlots;
     }
 
 
@@ -131,12 +140,14 @@ public class Inventory implements Serializable {
      * @return True if the item was transferred.
      */
     public boolean transferItem(Inventory target, Item itemToTransfer) {
-
-        if (target.items.add(itemToTransfer) && this.items.remove(itemToTransfer)) {
-            return true;
-        } else {
+        if ((target.getSize() < target.maxSlots) == false) {
             return false;
         }
+
+        if ((target.items.add(itemToTransfer) && this.items.remove(itemToTransfer)) == false) {
+            return false;
+        }
+        return true;
     }
 
     public Item findItemByUID(int UID) {

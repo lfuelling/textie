@@ -17,6 +17,7 @@ public class RaumBuilder implements Builder<Raum> {
     private int roomNumber;
     private List<DoorBuilder> dbs = new ArrayList<>();
     private HumanBuilder hb = new HumanBuilder();
+    private GhostBuilder gb = new GhostBuilder();
 
     public RaumBuilder(Dungeon dungeon){
         raum = new Raum(dungeon);
@@ -48,6 +49,12 @@ public class RaumBuilder implements Builder<Raum> {
         return this;
     }
 
+    public RaumBuilder addGhost(GhostBuilder gb){
+        this.gb = gb;
+        return this;
+    }
+
+
 
     @Override
     public RaumBuilder build() {
@@ -59,6 +66,7 @@ public class RaumBuilder implements Builder<Raum> {
             raum.addDoorToDoors(db.get());
         }
         raum.setHuman(hb.get());
+        raum.setGhost(gb.get());
         return this;
     }
 

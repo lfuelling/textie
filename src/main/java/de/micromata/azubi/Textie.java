@@ -14,14 +14,11 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 
-import de.micromata.azubi.builder.DoorBuilder;
 import de.micromata.azubi.model.Dungeon;
 import de.micromata.azubi.model.Inventory;
 import de.micromata.azubi.model.Item;
-import de.micromata.azubi.model.Raum;
 import de.micromata.azubi.model.Richtung;
 import de.micromata.azubi.model.StorageItem;
-import de.micromata.azubi.model.ToggleItem;
 
 /**
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
@@ -320,7 +317,7 @@ public class Textie implements Serializable {
      * @return Returns true if you could take it.
      */
     public static boolean recieveItem(Item item, Inventory inventory) {
-        if (inventory.getSize() < inventory.getInventorySize()) {
+        if (inventory.getSize() < inventory.getMaxSlots()) {
             inventory.addItem(item);
             return true;
         } else {
