@@ -43,7 +43,6 @@ public class Karte extends Item {
   /**
    * Prints out the map's ouput.
    */
-  @Override
   public void benutzen() {
 
     if(laufRichtung.size() != raumNummern.size()) {

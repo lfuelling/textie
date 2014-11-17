@@ -130,6 +130,7 @@ public class Dungeon implements Serializable {
      */
     public void runGame() {
         initializeGame();
+        player.setPosition(getCurrentRaum());
         getCurrentRaum().start(true);
 
 
@@ -162,6 +163,7 @@ public class Dungeon implements Serializable {
             } else {
                 Raum raum = getNextRoom(currentRoomNumber);
                 raum.setLeaveRoom(false);
+                player.setPosition(raum);
                 raum.start(false);
                 return;
             }
@@ -213,6 +215,11 @@ public class Dungeon implements Serializable {
         return null;
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     /**
      * Walking routine.
      *
@@ -227,13 +234,10 @@ public class Dungeon implements Serializable {
 
         } else {
             Raum nextRoom = currentRaum.getNextRoom(door);
-            if (nextRoom != null) {
-                    /*
-                    Hier Räume mit deren Nummern aufführen, die eine per Knopf verschlossene Tür haben
-                    if(richtung == Richtung.RICHTUNG_IN_DER_DIE_TÜR_LIEGT){
-                    checkSchalter(dungeon, richtung);
-                    }
-                    */
+            if (nextRoom == null) {
+                Textie.printText("Du bist gegen die Wand gelaufen.", this);
+            }else{
+
                 if (door.isLocked() == true) {
                     currentRaum.setLeaveRoom(false);
                     Textie.printText("Tür verschlossen.", this);
@@ -253,8 +257,6 @@ public class Dungeon implements Serializable {
                     }
                     return getNextRoom(currentRoomNumber);
                 }
-            } else {
-                Textie.printText("Du bist gegen die Wand gelaufen.", this);
             }
         }
         return null;
@@ -312,47 +314,6 @@ public class Dungeon implements Serializable {
     //TODO
     public HashMap<ToggleItem, Door> getDoorSchalter() {
         return doorSchalter;
-    }
-
-    /**
-     * Lets you walk.
-     *
-     * @param richtung the direction you want to go.
-     */
-    public void doGehen(Richtung richtung) {
-        if (this.getCurrentRaum().getRoomNumber() == 6 && this.getCurrentRaum().getNextRoom(this.getCurrentRaum().findDoorByDirection(richtung)) == null) {
-            Textie.printText("Der Weg wird durch eine Holzbarrikade versperrt.", this);
-        } else {
-            int roomNumber = this.getCurrentRaum().getRoomNumber();
-            Raum nextRoom = this.getRaum(richtung);
-            if (nextRoom != null && this.findRaumByNummer(roomNumber).isLeaveRoom()) {
-                this.setRoomNumber(nextRoom);
-                this.getCurrentRaum().setLeaveRoom(false);
-                Textie.printText(this.getCurrentRaum().getWillkommensNachricht(), this);
-            }
-        }
-
-
-    }
-
-    /**
-     * Throws away an Item.
-     *
-     * @param item  The item to throw away.
-     * @param count The size of the parsed_command String[]
-     */
-    public void doVernichte(Item item, int count) {
-        if (count == 2) {
-            if (this.getPlayer().getInventory().transferItem(this.getCurrentRaum().getInventory(), item)) {
-                Textie.printText(item.getName() + " vernichtet.", this);
-                return;
-            } else {
-                Textie.printText("Entweder das Objekt gibt es nicht, oder es ist nicht im Inventar.", this);
-                return;
-            }
-        } else {
-            Textie.printText("Was soll vernichtet werden?", this);
-        }
     }
 
     /**
@@ -439,142 +400,7 @@ public class Dungeon implements Serializable {
         }
     }
 
-    /**
-     * Lets you use an item.
-     *
-     * @param item The item to use.
-     */
-    public void doBenutze(Item item) {
-        if (item == null) {
-            Textie.printText("Das Item gibt es nicht.", this);
-        } else {
-            Inventory raumInventar = this.getCurrentRaum().getInventory();
-            Inventory playerInventory = this.getPlayer().getInventory();
-            if (item.isPickable() == false || playerInventory.hasItem(item.getName())) {
-                String itemName = item.getName();
-                if (Textie.diag == true) {
-                    Textie.printText("Du willst " + itemName + " benutzen", this);
-                }
-                switch (itemName) {
-                    // Fackel und Feuerzeug sind besonders, da sie auch funktionen
-                    // aufrufen
-                    // und nicht nur einen Text ausgeben. Außerdem sollen diese Items
-                    // benutzbar sein, selbst wenn der Raum dunkel ist.
-                    case "Fackel":// this.itemMap.get("FACKEL").getName():
-                    case "Feuerzeug": // this.itemMap.get("FEUERZEUG").getName():
-                        int fackelSlot = playerInventory.findItem(playerInventory.findItemByName("Fackel"));
-                        int feuerZeugSlot = playerInventory.findItem(playerInventory.findItemByName("Feuerzeug"));
-                        if (feuerZeugSlot < 0) {
-                            Textie.printText("Du hast kein Feuerzeug.", this);
-                            break;
-                        } else if (fackelSlot < 0) {
-                            Textie.printText("Du hast keine Fackel.", this);
-                            break;
-                        } else {
-                            Textie.printText("Du zündest deine Fackel mit dem Feuerzeug an.", this);
-                            Item item2 = playerInventory.findItemByName("Fackel");
-                            if (item2 instanceof ToggleItem) {
-                                ToggleItem fackel = (ToggleItem) item2;
-                                fackel.setState(true);
-                            }
-                            break;
-                        }
-                    case "Falltür":
-                        ToggleItem fackel = null;
-                        Item item5 = Textie.chooseInventory("Fackel", this);
-                        if (item5 instanceof ToggleItem) {
-                            fackel = (ToggleItem) item5;
-                        }
-                        if (fackel != null && fackel.getState() == false && this.getCurrentRaum().getRoomNumber() == 3) {
-                            Textie.printText("Du kannst nichts sehen!", this);
-                        } else {
-                            Item itemToUse = item;
-                            if (itemToUse == null) {
-                                Textie.printText("Das Objekt gibt es nicht.", this);
-                                break;
-                            } else {
-                                if (raumInventar.hasItem("Falltür")) {
-                                    Textie.printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.", this);
-                                    doGehen(Richtung.FALLTUER);
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                        break;
-                    case "Axt":
-                        Item axt = item;
-                        if (this.getCurrentRaum().getRoomNumber() != 6) {
-                            Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum", this);
-                        } else {
-                            this.getCurrentRaum().getDoors().add(new DoorBuilder().setRichtung(Richtung.OST).setLock(false).setNextRoom(this.findRaumByNummer(7)).build().get());
-                            axt.benutzen();
-                        }
-                        break;
-                    case "Sack":
-                        Item sack = item;
-                        sack.benutzen();
-                        playerInventory.removeItem(playerInventory.findItemByName("Sack"));
-                        playerInventory.increaseMaxSlots(2);
-                        break;
-                    case "Schalter":
 
-                        ToggleItem schalter = (ToggleItem) item;
-                        schalter.benutzen();
-                        schalter.toggleState();
-                        this.getDoorSchalter().get(schalter).toogleLock();
-
-                        break;
-                    case "Schwert":
-                        playerInventory.findItemByName("Schwert").benutzen();
-                        this.getPlayer().setAlive(false);
-                        Textie.ende(this);
-                        break;
-                    case "Schlüssel":
-                        StorageItem truhe = (StorageItem) raumInventar.findItemByName("Truhe");
-                        if (raumInventar.hasItem("Truhe")) {
-                            if (truhe.getLockState() == true) {
-                                truhe.setLockState(false);
-                                Textie.printText("Du öffnest die Truhe mit dem Schlüssel.", this);
-                                break;
-                            } else {
-                                Textie.printText("Die Truhe ist bereits aufgeschlossen.", this);
-                                break;
-                            }
-                        } else {
-                            Textie.printText("Hier gibt es nichts, was man aufschließen könnte.", this);
-                            break;
-                        }
-                    default:
-                        if (this.getCurrentRaum().getRoomNumber() == 3) {
-                            item5 = playerInventory.findItemByName("Fackel");
-                            if (item5 instanceof ToggleItem) {
-                                fackel = (ToggleItem) item5;
-                                if (fackel.getState() == true) {
-                                    Item itemToUse = item;
-                                    if (itemToUse == null) {
-                                        Textie.printText("Das Objekt gibt es nicht.", this);
-                                    } else {
-                                        itemToUse.benutzen();
-                                    }
-                                } else {
-                                    Textie.printText("Du kannst nichts sehen!", this);
-                                }
-                            }
-                        } else {
-                            Item itemToUse = item;
-                            if (itemToUse == null) {
-                                Textie.printText("Das Objekt gibt es nicht.", this);
-                            } else {
-                                itemToUse.benutzen();
-                            }
-                        }
-                }
-            } else {
-                Textie.printText("Du musst das Item im Inventar haben.", this);
-            }
-        }
-    }
 
     /**
      * Let's you take stuff from a chest.
@@ -648,38 +474,6 @@ public class Dungeon implements Serializable {
             Textie.printText("Zu wenig Argumente", this);
         }
     }
-
-    /**
-     * Talk to someone.
-     */
-    public void doReden() {
-        if (this.getCurrentRaum().getHuman().isQuestDone() == true) {
-            if (this.getCurrentRaum().getHuman().isGaveItem() == true) {
-                if (Textie.recieveItem(this.getCurrentRaum().getHuman().getRewarditem(), player.getInventory())) {
-                    Textie.printText("Hier, bitte schön.", this);
-                    this.getCurrentRaum().getHuman().setGaveItem(false);
-                } else {
-                    Textie.printText("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.", this);
-                    this.getCurrentRaum().getHuman().setGaveItem(true);
-                }
-            } else {
-                int dialogNumber = this.getCurrentRaum().getHuman().getDialogNumber();
-                switch (dialogNumber) {
-                    case 0:
-                        Textie.printText(this.getCurrentRaum().getHuman().getDialog1(), this);
-                        dialogNumber = 1;
-                        break;
-                    case 1:
-                        Textie.printText(this.getCurrentRaum().getHuman().getDialog2(), this);
-                        dialogNumber = 0;
-                        break;
-                }
-            }
-        } else {
-            Textie.printText(this.getCurrentRaum().getHuman().getQuestText(), this);
-        }
-    }
-
 
     /**
      * Best name ever.

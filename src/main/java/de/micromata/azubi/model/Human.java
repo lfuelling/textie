@@ -6,6 +6,8 @@ package de.micromata.azubi.model;
  * Wir werden das später evtl. erweitern. Vorerst genügt das. Wichtig ist mir nur, dass die Quests funktionieren.
  */
 
+import de.micromata.azubi.Textie;
+
 import java.io.Serializable;
 
 public class Human implements Serializable{
@@ -120,5 +122,36 @@ public class Human implements Serializable{
 
     public void setDialogNumber(int dialogNumber) {
         this.dialogNumber = dialogNumber;
+    }
+
+    /**
+     * Talk to someone.
+     */
+    public void doReden(Dungeon dungeon) {
+        if (this.isQuestDone() == true) {
+            if (this.isGaveItem() == true) {
+                if (Textie.recieveItem(this.getRewarditem(), dungeon.getPlayer().getInventory())) {
+                    Textie.printText("Hier, bitte schön.");
+                    this.setGaveItem(false);
+                } else {
+                    Textie.printText("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
+                    this.setGaveItem(true);
+                }
+            } else {
+                int dialogNumber = this.getDialogNumber();
+                switch (dialogNumber) {
+                    case 0:
+                        Textie.printText(this.getDialog1());
+                        dialogNumber = 1;
+                        break;
+                    case 1:
+                        Textie.printText(this.getDialog2());
+                        dialogNumber = 0;
+                        break;
+                }
+            }
+        } else {
+            Textie.printText(this.getQuestText());
+        }
     }
 }

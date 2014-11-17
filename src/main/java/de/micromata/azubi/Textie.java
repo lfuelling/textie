@@ -136,9 +136,6 @@ public class Textie implements Serializable {
                     printHelp(dungeon);
                     break;
                 case Command.NIMM:
-                    if (itemToUse == null) {
-                        printText("Du musst ein Item angeben.");
-                    } else {
                         if (args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
                             switch (parsed_args[1].toLowerCase()) {
                                 case "aus truhe":
@@ -156,29 +153,32 @@ public class Textie implements Serializable {
                                     }
                                     break;
                                 default:
-                                    printText("Unbekanntes Item: " + parsed_command[1], dungeon);
-                                    break;
+                                    if (itemToUse == null) {
+                                        printText("Du musst ein Item angeben.");
+                                    }else {
+                                        printText("Unbekanntes Item: " + parsed_command[1], dungeon);
+                                        break;
+                                    }
                             }
                         } else {
                             dungeon.getCurrentRaum().getInventory().transferItem(dungeon.getPlayer().getInventory(), dungeon.getCurrentRaum().getInventory().findItemByName(parsed_command[1]));
                         }
-                    }
                     break;
                 case Command.BENUTZE:
-                    dungeon.doBenutze(itemToUse);
+                    itemToUse.benutzen(dungeon);
                     break;
                 case Command.UNTERSUCHE:
                     dungeon.doUntersuche(parsed_command, count);
                     break;
                 case Command.VERNICHTE:
-                    dungeon.doVernichte(itemToUse, count);
+                    dungeon.getPlayer().getInventory().transferItem(dungeon.getCurrentRaum().getInventory(), itemToUse);
                     break;
 
                 case Command.GEHE:
-                    dungeon.doGehen(Richtung.getByText(parsed_command[1]));
+                    dungeon.getPlayer().doGehen(Richtung.getByText(parsed_command[1]), dungeon);
                     break;
                 case Command.REDE:
-                    dungeon.doReden();
+                    dungeon.getCurrentRaum().getHuman().doReden(dungeon);
                     break;
                 case Command.GIB:
                     if (dungeon.getCurrentRaum().getHuman() != null) {
