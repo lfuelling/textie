@@ -5,12 +5,12 @@ package de.micromata.azubi.model;
  */
 
         import de.micromata.azubi.Textie;
-        import java.util.ArrayList;
+        import java.io.Serializable;import java.util.ArrayList;
         import java.util.List;
 
-public class Ghost {
+public class Ghost implements Serializable{
 
-    private String name ="Geist";
+    private static final long serialVersionUID = -6334257305676290673L;private String name ="Geist";
     private String dialog ="Geist";
     private int nextRoomNumber;
     private Raum position;

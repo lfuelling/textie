@@ -1,10 +1,13 @@
 package de.micromata.azubi.model;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.micromata.azubi.IOUtils;
 import de.micromata.azubi.Textie;
 import de.micromata.azubi.builder.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -57,11 +60,116 @@ public class Dungeon implements Serializable {
      * @return
      */
     private static Dungeon init() {
-        DungeonBuilder dungeonBuilder = new DungeonBuilder(new Dungeon());
+        ObjectMapper mapper = new ObjectMapper();
+        List<LinkedHashMap> raumList = null;
+        try {
+            raumList = mapper.readValue(new File("TestConf.json"), List.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        DungeonBuilder dungeonBuilder = new DungeonBuilder(new Dungeon());
         PlayerBuilder fremder = new PlayerBuilder().addName("Fremder").add(new InventarBuilder().addSize(5).build()).build();
         dungeonBuilder.add(fremder);
 
+        for (LinkedHashMap listItem : raumList) {
+            RaumBuilder raum = new RaumBuilder(dungeonBuilder.get()).addRoomNumber((int) listItem.get("roomNumber")).addwillkommensNachricht((String) listItem.get("willkommensNachricht"));
+            LinkedHashMap human = (LinkedHashMap) listItem.get("human");
+            if (human == null) {
+            } else {
+                HumanBuilder hb = new HumanBuilder().setHumanName((String) human.get("name"))
+                                .setDialog1((String) human.get("dialog1"))
+                                .setDialog2((String) human.get("dialog2"))
+                                .setQuestDoneText((String) human.get("questDoneText"))
+                                .setQuestText((String) human.get("questText"))
+                                .setQuestItem((String) human.get("questItem"));
+                BaseItemBuilder rewardItemBuilder = null;
+                LinkedHashMap rewardItem = (LinkedHashMap) human.get("rewardItem");
+                String rewardItemClass = (String) rewardItem.get("class");
+                switch (rewardItemClass) {
+                    case "de.micromata.azubi.model.Item":
+                        rewardItemBuilder = new ItemBuilder();
+                        break;
+                    case "de.micromata.azubi.model.ToggleItem":
+                        rewardItemBuilder = new ToggleItemBuilder().setState((boolean) rewardItem.get("state"));
+                        break;
+                    default:
+                        System.out.println("Fehler in der Konfiguration. Fehlerhafte Klasse in rewardItem");
+                }
+                rewardItemBuilder.setName((String)rewardItem.get("name")).setBenutzeText((String) rewardItem.get("benutzeText")).setUntersucheText((String) rewardItem.get("untersucheText")).build();
+                hb.setRewarditem(rewardItemBuilder).build();
+                raum.addHuman(hb);
+            }
+            InventarBuilder ib = new InventarBuilder();
+            List<BaseItemBuilder> ibs = new ArrayList();
+            LinkedHashMap inventory = (LinkedHashMap) listItem.get("inventory");
+            ArrayList<LinkedHashMap> items = (ArrayList<LinkedHashMap>) inventory.get("items");
+            BaseItemBuilder itemBuilder = null;
+            for(LinkedHashMap item : items){
+                String itemClass = (String) item.get("class");
+                switch (itemClass) {
+                    case "de.micromata.azubi.model.Item":
+                        itemBuilder = new ItemBuilder();
+                        break;
+                    case "de.micromata.azubi.model.ToggleItem":
+                        itemBuilder = new ToggleItemBuilder().setState((boolean) item.get("state"));
+                        break;
+                    case "de.micromata.azubi.model.StorageItem":
+                        InventarBuilder chestInvBuilder;
+                        itemBuilder = new StorageItemBuilder().setLockState((boolean) item.get("lockState")).setInventarBuilder(chestInvBuilder = new InventarBuilder());
+                        LinkedHashMap chestInv = (LinkedHashMap) item.get("inventory");
+                        ArrayList<LinkedHashMap> chestItems = (ArrayList<LinkedHashMap>) chestInv.get("items");
+                        for(LinkedHashMap chestItem : chestItems){
+                            BaseItemBuilder chestItemBuilder = null;
+                            String rewardItemClass = (String) chestItem.get("class");
+                            switch (rewardItemClass) {
+                                case "de.micromata.azubi.model.Item":
+                                    chestItemBuilder = new ItemBuilder();
+                                    break;
+                                case "de.micromata.azubi.model.ToggleItem":
+                                    chestItemBuilder = new ToggleItemBuilder().setState((boolean) chestItem.get("state"));
+                                    break;
+                                default:
+                                    System.out.println("Fehler in der Konfiguration. Fehlerhafte Klasse in StorageItem");
+                            }
+                            chestItemBuilder.setName((String) chestItem.get("name")).setBenutzeText((String) chestItem.get("benutzeText")).setUntersucheText((String) chestItem.get("untersucheText")).build();
+                            chestInvBuilder.addItem(chestItemBuilder);
+                        }
+                        chestInvBuilder.build();
+                        break;
+                    case "de.micromata.azubi.model.Karte":
+                        itemBuilder = new KartenBuilder();
+                        break;
+                    default:
+                        System.out.println("Fehler in der Konfiguration. Fehlerhafte Klasse in Item");
+                }
+                itemBuilder.setName((String) item.get("name"))
+                        .setPickable((boolean) item.get("pickable"))
+                        .setUntersucheText((String) item.get("untersucheText"))
+                        .setBenutzeText((String) item.get("benutzeText"))
+                        .build();
+                ibs.add(itemBuilder);
+            }
+            for(BaseItemBuilder itemBuilder1 : ibs){
+               ib.addItem(itemBuilder1);
+            }
+            ib.build();
+            raum.addInventory(ib).build();
+            DoorBuilder db;
+            List<LinkedHashMap> doorList = (List<LinkedHashMap>) listItem.get("doors");
+            for(LinkedHashMap doorItem : doorList){
+                db = new DoorBuilder()
+                .setLock((boolean) doorItem.get("locked"))
+                .setRichtungByText((String) doorItem.get("richtung"))
+                .setNextRoom((int) doorItem.get("nextRoom")).build();
+                raum.addDoor(db);
+            }
+            raum.build();
+            dungeonBuilder.addRoom(raum);
+        }
+
+
+        /*
         RaumBuilder raum1 = new RaumBuilder(dungeonBuilder.get()).addRoomNumber(1).addwillkommensNachricht("Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.")
                 .addInventory(new InventarBuilder()
                         .addItem(new ToggleItemBuilder().setState(false).setName("Fackel").setPickable(true).setUntersucheText("Du betrachtest die Fackel. Wie kann man die wohl anzünden?").setBenutzeText("Du zündest deine Fackel mit dem Feuerzeug an.").build())
@@ -106,22 +214,22 @@ public class Dungeon implements Serializable {
                 .addHuman(new HumanBuilder().setHumanName("Frau").setDialog1("Du hast mein Sohn gesehen ?").setDialog2("Wo ?").setQuestDoneText("Danke, Hier ein Seil für dich.").setQuestItem("Brief").setRewarditem(new ItemBuilder().setName("Seil").setPickable(true).setUntersucheText("Ein stabiles Seil.").setBenutzeText("Du bindest das Seil fest.").build()).build())
                 .addInventory(new InventarBuilder().addItem(new ToggleItemBuilder().setState(false).setBenutzeText("Du hörst ein Rumpeln, als du den Schalter drückst.").setName("Schalter").setPickable(false).setUntersucheText("Da ist ein kleiner Schalter an der Wand.").build()).build().build());
 
-        raum1.addDoor(new DoorBuilder().setRichtung(Richtung.SUED).setNextRoom(raum2.get()).setLock(false).build())
-                .addDoor(new DoorBuilder().setRichtung(Richtung.WEST).setNextRoom(raum4.get()).setLock(true).build()).build();
+        raum1.addDoor(new DoorBuilder().setRichtung(Richtung.SUED).setNextRoom(2).setLock(false).build())
+                .addDoor(new DoorBuilder().setRichtung(Richtung.WEST).setNextRoom(4).setLock(true).build()).build();
 
-        raum2.addDoor(new DoorBuilder().setRichtung(Richtung.WEST).setNextRoom(raum3.get()).setLock(false).build())
-                .addDoor(new DoorBuilder().setRichtung(Richtung.NORD).setNextRoom(raum1.get()).setLock(false).build()).build();
+        raum2.addDoor(new DoorBuilder().setRichtung(Richtung.WEST).setNextRoom(3).setLock(false).build())
+                .addDoor(new DoorBuilder().setRichtung(Richtung.NORD).setNextRoom(1).setLock(false).build()).build();
 
-        raum3.addDoor(new DoorBuilder().setRichtung(Richtung.FALLTUER).setNextRoom(raum4.get()).build())
-                .addDoor(new DoorBuilder().setRichtung(Richtung.OST).setNextRoom(raum2.get()).build()).build();
+        raum3.addDoor(new DoorBuilder().setRichtung(Richtung.FALLTUER).setNextRoom(4).build())
+                .addDoor(new DoorBuilder().setRichtung(Richtung.OST).setNextRoom(2).build()).build();
 
-        raum4.addDoor(new DoorBuilder().setRichtung(Richtung.OST).setNextRoom(raum1.get()).setLock(true).build()).addDoor(new DoorBuilder().setRichtung(Richtung.WEST).setLock(false).setNextRoom(raum5.get()).build()).addDoor(new DoorBuilder().setNextRoom(raum7.get()).setLock(true).setRichtung(Richtung.NORD).build()).build();
+        raum4.addDoor(new DoorBuilder().setRichtung(Richtung.OST).setNextRoom(1).setLock(true).build()).addDoor(new DoorBuilder().setRichtung(Richtung.WEST).setLock(false).setNextRoom(5).build()).addDoor(new DoorBuilder().setNextRoom(7).setLock(true).setRichtung(Richtung.NORD).build()).build();
 
-        raum5.addDoor(new DoorBuilder().setRichtung(Richtung.FALLTUER).setNextRoom(raum6.get()).setLock(false).build()).addDoor(new DoorBuilder().setLock(false).setNextRoom(raum4.get()).setRichtung(Richtung.OST).build()).build();
+        raum5.addDoor(new DoorBuilder().setRichtung(Richtung.FALLTUER).setNextRoom(6).setLock(false).build()).addDoor(new DoorBuilder().setLock(false).setNextRoom(4).setRichtung(Richtung.OST).build()).build();
 
-        raum7.addDoor(new DoorBuilder().setRichtung(Richtung.SUED).setLock(true).setNextRoom(raum4.get()).build()).addDoor(new DoorBuilder().setNextRoom(raum6.get()).setRichtung(Richtung.WEST).setLock(false).build()).build();
+        raum7.addDoor(new DoorBuilder().setRichtung(Richtung.SUED).setLock(true).setNextRoom(4).build()).addDoor(new DoorBuilder().setNextRoom(6).setRichtung(Richtung.WEST).setLock(false).build()).build();
         dungeonBuilder.addRoom(raum1).addRoom(raum2).addRoom(raum3).addRoom(raum4).addRoom(raum5).addRoom(raum6).addRoom(raum7);
-
+        */
         return dungeonBuilder.build().get();
     }
 
@@ -236,7 +344,7 @@ public class Dungeon implements Serializable {
             Raum nextRoom = currentRaum.getNextRoom(door);
             if (nextRoom == null) {
                 Textie.printText("Du bist gegen die Wand gelaufen.", this);
-            }else{
+            } else {
 
                 if (door.isLocked() == true) {
                     currentRaum.setLeaveRoom(false);
@@ -399,7 +507,6 @@ public class Dungeon implements Serializable {
             }
         }
     }
-
 
 
     /**

@@ -10,7 +10,7 @@ public class DoorBuilder implements Builder<Door> {
 
     private Door door = new Door();
     private Richtung richtung;
-    private Raum nextRoom;
+    private int nextRoom;
     private boolean locked;
 
     public DoorBuilder setRichtung(Richtung richtung){
@@ -18,7 +18,12 @@ public class DoorBuilder implements Builder<Door> {
         return this;
     }
 
-    public DoorBuilder setNextRoom(Raum connectedRoom){
+    public DoorBuilder setRichtungByText(String richtung){
+        this.richtung = Richtung.getByText(richtung);
+        return this;
+    }
+
+    public DoorBuilder setNextRoom(int connectedRoom){
         this.nextRoom = connectedRoom;
         return this;
     }

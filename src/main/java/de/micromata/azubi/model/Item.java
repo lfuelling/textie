@@ -201,7 +201,7 @@ public class Item implements Serializable{
                         if (dungeon.getCurrentRaum().getRoomNumber() != 6) {
                             Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum");
                         } else {
-                            dungeon.getCurrentRaum().getDoors().add(new DoorBuilder().setRichtung(Richtung.OST).setLock(false).setNextRoom(dungeon.findRaumByNummer(7)).build().get());
+                            dungeon.getCurrentRaum().getDoors().add(new DoorBuilder().setRichtung(Richtung.OST).setLock(false).setNextRoom(7).build().get());
                             Textie.printText(benutzeText);
                         }
                         break;

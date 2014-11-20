@@ -1,0 +1,311 @@
+[
+  {
+    "roomNumber": 1,
+    "willkommensNachricht": "Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.",
+    "inventory": {
+      "items": [
+        {
+          "class": "de.micromata.azubi.model.ToggleItem",
+          "state": false,
+          "name": "Fackel",
+          "pickable": true,
+          "untersucheText": "Du betrachtest die Fackel. Wie kann man die wohl anzünden?",
+          "benutzeText": "Du zündest deine Fackel mit dem Feuerzeug an."
+        },
+        {
+          "class": "de.micromata.azubi.model.Item",
+          "name": "Handtuch",
+          "pickable": true,
+          "untersucheText": "Das Handtuch sieht sehr flauschig aus.",
+          "benutzeText": "Du wischst dir den Angstschweiß von der Stirn."
+        },
+        {
+          "class": "de.micromata.azubi.model.StorageItem",
+          "name": "Truhe",
+          "inventory": {
+            "items": []
+          },
+          "lockState": true,
+          "pickable": false,
+          "untersucheText": "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.",
+          "setBenutzeText": "Du kannst die Truhe nicht öffnen."
+        },
+        {
+          "class": "de.micromata.azubi.model.ToggleItem",
+          "name": "Schalter",
+          "state": false,
+          "pickable": false,
+          "untersucheText": "Da ist ein kleiner Schalter an der Wand.",
+          "benutzeText": "Du hörst ein Rumpeln, als du den Schalter drückst."
+        }
+      ]
+    },
+    "doors": [
+      {
+        "nextRoom": 2,
+        "locked": false,
+        "richtung": "SUED"
+      },
+      {
+        "nextRoom": 4,
+        "locked": true,
+        "richtung": "WEST"
+      }
+    ]
+  },
+  {
+    "roomNumber": 2,
+    "willkommensNachricht": "Du kommst in einen dunklen Raum.",
+    "inventory": {
+      "items": [
+        {
+          "class": "de.micromata.azubi.model.Item",
+          "name": "Stein",
+          "pickable": true,
+          "untersucheText": "Du betrachtest den Stein. Er wirkt kalt.",
+          "benutzeText": "Du wirfst den Stein vor dir auf den Boden und hebst ihn wieder auf. Was ein Spaß."
+        },
+        {
+          "class": "de.micromata.azubi.model.Item",
+          "name": "Schwert",
+          "pickable": true,
+          "untersucheText": "Du betrachtest das Schwert. Es sieht sehr scharf aus.",
+          "benutzeText": "Du stichst dir das Schwert zwischen die Rippen und stirbst."
+        },
+        {
+          "class": "de.micromata.azubi.model.Item",
+          "name": "Feuerzeug",
+          "pickable": true,
+          "untersucheText": "Du betrachtest das Feuerzeug. Es wirkt zuverlässig.",
+          "benutzeText": "Du zündest deine Fackel mit dem Feuerzeug an."
+        }
+      ]
+    },
+    "doors": [
+      {
+        "nextRoom": 3,
+        "locked": false,
+        "richtung": "WEST"
+      },
+      {
+        "nextRoom": 1,
+        "locked": false,
+        "richtung": "NORD"
+      }
+    ]
+  },
+  {
+    "roomNumber": 3,
+    "willkommensNachricht": "Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.",
+    "inventory": {
+      "items": [
+        {
+          "class": "de.micromata.azubi.model.Item",
+          "name": "Falltür",
+          "pickable": false,
+          "untersucheText": "Da ist eine Falltür",
+          "benutzeText": "Du schlüpfst durch die Falltür in den darunterliegenden Raum."
+        },
+        {
+          "class": "de.micromata.azubi.model.Item",
+          "name": "Whiteboard",
+          "pickable": false,
+          "untersucheText": "Es steht \"FLIEH!\" mit Blut geschrieben darauf.",
+          "benutzeText": "Das fasse ich bestimmt nicht an!"
+        },
+        {
+          "class": "de.micromata.azubi.model.Item",
+          "name": "Brecheisen",
+          "pickable": true,
+          "untersucheText": "Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.",
+          "benutzeText": "Du kratzt dich mit dem Brecheisen am Kopf"
+        },
+        {
+          "class": "de.micromata.azubi.model.Item",
+          "name": "Quietscheente",
+          "pickable": true,
+          "untersucheText": "Die Ente schaut dich vorwurfsvoll an.",
+          "benutzeText": "Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst."
+        }
+      ]
+    },
+    "doors": [
+      {
+        "nextRoom": 4,
+        "locked": false,
+        "richtung": "FALLTUER"
+      },
+      {
+        "nextRoom": 2,
+        "locked": false,
+        "richtung": "OST"
+      }
+    ]
+  },
+  {
+    "roomNumber": 4,
+    "willkommensNachricht": "Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.",
+    "human": {
+      "name": "Gordon",
+      "dialog1": "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...",
+      "dialog2": "...",
+      "questDoneText": "Sehr gut. Danke dir.",
+      "questText": "Ich suche ein Brecheisen. Hast du eins?",
+      "questItem": "Brecheisen",
+      "rewardItem": {
+        "class": "de.micromata.azubi.model.Item",
+        "name": "Schlüssel",
+        "pickable": true,
+        "untersucheText": "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?",
+        "benutzeText": "Hier gibt es nichts um den Schlüssel zu benutzen."
+      }
+    },
+    "inventory": {
+      "items": [
+        {
+          "class": "de.micromata.azubi.model.Item",
+          "name": "Sack",
+          "pickable": true,
+          "untersucheText": "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.",
+          "benutzeText": "Du bindest den Sack an deinen Rucksack."
+        },
+        {
+          "class": "de.micromata.azubi.model.ToggleItem",
+          "name": "Schalter",
+          "state": false,
+          "pickable": false,
+          "untersucheText": "Da ist ein kleiner Schalter an der Wand.",
+          "benutzeText": "Du hörst ein Rumpeln, als du den Schalter drückst."
+        },
+        {
+          "class": "de.micromata.azubi.model.Karte",
+          "name": "Karte",
+          "pickable": true,
+          "untersucheText": "Das ist eine Karte, sie zeigt deinen Laufweg."
+        }
+      ]
+    },
+    "doors": [
+      {
+        "nextRoom": 1,
+        "locked": true,
+        "richtung": "OST"
+      },
+      {
+        "nextRoom": 5,
+        "locked": false,
+        "richtung": "WEST"
+      },
+      {
+        "nextRoom": 7,
+        "locked": true,
+        "richtung": "NORD"
+      }
+    ]
+  },
+  {
+    "roomNumber": 5,
+    "willkommensNachricht": "Du kommst in einen Raum, in dem eine Junge steht.",
+    "human": {
+      "name": "Junge",
+      "dialog1": "Ich suche meine Mutter.",
+      "dialog2": "Finde sie!",
+      "questDoneText": "Danke",
+      "questText": "Hier ein Brief bring ihn zu einer Frau.",
+      "questItem": "Handtuch",
+      "rewardItem": {
+        "class": "de.micromata.azubi.model.Item",
+        "name": "Brief",
+        "pickable": true,
+        "benutzeText": "Bringe den Brief zu einer Frau",
+        "untersucheText": "Ein Brief adressiert an eine Frau."
+      }
+    },
+    "inventory": {
+      "items": []
+    },
+    "doors": [
+      {
+        "nextRoom": 6,
+        "locked": false,
+        "richtung": "FALLTUER"
+      },
+      {
+        "nextRoom": 4,
+        "locked": false,
+        "richtung": "OST"
+      }
+    ]
+  },
+  {
+    "roomNumber": 6,
+    "willkommensNachricht": "Du kommst in einen Raum mit einer Truhe.",
+    "inventory": {
+      "items": [
+        {
+          "class": "de.micromata.azubi.model.StorageItem",
+          "lockState": false,
+          "inventory": {
+            "items": [
+              {
+                "class": "de.micromata.azubi.model.Item",
+                "name": "Axt",
+                "pickable": true,
+                "benutzeText": "Du schlägst mit der Axt zu.",
+                "untersucheText": "Eine scharfe Axt."
+              }
+            ]
+          },
+          "class": "de.micromata.azubi.model.StorageItem",
+          "name": "Truhe",
+          "pickable": false,
+          "benutzeText": "Du versuchst die Truhe zu öffnen.",
+          "untersucheText": "Ein große Truhe aus Holz."
+        }
+      ]
+    },
+    "doors": []
+  },
+  {
+    "roomNumber": 7,
+    "willkommensNachricht": "Du kommst in einen Raum, eine Frau steht mitten im Raum.",
+    "human": {
+      "name": "Frau",
+      "dialog1": "Du hast mein Sohn gesehen ?",
+      "dialog2": "Wo ?",
+      "questDoneText": "Danke, Hier ein Seil für dich.",
+      "questItem": "Brief",
+      "rewardItem": {
+        "class": "de.micromata.azubi.model.Item",
+        "name": "Seil",
+        "pickable": true,
+        "untersucheText": "Ein stabiles Seil.",
+        "benutzeText": "Du bindest das Seil fest."
+      }
+    },
+    "inventory": {
+      "items": [
+        {
+          "class": "de.micromata.azubi.model.ToggleItem",
+          "name": "Schalter",
+          "state": false,
+          "benutzeText": "Du hörst ein Rumpeln, als du den Schalter drückst.",
+          "pickable": false,
+          "untersucheText": "Da ist ein kleiner Schalter an der Wand."
+        }
+      ]
+    },
+    "doors": [
+      {
+        "nextRoom": 4,
+        "locked": true,
+        "richtung": "SUED"
+      },
+      {
+        "nextRoom": 6,
+        "locked": false,
+        "richtung": "WEST"
+      }
+    ]
+  }
+]

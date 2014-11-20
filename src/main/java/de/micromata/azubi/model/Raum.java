@@ -86,7 +86,7 @@ public class Raum implements Serializable{
    * @return The next room.
    */
     public Raum getNextRoom(Door door) {
-        return door.getNextRoom();
+        return dungeon.findRaumByNummer(door.getNextRoom());
     }
 
   /**

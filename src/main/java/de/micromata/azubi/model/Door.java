@@ -2,15 +2,18 @@ package de.micromata.azubi.model;
 
 import de.micromata.azubi.Textie;
 
+import java.io.Serializable;
+
 /**
  * This defines a simple door.
  *
  * @author Lukas F&uuml;lling
  * @version 1.0
  */
-public class Door {
-    long uid;
-    private Raum nextRoom;
+public class Door implements Serializable{
+    private static final long serialVersionUID = 8951820683349398179L;
+    private long uid;
+    private int nextRoom;
     private boolean locked;
     private Richtung richtung;
     private Raum currentRoom;
@@ -79,11 +82,15 @@ public class Door {
         this.richtung = richtung;
     }
 
-    public void setNextRoom(Raum nextRoom) {
+    /**
+     *
+     * @param nextRoom The RoomNumber of the next room
+     */
+    public void setNextRoom(int nextRoom) {
         this.nextRoom = nextRoom;
     }
 
-    public Raum getNextRoom() {
+    public int getNextRoom() {
         return nextRoom;
     }
 
