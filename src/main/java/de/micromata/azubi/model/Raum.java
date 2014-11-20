@@ -10,17 +10,16 @@ import java.util.ArrayList;
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
  * @author Julian Siebert (j.siebert@micromata.de)
  */
-public class Raum implements Serializable{
+public class Raum implements Serializable, Discoverable {
     private static final long serialVersionUID = -2269575363024102428L;
     protected int roomNumber;
     protected String willkommensNachricht;
-    //protected Map<Richtung, Raum> verbindungen = new HashMap<>();
     protected boolean leaveRoom = false;
     protected Inventory inventory;
-    private Human human;
-    private Dungeon dungeon;
-    private ArrayList<Door> doors = new ArrayList<>();
-    private Ghost ghost;
+    protected Human human;
+    protected Dungeon dungeon;
+    protected ArrayList<Door> doors = new ArrayList<>();
+    protected Ghost ghost;
 
 
     public Raum(Dungeon dungeon) {
@@ -189,4 +188,9 @@ public class Raum implements Serializable{
         this.ghost = ghost;
     }
 
+    @Override
+    public void discover() {
+        Textie.printText("Im Raum befindet sich:", dungeon);
+        inventory.listItems(dungeon);
+    }
 }

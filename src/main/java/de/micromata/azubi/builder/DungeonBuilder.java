@@ -11,13 +11,13 @@ import java.util.List;
 public class DungeonBuilder implements Builder<Dungeon>{
     Dungeon dungeon;
     PlayerBuilder pb;
-    List<RaumBuilder> rbs = new ArrayList<>();
+    List<BaseRaumBuilder> rbs = new ArrayList<>();
 
     public DungeonBuilder(Dungeon dungeon) {
     	this.dungeon = dungeon;
     }
     
-    public DungeonBuilder addRoom(RaumBuilder rm) {
+    public DungeonBuilder addRoom(BaseRaumBuilder rm) {
         rbs.add(rm);
         return this;
     }
@@ -29,7 +29,7 @@ public class DungeonBuilder implements Builder<Dungeon>{
 
     @Override
     public DungeonBuilder build() {
-        for(RaumBuilder rb : rbs){
+        for(BaseRaumBuilder rb : rbs){
             dungeon.getRooms().add(rb.get());
         }
         dungeon.setPlayer(pb.get());

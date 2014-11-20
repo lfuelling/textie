@@ -4,6 +4,7 @@
 */
 [
   {
+    "class": "de.micromata.azubi.model.Raum",
     "roomNumber": 1,
     "willkommensNachricht": "Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.",
     "inventory": {
@@ -27,7 +28,7 @@
           "class": "de.micromata.azubi.model.StorageItem",
           "name": "Truhe",
           "inventory": {
-            "items": []
+          "items": []
           },
           "lockState": true,
           "pickable": false,
@@ -58,6 +59,7 @@
     ]
   },
   {
+    "class": "de.micromata.azubi.model.Raum",
     "roomNumber": 2,
     "willkommensNachricht": "Du kommst in einen dunklen Raum.",
     "inventory": {
@@ -99,6 +101,7 @@
     ]
   },
   {
+    "class": "de.micromata.azubi.model.DarkRoom",
     "roomNumber": 3,
     "willkommensNachricht": "Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.",
     "inventory": {
@@ -147,6 +150,7 @@
     ]
   },
   {
+    "class": "de.micromata.azubi.model.Raum",
     "roomNumber": 4,
     "willkommensNachricht": "Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.",
     "human": {
@@ -208,6 +212,7 @@
     ]
   },
   {
+    "class": "de.micromata.azubi.model.Raum",
     "roomNumber": 5,
     "willkommensNachricht": "Du kommst in einen Raum, in dem eine Junge steht.",
     "human": {
@@ -242,6 +247,7 @@
     ]
   },
   {
+    "class": "de.micromata.azubi.model.Raum",
     "roomNumber": 6,
     "willkommensNachricht": "Du kommst in einen Raum mit einer Truhe.",
     "inventory": {
@@ -271,6 +277,7 @@
     "doors": []
   },
   {
+    "class": "de.micromata.azubi.model.Raum",
     "roomNumber": 7,
     "willkommensNachricht": "Du kommst in einen Raum, eine Frau steht mitten im Raum.",
     "human": {

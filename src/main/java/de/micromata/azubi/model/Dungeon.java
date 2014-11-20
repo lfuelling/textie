@@ -75,7 +75,17 @@ public class Dungeon implements Serializable {
         dungeonBuilder.add(fremder);
 
         for (LinkedHashMap listItem : raumList) {
-            RaumBuilder raum = new RaumBuilder(dungeonBuilder.get()).addRoomNumber((int) listItem.get("roomNumber")).addwillkommensNachricht((String) listItem.get("willkommensNachricht"));
+            BaseRaumBuilder raum = null;
+            String roomClass = (String) listItem.get("class");
+            switch(roomClass){
+                case "de.micromata.azubi.model.Raum":
+                    raum = new RaumBuilder(dungeonBuilder.get());
+                    break;
+                case "de.micromata.azubi.model.DarkRoom":
+                    raum = new DarkRoomBuilder(dungeonBuilder.get());
+                    break;
+            }
+            raum.addRoomNumber((int) listItem.get("roomNumber")).addwillkommensNachricht((String) listItem.get("willkommensNachricht"));
             LinkedHashMap human = (LinkedHashMap) listItem.get("human");
             if (human == null) {
             } else {
@@ -375,21 +385,7 @@ public class Dungeon implements Serializable {
         } else {
             switch (parsed_command[1].toLowerCase()) {
                 case "raum":
-                    if (this.getCurrentRaum().getRoomNumber() == 3) {
-                        Item item = getPlayer().getInventory().findItemByName("Fackel");
-                        if (item instanceof ToggleItem) {
-                            ToggleItem fackel = (ToggleItem) item;
-                            if (fackel.getState() == true) {
-                                Textie.printText("Im Raum befindet sich:", this);
-                                this.getCurrentRaum().getInventory().listItems(this);
-                            } else {
-                                Textie.printText("Du kannst nichts sehen!", this);
-                            }
-                        }
-                    } else {
-                        Textie.printText("Im Raum befindet sich:", this);
-                        this.getCurrentRaum().getInventory().listItems(this);
-                    }
+                        getCurrentRaum().discover();
                     break;
                 case "inventar":
                     if (this.getCurrentRaum().getRoomNumber() == 3) {
