@@ -5,7 +5,7 @@ import de.micromata.azubi.Textie;
 /**
  * Created by jsiebert on 20.11.14.
  */
-public class DarkRoom extends Raum {
+public class DarkRoom extends Room {
 
     public DarkRoom(Dungeon dungeon) {
         super(dungeon);
@@ -16,7 +16,7 @@ public class DarkRoom extends Raum {
     }
 
     @Override
-    public void discover() {
+    public void examine() {
         Item item = dungeon.getPlayer().getInventory().findItemByName("Fackel");
         if(item == null){
             Textie.printText("Du kannst nichts sehen!");

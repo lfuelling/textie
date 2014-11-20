@@ -4,10 +4,10 @@ package de.micromata.azubi.model;
  * @author Julian Siebert (j.siebert@micromata.de)
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
  */
-public enum Richtung {
+public enum Direction {
     NORD, SUED, WEST, OST, FALLTUER;
 
-    public static Richtung getByText(String text) {
+    public static Direction getByText(String text) {
         if ("süd".equals(text.toLowerCase()) || "sued".equals(text.toLowerCase())) {
             return SUED;
         } else if (text.toLowerCase().equals("falltür") || text.toLowerCase().equals("falltuer")) {
@@ -25,13 +25,13 @@ public enum Richtung {
 
     /**
      *
-     * @param richtung Richtung deren Gegenteil man haben will.
+     * @param direction Richtung deren Gegenteil man haben will.
      * @return Gegenteilige Richtung
      *
      */
-    public static Richtung getOpposite(Richtung richtung){
-        Richtung opposite;
-        switch(richtung){
+    public static Direction getOpposite(Direction direction){
+        Direction opposite;
+        switch(direction){
             case NORD:
                 opposite = SUED;
                 break;

@@ -44,8 +44,8 @@ public abstract class BaseItemBuilder implements Builder<Item> {
     public BaseItemBuilder build() {
         item.setUid(Utils.nextId());
         item.setName(name);
-        item.setBenutzeText(benutzeText);
-        item.setUntersucheText(untersucheText);
+        item.setUseText(benutzeText);
+        item.setExamineText(untersucheText);
         item.setPickable(pickable);
         return this;
     }

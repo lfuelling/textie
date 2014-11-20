@@ -127,7 +127,7 @@ public class Human implements Serializable{
     /**
      * Talk to someone.
      */
-    public void doReden(Dungeon dungeon) {
+    public void doTalk(Dungeon dungeon) {
         if (this.isQuestDone() == true) {
             if (this.isGaveItem() == true) {
                 if (Textie.recieveItem(this.getRewarditem(), dungeon.getPlayer().getInventory())) {

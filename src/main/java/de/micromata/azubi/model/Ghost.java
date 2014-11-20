@@ -13,7 +13,7 @@ public class Ghost implements Serializable{
     private static final long serialVersionUID = -6334257305676290673L;private String name ="Geist";
     private String dialog ="Geist";
     private int nextRoomNumber;
-    private Raum position;
+    private Room position;
     private Dungeon dungeon;
 
     public void move () {
@@ -36,13 +36,13 @@ public class Ghost implements Serializable{
         int numberOfRooms = dungeon.getRooms().size();
         nextRoomNumber = (int) (Math.random() * numberOfRooms);
 
-        Item mobileItem = dungeon.getCurrentRaum().getInventory().findItemByName(itemName);
+        Item mobileItem = dungeon.getCurrentRoom().getInventory().findItemByName(itemName);
         if (mobileItem == null) {
-            setPosition(dungeon.findRaumByNummer(nextRoomNumber));
+            setPosition(dungeon.findRoomByNumber(nextRoomNumber));
         } else {
-            dungeon.getCurrentRaum().getInventory().addItem(mobileItem);
-            setPosition(dungeon.findRaumByNummer(nextRoomNumber));
-            dungeon.getCurrentRaum().getInventory().removeItem(mobileItem);
+            dungeon.getCurrentRoom().getInventory().addItem(mobileItem);
+            setPosition(dungeon.findRoomByNumber(nextRoomNumber));
+            dungeon.getCurrentRoom().getInventory().removeItem(mobileItem);
         }
         System.out.println("geist in raum:"+position);
         System.out.println("Item:"+mobileItem);
@@ -50,7 +50,7 @@ public class Ghost implements Serializable{
 
     public void setName(String name) {this.name = name;}
     public void setDialog(String dialog) {this.dialog = dialog;}
-    public void setPosition(Raum position) {
+    public void setPosition(Room position) {
         this.position = position;
     }
 }

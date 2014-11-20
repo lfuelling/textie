@@ -1,9 +1,6 @@
 package de.micromata.azubi.model;
 
-import de.micromata.azubi.IOUtils;
 import de.micromata.azubi.Textie;
-import de.micromata.azubi.model.Dungeon;
-import de.micromata.azubi.model.Inventory;
 
 import java.io.Serializable;
 
@@ -16,7 +13,7 @@ public class Player implements Serializable {
     private String name;
     private Inventory inventory;
     private boolean alive;
-    private Raum position;
+    private Room position;
 
 
 
@@ -41,30 +38,30 @@ public class Player implements Serializable {
         this.name = name;
     }
 
-    public Raum getPosition() {
+    public Room getPosition() {
         return position;
     }
 
-    public void setPosition(Raum position) {
+    public void setPosition(Room position) {
         this.position = position;
     }
 
     /**
      * Lets you walk.
      *
-     * @param richtung the direction you want to go.
+     * @param direction the direction you want to go.
      */
-    public void doGehen(Richtung richtung, Dungeon dungeon) {
-        if (position.getRoomNumber() == 6 && position.getNextRoom(position.findDoorByDirection(richtung)) == null) {
+    public void doWalk(Direction direction, Dungeon dungeon) {
+        if (position.getRoomNumber() == 6 && position.getNextRoom(position.findDoorByDirection(direction)) == null) {
             Textie.printText("Der Weg wird durch eine Holzbarrikade versperrt.");
         } else {
             int roomNumber = position.getRoomNumber();
-            Raum nextRoom = dungeon.getRaum(richtung);
-            if (nextRoom != null && dungeon.findRaumByNummer(roomNumber).isLeaveRoom() == true) {
+            Room nextRoom = dungeon.getRoom(direction);
+            if (nextRoom != null && dungeon.findRoomByNumber(roomNumber).isLeaveRoom() == true) {
                 dungeon.setRoomNumber(nextRoom);
                 position.setLeaveRoom(false);
                 position = nextRoom;
-                Textie.printText(dungeon.getCurrentRaum().getWillkommensNachricht());
+                Textie.printText(dungeon.getCurrentRoom().getWelcomeText());
             }
         }
 

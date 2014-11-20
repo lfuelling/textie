@@ -12,7 +12,7 @@ import de.micromata.azubi.model.ImmobileItem;
  */
 public class ImmobileItemBuilder extends BaseItemBuilder {
   private ImmobileItem immobileItem;
-  private InventarBuilder ib;
+  private InventoryBuilder ib;
   private boolean lockState;
 
   @Override
@@ -23,7 +23,7 @@ public class ImmobileItemBuilder extends BaseItemBuilder {
   }
 
 
-  public ImmobileItemBuilder setInventarBuilder(InventarBuilder ib) {
+  public ImmobileItemBuilder setInventoryBuilder(InventoryBuilder ib) {
     this.ib = ib;
     return this;
   }

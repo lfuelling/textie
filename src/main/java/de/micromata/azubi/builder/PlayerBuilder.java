@@ -9,10 +9,10 @@ import de.micromata.azubi.model.Player;
 public class PlayerBuilder implements Builder<Player> {
 
     private Player player = new Player();
-    private InventarBuilder ib;
+    private InventoryBuilder ib;
     private String playerName;
 
-    public PlayerBuilder add(InventarBuilder ib) {
+    public PlayerBuilder add(InventoryBuilder ib) {
         this.ib = ib;
         return this;
     }

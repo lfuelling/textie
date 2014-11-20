@@ -2,9 +2,8 @@ package de.micromata.azubi;
 
 
 import java.io.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import de.micromata.azubi.model.*;
-import java.util.*;
 
 /**
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
@@ -40,7 +39,7 @@ public class Textie implements Serializable {
      *
      * @return Returns true if you're in diag mode.
      */
-    public static boolean ende(Dungeon dungeon) {
+    public static boolean end(Dungeon dungeon) {
         printText("Herzlichen Glückwunsch !", dungeon);
         printText("Du bist aus deinem Traum erwacht und siehst, dass du", dungeon);
         printText("in deinem Bett liegst. Du spürst dein Herz stark und schnell schlagen", dungeon);
@@ -57,19 +56,19 @@ public class Textie implements Serializable {
      * @param withPrompt Set to <code>true</code>, if you want a prompt.
      * @see de.micromata.azubi.model.Dungeon#runGame()
      */
-    public static void warten(Dungeon dungeon, boolean withPrompt) {
+    public static void wait(Dungeon dungeon, boolean withPrompt) {
         if (withPrompt == true) {
             Textie.prompt(dungeon);
         } else {
-//            Runnable warten = new Runnable() {
+//            Runnable wait = new Runnable() {
 //                @Override
 //                public void run() {
 //                    do {
-//                    } while (Dungeon.getDungeon().getCurrentRaum().isLeaveRoom() == false);
+//                    } while (Dungeon.getDungeon().getCurrentRoom().isLeaveRoom() == false);
 //                }
 //            };
 //
-//            Thread thread = new Thread(warten);
+//            Thread thread = new Thread(wait);
 //            thread.start();
         }
     }
@@ -82,7 +81,7 @@ public class Textie implements Serializable {
      * @param parsed_args    Arguments of the command split by the first space.
      */
     public static void executeCommand(String[] parsed_command, String[] parsed_args, Dungeon dungeon) {
-        if (dungeon.getCurrentRaum() == null) {
+        if (dungeon.getCurrentRoom() == null) {
             System.err.println("currentRaum nicht da");
             // Kein raum nichts tun
             return;
@@ -105,10 +104,10 @@ public class Textie implements Serializable {
                     Textie.printHelp(dungeon);
                     break;
                 case "speichern":
-                    Textie.doSpeichern(dungeon);
+                    Textie.doSave(dungeon);
                     break;
                 case "laden":
-                    Textie.doLaden(dungeon);
+                    Textie.doLoad(dungeon);
                     break;
                 default:
                     Textie.printText("Unbekannter Befehl oder fehlende Argumente: "
@@ -122,14 +121,14 @@ public class Textie implements Serializable {
                     printHelp(dungeon);
                     break;
                 case Command.NIMM:
-                if(dungeon.getCurrentRaum().getInventory().findItemByName(parsed_command[1]) == null){
+                if(dungeon.getCurrentRoom().getInventory().findItemByName(parsed_command[1]) == null){
                     Textie.printText("Du musst ein Item angeben.");
                 }
                 else{
                     if (args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
                         switch (parsed_args[1].toLowerCase()) {
                             case "aus truhe":
-                                StorageItem truhe = (StorageItem) dungeon.getCurrentRaum().getInventory().findItemByName("Truhe");
+                                StorageItem truhe = (StorageItem) dungeon.getCurrentRoom().getInventory().findItemByName("Truhe");
                                 if (truhe != null) {
                                     try {
                                         truhe.getInventory().transferItem(dungeon.getPlayer().getInventory(),
@@ -151,29 +150,29 @@ public class Textie implements Serializable {
                                 }
                         }
                     } else {
-                        dungeon.getCurrentRaum().getInventory().transferItem(dungeon.getPlayer().getInventory(), dungeon.getCurrentRaum().getInventory().findItemByName(parsed_command[1]));
+                        dungeon.getCurrentRoom().getInventory().transferItem(dungeon.getPlayer().getInventory(), dungeon.getCurrentRoom().getInventory().findItemByName(parsed_command[1]));
                     }
             }
                     break;
                 case Command.BENUTZE:
-                    itemToUse.benutzen(dungeon);
+                    itemToUse.use(dungeon);
                     break;
                 case Command.UNTERSUCHE:
                     dungeon.doUntersuche(parsed_command, count);
                     break;
                 case Command.VERNICHTE:
-                    dungeon.getPlayer().getInventory().transferItem(dungeon.getCurrentRaum().getInventory(), itemToUse);
+                    dungeon.getPlayer().getInventory().transferItem(dungeon.getCurrentRoom().getInventory(), itemToUse);
                     break;
 
                 case Command.GEHE:
-                    dungeon.getPlayer().doGehen(Richtung.getByText(parsed_command[1]), dungeon);
+                    dungeon.getPlayer().doWalk(Direction.getByText(parsed_command[1]), dungeon);
                     break;
                 case Command.REDE:
-                    dungeon.getCurrentRaum().getHuman().doReden(dungeon);
+                    dungeon.getCurrentRoom().getHuman().doTalk(dungeon);
                     break;
                 case Command.GIB:
-                    if (dungeon.getCurrentRaum().getHuman() != null) {
-                        dungeon.doGeben(parsed_command, count);
+                    if (dungeon.getCurrentRoom().getHuman() != null) {
+                        dungeon.doGive(parsed_command, count);
                     } else {
                         printText("Hier gibt es niemandem, dem du etwas geben könntest", dungeon);
                     }
@@ -205,7 +204,7 @@ public class Textie implements Serializable {
                 Textie.printText("Keine Eingabe.");
                 e.printStackTrace();
             }
-        } while (dungeon.getCurrentRaum().isLeaveRoom() == false);
+        } while (dungeon.getCurrentRoom().isLeaveRoom() == false);
     }
 
     /**
@@ -226,7 +225,7 @@ public class Textie implements Serializable {
      */
     public static void printText(String text, Dungeon dungeon) {
         if (Textie.diag == true && dungeon != null) {
-            System.out.println(dungeon.getCurrentRaum() == null ? text : "[" + dungeon.getCurrentRaum().getRoomNumber() + "], " + text);
+            System.out.println(dungeon.getCurrentRoom() == null ? text : "[" + dungeon.getCurrentRoom().getRoomNumber() + "], " + text);
         } else {
             System.out.println(text);
         }
@@ -252,8 +251,8 @@ public class Textie implements Serializable {
         printText("\thilfe -> Zeigt diese Hilfe", dungeon);
         printText("\tnimm [gegenstand] -> Gegenstand zum Inventar hinzufügen", dungeon);
         printText("\tnimm [gegenstand] aus truhe -> Gegenstand aus Truhe zum Inventar hinzufügen", dungeon);
-        printText("\tbenutze [gegenstand] -> Gegenstand benutzen", dungeon);
-        printText("\tuntersuche [gegenstand/raum/inventar] -> Gegenstand, Raum oder Inventar untersuchen", dungeon);
+        printText("\tbenutze [gegenstand] -> Gegenstand use", dungeon);
+        printText("\tuntersuche [gegenstand/raum/inventar] -> Gegenstand, Raum oder Inventar examine", dungeon);
         printText("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen", dungeon);
         printText("\tgehe [nord/süd/ost/west] -> In eine Richtung gehen", dungeon);
         printText("\trede [person] -> Rede mit einer Person", dungeon);
@@ -262,7 +261,7 @@ public class Textie implements Serializable {
     /**
      * Saves.
      */
-    public static void doSpeichern(Dungeon dungeon) {
+    public static void doSave(Dungeon dungeon) {
 
         try (
                 OutputStream file = new FileOutputStream("savegame.save");
@@ -281,7 +280,7 @@ public class Textie implements Serializable {
     /**
      * Loads
      */
-    public static void doLaden(Dungeon dungeon) {
+    public static void doLoad(Dungeon dungeon) {
 
         try (
                 InputStream file = new FileInputStream("savegame.save");
@@ -328,8 +327,8 @@ public class Textie implements Serializable {
         Item item = null;
         if (dungeon.getPlayer().getInventory().findItemByName(itemName) != null) {
             item = dungeon.getPlayer().getInventory().findItemByName(itemName);
-        } else if (dungeon.getCurrentRaum().getInventory().findItemByName(itemName) != null) {
-            item = dungeon.getCurrentRaum().getInventory().findItemByName(itemName);
+        } else if (dungeon.getCurrentRoom().getInventory().findItemByName(itemName) != null) {
+            item = dungeon.getCurrentRoom().getInventory().findItemByName(itemName);
         }
         return item;
     }

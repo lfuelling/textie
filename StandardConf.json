@@ -4,9 +4,9 @@
 */
 [
   {
-    "class": "de.micromata.azubi.model.Raum",
+    "class": "de.micromata.azubi.model.Room",
     "roomNumber": 1,
-    "willkommensNachricht": "Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.",
+    "welcomeText": "Du befindest dich in einem dunklen Raum. Nach einiger Zeit gewöhnen sich deine Augen an die Dunkelheit.",
     "inventory": {
       "items": [
         {
@@ -14,15 +14,15 @@
           "state": false,
           "name": "Fackel",
           "pickable": true,
-          "untersucheText": "Du betrachtest die Fackel. Wie kann man die wohl anzünden?",
-          "benutzeText": "Du zündest deine Fackel mit dem Feuerzeug an."
+          "examineText": "Du betrachtest die Fackel. Wie kann man die wohl anzünden?",
+          "useText": "Du zündest deine Fackel mit dem Feuerzeug an."
         },
         {
           "class": "de.micromata.azubi.model.Item",
           "name": "Handtuch",
           "pickable": true,
-          "untersucheText": "Das Handtuch sieht sehr flauschig aus.",
-          "benutzeText": "Du wischst dir den Angstschweiß von der Stirn."
+          "examineText": "Das Handtuch sieht sehr flauschig aus.",
+          "useText": "Du wischst dir den Angstschweiß von der Stirn."
         },
         {
           "class": "de.micromata.azubi.model.StorageItem",
@@ -32,16 +32,16 @@
           },
           "lockState": true,
           "pickable": false,
-          "untersucheText": "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.",
-          "setBenutzeText": "Du kannst die Truhe nicht öffnen."
+          "examineText": "Die Truhe ist verschlossen. Es sieht nicht so aus, als könnte man sie aufbrechen.",
+          "useText": "Du kannst die Truhe nicht öffnen."
         },
         {
           "class": "de.micromata.azubi.model.ToggleItem",
           "name": "Schalter",
           "state": false,
           "pickable": false,
-          "untersucheText": "Da ist ein kleiner Schalter an der Wand.",
-          "benutzeText": "Du hörst ein Rumpeln, als du den Schalter drückst."
+          "examineText": "Da ist ein kleiner Schalter an der Wand.",
+          "useText": "Du hörst ein Rumpeln, als du den Schalter drückst."
         }
       ]
     },
@@ -49,41 +49,41 @@
       {
         "nextRoom": 2,
         "locked": false,
-        "richtung": "SUED"
+        "direction": "SUED"
       },
       {
         "nextRoom": 4,
         "locked": true,
-        "richtung": "WEST"
+        "direction": "WEST"
       }
     ]
   },
   {
-    "class": "de.micromata.azubi.model.Raum",
+    "class": "de.micromata.azubi.model.Room",
     "roomNumber": 2,
-    "willkommensNachricht": "Du kommst in einen dunklen Raum.",
+    "welcomeText": "Du kommst in einen dunklen Raum.",
     "inventory": {
       "items": [
         {
           "class": "de.micromata.azubi.model.Item",
           "name": "Stein",
           "pickable": true,
-          "untersucheText": "Du betrachtest den Stein. Er wirkt kalt.",
-          "benutzeText": "Du wirfst den Stein vor dir auf den Boden und hebst ihn wieder auf. Was ein Spaß."
+          "examineText": "Du betrachtest den Stein. Er wirkt kalt.",
+          "useText": "Du wirfst den Stein vor dir auf den Boden und hebst ihn wieder auf. Was ein Spaß."
         },
         {
           "class": "de.micromata.azubi.model.Item",
           "name": "Schwert",
           "pickable": true,
-          "untersucheText": "Du betrachtest das Schwert. Es sieht sehr scharf aus.",
-          "benutzeText": "Du stichst dir das Schwert zwischen die Rippen und stirbst."
+          "examineText": "Du betrachtest das Schwert. Es sieht sehr scharf aus.",
+          "useText": "Du stichst dir das Schwert zwischen die Rippen und stirbst."
         },
         {
           "class": "de.micromata.azubi.model.Item",
           "name": "Feuerzeug",
           "pickable": true,
-          "untersucheText": "Du betrachtest das Feuerzeug. Es wirkt zuverlässig.",
-          "benutzeText": "Du zündest deine Fackel mit dem Feuerzeug an."
+          "examineText": "Du betrachtest das Feuerzeug. Es wirkt zuverlässig.",
+          "useText": "Du zündest deine Fackel mit dem Feuerzeug an."
         }
       ]
     },
@@ -91,48 +91,48 @@
       {
         "nextRoom": 3,
         "locked": false,
-        "richtung": "WEST"
+        "direction": "WEST"
       },
       {
         "nextRoom": 1,
         "locked": false,
-        "richtung": "NORD"
+        "direction": "NORD"
       }
     ]
   },
   {
     "class": "de.micromata.azubi.model.DarkRoom",
     "roomNumber": 3,
-    "willkommensNachricht": "Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.",
+    "welcomeText": "Es ist zu dunkel, um etwas zu sehen. Ein seltsamer Geruch liegt in der Luft.",
     "inventory": {
       "items": [
         {
           "class": "de.micromata.azubi.model.Item",
           "name": "Falltür",
           "pickable": false,
-          "untersucheText": "Da ist eine Falltür",
-          "benutzeText": "Du schlüpfst durch die Falltür in den darunterliegenden Raum."
+          "examineText": "Da ist eine Falltür",
+          "useText": "Du schlüpfst durch die Falltür in den darunterliegenden Raum."
         },
         {
           "class": "de.micromata.azubi.model.Item",
           "name": "Whiteboard",
           "pickable": false,
-          "untersucheText": "Es steht \"FLIEH!\" mit Blut geschrieben darauf.",
-          "benutzeText": "Das fasse ich bestimmt nicht an!"
+          "examineText": "Es steht \"FLIEH!\" mit Blut geschrieben darauf.",
+          "useText": "Das fasse ich bestimmt nicht an!"
         },
         {
           "class": "de.micromata.azubi.model.Item",
           "name": "Brecheisen",
           "pickable": true,
-          "untersucheText": "Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.",
-          "benutzeText": "Du kratzt dich mit dem Brecheisen am Kopf"
+          "examineText": "Da ist ein Brecheisen, es ist \"Gordon\" eingeritzt.",
+          "useText": "Du kratzt dich mit dem Brecheisen am Kopf"
         },
         {
           "class": "de.micromata.azubi.model.Item",
           "name": "Quietscheente",
           "pickable": true,
-          "untersucheText": "Die Ente schaut dich vorwurfsvoll an.",
-          "benutzeText": "Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst."
+          "examineText": "Die Ente schaut dich vorwurfsvoll an.",
+          "useText": "Die Ente schaut dich vorwurfsvoll an und quietscht leise, als du sie zusammendrückst."
         }
       ]
     },
@@ -140,19 +140,19 @@
       {
         "nextRoom": 4,
         "locked": false,
-        "richtung": "FALLTUER"
+        "direction": "FALLTUER"
       },
       {
         "nextRoom": 2,
         "locked": false,
-        "richtung": "OST"
+        "direction": "OST"
       }
     ]
   },
   {
-    "class": "de.micromata.azubi.model.Raum",
+    "class": "de.micromata.azubi.model.Room",
     "roomNumber": 4,
-    "willkommensNachricht": "Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.",
+    "welcomeText": "Du kommst in einen hell erleuchteten Raum. Ein alter Mann lehnt an der Wand.",
     "human": {
       "name": "Gordon",
       "dialog1": "Hast du die Truhe gesehen? Ich frage mich, was da wohl drin ist...",
@@ -164,8 +164,8 @@
         "class": "de.micromata.azubi.model.Item",
         "name": "Schlüssel",
         "pickable": true,
-        "untersucheText": "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?",
-        "benutzeText": "Hier gibt es nichts um den Schlüssel zu benutzen."
+        "examineText": "Du betrachtest den Schlüssel. Was kann man damit wohl aufschließen?",
+        "useText": "Hier gibt es nichts um den Schlüssel zu benutzen."
       }
     },
     "inventory": {
@@ -174,22 +174,22 @@
           "class": "de.micromata.azubi.model.Item",
           "name": "Sack",
           "pickable": true,
-          "untersucheText": "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.",
-          "benutzeText": "Du bindest den Sack an deinen Rucksack."
+          "examineText": "Du betrachtest den Sack. Vielleicht kannst du ihn ja an deinem Rucksack befestigen.",
+          "useText": "Du bindest den Sack an deinen Rucksack."
         },
         {
           "class": "de.micromata.azubi.model.ToggleItem",
           "name": "Schalter",
           "state": false,
           "pickable": false,
-          "untersucheText": "Da ist ein kleiner Schalter an der Wand.",
-          "benutzeText": "Du hörst ein Rumpeln, als du den Schalter drückst."
+          "examineText": "Da ist ein kleiner Schalter an der Wand.",
+          "useText": "Du hörst ein Rumpeln, als du den Schalter drückst."
         },
         {
           "class": "de.micromata.azubi.model.Karte",
           "name": "Karte",
           "pickable": true,
-          "untersucheText": "Das ist eine Karte, sie zeigt deinen Laufweg."
+          "examineText": "Das ist eine Karte, sie zeigt deinen Laufweg."
         }
       ]
     },
@@ -197,24 +197,24 @@
       {
         "nextRoom": 1,
         "locked": true,
-        "richtung": "OST"
+        "direction": "OST"
       },
       {
         "nextRoom": 5,
         "locked": false,
-        "richtung": "WEST"
+        "direction": "WEST"
       },
       {
         "nextRoom": 7,
         "locked": true,
-        "richtung": "NORD"
+        "direction": "NORD"
       }
     ]
   },
   {
-    "class": "de.micromata.azubi.model.Raum",
+    "class": "de.micromata.azubi.model.Room",
     "roomNumber": 5,
-    "willkommensNachricht": "Du kommst in einen Raum, in dem eine Junge steht.",
+    "welcomeText": "Du kommst in einen Raum, in dem eine Junge steht.",
     "human": {
       "name": "Junge",
       "dialog1": "Ich suche meine Mutter.",
@@ -226,8 +226,8 @@
         "class": "de.micromata.azubi.model.Item",
         "name": "Brief",
         "pickable": true,
-        "benutzeText": "Bringe den Brief zu einer Frau",
-        "untersucheText": "Ein Brief adressiert an eine Frau."
+        "useText": "Bringe den Brief zu einer Frau",
+        "examineText": "Ein Brief adressiert an eine Frau."
       }
     },
     "inventory": {
@@ -237,19 +237,19 @@
       {
         "nextRoom": 6,
         "locked": false,
-        "richtung": "FALLTUER"
+        "direction": "FALLTUER"
       },
       {
         "nextRoom": 4,
         "locked": false,
-        "richtung": "OST"
+        "direction": "OST"
       }
     ]
   },
   {
-    "class": "de.micromata.azubi.model.Raum",
+    "class": "de.micromata.azubi.model.Room",
     "roomNumber": 6,
-    "willkommensNachricht": "Du kommst in einen Raum mit einer Truhe.",
+    "welcomeText": "Du kommst in einen Raum mit einer Truhe.",
     "inventory": {
       "items": [
         {
@@ -261,25 +261,25 @@
                 "class": "de.micromata.azubi.model.Item",
                 "name": "Axt",
                 "pickable": true,
-                "benutzeText": "Du schlägst mit der Axt zu.",
-                "untersucheText": "Eine scharfe Axt."
+                "useText": "Du schlägst mit der Axt zu.",
+                "examineText": "Eine scharfe Axt."
               }
             ]
           },
           "class": "de.micromata.azubi.model.StorageItem",
           "name": "Truhe",
           "pickable": false,
-          "benutzeText": "Du versuchst die Truhe zu öffnen.",
-          "untersucheText": "Ein große Truhe aus Holz."
+          "useText": "Du versuchst die Truhe zu öffnen.",
+          "examineText": "Ein große Truhe aus Holz."
         }
       ]
     },
     "doors": []
   },
   {
-    "class": "de.micromata.azubi.model.Raum",
+    "class": "de.micromata.azubi.model.Room",
     "roomNumber": 7,
-    "willkommensNachricht": "Du kommst in einen Raum, eine Frau steht mitten im Raum.",
+    "welcomeText": "Du kommst in einen Raum, eine Frau steht mitten im Raum.",
     "human": {
       "name": "Frau",
       "dialog1": "Du hast mein Sohn gesehen ?",
@@ -290,8 +290,8 @@
         "class": "de.micromata.azubi.model.Item",
         "name": "Seil",
         "pickable": true,
-        "untersucheText": "Ein stabiles Seil.",
-        "benutzeText": "Du bindest das Seil fest."
+        "examineText": "Ein stabiles Seil.",
+        "useText": "Du bindest das Seil fest."
       }
     },
     "inventory": {
@@ -300,9 +300,9 @@
           "class": "de.micromata.azubi.model.ToggleItem",
           "name": "Schalter",
           "state": false,
-          "benutzeText": "Du hörst ein Rumpeln, als du den Schalter drückst.",
+          "useText": "Du hörst ein Rumpeln, als du den Schalter drückst.",
           "pickable": false,
-          "untersucheText": "Da ist ein kleiner Schalter an der Wand."
+          "examineText": "Da ist ein kleiner Schalter an der Wand."
         }
       ]
     },
@@ -310,12 +310,12 @@
       {
         "nextRoom": 4,
         "locked": true,
-        "richtung": "SUED"
+        "direction": "SUED"
       },
       {
         "nextRoom": 6,
         "locked": false,
-        "richtung": "WEST"
+        "direction": "WEST"
       }
     ]
   }

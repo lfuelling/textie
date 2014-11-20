@@ -9,11 +9,11 @@ import java.util.ArrayList;
  * @author Lukas F&uuml;lling (lf.fuelling@micromata.de)
  * @see Item
  */
-public class Karte extends Item {
+public class Map extends Item {
 
 
-  ArrayList<String> raumNummern = new ArrayList<String>();
-  ArrayList<String> laufRichtung = new ArrayList<String>();
+  ArrayList<String> roomNumbers = new ArrayList<String>();
+  ArrayList<String> walkDirection = new ArrayList<String>();
 
   /**
    *
@@ -30,13 +30,13 @@ public class Karte extends Item {
 
   /**
    * Add another field to the map's output.
-   * @param currentRaumNummer Number of the room.
+   * @param currentRoomNumber Number of the room.
    * @param laufRichtung Direction
    */
-  public void writeMap(int currentRaumNummer, String laufRichtung) {
+  public void writeMap(int currentRoomNumber, String laufRichtung) {
 
-    this.laufRichtung.add("(" + laufRichtung + ")--");
-    this.raumNummern.add("[Raum " + currentRaumNummer + "]--");
+    this.walkDirection.add("(" + laufRichtung + ")--");
+    this.roomNumbers.add("[Raum " + currentRoomNumber + "]--");
 
   }
 
@@ -45,14 +45,14 @@ public class Karte extends Item {
    */
   public void benutzen() {
 
-    if(laufRichtung.size() != raumNummern.size()) {
+    if(walkDirection.size() != roomNumbers.size()) {
       return;
     }
 
     StringBuffer buf = new StringBuffer();
 
-    for(int i = 0; i < laufRichtung.size(); i++) {
-      buf.append(raumNummern.get(i)).append(laufRichtung.get(i));
+    for(int i = 0; i < walkDirection.size(); i++) {
+      buf.append(roomNumbers.get(i)).append(walkDirection.get(i));
     }
 
     Textie.printText(buf.toString());

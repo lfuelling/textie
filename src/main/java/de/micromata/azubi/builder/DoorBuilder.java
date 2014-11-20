@@ -9,17 +9,17 @@ import de.micromata.azubi.model.*;
 public class DoorBuilder implements Builder<Door> {
 
     private Door door = new Door();
-    private Richtung richtung;
+    private Direction direction;
     private int nextRoom;
     private boolean locked;
 
-    public DoorBuilder setRichtung(Richtung richtung){
-        this.richtung = richtung;
+    public DoorBuilder setDirection(Direction direction){
+        this.direction = direction;
         return this;
     }
 
     public DoorBuilder setRichtungByText(String richtung){
-        this.richtung = Richtung.getByText(richtung);
+        this.direction = Direction.getByText(richtung);
         return this;
     }
 
@@ -37,7 +37,7 @@ public class DoorBuilder implements Builder<Door> {
     @Override
     public DoorBuilder build() {
         door.setUid(Utils.nextId());
-        door.setRichtung(richtung);
+        door.setDirection(direction);
         door.setNextRoom(nextRoom);
         door.setLocked(locked);
         return this;

@@ -1,67 +1,56 @@
 package de.micromata.azubi.builder;
 
-import de.micromata.azubi.model.DarkRoom;
 import de.micromata.azubi.model.Dungeon;
+import de.micromata.azubi.model.Inventory;
 import de.micromata.azubi.model.Room;
+import java.util.*;
 
 /**
- * Created by jsiebert on 20.11.14.
+ * Created by jsiebert on 30.10.14.
  */
-public class DarkRoomBuilder extends BaseRoomBuilder implements Builder<Room> {
+public abstract class BaseRoomBuilder implements Builder<Room> {
 
-    private DarkRoom room;
-
-    public DarkRoomBuilder(Dungeon dungeon) {
-        super(dungeon);
-    }
-
-    @Override
-    protected Room createInstance(Dungeon dungeon) {
-        this.room = new DarkRoom(dungeon);
-        return room;
-    }
-}
-
-/*
-    private DarkRoom room;
-    private InventarBuilder ib = new InventarBuilder();
+    private Room room;
+    private InventoryBuilder ib = new InventoryBuilder();
     private String willkommensNachricht;
     private int roomNumber;
     private List<DoorBuilder> dbs = new ArrayList<>();
     private HumanBuilder hb = new HumanBuilder();
     private GhostBuilder gb = new GhostBuilder();
 
-    public DarkRoomBuilder(Dungeon dungeon){
-        room = new DarkRoom(dungeon);
+    public BaseRoomBuilder(Dungeon dungeon){
+        this.room = createInstance(dungeon);
     }
 
+    protected abstract Room createInstance(Dungeon dungeon);
 
-    public DarkRoomBuilder addInventory(InventarBuilder ib){
+
+    public BaseRoomBuilder addInventory(InventoryBuilder ib){
         this.ib = ib;
         return this;
     }
 
-    public DarkRoomBuilder addRoomNumber(int roomNumber){
+    public BaseRoomBuilder addRoomNumber(int roomNumber){
         this.roomNumber = roomNumber;
         return this;
     }
 
-    public DarkRoomBuilder addDoor(DoorBuilder db){
+    public BaseRoomBuilder addDoor(DoorBuilder db){
         dbs.add(db);
         return this;
     }
 
-    public DarkRoomBuilder addHuman(HumanBuilder hb){
+    public BaseRoomBuilder addHuman(HumanBuilder hb){
         this.hb = hb;
         return this;
     }
 
-    public DarkRoomBuilder addwillkommensNachricht(String willkommensNachricht){
+    public BaseRoomBuilder addwillkommensNachricht(String willkommensNachricht){
         this.willkommensNachricht = willkommensNachricht;
         return this;
     }
 
-    public DarkRoomBuilder addGhost(GhostBuilder gb){
+    public BaseRoomBuilder addGhost(GhostBuilder gb){
         this.gb = gb;
         return this;
     }
@@ -69,7 +58,7 @@ public class DarkRoomBuilder extends BaseRoomBuilder implements Builder<Room> {
 
 
     @Override
-    public DarkRoomBuilder build() {
+    public BaseRoomBuilder build() {
         Inventory inv = ib.get();
         room.setInventory(inv);
         room.setWelcomeText(willkommensNachricht);
@@ -83,7 +72,7 @@ public class DarkRoomBuilder extends BaseRoomBuilder implements Builder<Room> {
     }
 
     @Override
-    public DarkRoom get() {
+    public Room get() {
         return room;
     }
- */
+}

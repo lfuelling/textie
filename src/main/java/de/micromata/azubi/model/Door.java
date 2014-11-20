@@ -15,8 +15,8 @@ public class Door implements Serializable{
     private long uid;
     private int nextRoom;
     private boolean locked;
-    private Richtung richtung;
-    private Raum currentRoom;
+    private Direction direction;
+    private Room currentRoom;
 
     /**
      * @param UID              The unique identifier we can use to define a key or a switch to a certain door.
@@ -78,8 +78,8 @@ public class Door implements Serializable{
         }
     }
 
-    public void setRichtung(Richtung richtung) {
-        this.richtung = richtung;
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     /**
@@ -94,15 +94,15 @@ public class Door implements Serializable{
         return nextRoom;
     }
 
-    public Richtung getRichtung() {
-        return richtung;
+    public Direction getDirection() {
+        return direction;
     }
 
     public void setUid(long uid) {
         this.uid = uid;
     }
 
-    public void setCurrentRoom(Raum currentRoom) {
+    public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }
 }

@@ -20,7 +20,7 @@ import java.util.*;
  */
 public class Dungeon implements Serializable {
     private static final long serialVersionUID = -7870743513679247263L;
-    private ArrayList<Raum> raums = new ArrayList<>();
+    private ArrayList<Room> rooms = new ArrayList<>();
     private int currentRoomNumber; //Index des aktuellen Raumes in der RaumListe FIXME In Spieler
     private Player player;
     private HashMap<ToggleItem, Door> doorSchalter = new HashMap<>();//FIXME ab in den Raum
@@ -63,38 +63,38 @@ public class Dungeon implements Serializable {
     private static Dungeon init() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.getFactory().enable(JsonParser.Feature.ALLOW_COMMENTS);
-        List<LinkedHashMap> raumList = null;
+        List<LinkedHashMap> roomList = null;
         try {
-            raumList = mapper.readValue(new File("TextieConf.json"), List.class);
+            roomList = mapper.readValue(new File("TextieConf.json"), List.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         DungeonBuilder dungeonBuilder = new DungeonBuilder(new Dungeon());
-        PlayerBuilder fremder = new PlayerBuilder().addName("Fremder").add(new InventarBuilder().addSize(5).build()).build();
+        PlayerBuilder fremder = new PlayerBuilder().addName("Fremder").add(new InventoryBuilder().addSize(5).build()).build();
         dungeonBuilder.add(fremder);
 
-        for (LinkedHashMap listItem : raumList) {
-            BaseRaumBuilder raum = null;
+        for (LinkedHashMap listItem : roomList) {
+            BaseRoomBuilder room = null;
             String roomClass = (String) listItem.get("class");
-            switch(roomClass){
-                case "de.micromata.azubi.model.Raum":
-                    raum = new RaumBuilder(dungeonBuilder.get());
+            switch (roomClass) {
+                case "de.micromata.azubi.model.Room":
+                    room = new RoomBuilder(dungeonBuilder.get());
                     break;
                 case "de.micromata.azubi.model.DarkRoom":
-                    raum = new DarkRoomBuilder(dungeonBuilder.get());
+                    room = new DarkRoomBuilder(dungeonBuilder.get());
                     break;
             }
-            raum.addRoomNumber((int) listItem.get("roomNumber")).addwillkommensNachricht((String) listItem.get("willkommensNachricht"));
+            room.addRoomNumber((int) listItem.get("roomNumber")).addwillkommensNachricht((String) listItem.get("welcomeText"));
             LinkedHashMap human = (LinkedHashMap) listItem.get("human");
             if (human == null) {
             } else {
                 HumanBuilder hb = new HumanBuilder().setHumanName((String) human.get("name"))
-                                .setDialog1((String) human.get("dialog1"))
-                                .setDialog2((String) human.get("dialog2"))
-                                .setQuestDoneText((String) human.get("questDoneText"))
-                                .setQuestText((String) human.get("questText"))
-                                .setQuestItem((String) human.get("questItem"));
+                        .setDialog1((String) human.get("dialog1"))
+                        .setDialog2((String) human.get("dialog2"))
+                        .setQuestDoneText((String) human.get("questDoneText"))
+                        .setQuestText((String) human.get("questText"))
+                        .setQuestItem((String) human.get("questItem"));
                 BaseItemBuilder rewardItemBuilder = null;
                 LinkedHashMap rewardItem = (LinkedHashMap) human.get("rewardItem");
                 String rewardItemClass = (String) rewardItem.get("class");
@@ -108,16 +108,16 @@ public class Dungeon implements Serializable {
                     default:
                         System.out.println("Fehler in der Konfiguration. Fehlerhafte Klasse in rewardItem");
                 }
-                rewardItemBuilder.setName((String)rewardItem.get("name")).setBenutzeText((String) rewardItem.get("benutzeText")).setUntersucheText((String) rewardItem.get("untersucheText")).build();
+                rewardItemBuilder.setName((String) rewardItem.get("name")).setBenutzeText((String) rewardItem.get("useText")).setUntersucheText((String) rewardItem.get("examineText")).build();
                 hb.setRewarditem(rewardItemBuilder).build();
-                raum.addHuman(hb);
+                room.addHuman(hb);
             }
-            InventarBuilder ib = new InventarBuilder();
+            InventoryBuilder ib = new InventoryBuilder();
             List<BaseItemBuilder> ibs = new ArrayList();
             LinkedHashMap inventory = (LinkedHashMap) listItem.get("inventory");
             ArrayList<LinkedHashMap> items = (ArrayList<LinkedHashMap>) inventory.get("items");
             BaseItemBuilder itemBuilder = null;
-            for(LinkedHashMap item : items){
+            for (LinkedHashMap item : items) {
                 String itemClass = (String) item.get("class");
                 switch (itemClass) {
                     case "de.micromata.azubi.model.Item":
@@ -127,11 +127,11 @@ public class Dungeon implements Serializable {
                         itemBuilder = new ToggleItemBuilder().setState((boolean) item.get("state"));
                         break;
                     case "de.micromata.azubi.model.StorageItem":
-                        InventarBuilder chestInvBuilder;
-                        itemBuilder = new StorageItemBuilder().setLockState((boolean) item.get("lockState")).setInventarBuilder(chestInvBuilder = new InventarBuilder());
+                        InventoryBuilder chestInvBuilder;
+                        itemBuilder = new StorageItemBuilder().setLockState((boolean) item.get("lockState")).setInventoryBuilder(chestInvBuilder = new InventoryBuilder());
                         LinkedHashMap chestInv = (LinkedHashMap) item.get("inventory");
                         ArrayList<LinkedHashMap> chestItems = (ArrayList<LinkedHashMap>) chestInv.get("items");
-                        for(LinkedHashMap chestItem : chestItems){
+                        for (LinkedHashMap chestItem : chestItems) {
                             BaseItemBuilder chestItemBuilder = null;
                             String rewardItemClass = (String) chestItem.get("class");
                             switch (rewardItemClass) {
@@ -144,40 +144,40 @@ public class Dungeon implements Serializable {
                                 default:
                                     System.out.println("Fehler in der Konfiguration. Fehlerhafte Klasse in StorageItem");
                             }
-                            chestItemBuilder.setName((String) chestItem.get("name")).setBenutzeText((String) chestItem.get("benutzeText")).setUntersucheText((String) chestItem.get("untersucheText")).build();
+                            chestItemBuilder.setName((String) chestItem.get("name")).setBenutzeText((String) chestItem.get("useText")).setUntersucheText((String) chestItem.get("examineText")).build();
                             chestInvBuilder.addItem(chestItemBuilder);
                         }
                         chestInvBuilder.build();
                         break;
                     case "de.micromata.azubi.model.Karte":
-                        itemBuilder = new KartenBuilder();
+                        itemBuilder = new MapBuilder();
                         break;
                     default:
                         System.out.println("Fehler in der Konfiguration. Fehlerhafte Klasse in Item");
                 }
                 itemBuilder.setName((String) item.get("name"))
                         .setPickable((boolean) item.get("pickable"))
-                        .setUntersucheText((String) item.get("untersucheText"))
-                        .setBenutzeText((String) item.get("benutzeText"))
+                        .setUntersucheText((String) item.get("examineText"))
+                        .setBenutzeText((String) item.get("useText"))
                         .build();
                 ibs.add(itemBuilder);
             }
-            for(BaseItemBuilder itemBuilder1 : ibs){
-               ib.addItem(itemBuilder1);
+            for (BaseItemBuilder itemBuilder1 : ibs) {
+                ib.addItem(itemBuilder1);
             }
             ib.build();
-            raum.addInventory(ib).build();
+            room.addInventory(ib).build();
             DoorBuilder db;
             List<LinkedHashMap> doorList = (List<LinkedHashMap>) listItem.get("doors");
-            for(LinkedHashMap doorItem : doorList){
+            for (LinkedHashMap doorItem : doorList) {
                 db = new DoorBuilder()
-                .setLock((boolean) doorItem.get("locked"))
-                .setRichtungByText((String) doorItem.get("richtung"))
-                .setNextRoom((int) doorItem.get("nextRoom")).build();
-                raum.addDoor(db);
+                        .setLock((boolean) doorItem.get("locked"))
+                        .setRichtungByText((String) doorItem.get("direction"))
+                        .setNextRoom((int) doorItem.get("nextRoom")).build();
+                room.addDoor(db);
             }
-            raum.build();
-            dungeonBuilder.addRoom(raum);
+            room.build();
+            dungeonBuilder.addRoom(room);
         }
         return dungeonBuilder.build().get();
     }
@@ -187,20 +187,20 @@ public class Dungeon implements Serializable {
      */
     public void runGame() {
         initializeGame();
-        player.setPosition(getCurrentRaum());
-        getCurrentRaum().start(true);
+        player.setPosition(getCurrentRoom());
+        getCurrentRoom().start(true);
 
 
         while (player.isAlive()) {
-            if (getCurrentRaum().isLeaveRoom() == false) {
+            if (getCurrentRoom().isLeaveRoom() == false) {
                 continue;
             } else {
-                Raum raum = getNextRoom(currentRoomNumber);
-                raum.setLeaveRoom(false);
-                raum.start(true);
+                Room room = getNextRoom(currentRoomNumber);
+                room.setLeaveRoom(false);
+                room.start(true);
             }
         }
-        Textie.ende(this);
+        Textie.end(this);
     }
 
 
@@ -215,17 +215,17 @@ public class Dungeon implements Serializable {
         }
 
         if (player.isAlive()) {
-            if (getCurrentRaum().isLeaveRoom() == false) {
+            if (getCurrentRoom().isLeaveRoom() == false) {
                 return;
             } else {
-                Raum raum = getNextRoom(currentRoomNumber);
-                raum.setLeaveRoom(false);
-                player.setPosition(raum);
-                raum.start(false);
+                Room room = getNextRoom(currentRoomNumber);
+                room.setLeaveRoom(false);
+                player.setPosition(room);
+                room.start(false);
                 return;
             }
         }
-        Textie.ende(this);
+        Textie.end(this);
     }
 
 
@@ -235,38 +235,38 @@ public class Dungeon implements Serializable {
     }
 
     public void initDoorSchalter() {
-        doorSchalter.put((ToggleItem) findRaumByNummer(1).getInventory().findItemByName("Schalter"), findRaumByNummer(1).findDoorByDirection(Richtung.WEST));
-        doorSchalter.put((ToggleItem) findRaumByNummer(4).getInventory().findItemByName("Schalter"), findRaumByNummer(4).findDoorByDirection(Richtung.OST));
-        doorSchalter.put((ToggleItem) findRaumByNummer(7).getInventory().findItemByName("Schalter"), findRaumByNummer(7).findDoorByDirection(Richtung.SUED));
+        doorSchalter.put((ToggleItem) findRoomByNumber(1).getInventory().findItemByName("Schalter"), findRoomByNumber(1).findDoorByDirection(Direction.WEST));
+        doorSchalter.put((ToggleItem) findRoomByNumber(4).getInventory().findItemByName("Schalter"), findRoomByNumber(4).findDoorByDirection(Direction.OST));
+        doorSchalter.put((ToggleItem) findRoomByNumber(7).getInventory().findItemByName("Schalter"), findRoomByNumber(7).findDoorByDirection(Direction.SUED));
     }
 
     /**
      * @return Returns the current room.
      */
-    public Raum getCurrentRaum() {
+    public Room getCurrentRoom() {
 
-        if (raums == null || raums.size() <= 0) {
+        if (rooms == null || rooms.size() <= 0) {
             return null;
         }
 
-        for (Raum raum : raums) {
-            if (raum.roomNumber == this.currentRoomNumber) {
-                return raum;
+        for (Room room : rooms) {
+            if (room.roomNumber == this.currentRoomNumber) {
+                return room;
             }
         }
-        return raums.get(0);
+        return rooms.get(0);
     }
 
     /**
      * Helps you finding a room by it's number.
      *
-     * @param raumNummer The number of the room you're searching
+     * @param roomNumber The number of the room you're searching
      * @return Returns the room you're searching.
      */
-    public Raum findRaumByNummer(int raumNummer) {
-        for (Raum raum : raums) {
-            if (raum.roomNumber == raumNummer) {
-                return raum;
+    public Room findRoomByNumber(int roomNumber) {
+        for (Room room : rooms) {
+            if (room.roomNumber == roomNumber) {
+                return room;
             }
         }
         return null;
@@ -280,37 +280,37 @@ public class Dungeon implements Serializable {
     /**
      * Walking routine.
      *
-     * @param richtung The direction you want to go
+     * @param direction The direction you want to go
      * @return Returns the room you'll get into or null if there isn't any room in this direction.
      */
-    public Raum getRaum(Richtung richtung) {
-        Raum currentRaum = getCurrentRaum();
-        Door door = currentRaum.findDoorByDirection(richtung);
+    public Room getRoom(Direction direction) {
+        Room currentRoom = getCurrentRoom();
+        Door door = currentRoom.findDoorByDirection(direction);
         if (door == null) {
             Textie.printText("Diese Richtung gibt es nicht.", this);
 
         } else {
-            Raum nextRoom = currentRaum.getNextRoom(door);
+            Room nextRoom = currentRoom.getNextRoom(door);
             if (nextRoom == null) {
                 Textie.printText("Du bist gegen die Wand gelaufen.", this);
             } else {
 
                 if (door.isLocked() == true) {
-                    currentRaum.setLeaveRoom(false);
+                    currentRoom.setLeaveRoom(false);
                     Textie.printText("Tür verschlossen.", this);
                 } else {
                     Textie.printText("Du öffnest die Tür", this);
                     currentRoomNumber = nextRoom.getRoomNumber();
-                    currentRaum.setLeaveRoom(true);
+                    currentRoom.setLeaveRoom(true);
 
                     //previousRoomNumber = raums.indexOf(currentRaum);
-                    Karte karte;
+                    Map map;
                     if (this.player.getInventory().findItemByName("Karte") != null) {
-                        karte = (Karte) this.player.getInventory().findItemByName("Karte");
-                        karte.writeMap(currentRaum.getRoomNumber(), door.getRichtung().toString());
-                    } else if (this.findRaumByNummer(4).getInventory().findItemByName("Karte") != null) {
-                        karte = (Karte) this.findRaumByNummer(4).getInventory().findItemByName("Karte");
-                        karte.writeMap(currentRaum.getRoomNumber(), door.getRichtung().toString());
+                        map = (Map) this.player.getInventory().findItemByName("Karte");
+                        map.writeMap(currentRoom.getRoomNumber(), door.getDirection().toString());
+                    } else if (this.findRoomByNumber(4).getInventory().findItemByName("Karte") != null) {
+                        map = (Map) this.findRoomByNumber(4).getInventory().findItemByName("Karte");
+                        map.writeMap(currentRoom.getRoomNumber(), door.getDirection().toString());
                     }
                     return getNextRoom(currentRoomNumber);
                 }
@@ -325,15 +325,15 @@ public class Dungeon implements Serializable {
      *
      * @param currentRoomNumber The number of the current room.
      * @return Returns the new room.
-     * @see Dungeon#findRaumByNummer(int)
+     * @see Dungeon#findRoomByNumber(int)
      */
-    private Raum getNextRoom(int currentRoomNumber) {
-        for (Raum raum : raums) {
-            if (raum.roomNumber == currentRoomNumber) {
-                return raum;
+    private Room getNextRoom(int currentRoomNumber) {
+        for (Room room : rooms) {
+            if (room.roomNumber == currentRoomNumber) {
+                return room;
             }
         }
-        return raums.get(0);
+        return rooms.get(0);
     }
 
     /**
@@ -352,16 +352,16 @@ public class Dungeon implements Serializable {
         return false;
     }
 
-    public void setRoomNumber(Raum raum) {
-        this.currentRoomNumber = raums.indexOf(raum) + 1;
+    public void setRoomNumber(Room room) {
+        this.currentRoomNumber = rooms.indexOf(room) + 1;
     }
 
     public void setPlayer(Player player) {
         this.player = player;
     }
 
-    public List<Raum> getRooms() {
-        return raums;
+    public List<Room> getRooms() {
+        return rooms;
     }
 
     public Player getPlayer() {
@@ -385,10 +385,10 @@ public class Dungeon implements Serializable {
         } else {
             switch (parsed_command[1].toLowerCase()) {
                 case "raum":
-                        getCurrentRaum().discover();
+                    getCurrentRoom().examine();
                     break;
                 case "inventar":
-                    if (this.getCurrentRaum().getRoomNumber() == 3) {
+                    if (this.getCurrentRoom().getRoomNumber() == 3) {
                         Item item = this.getPlayer().getInventory().findItemByName("Fackel");
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
@@ -405,10 +405,10 @@ public class Dungeon implements Serializable {
                     }
                     break;
                 case "truhe":
-                    if (this.getCurrentRaum().getInventory().hasItem("Truhe") == false) {
+                    if (this.getCurrentRoom().getInventory().hasItem("Truhe") == false) {
                         Textie.printText("Hier ist keine Truhe", this);
                     } else {
-                        StorageItem truhe = (StorageItem) this.getCurrentRaum().getInventory().findItemByName("Truhe");
+                        StorageItem truhe = (StorageItem) this.getCurrentRoom().getInventory().findItemByName("Truhe");
                         if (truhe.getLockState() == true) {
                             Textie.printText("Die Truhe ist verschlossen.", this);
                         } else {
@@ -417,7 +417,7 @@ public class Dungeon implements Serializable {
                     }
                     break;
                 default:
-                    if (this.getCurrentRaum().getRoomNumber() == 3) {
+                    if (this.getCurrentRoom().getRoomNumber() == 3) {
                         Item item = this.getPlayer().getInventory().findItemByName("Fackel");
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
@@ -428,7 +428,7 @@ public class Dungeon implements Serializable {
                                 if (itemUSU == null) {
                                     Textie.printText("Das Objekt gibt es nicht.", this);
                                 } else {
-                                    itemUSU.untersuchen();
+                                    itemUSU.discover();
                                 }
                             }
                         }
@@ -436,7 +436,7 @@ public class Dungeon implements Serializable {
                         Item itemUSU = Textie.chooseInventory(parsed_command[1], this);
                         if (itemUSU == null) {
                         } else {
-                            itemUSU.untersuchen();
+                            itemUSU.discover();
                         }
                     }
             }
@@ -467,12 +467,12 @@ public class Dungeon implements Serializable {
      *
      * @param item The item to pick up.
      */
-    public void doNimm(Item item) {
+    public void doTake(Item item) {
         if (item == null) {
             Textie.printText("Unbekanntes Item.", this);
         } else {
             if (item.isPickable()) {
-                if (this.getCurrentRaum().getInventory().transferItem(this.getPlayer().getInventory(), item)) {
+                if (this.getCurrentRoom().getInventory().transferItem(this.getPlayer().getInventory(), item)) {
 
                     Textie.printText(item.getName() + " zum Inventar hinzugefügt.", this);
                 } else {
@@ -490,21 +490,21 @@ public class Dungeon implements Serializable {
      * @param parsed_command The String[]
      * @param count          The size of the String[]
      */
-    public void doGeben(String[] parsed_command, int count) {
+    public void doGive(String[] parsed_command, int count) {
         if (count == 2) {
             String itemToUse = IOUtils.convertToName(parsed_command[1]);
             //Item itemToUse = chooseInventory(parsed_command[1]);
-            if (itemToUse.equals(this.getCurrentRaum().getHuman().getQuestItem())) {
+            if (itemToUse.equals(this.getCurrentRoom().getHuman().getQuestItem())) {
                 Item item = Textie.chooseInventory(parsed_command[1], this);
                 boolean isRemoved = this.getPlayer().getInventory().removeItem(item);
                 if (isRemoved == true) {
-                    Textie.printText(this.getCurrentRaum().getHuman().getQuestDoneText(), this);
-                    this.getCurrentRaum().getHuman().setQuestDone(true);
-                    if (Textie.recieveItem(this.getCurrentRaum().getHuman().getRewarditem(), player.getInventory())) {
+                    Textie.printText(this.getCurrentRoom().getHuman().getQuestDoneText(), this);
+                    this.getCurrentRoom().getHuman().setQuestDone(true);
+                    if (Textie.recieveItem(this.getCurrentRoom().getHuman().getRewarditem(), player.getInventory())) {
                         Textie.printText("Im Gegenzug bekommst du von mir auch etwas. Bitteschön.", this);
                     } else {
                         Textie.printText("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.", this);
-                        this.getCurrentRaum().getHuman().setGaveItem(true);
+                        this.getCurrentRoom().getHuman().setGaveItem(true);
                     }
                 } else {
                     Textie.printText("Item nicht im Inventar.", this);
@@ -524,7 +524,7 @@ public class Dungeon implements Serializable {
      * @return Returns true, if you can pick up the item.
      */
     private static boolean addItemFromChestToInventory(Item item, Dungeon dungeon) {
-        StorageItem dieTruhe = (StorageItem) dungeon.getCurrentRaum().getInventory().findItemByName("Truhe");
+        StorageItem dieTruhe = (StorageItem) dungeon.getCurrentRoom().getInventory().findItemByName("Truhe");
         if (dungeon.getPlayer().getInventory().getSize() < dungeon.getPlayer().getInventory().getMaxSlots() && dieTruhe.getInventory().hasItem(item.getName())) {
             dieTruhe.getInventory().transferItem(dungeon.getPlayer().getInventory(), item);
             return true;

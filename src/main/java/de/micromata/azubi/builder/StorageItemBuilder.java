@@ -9,7 +9,7 @@ import de.micromata.azubi.model.StorageItem;
 public class StorageItemBuilder extends BaseItemBuilder {
 
     private StorageItem storageItem;
-    private InventarBuilder ib;
+    private InventoryBuilder ib;
     private boolean lockState;
 
     @Override
@@ -19,7 +19,7 @@ public class StorageItemBuilder extends BaseItemBuilder {
     }
 
 
-    public StorageItemBuilder setInventarBuilder(InventarBuilder ib) {
+    public StorageItemBuilder setInventoryBuilder(InventoryBuilder ib) {
         this.ib = ib;
         return this;
     }

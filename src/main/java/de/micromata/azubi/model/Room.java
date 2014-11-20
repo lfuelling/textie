@@ -10,10 +10,10 @@ import java.util.ArrayList;
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
  * @author Julian Siebert (j.siebert@micromata.de)
  */
-public class Raum implements Serializable, Discoverable {
+public class Room implements Serializable, Discoverable {
     private static final long serialVersionUID = -2269575363024102428L;
     protected int roomNumber;
-    protected String willkommensNachricht;
+    protected String welcomeText;
     protected boolean leaveRoom = false;
     protected Inventory inventory;
     protected Human human;
@@ -22,19 +22,19 @@ public class Raum implements Serializable, Discoverable {
     protected Ghost ghost;
 
 
-    public Raum(Dungeon dungeon) {
+    public Room(Dungeon dungeon) {
         this.dungeon = dungeon;
     }
 
   /**
    *
    * @param number The number of the room
-   * @param willkommensNachricht The message you get, when you enter the room.
+   * @param welcomeText The message you get, when you enter the room.
    */
-    public Raum(int number, String willkommensNachricht, Dungeon dung) {
+    public Room(int number, String welcomeText, Dungeon dung) {
         this(dung);
         this.roomNumber = number;
-        this.willkommensNachricht = willkommensNachricht;
+        this.welcomeText = welcomeText;
     }
 
   /**
@@ -58,8 +58,8 @@ public class Raum implements Serializable, Discoverable {
                 fackel.setState(false);
             }
         }
-        Textie.printText(willkommensNachricht, dungeon);
-        Textie.warten(this.dungeon, withPrompt);
+        Textie.printText(welcomeText, dungeon);
+        Textie.wait(this.dungeon, withPrompt);
     }
 
 
@@ -75,8 +75,8 @@ public class Raum implements Serializable, Discoverable {
    *
    * @return The intro message.
    */
-    public String getWillkommensNachricht() {
-        return willkommensNachricht;
+    public String getWelcomeText() {
+        return welcomeText;
     }
 
   /**
@@ -84,8 +84,8 @@ public class Raum implements Serializable, Discoverable {
    * @param door The door in the current room you want to going trough
    * @return The next room.
    */
-    public Raum getNextRoom(Door door) {
-        return dungeon.findRaumByNummer(door.getNextRoom());
+    public Room getNextRoom(Door door) {
+        return dungeon.findRoomByNumber(door.getNextRoom());
     }
 
   /**
@@ -104,8 +104,8 @@ public class Raum implements Serializable, Discoverable {
         this.leaveRoom = leaveRoom;
     }
 
-    public void setWillkommensNachricht(String willkommensNachricht) {
-        this.willkommensNachricht = willkommensNachricht;
+    public void setWelcomeText(String welcomeText) {
+        this.welcomeText = welcomeText;
     }
 
     /**
@@ -151,13 +151,13 @@ public class Raum implements Serializable, Discoverable {
 
     /**
      *
-     * @param richtung The direction you want to go
+     * @param direction The direction you want to go
      * @return The door which is in the direction you asked
      */
-    public Door findDoorByDirection(Richtung richtung) {
+    public Door findDoorByDirection(Direction direction) {
 
         for (Door door : this.doors) {
-            if (door.getRichtung().equals(richtung)){
+            if (door.getDirection().equals(direction)){
                 return door;
             }
         }
@@ -189,7 +189,7 @@ public class Raum implements Serializable, Discoverable {
     }
 
     @Override
-    public void discover() {
+    public void examine() {
         Textie.printText("Im Raum befindet sich:", dungeon);
         inventory.listItems(dungeon);
     }

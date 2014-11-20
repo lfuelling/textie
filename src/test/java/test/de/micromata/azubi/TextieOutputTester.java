@@ -29,7 +29,7 @@ public class TextieOutputTester {
 	 * 
 	 * @param richtung
 	 * @return gibt den Test weiter.
-	 * @see de.micromata.azubi.model.Dungeon#doGehen(de.micromata.azubi.model.Richtung)
+	 * @see de.micromata.azubi.model.Dungeon#doGehen(de.micromata.azubi.model.Direction)
 	 */
 	public TextieInputTester gehe(String richtung) {
 		Textie.executeCommand(new String[] { Command.GEHE, richtung },
@@ -43,13 +43,13 @@ public class TextieOutputTester {
 	 * @param text
 	 *            Was soll der Spieler nehmen?
 	 * @return gibt den Test weiter.
-	 * @see de.micromata.azubi.model.Dungeon#doNimm(de.micromata.azubi.model.Item)
+	 * @see de.micromata.azubi.model.Dungeon#doTake(de.micromata.azubi.model.Item)
 	 */
 	public TextieInputTester nimm(String text) {
 		String[] text2 = Textie.parseInput(text);
 		if (text.endsWith("aus truhe")) {
 			StorageItem truhe = (StorageItem) dungeon
-					.getCurrentRaum().getInventory().findItemByName("Truhe");
+					.getCurrentRoom().getInventory().findItemByName("Truhe");
 			dungeon.doTakeFromChest(truhe.getInventory()
 					.findItemByName(text2[0]));
 
@@ -68,7 +68,7 @@ public class TextieOutputTester {
 	}
 
 	/**
-	 * Lässt den Spieler ein Item untersuchen.
+	 * Lässt den Spieler ein Item examine.
 	 * 
 	 * @param item
 	 * @return gibt den Test weiter.
@@ -98,7 +98,7 @@ public class TextieOutputTester {
 	 * 
 	 * @param item
 	 * @return gibt den Test weiter.
-	 * @see de.micromata.azubi.model.Dungeon#doGeben(String[], int)
+	 * @see de.micromata.azubi.model.Dungeon#doGive(String[], int)
 	 */
 	public TextieInputTester gib(String item) {
 		Textie.executeCommand(new String[] { Command.GIB, item },
