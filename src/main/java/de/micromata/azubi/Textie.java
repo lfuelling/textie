@@ -278,20 +278,6 @@ public class Textie implements Serializable {
         }
         printText("Gespeichert!", dungeon);
     }
-
-    /*  Configschreiber
-
-        List<Raum> rooms = dungeon.getRooms();
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            mapper.writeValue(new File("Test.json"), rooms);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-     */
-
-
     /**
      * Loads
      */
