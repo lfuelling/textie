@@ -5,26 +5,13 @@ import de.micromata.azubi.builder.DoorBuilder;
 
 import java.io.Serializable;
 
-public class Item implements Serializable{
-    public static final String SCHALTER = "Schalter";
-    public static final String TRUHE = "Truhe";
-    public static final String SCHLÜSSEL = "Schlüssel";
-    public static final String FEUERZEUG = "Feuerzeug";
-    public static final String SCHWERT = "Schwert";
-    public static final String BRECHEISEN = "Brecheisen";
-    public static final String QUIETSCHEENTE = "Quietscheente";
-    public static final String FACKEL = "Fackel";
-    public static final String SACK = "Sack";
-    public static final String FALLTÜR = "Falltür";
-    public static final String WHITEBOARD = "Whiteboard";
-    public static final String STEIN = "Stein";
-    public static final String HANDTUCH = "Handtuch";
+public class Item implements Serializable {
+
     private static final long serialVersionUID = -2308071724210324323L;
     private String useText;
     private String name;
     private String examineText;
     private int itemID;
-    private long uid;
     private boolean pickable; // FIXME muss eigentlich wieder raus
 
     public int getItemID() {
@@ -32,19 +19,18 @@ public class Item implements Serializable{
     }
 
 
-
-    public Item(){
+    public Item() {
 
     }
 
 
-  /**
-   * @param itemID The item ID
-   * @param name Item name
-   * @param examineText Text which is printed when you inspect the item.
-   * @param useText Text which is printed when you use the item.
-   * @deprecated Use the builder instead
-   */
+    /**
+     * @param itemID      The item ID
+     * @param name        Item name
+     * @param examineText Text which is printed when you inspect the item.
+     * @param useText     Text which is printed when you use the item.
+     * @deprecated Use the builder instead
+     */
     public Item(int itemID, String name, String examineText, String useText) {
         this.itemID = itemID;
         this.name = name;
@@ -52,57 +38,56 @@ public class Item implements Serializable{
         this.useText = useText;
     }
 
-  /**
-   *
-   * @return Returns true if the Item is pickable
-   */
+    /**
+     * @return Returns true if the Item is pickable
+     */
     public boolean isPickable() { //FIXME !!
-        if(pickable == true){
+        if (pickable == true) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-  /**
-   *
-   * @return Returns the Item name.
-   */
+    /**
+     * @return Returns the Item name.
+     */
     public String getName() {
 
         return this.name;
-        // return getObjectName(objectID);
     }
 
-  /**
-   * prints the examineText
-   */
-    public void discover() {
-        if(examineText.equals("") == true) {
-            // TODO itemgeschlechter hinzufügen und Text anpassen
-            System.out.println("Da ist ein/e " + this.getName() + ".");
+    /**
+     * prints the examineText
+     */
+    public void examine(Item item, Dungeon dungeon) {
+        if (dungeon.getCurrentRoom() instanceof DarkRoom) {
+            Item torch = dungeon.getPlayer().getInventory().findItemByName("Fackel");
+            if (torch instanceof ToggleItem) {
+                if (((ToggleItem) torch).getState() == false) {
+                    Textie.printText("Du kannst nichts sehen!", dungeon);
+                } else {
+                    Textie.printText(item.getExamineText(), dungeon);
+                }
+            }
+        } else {
+            Textie.printText(item.getExamineText(), dungeon);
         }
-        Textie.printText(examineText);
     }
 
-  /**
-   *
-   * @return Returns true if the Item is a switch.
-   */
+    /**
+     * @return Returns true if the Item is a switch.
+     */
     public boolean isToggle() {
-        if(this instanceof ToggleItem) {
-            return true;
-        }
-        return false;
+        return this instanceof ToggleItem;
     }
 
-  /**
-   *
-   * @return Returns true if the Item is a map.
-   */
-    public boolean isMap(){
-        if(this instanceof Map){
-            return  true;
+    /**
+     * @return Returns true if the Item is a map.
+     */
+    public boolean isMap() {
+        if (this instanceof Map) {
+            return true;
         }
         return false;
     }
@@ -123,11 +108,6 @@ public class Item implements Serializable{
         this.name = name;
     }
 
-    public void setUid(long uid) {
-        this.uid = uid;
-    }
-
-
     public void setUseText(String useText) {
         this.useText = useText;
     }
@@ -138,7 +118,6 @@ public class Item implements Serializable{
 
     /**
      * Lets you use an item.
-     *
      */
     public void use(Dungeon dungeon) {
         if (this == null) {
@@ -176,12 +155,12 @@ public class Item implements Serializable{
                             break;
                         }
                     case "Falltür":
-                        ToggleItem fackel = null;
-                        Item item5 = Textie.chooseInventory("Fackel", dungeon);
-                        if (item5 instanceof ToggleItem) {
-                            fackel = (ToggleItem) item5;
+                        ToggleItem torch1 = null;
+                        Item torch = Textie.chooseInventory("Fackel", dungeon);
+                        if (torch instanceof ToggleItem) {
+                            torch1 = (ToggleItem) torch;
                         }
-                        if (fackel != null && fackel.getState() == false && dungeon.getCurrentRoom().getRoomNumber() == 3) {
+                        if (dungeon.getCurrentRoom() instanceof DarkRoom && torch1.getState() == false) {
                             Textie.printText("Du kannst nichts sehen!");
                         } else {
                             if (this == null) {
@@ -198,11 +177,13 @@ public class Item implements Serializable{
                         }
                         break;
                     case "Axt":
-                        if (dungeon.getCurrentRoom().getRoomNumber() != 6) {
-                            Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum");
-                        } else {
-                            dungeon.getCurrentRoom().getDoors().add(new DoorBuilder().setDirection(Direction.OST).setLock(false).setNextRoom(7).build().get());
-                            Textie.printText(useText);
+                        for (Door door : dungeon.getCurrentRoom().getDoors()) {
+                            if (door.isLocked() == true) {
+                                Textie.printText(useText);
+                                door.setLocked(false);
+                            } else {
+                                Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum");
+                            }
                         }
                         break;
                     case "Sack":
@@ -212,10 +193,10 @@ public class Item implements Serializable{
                         break;
                     case "Schalter":
 
-                        ToggleItem schalter = (ToggleItem) this;
+                        Switch schalter = (Switch) this;
                         Textie.printText(useText);
                         schalter.toggleState();
-                        dungeon.getDoorSchalter().get(schalter).toogleLock();
+                        schalter.toggleLock(dungeon);
 
                         break;
                     case "Schwert":
@@ -239,26 +220,18 @@ public class Item implements Serializable{
                             break;
                         }
                     default:
-                        if (dungeon.getCurrentRoom().getRoomNumber() == 3) {
-                            item5 = playerInventory.findItemByName("Fackel");
-                            if (item5 instanceof ToggleItem) {
-                                fackel = (ToggleItem) item5;
-                                if (fackel.getState() == true) {
-                                    if (this == null) {
-                                        Textie.printText("Das Objekt gibt es nicht.");
-                                    } else {
-                                        Textie.printText(useText);
-                                    }
+                        if (dungeon.getCurrentRoom() instanceof DarkRoom) {
+                            torch = playerInventory.findItemByName("Fackel");
+                            if (torch instanceof ToggleItem) {
+                                torch1 = (ToggleItem) torch;
+                                if (torch1.getState() == true) {
+                                    Textie.printText(useText);
                                 } else {
                                     Textie.printText("Du kannst nichts sehen!");
                                 }
                             }
                         } else {
-                            if (this == null) {
-                                Textie.printText("Das Objekt gibt es nicht.");
-                            } else {
-                                Textie.printText(useText);
-                            }
+                            Textie.printText(useText);
                         }
                 }
             } else {

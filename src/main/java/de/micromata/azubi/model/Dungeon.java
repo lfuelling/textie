@@ -7,6 +7,7 @@ import de.micromata.azubi.IOUtils;
 import de.micromata.azubi.Textie;
 import de.micromata.azubi.builder.*;
 
+import javax.xml.soap.Text;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -152,6 +153,13 @@ public class Dungeon implements Serializable {
                     case "de.micromata.azubi.model.Karte":
                         itemBuilder = new MapBuilder();
                         break;
+                    case "de.micromata.azubi.model.Switch":
+                        itemBuilder = new SwitchBuilder();
+                        ArrayList<Integer> doorIds = (ArrayList<Integer>) item.get("doorIds");
+                        for(int doorId : doorIds){
+                            ((SwitchBuilder)itemBuilder).addDoor(doorId);
+                        }
+                        break;
                     default:
                         System.out.println("Fehler in der Konfiguration. Fehlerhafte Klasse in Item");
                 }
@@ -171,6 +179,7 @@ public class Dungeon implements Serializable {
             List<LinkedHashMap> doorList = (List<LinkedHashMap>) listItem.get("doors");
             for (LinkedHashMap doorItem : doorList) {
                 db = new DoorBuilder()
+                        .setDoorId((int) doorItem.get("doorId"))
                         .setLock((boolean) doorItem.get("locked"))
                         .setRichtungByText((String) doorItem.get("direction"))
                         .setNextRoom((int) doorItem.get("nextRoom")).build();
@@ -379,17 +388,20 @@ public class Dungeon implements Serializable {
      * @param parsed_command The String[]
      * @param count          THe size of the String[]
      */
-    public void doUntersuche(String[] parsed_command, int count) {
+    public void doExamine(String[] parsed_command, int count) {
         if (count != 2) {
             Textie.printText("Was soll untersucht werden?", this);
         } else {
             switch (parsed_command[1].toLowerCase()) {
                 case "raum":
-                    getCurrentRoom().examine();
+                    getCurrentRoom().examine(this);
                     break;
                 case "inventar":
-                    if (this.getCurrentRoom().getRoomNumber() == 3) {
+                    if (getCurrentRoom() instanceof DarkRoom) {
                         Item item = this.getPlayer().getInventory().findItemByName("Fackel");
+                        if (item == null) {
+                            Textie.printText("Du kannst nichts sehen!", this);
+                        }
                         if (item instanceof ToggleItem) {
                             ToggleItem fackel = (ToggleItem) item;
                             if (fackel.getState() == false) {
@@ -409,35 +421,15 @@ public class Dungeon implements Serializable {
                         Textie.printText("Hier ist keine Truhe", this);
                     } else {
                         StorageItem truhe = (StorageItem) this.getCurrentRoom().getInventory().findItemByName("Truhe");
-                        if (truhe.getLockState() == true) {
-                            Textie.printText("Die Truhe ist verschlossen.", this);
-                        } else {
-                            truhe.getInventory().listItems(this);
-                        }
+                        truhe.examine(this);
                     }
                     break;
                 default:
-                    if (this.getCurrentRoom().getRoomNumber() == 3) {
-                        Item item = this.getPlayer().getInventory().findItemByName("Fackel");
-                        if (item instanceof ToggleItem) {
-                            ToggleItem fackel = (ToggleItem) item;
-                            if (fackel.getState() == false) {
-                                Textie.printText("Du kannst nichts sehen!", this);
-                            } else {
-                                Item itemUSU = Textie.chooseInventory(parsed_command[1], this);
-                                if (itemUSU == null) {
-                                    Textie.printText("Das Objekt gibt es nicht.", this);
-                                } else {
-                                    itemUSU.discover();
-                                }
-                            }
-                        }
+                    Item item = Textie.chooseInventory(parsed_command[1], this);
+                    if (item == null) {
+                        Textie.printText("Das Objekt gibt es nicht.", this);
                     } else {
-                        Item itemUSU = Textie.chooseInventory(parsed_command[1], this);
-                        if (itemUSU == null) {
-                        } else {
-                            itemUSU.discover();
-                        }
+                        item.examine(item, this);
                     }
             }
         }

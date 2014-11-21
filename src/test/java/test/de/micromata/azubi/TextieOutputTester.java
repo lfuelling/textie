@@ -72,7 +72,7 @@ public class TextieOutputTester {
 	 * 
 	 * @param item
 	 * @return gibt den Test weiter.
-	 * @see de.micromata.azubi.model.Dungeon#doUntersuche(String[], int)
+	 * @see de.micromata.azubi.model.Dungeon#doExamine(String[], int)
 	 */
 	public TextieInputTester untersuche(String item) {
 		Textie.executeCommand(new String[] { Command.UNTERSUCHE, item },

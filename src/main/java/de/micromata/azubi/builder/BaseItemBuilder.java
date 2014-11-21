@@ -42,7 +42,7 @@ public abstract class BaseItemBuilder implements Builder<Item> {
 
     @Override
     public BaseItemBuilder build() {
-        item.setUid(Utils.nextId());
+        //item.setUid(Utils.nextId());
         item.setName(name);
         item.setUseText(benutzeText);
         item.setExamineText(untersucheText);

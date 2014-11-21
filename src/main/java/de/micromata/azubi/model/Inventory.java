@@ -11,7 +11,7 @@ import java.util.List;
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
  * @author Julian Siebert (j.siebert@micromata.de)
  */
-public class Inventory implements Serializable {
+public class Inventory implements Serializable, Examineable{
 
     private static final long serialVersionUID = -706607514666174299L;
 
@@ -165,5 +165,11 @@ public class Inventory implements Serializable {
 
     public int getSize() {
         return items.size();
+    }
+
+
+    @Override
+    public void examine(Dungeon dungeon) {
+        listItems(dungeon);
     }
 }

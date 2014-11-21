@@ -32,6 +32,7 @@ public class TextieTest {
 	@Before
 	public void testBefore() throws Exception {
 		dungeon = Dungeon.createDungeon();
+		dungeon.getPlayer().setPosition(dungeon.getCurrentRoom());
 		Textie.diag = true;
 	}
 
@@ -86,8 +87,8 @@ public class TextieTest {
         Assert.assertEquals(0, dungeon.getPlayer().getInventory().getSize());
         out = out.nimm("234hjfkjvn932").next();
         Assert.assertEquals(0, dungeon.getPlayer().getInventory().getSize());
-        out = out.nimm("0xD47B34T").next(). // Dat Beat :3
-                benutze("hfsejinefsi").next();
+        out = out.nimm("0xD47B34T").next() // Dat Beat :3
+        .benutze("hfsejinefsi").next();
         Assert.assertEquals(0, dungeon.getPlayer().getInventory().getSize());
         out = out.untersuche("").next().benutze("").next().untersuche("sdfghjklhgfd").next();
         Assert.assertEquals(0, dungeon.getPlayer().getInventory().getSize());
@@ -158,8 +159,7 @@ public class TextieTest {
 	Assert.assertEquals(dungeon.findRoomByNumber(4),
 	dungeon.getCurrentRoom());
 	System.out.println("Gehe in Raum 4");
-	out = out.benutze("falltür").next()
-	.untersuche("raum").next()
+	out = out.untersuche("raum").next()
 	.benutze("schalter").next();
 	System.out.println("Gehe in Raum 1");
 	out.gehe("ost").next()

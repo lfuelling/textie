@@ -22,13 +22,13 @@ public class Ghost implements Serializable{
             Textie.printText(dialog);
         }
         List<String> mobileItems = new ArrayList<>();
-        mobileItems.add(Item.HANDTUCH);
-        mobileItems.add(Item.STEIN);
-        mobileItems.add(Item.BRECHEISEN);
-        mobileItems.add(Item.QUIETSCHEENTE);
-        mobileItems.add(Item.SACK);
-        mobileItems.add(Item.SCHWERT);
-        mobileItems.add(Item.WHITEBOARD);
+        mobileItems.add("Handtuch");
+        mobileItems.add("Stein");
+        mobileItems.add("Brecheisen");
+        mobileItems.add("Quietscheente");
+        mobileItems.add("Sack");
+        mobileItems.add("Schwert");
+        mobileItems.add("Whiteboard");
 
         int itemIdx = (int) (Math.random() * (mobileItems.size() - 1));
         String itemName = mobileItems.get(itemIdx);

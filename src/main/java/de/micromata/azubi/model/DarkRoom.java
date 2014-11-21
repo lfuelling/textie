@@ -16,7 +16,7 @@ public class DarkRoom extends Room {
     }
 
     @Override
-    public void examine() {
+    public void examine(Dungeon dungeon) {
         Item item = dungeon.getPlayer().getInventory().findItemByName("Fackel");
         if(item == null){
             Textie.printText("Du kannst nichts sehen!");

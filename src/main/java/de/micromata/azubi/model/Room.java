@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
  * @author Julian Siebert (j.siebert@micromata.de)
  */
-public class Room implements Serializable, Discoverable {
+public class Room implements Serializable, Examineable {
     private static final long serialVersionUID = -2269575363024102428L;
     protected int roomNumber;
     protected String welcomeText;
@@ -189,7 +189,7 @@ public class Room implements Serializable, Discoverable {
     }
 
     @Override
-    public void examine() {
+    public void examine(Dungeon dungeon) {
         Textie.printText("Im Raum befindet sich:", dungeon);
         inventory.listItems(dungeon);
     }

@@ -12,6 +12,12 @@ public class DoorBuilder implements Builder<Door> {
     private Direction direction;
     private int nextRoom;
     private boolean locked;
+    private int doorId;
+
+    public DoorBuilder setDoorId(int doorId) {
+        this.doorId = doorId;
+        return this;
+    }
 
     public DoorBuilder setDirection(Direction direction){
         this.direction = direction;
@@ -36,7 +42,7 @@ public class DoorBuilder implements Builder<Door> {
 
     @Override
     public DoorBuilder build() {
-        door.setUid(Utils.nextId());
+        door.setUid(doorId);
         door.setDirection(direction);
         door.setNextRoom(nextRoom);
         door.setLocked(locked);

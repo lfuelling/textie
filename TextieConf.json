@@ -35,22 +35,25 @@
           "useText": "Du kannst die Truhe nicht öffnen."
         },
         {
-          "class": "de.micromata.azubi.model.ToggleItem",
+          "class": "de.micromata.azubi.model.Switch",
           "name": "Schalter",
           "state": false,
           "pickable": false,
           "examineText": "Da ist ein kleiner Schalter an der Wand.",
-          "useText": "Du hörst ein Rumpeln, als du den Schalter drückst."
+          "useText": "Du hörst ein Rumpeln, als du den Schalter drückst.",
+          "doorIds": [2, 7]
         }
       ]
     },
     "doors": [
       {
+        "doorId": 1,
         "nextRoom": 2,
         "locked": false,
         "direction": "SUED"
       },
       {
+        "doorId": 2,
         "nextRoom": 4,
         "locked": true,
         "direction": "WEST"
@@ -88,11 +91,13 @@
     },
     "doors": [
       {
+        "doorId": 3,
         "nextRoom": 3,
         "locked": false,
         "direction": "WEST"
       },
       {
+        "doorId": 4,
         "nextRoom": 1,
         "locked": false,
         "direction": "NORD"
@@ -137,11 +142,13 @@
     },
     "doors": [
       {
+        "doorId": 5,
         "nextRoom": 4,
         "locked": false,
         "direction": "FALLTUER"
       },
       {
+        "doorId": 6,
         "nextRoom": 2,
         "locked": false,
         "direction": "OST"
@@ -177,12 +184,13 @@
           "useText": "Du bindest den Sack an deinen Rucksack."
         },
         {
-          "class": "de.micromata.azubi.model.ToggleItem",
+          "class": "de.micromata.azubi.model.Switch",
           "name": "Schalter",
           "state": false,
           "pickable": false,
           "examineText": "Da ist ein kleiner Schalter an der Wand.",
-          "useText": "Du hörst ein Rumpeln, als du den Schalter drückst."
+          "useText": "Du hörst ein Rumpeln, als du den Schalter drückst.",
+          "doorIds": [7, 2]
         },
         {
           "class": "de.micromata.azubi.model.Karte",
@@ -194,16 +202,19 @@
     },
     "doors": [
       {
+        "doorId": 7,
         "nextRoom": 1,
         "locked": true,
         "direction": "OST"
       },
       {
+        "doorId": 8,
         "nextRoom": 5,
         "locked": false,
         "direction": "WEST"
       },
       {
+        "doorId": 9,
         "nextRoom": 7,
         "locked": true,
         "direction": "NORD"
@@ -234,11 +245,13 @@
     },
     "doors": [
       {
+        "doorId": 10,
         "nextRoom": 6,
         "locked": false,
         "direction": "FALLTUER"
       },
       {
+        "doorId": 11,
         "nextRoom": 4,
         "locked": false,
         "direction": "OST"
@@ -273,7 +286,14 @@
         }
       ]
     },
-    "doors": []
+    "doors": [
+      {
+        "doorId": 12,
+        "nextRoom": 7,
+        "locked": true,
+        "direction": "OST"
+      }
+    ]
   },
   {
     "class": "de.micromata.azubi.model.Room",
@@ -296,22 +316,25 @@
     "inventory": {
       "items": [
         {
-          "class": "de.micromata.azubi.model.ToggleItem",
+          "class": "de.micromata.azubi.model.Switch",
           "name": "Schalter",
           "state": false,
           "useText": "Du hörst ein Rumpeln, als du den Schalter drückst.",
           "pickable": false,
-          "examineText": "Da ist ein kleiner Schalter an der Wand."
+          "examineText": "Da ist ein kleiner Schalter an der Wand.",
+          "doorIds": [13]
         }
       ]
     },
     "doors": [
       {
+        "doorId": 13,
         "nextRoom": 4,
         "locked": true,
         "direction": "SUED"
       },
       {
+        "doorId": 14,
         "nextRoom": 6,
         "locked": false,
         "direction": "WEST"

@@ -121,44 +121,43 @@ public class Textie implements Serializable {
                     printHelp(dungeon);
                     break;
                 case Command.NIMM:
-                if(dungeon.getCurrentRoom().getInventory().findItemByName(parsed_command[1]) == null){
-                    Textie.printText("Du musst ein Item angeben.");
-                }
-                else{
-                    if (args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
-                        switch (parsed_args[1].toLowerCase()) {
-                            case "aus truhe":
-                                StorageItem truhe = (StorageItem) dungeon.getCurrentRoom().getInventory().findItemByName("Truhe");
-                                if (truhe != null) {
-                                    try {
-                                        truhe.getInventory().transferItem(dungeon.getPlayer().getInventory(),
-                                                truhe.getInventory().findItemByName(parsed_args[0]));
-                                    } catch (NullPointerException e) {
-                                        printText("Item nicht gefunden.", dungeon);
+                    if (dungeon.getCurrentRoom().getInventory().findItemByName(parsed_command[1]) == null) {
+                        Textie.printText("Du musst ein Item angeben.");
+                    } else {
+                        if (args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
+                            switch (parsed_args[1].toLowerCase()) {
+                                case "aus truhe":
+                                    StorageItem truhe = (StorageItem) dungeon.getCurrentRoom().getInventory().findItemByName("Truhe");
+                                    if (truhe != null) {
+                                        try {
+                                            truhe.getInventory().transferItem(dungeon.getPlayer().getInventory(),
+                                                    truhe.getInventory().findItemByName(parsed_args[0]));
+                                        } catch (NullPointerException e) {
+                                            printText("Item nicht gefunden.", dungeon);
+                                            break;
+                                        }
+                                    } else {
+                                        printText("Hier gibt es keine Truhe", dungeon);
+                                    }
+                                    break;
+                                default:
+                                    if (itemToUse == null) {
+                                        printText("Du musst ein Item angeben.");
+                                    } else {
+                                        printText("Unbekanntes Item: " + parsed_command[1], dungeon);
                                         break;
                                     }
-                                } else {
-                                    printText("Hier gibt es keine Truhe", dungeon);
-                                }
-                                break;
-                            default:
-                                if (itemToUse == null) {
-                                    printText("Du musst ein Item angeben.");
-                                } else {
-                                    printText("Unbekanntes Item: " + parsed_command[1], dungeon);
-                                    break;
-                                }
+                            }
+                        } else {
+                            dungeon.getCurrentRoom().getInventory().transferItem(dungeon.getPlayer().getInventory(), dungeon.getCurrentRoom().getInventory().findItemByName(parsed_command[1]));
                         }
-                    } else {
-                        dungeon.getCurrentRoom().getInventory().transferItem(dungeon.getPlayer().getInventory(), dungeon.getCurrentRoom().getInventory().findItemByName(parsed_command[1]));
                     }
-            }
                     break;
                 case Command.BENUTZE:
                     itemToUse.use(dungeon);
                     break;
                 case Command.UNTERSUCHE:
-                    dungeon.doUntersuche(parsed_command, count);
+                    dungeon.doExamine(parsed_command, count);
                     break;
                 case Command.VERNICHTE:
                     dungeon.getPlayer().getInventory().transferItem(dungeon.getCurrentRoom().getInventory(), itemToUse);
@@ -277,6 +276,7 @@ public class Textie implements Serializable {
         }
         printText("Gespeichert!", dungeon);
     }
+
     /**
      * Loads
      */

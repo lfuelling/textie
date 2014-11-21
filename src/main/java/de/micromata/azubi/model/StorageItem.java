@@ -1,10 +1,12 @@
 package de.micromata.azubi.model;
 
+import de.micromata.azubi.Textie;
+
 /**
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
  * @see Item
  */
-public class StorageItem extends Item {
+public class StorageItem extends Item implements Examineable{
     //boolean lockable;
     boolean lockState;
     int itemID;
@@ -47,5 +49,14 @@ public class StorageItem extends Item {
 
     public void setLockState(boolean lockState) {
         this.lockState = lockState;
+    }
+
+    @Override
+    public void examine(Dungeon dungeon) {
+        if (lockState == true) {
+            Textie.printText("Die Truhe ist verschlossen.", dungeon);
+        } else {
+            inventory.listItems(dungeon);
+        }
     }
 }
