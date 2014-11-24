@@ -1,20 +1,20 @@
-
 package de.micromata.azubi;
-
-/*
- *  Das ist der GameMaster
- *  Der Spieler darf entscheiden, was er tun möchte, doch der GameMaster entscheidet, was geschiet.
- */
 
 
 import java.io.*;
 
-public class Textie implements Serializable{
+import de.micromata.azubi.model.*;
+
+/**
+ * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
+ * @author Julian Siebert (j.siebert@micromata.de)
+ */
+public class Textie implements Serializable {
+
     private static final long serialVersionUID = -6980176018028225023L;
     public static boolean diag;
     public static String savegame;
     public static String lastPrintedText = "";
-    static int dialogNumber = 0;
 
     public static void main(String[] args) {
 
@@ -28,47 +28,60 @@ public class Textie implements Serializable{
             diag = false;
         }
 
-        Dungeon dungeon = Dungeon.getDungeon();
-        dungeon.init();
-        dungeon.runGame(true);
+        Dungeon dungeon = Dungeon.createDungeon();
+        dungeon.runGame();
         System.exit(0);
     }
 
-    public static boolean ende() {
-        printText("Herzlichen Glückwunsch !");
-        printText("Du bist aus deinem Traum erwacht und siehst, dass du");
-        printText("in deinem Bett liegst. Du spürst dein Herz stark und schnell schlagen");
-        printText("und bist froh, dass du aufgewacht bist.");
-        if(diag) {
-            printText("Programm wird aufgrund des Diagnosemodus nicht beendet. Bitte Ctrl+C drücken.");
+
+    /**
+     * End of the game.
+     *
+     * @return Returns true if you're in diag mode.
+     */
+    public static boolean end(Dungeon dungeon) {
+        printText("Herzlichen Glückwunsch !", dungeon);
+        printText("Du bist aus deinem Traum erwacht und siehst, dass du", dungeon);
+        printText("in deinem Bett liegst. Du spürst dein Herz stark und schnell schlagen", dungeon);
+        printText("und bist froh, dass du aufgewacht bist.", dungeon);
+        if (diag) {
+            printText("Programm wird aufgrund des Diagnosemodus nicht beendet. Bitte Ctrl+C drücken.", dungeon);
         } else {
             System.exit(0);
         }
         return true;
     }
 
-    public static void warten(boolean withPrompt) {
+    /**
+     * @param withPrompt Set to <code>true</code>, if you want a prompt.
+     * @see de.micromata.azubi.model.Dungeon#runGame()
+     */
+    public static void wait(Dungeon dungeon, boolean withPrompt) {
         if (withPrompt == true) {
-            Dungeon.getDungeon().player.prompt();
+            Textie.prompt(dungeon);
         } else {
-            printText("Was willst du tun? ");
-            Runnable warten = new Runnable() {
-                @Override
-                public void run() {
-                    do {
-                    } while (Dungeon.getDungeon().getCurrentRaum().isLeaveRoom() == false);
-                }
-            };
-
-            Thread thread = new Thread(warten);
-            thread.start();
+//            Runnable wait = new Runnable() {
+//                @Override
+//                public void run() {
+//                    do {
+//                    } while (Dungeon.getDungeon().getCurrentRoom().isLeaveRoom() == false);
+//                }
+//            };
+//
+//            Thread thread = new Thread(wait);
+//            thread.start();
         }
     }
 
 
-    //Befehlsverarbeitung
-    public static void executeCommand(String[] parsed_command, String[] parsed_args) {
-        if (Dungeon.getDungeon().getCurrentRaum() == null) {
+    /**
+     * Executes the commands.
+     *
+     * @param parsed_command Command split at the first space.
+     * @param parsed_args    Arguments of the command split by the first space.
+     */
+    public static void executeCommand(String[] parsed_command, String[] parsed_args, Dungeon dungeon) {
+        if (dungeon.getCurrentRoom() == null) {
             System.err.println("currentRaum nicht da");
             // Kein raum nichts tun
             return;
@@ -86,65 +99,139 @@ public class Textie implements Serializable{
             }
         }
         if (parsed_command.length < 2) {
-
-        } else {
-            Item itemToUse = Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase());
-            switch (parsed_command[0]) {
-                case Command.HILFE:
-                    printHelp();
+            switch (parsed_command[0].toLowerCase()) {
+                case "hilfe":
+                    Textie.printHelp(dungeon);
                     break;
-                case Command.NIMM:
-                    if (args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
-                        switch (parsed_args[1].toLowerCase()) {
-                            case "aus truhe":
-                                doTakeFromChest(Dungeon.getDungeon().itemMap.get(parsed_args[0].toUpperCase()));
-                                break;
-                            default:
-                                printText("Unbekanntes Item: " + parsed_command[1]);
-                                break;
-                        }
-                    } else {
-                        doNimm(itemToUse);
-                    }
+                case "speichern":
+                    Textie.doSave(dungeon);
                     break;
-                case Command.BENUTZE:
-                    doBenutze(itemToUse);
-                    break;
-                case Command.UNTERSUCHE:
-                    doUntersuche(parsed_command, count);
-                    break;
-                case Command.VERNICHTE:
-                    doVernichte(itemToUse, count);
-                    break;
-
-                case Command.GEHE:
-                    doGehen(Richtung.getByText(parsed_command[1]));
-                    break;
-                case Command.REDE:
-                    doReden();
-                    break;
-                case Command.GIB:
-                    if (Dungeon.getDungeon().currentHuman != null) {
-                        doGeben(parsed_command, count);
-                    } else {
-                        printText("Hier gibt es niemandem, dem du etwas geben könntest");
-                    }
+                case "laden":
+                    Textie.doLoad(dungeon);
                     break;
                 default:
-                    printText("Unbekannter Befehl: " + parsed_command[0]);
+                    Textie.printText("Unbekannter Befehl oder fehlende Argumente: "
+                            + parsed_command[0], dungeon);
                     break;
+            }
+        } else {
+            Item itemToUse = chooseInventory(parsed_command[1], dungeon);
+            if ("benutze".equalsIgnoreCase(parsed_command[0]) && itemToUse == null) {
+                printText("Das Item gibt es nicht!");
+            } else {
+                switch (parsed_command[0]) {
+                    case Command.HILFE:
+                        printHelp(dungeon);
+                        break;
+                    case Command.NIMM:
+                        Item truhe1 = dungeon.getCurrentRoom().getInventory().findItemByName("Truhe");
+                        Item item = dungeon.getCurrentRoom().getInventory().findItemByName(parsed_command[1]);
+                        if (item == null || truhe1 == null || ((StorageItem) truhe1).getInventory().findItemByName(parsed_args[0]) == null) { //FIXME Überleg dir was! :D
+                            Textie.printText("Du musst ein Item angeben.");
+                        } else {
+                            if (args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
+                                switch (parsed_args[1].toLowerCase()) {
+                                    case "aus truhe":
+                                        StorageItem truhe = (StorageItem) truhe1;
+                                        if (truhe != null) {
+                                            try {
+                                                truhe.getInventory().transferItem(dungeon.getPlayer().getInventory(),
+                                                        truhe.getInventory().findItemByName(parsed_args[0]));
+                                            } catch (NullPointerException e) {
+                                                printText("Item nicht gefunden.", dungeon);
+                                                break;
+                                            }
+                                        } else {
+                                            printText("Hier gibt es keine Truhe", dungeon);
+                                        }
+                                        break;
+                                    default:
+                                        if (itemToUse == null) {
+                                            printText("Du musst ein Item angeben.");
+                                        } else {
+                                            printText("Unbekanntes Item: " + parsed_command[1], dungeon);
+                                            break;
+                                        }
+                                }
+                            } else {
+                                dungeon.getCurrentRoom().getInventory().transferItem(dungeon.getPlayer().getInventory(), item);
+                                Textie.printText(item.getName()+" zum Inventar hinzugefügt.");
+                            }
+                        }
+                        break;
+                    case Command.BENUTZE:
+                        itemToUse.use(dungeon);
+                        break;
+                    case Command.UNTERSUCHE:
+                        dungeon.doExamine(parsed_command, count);
+                        break;
+                    case Command.VERNICHTE:
+                        dungeon.getPlayer().getInventory().transferItem(dungeon.getCurrentRoom().getInventory(), itemToUse);
+                        break;
+
+                    case Command.GEHE:
+                        dungeon.getPlayer().doWalk(Direction.getByText(parsed_command[1]), dungeon);
+                        break;
+                    case Command.REDE:
+                        dungeon.getCurrentRoom().getHuman().doTalk(dungeon);
+                        break;
+                    case Command.GIB:
+                        if (dungeon.getCurrentRoom().getHuman() != null) {
+                            dungeon.doGive(parsed_command, count);
+                        } else {
+                            printText("Hier gibt es niemandem, dem du etwas geben könntest", dungeon);
+                        }
+                        break;
+                    default:
+                        printText("Unbekannter Befehl: " + parsed_command[0], dungeon);
+                        break;
+                }
             }
         }
     }
 
+    public static void prompt(Dungeon dungeon) {
+        do {
+            String command = IOUtils.readLine("Was willst du tun? ");
+            try {
+                if (command.equals("")) {
+                } else {
+                    String[] parsed_command = Textie.parseInput(command);
+
+                    String[] parsed_args = new String[2];
+                    if (parsed_command.length == 1 || parsed_command[1] == null) {
+                        parsed_args[0] = "nichts";
+                    } else {
+                        parsed_args = Textie.parseInput(parsed_command[1]);
+                    }
+                    Textie.executeCommand(parsed_command, parsed_args, dungeon);
+                }
+            } catch (NullPointerException e) {
+                Textie.printText("Keine Eingabe.");
+                e.printStackTrace();
+            }
+        } while (dungeon.getCurrentRoom().isLeaveRoom() == false);
+    }
+
+    /**
+     * Splits the input at the first space.
+     *
+     * @param command The command you want to execute.
+     * @return Returns a string array containing a maximum size of two strings.
+     */
     public static String[] parseInput(String command) {
 
         return command.split(" ", 2);
     }
 
-    public static void printText(String text) {
-        if (Textie.diag == true) {
-            System.out.println(Dungeon.getDungeon().getCurrentRaum() == null ? text : "[" + Dungeon.getDungeon().getCurrentRaum().roomNumber + "], " + text);
+    /**
+     * Prints some text. If diag mode is active, it will print the number of the current room.
+     *
+     * @param text The text you want to print.
+     */
+    public static void printText(String text, Dungeon dungeon) {
+        if (Textie.diag == true && dungeon != null) {
+            System.out.println(dungeon.getCurrentRoom() == null ? text : "[" + dungeon.getCurrentRoom().getRoomNumber() + "], " + text);
         } else {
             System.out.println(text);
         }
@@ -152,481 +239,105 @@ public class Textie implements Serializable{
         lastPrintedText = text;
     }
 
-    static void doGehen(Richtung richtung) {
-        Raum raum = Dungeon.getDungeon().getRaum(richtung);
-        if (raum != null && Dungeon.getDungeon().raums.get(Dungeon.getDungeon().previousRoomNumber).isLeaveRoom()) {
-            Dungeon.getDungeon().setRoomNumber(raum);
-            Dungeon.getDungeon().getCurrentRaum().setLeaveRoom(false);
-            Textie.printText(Dungeon.getDungeon().getCurrentRaum().getWillkommensNachricht());
-        }
-
+    /**
+     * Prints some text. If diag mode is active, it will print the number of the current room.
+     *
+     * @param text The text you want to print.
+     */
+    public static void printText(String text) {
+        Textie.printText(text, null);
     }
 
 
-/*
-
-                        printText("Du siehst eine Tür und gehst die Treppe dahinter hinauf.");
-                        Karte karte;
-                        if (Dungeon.getDungeon().itemMap.get(Consts.KARTE).isKarte() == true) {
-                            karte = (Karte) Dungeon.getDungeon().itemMap.get(Consts.KARTE);
-                            karte.writeMap(Dungeon.getDungeon().getCurrentRaum().getNumberAsString(), parsed_command[1].toUpperCase());
-                        }printText("Du siehst eine Tür und gehst die Treppe dahinter hinab.");
-        */
-
-
-    static void doVernichte(Item item, int count) {
-        if (count == 2) {
-            if (removeItemFromInventory(item)) {
-                printText(item.getName() + " vernichtet.");
-                return;
-            } else {
-                printText("Entweder das Objekt gibt es nicht, oder es ist nicht im Inventar.");
-                return;
-            }
-        } else {
-            printText("Was soll vernichtet werden?");
-        }
+    /**
+     * Prints the help.
+     */
+    public static void printHelp(Dungeon dungeon) {
+        printText("Mögliche Befehle:", dungeon);
+        printText("\thilfe -> Zeigt diese Hilfe", dungeon);
+        printText("\tnimm [gegenstand] -> Gegenstand zum Inventar hinzufügen", dungeon);
+        printText("\tnimm [gegenstand] aus truhe -> Gegenstand aus Truhe zum Inventar hinzufügen", dungeon);
+        printText("\tbenutze [gegenstand] -> Gegenstand use", dungeon);
+        printText("\tuntersuche [gegenstand/raum/inventar] -> Gegenstand, Raum oder Inventar examine", dungeon);
+        printText("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen", dungeon);
+        printText("\tgehe [nord/süd/ost/west] -> In eine Richtung gehen", dungeon);
+        printText("\trede [person] -> Rede mit einer Person", dungeon);
     }
 
-    static void doUntersuche(String[] parsed_command, int count) {
-        if (count == 2) {
-            switch (parsed_command[1].toLowerCase()) {
-                case "raum":
-                    if (Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
-                        Item item = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
-                        if (item instanceof ToggleItem) {
-                            ToggleItem fackel = (ToggleItem) item;
-                            if (fackel.getState() == true) {
-                                Dungeon.getDungeon().getCurrentRaum().listItems();
-                            } else {
-                                printText("Du kannst nichts sehen!");
-                            }
-                        }
-                    } else {
-                        Dungeon.getDungeon().getCurrentRaum().listItems();
-                    }
-                    break;
-                case "inventar":
-                    if (Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
-                        Item item = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
-                        if (item instanceof ToggleItem) {
-                            ToggleItem fackel = (ToggleItem) item;
-                            if (fackel.getState() == true) {
-                                listInventory();
-                            } else {
-                                printText("Du kannst nichts sehen!");
-                            }
-                        }
-                    } else {
-                        listInventory();
-                    }
-                    break;
-                case "truhe":
-                    if (isInRoom(Dungeon.getDungeon().itemMap.get(Consts.TRUHE))) {
-                        StorageItem truhe = (StorageItem) Dungeon.getDungeon().itemMap.get(Consts.TRUHE);
-                        truhe.listItems();
-                    } else {
-                        printText("Hier ist keine Truhe");
-                    }
-                    break;
-                default:
-                    if (Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
-                        Item item = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
-                        if (item instanceof ToggleItem) {
-                            ToggleItem fackel = (ToggleItem) item;
-                            if (fackel.getState() == true) {
-                                Item itemUSU = Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase());
-                                if (itemUSU == null) {
-                                    printText("Das Objekt gibt es nicht.");
-                                } else {
-                                    itemUSU.untersuchen();
-                                }
-                            } else {
-                                printText("Du kannst nichts sehen!");
-                            }
-                        }
-                    } else {
-                        Item itemUSU = Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase());
-                        if (itemUSU == null) {
-                            printText("Das Objekt gibt es nicht.");
-                        } else {
-                            itemUSU.untersuchen();
-                        }
-                    }
-            }
-        } else {
-            printText("Was soll untersucht werden?");
-        }
-    }
-
-    static void doBenutze(Item item) {
-        if (item == null) {
-
-            printText("Das Item gibt es nicht.");
-
-        } else {
-            if (item.isPickable() == false || isInInventory(item)) {
-                String itemName = item.getName();
-                if (Textie.diag == true) {
-                    printText("Du willst " + itemName + " benutzen");
-                }
-                switch (itemName) {
-                    // Fackel und Feuerzeug sind besonders, da sie auch funktionen
-                    // aufrufen
-                    // und nicht nur einen Text ausgeben. Außerdem sollen diese Items
-                    // benutzbar sein, selbst wenn der Raum dunkel ist.
-                    case "Fackel":// Dungeon.getDungeon().itemMap.get("FACKEL").getName():
-                    case "Feuerzeug": // Dungeon.getDungeon().itemMap.get("FEUERZEUG").getName():
-                        int fackelSlot = findInInventory(Dungeon.getDungeon().itemMap.get(Consts.FACKEL));
-                        int feuerZeugSlot = findInInventory(Dungeon.getDungeon().itemMap.get(Consts.FEUERZEUG));
-                        if (feuerZeugSlot < 0) {
-                            printText("Du hast kein Feuerzeug.");
-                            break;
-                        } else if (fackelSlot < 0) {
-                            printText("Du hast keine Fackel.");
-                            break;
-                        } else {
-                            printText("Du zündest deine Fackel mit dem Feuerzeug an.");
-                            Item item2 = Dungeon.getDungeon().itemMap.get("FACKEL");
-                            if (item2 instanceof ToggleItem) {
-                                ToggleItem fackel = (ToggleItem) item2;
-                                fackel.setState(true);
-                            }
-                            break;
-                        }
-                    case "Falltür":
-                        Item item5 = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
-                        if (item5 instanceof ToggleItem) {
-                            ToggleItem fackel = (ToggleItem) item5;
-                            if (fackel.getState() == true && Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
-                                Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
-                                if (itemToUse == null) {
-                                    printText("Das Objekt gibt es nicht.");
-                                    break;
-                                } else {
-                                    if (isInRoom(Dungeon.getDungeon().itemMap.get(Consts.FALLTÜR))) {
-                                        printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
-                                        doGehen(Richtung.FALLTUER);
-                                        break;
-                                    }
-                                }
-                            } else {
-                                printText("Du kannst nichts sehen!");
-                                break;
-                            }
-                        }
-                    case "Sack":
-                        Item sack = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
-                        sack.benutzen();
-                        removeItemFromInventory(Dungeon.getDungeon().itemMap.get(Consts.SACK));
-                        Dungeon.getDungeon().player.getInventory().setInventorySize(2);
-                        break;
-                    case "Schalter":
-                        ToggleItem schalter = (ToggleItem) Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
-                        schalter.benutzen();
-                        schalter.setState(true);
-                        break;
-                    case "Schwert":
-                        Dungeon.getDungeon().itemMap.get(Consts.SCHWERT).benutzen();
-                        ende();
-                        break;
-                    case "Schlüssel":
-                        StorageItem truhe = (StorageItem) Dungeon.getDungeon().itemMap.get(Consts.TRUHE);
-                        if (Dungeon.getDungeon().getCurrentRaum().hasItem(Dungeon.getDungeon().itemMap.get(Consts.TRUHE))) {
-                            if (truhe.lockState == true) {
-                                truhe.lockState = false;
-                                printText("Du öffnest die Truhe mit dem Schlüssel.");
-                                break;
-                            } else {
-                                printText("Die Truhe ist bereits aufgeschlossen.");
-                                break;
-                            }
-                        } else {
-                            printText("Hier gibt es nichts, was man aufschließen könnte.");
-                            break;
-                        }
-                    default:
-                        if (Dungeon.getDungeon().getCurrentRaum().getNumber() == 3) {
-                            item5 = Dungeon.getDungeon().itemMap.get(Consts.FACKEL);
-                            if (item5 instanceof ToggleItem) {
-                                ToggleItem fackel = (ToggleItem) item5;
-                                if (fackel.getState() == true) {
-                                    Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
-                                    if (itemToUse == null) {
-                                        printText("Das Objekt gibt es nicht.");
-                                    } else {
-                                        itemToUse.benutzen();
-                                    }
-                                } else {
-                                    printText("Du kannst nichts sehen!");
-                                }
-                            }
-                        } else {
-                            Item itemToUse = Dungeon.getDungeon().itemMap.get(itemName.toUpperCase());
-                            if (itemToUse == null) {
-                                printText("Das Objekt gibt es nicht.");
-                            } else {
-                                itemToUse.benutzen();
-                            }
-                        }
-                }
-            } else {
-                printText("Du musst das Item im Inventar haben.");
-            }
-        }
-    }
-
-    static void doTakeFromChest(Item item) {
-        if (item.isPickable()) {
-            if (addItemFromChestToInventory(item)) {
-
-                printText(item.getName() + " zum Inventar hinzugefügt.");
-            } else {
-                printText("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
-            }
-        } else {
-            printText("Du kannst dieses Item nicht aufheben.");
-        }
-    }
-
-    static void doNimm(Item item) {
-        if (item == null) {
-            printText("Unbekanntes Item.");
-        } else {
-            if (item.isPickable()) {
-                if (addItemToInventory(item)) {
-
-                    printText(item.getName() + " zum Inventar hinzugefügt.");
-                } else {
-                    printText("Entweder das Objekt gibt es nicht, oder dein Inventar ist voll.");
-                }
-            } else {
-                printText("Du kannst dieses Item nicht aufheben.");
-            }
-        }
-    }
-
-    static void printHelp() {
-        printText("Mögliche Befehle:");
-        printText("\thilfe -> Zeigt diese Hilfe");
-        printText("\tnimm [gegenstand] -> Gegenstand zum Inventar hinzufügen");
-        printText("\tbenutze [gegenstand] -> Gegenstand benutzen");
-        printText("\tuntersuche [gegenstand/raum/inventar] -> Gegenstand, Raum oder Inventar untersuchen");
-        printText("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen");
-        printText("\tgehe [nord/süd/ost/west] -> In eine Richtung gehen");
-    }
-
-    public static void doSpeichern() {
+    /**
+     * Saves.
+     */
+    public static void doSave(Dungeon dungeon) {
 
         try (
                 OutputStream file = new FileOutputStream("savegame.save");
                 OutputStream buffer = new BufferedOutputStream(file);
                 ObjectOutput output = new ObjectOutputStream(buffer);
-        ){
-            output.writeObject(Dungeon.getDungeon());
+        ) {
+            output.writeObject(dungeon);
             output.close();
-        }
-        catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-
-        printText("Gespeichert!");
-    }
-
-    public static void doLaden() {
-
-        try(
-                InputStream file = new FileInputStream("savegame.save");
-                InputStream buffer = new BufferedInputStream(file);
-                ObjectInput input = new ObjectInputStream (buffer);
-        ){
-            //deserialize the List
-            Dungeon loadedDungeon = (Dungeon)input.readObject();
-            Dungeon.setDungeon(loadedDungeon);
-
-        }
-        catch(ClassNotFoundException ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        catch(IOException ex){
-            ex.printStackTrace();
-        }
-        catch (Exception ex){
-            ex.printStackTrace();
-        }
-
-        printText("Geladen");
-
-        /*savegame = IOUtils.readFromFile();
-        if (savegame != null) {
-            Dungeon loadedDungeon = new JSONDeserializer<Dungeon>().deserialize(savegame);
-            Dungeon.setDungeon(null);
-            Dungeon.getDungeon().player.setInventory(null);
-            Dungeon.setDungeon(loadedDungeon);
-            //Dungeon.getDungeon().player.setInventory(loadedDungeon.player.getInventory());
-            printText("Geladen!");
-            //printText("Raum: " + dungeon1.currentRaum.getNumber());
-            printText("Raum:" + Dungeon.getDungeon().getCurrentRaum().getNumberAsString());
-        } else {
-            printText("Wer nicht speichert, kann nichts laden");
-        }
-        */
-    }
-
-
-    //RaumKram
-    public static boolean removeItemInRoom(Item item) {
-        if (Dungeon.getDungeon().getCurrentRaum().items.remove(item))
-            return true;
-        return false;
-    }
-
-    public static boolean addItemToRoom(Item item) {
-        if (Dungeon.getDungeon().getCurrentRaum().items.add(item)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static boolean isInRoom(Item item) {
-        return findInRoom(item) >= 0;
+        printText("Gespeichert!", dungeon);
     }
 
     /**
-     * @param item
-     * @return Returns -128 when the item is not in the room
+     * Loads
      */
-    public static int findInRoom(Item item) {
-        int i = -128;
-        i = Dungeon.getDungeon().getCurrentRaum().items.indexOf(item);
-        return i;
+    public static void doLoad(Dungeon dungeon) {
+
+        try (
+                InputStream file = new FileInputStream("savegame.save");
+                InputStream buffer = new BufferedInputStream(file);
+                ObjectInput input = new ObjectInputStream(buffer);
+        ) {
+            //deserialize the List
+            Dungeon loadedDungeon = (Dungeon) input.readObject();
+            dungeon = loadedDungeon;
+
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        printText("Geladen", dungeon);
     }
 
-
-    //InventarKram
-    public static boolean addItemToInventory(Item item) {
-        if (Dungeon.getDungeon().player.getInventory().getInventory().size() < Dungeon.getDungeon().player.getInventory().getInventorySize() && Dungeon.getDungeon().getCurrentRaum().hasItem(item)) {
-            Dungeon.getDungeon().player.getInventory().getInventory().add(item);
-            removeItemInRoom(item);
+    /**
+     * Get an Item.
+     *
+     * @param item The item you want.
+     * @return Returns true if you could take it.
+     */
+    public static boolean recieveItem(Item item, Inventory inventory) {
+        if (inventory.getSize() < inventory.getMaxSlots()) {
+            inventory.addItem(item);
             return true;
         } else {
             return false;
         }
     }
 
-    public static boolean addItemFromChestToInventory(Item item) {
-        StorageItem dieTruhe = (StorageItem) Dungeon.getDungeon().itemMap.get(Consts.TRUHE);
-        if (Dungeon.getDungeon().player.getInventory().getInventory().size() < Dungeon.getDungeon().player.getInventory().getInventorySize() && dieTruhe.hasItem(item)) {
-            Dungeon.getDungeon().player.getInventory().getInventory().add(item);
-            dieTruhe.removeItem(item);
-            return true;
-        } else {
-            return false;
+    /**
+     * Chooses an Inventory.
+     *
+     * @param itemName the item you search.
+     * @return Returns the item.
+     */
+    public static Item chooseInventory(String itemName, Dungeon dungeon) {
+        Item item = null;
+        if (dungeon.getPlayer().getInventory().findItemByName(itemName) != null) {
+            item = dungeon.getPlayer().getInventory().findItemByName(itemName);
+        } else if (dungeon.getCurrentRoom().getInventory().findItemByName(itemName) != null) {
+            item = dungeon.getCurrentRoom().getInventory().findItemByName(itemName);
         }
-    }
-
-    public static boolean removeItemFromInventory(Item item) {
-        if (Dungeon.getDungeon().player.getInventory().getInventory().remove(item) && addItemToRoom(item))
-            return true;
-        return false;
-    }
-
-    public static void listInventory() {
-        if (Dungeon.getDungeon().player.getInventory().getInventory().size() > 0) {
-
-            printText("In deiner Tasche befindet sich:");
-            for (Item items : Dungeon.getDungeon().player.getInventory().getInventory()) {
-                String objectName = items.getName();
-                printText("\t" + objectName);
-            }
-        } else {
-            printText("Deine Tasche ist leer.");
-        }
-    }
-
-    public static boolean isInInventory(Item items) {
-        return findInInventory(items) >= 0;
-    }
-
-    public static int findInInventory(Item items) {
-        int slot = -128;
-        slot = Dungeon.getDungeon().player.getInventory().getInventory().indexOf(items);
-        if (slot > -128) {
-            return slot;
-        }
-        return -128;
-    }
-
-    public static boolean giveItem(Item item) {
-        if (Dungeon.getDungeon().player.getInventory().getInventory().remove(item)) {
-            return true;
-        }
-        return false;
-    }
-
-
-    //HumanKram
-    static void doReden() {
-        if (Dungeon.getDungeon().currentHuman.isQuestDone() == true) {
-            if (Dungeon.getDungeon().currentHuman.isGaveItem() == true) {
-                if (recieveItem(Dungeon.getDungeon().currentHuman.getRewarditem())) {
-                    printText("Hier, bitte schön.");
-                    Dungeon.getDungeon().currentHuman.setGaveItem(false);
-                } else {
-                    printText("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
-                    Dungeon.getDungeon().currentHuman.setGaveItem(true);
-                }
-            } else {
-                switch (dialogNumber) {
-                    case 0:
-                        printText(Dungeon.getDungeon().currentHuman.getDialog1());
-                        dialogNumber = 1;
-                        break;
-                    case 1:
-                        printText(Dungeon.getDungeon().currentHuman.getDialog2());
-                        dialogNumber = 0;
-                        break;
-                }
-            }
-        } else {
-            printText(Dungeon.getDungeon().currentHuman.getQuestText());
-        }
-    }
-
-    public static void doGeben(String[] parsed_command, int count) {
-        if (count == 2) {
-            String itemToUse = IOUtils.convertToName(parsed_command[1]);
-            if (itemToUse.equals(Dungeon.getDungeon().currentHuman.getQuestItem().getName())) {
-                if (giveItem(Dungeon.getDungeon().itemMap.get(parsed_command[1].toUpperCase()))) {
-                    printText(Dungeon.getDungeon().currentHuman.getQuestDoneText());
-                    Dungeon.getDungeon().currentHuman.setQuestDone(true);
-                    if (recieveItem(Dungeon.getDungeon().currentHuman.getRewarditem())) {
-                        printText("Im Gegenzug bekommst du von mir auch etwas. Bitteschön.");
-                    } else {
-                        printText("Dein Inventar ist leider voll. Komm wieder, wenn du Platz hast.");
-                        Dungeon.getDungeon().currentHuman.setGaveItem(true);
-                    }
-                } else {
-                    printText("Item nicht im Inventar.");
-                }
-            } else {
-                printText("Das brauche ich nicht.");
-            }
-        } else {
-            printText("Zu wenig Argumente");
-        }
-    }
-
-    public static boolean recieveItem(Item item) {
-        if (Dungeon.getDungeon().player.getInventory().getInventory().size() < Dungeon.getDungeon().player.getInventory().getInventorySize()) {
-            Dungeon.getDungeon().player.getInventory().getInventory().add(item);
-            return true;
-        } else {
-            return false;
-        }
+        return item;
     }
 
 
