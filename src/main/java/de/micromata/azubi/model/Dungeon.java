@@ -66,7 +66,7 @@ public class Dungeon implements Serializable {
         mapper.getFactory().enable(JsonParser.Feature.ALLOW_COMMENTS);
         List<LinkedHashMap> roomList = null;
         try {
-            roomList = mapper.readValue(new File("TextieConf.json"), List.class);
+            roomList = mapper.readValue(new File("config/TextieConf.json"), List.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -145,7 +145,7 @@ public class Dungeon implements Serializable {
                                 default:
                                     System.out.println("Fehler in der Konfiguration. Fehlerhafte Klasse in StorageItem");
                             }
-                            chestItemBuilder.setName((String) chestItem.get("name")).setBenutzeText((String) chestItem.get("useText")).setUntersucheText((String) chestItem.get("examineText")).build();
+                            chestItemBuilder.setName((String) chestItem.get("name")).setBenutzeText((String) chestItem.get("useText")).setUntersucheText((String) chestItem.get("examineText")).setPickable((boolean) chestItem.get("pickable")).build();
                             chestInvBuilder.addItem(chestItemBuilder);
                         }
                         chestInvBuilder.build();
@@ -442,7 +442,7 @@ public class Dungeon implements Serializable {
      * @param item The item to take.
      */
     public void doTakeFromChest(Item item) {
-        if (item.isPickable()) {
+        if (item.isPickable() == true) {
             if (addItemFromChestToInventory(item, this)) {
 
                 Textie.printText(item.getName() + " zum Inventar hinzugefügt.", this);
@@ -463,7 +463,7 @@ public class Dungeon implements Serializable {
         if (item == null) {
             Textie.printText("Unbekanntes Item.", this);
         } else {
-            if (item.isPickable()) {
+            if (item.isPickable() == true) {
                 if (this.getCurrentRoom().getInventory().transferItem(this.getPlayer().getInventory(), item)) {
 
                     Textie.printText(item.getName() + " zum Inventar hinzugefügt.", this);

@@ -43,7 +43,7 @@ public class Map extends Item {
   /**
    * Prints out the map's ouput.
    */
-  public void benutzen() {
+  public void use() {
 
     if(walkDirection.size() != roomNumbers.size()) {
       return;

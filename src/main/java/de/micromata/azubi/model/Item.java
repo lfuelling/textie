@@ -125,7 +125,7 @@ public class Item implements Serializable {
         if (this.isPickable() == false || playerInventory.hasItem(this.getName())) {
             String itemName = this.getName();
             if (Textie.diag == true) {
-                Textie.printText("Du willst " + itemName + " use");
+                Textie.printText("Du willst " + itemName + " benutzen");
             }
             switch (itemName) {
                 // Fackel und Feuerzeug sind besonders, da sie auch funktionen
@@ -217,6 +217,10 @@ public class Item implements Serializable {
                         Textie.printText("Hier gibt es nichts, was man aufschließen könnte.");
                         break;
                     }
+                case "Karte":
+                    Map item = (Map) playerInventory.findItemByName("Karte");
+                    item.use();
+                    break;
                 default:
                     if (dungeon.getCurrentRoom() instanceof DarkRoom) {
                         torch = playerInventory.findItemByName("Fackel");

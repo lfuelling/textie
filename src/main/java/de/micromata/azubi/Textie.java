@@ -124,40 +124,39 @@ public class Textie implements Serializable {
                         printHelp(dungeon);
                         break;
                     case Command.NIMM:
-                        Item truhe1 = dungeon.getCurrentRoom().getInventory().findItemByName("Truhe");
-                        Item item = dungeon.getCurrentRoom().getInventory().findItemByName(parsed_command[1]);
-                        if (item == null || truhe1 == null || ((StorageItem) truhe1).getInventory().findItemByName(parsed_args[0]) == null) { //FIXME Überleg dir was! :D
-                            Textie.printText("Du musst ein Item angeben.");
-                        } else {
-                            if (args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
-                                switch (parsed_args[1].toLowerCase()) {
-                                    case "aus truhe":
-                                        StorageItem truhe = (StorageItem) truhe1;
-                                        if (truhe != null) {
-                                            try {
-                                                truhe.getInventory().transferItem(dungeon.getPlayer().getInventory(),
-                                                        truhe.getInventory().findItemByName(parsed_args[0]));
-                                            } catch (NullPointerException e) {
-                                                printText("Item nicht gefunden.", dungeon);
-                                                break;
-                                            }
+                        if (args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
+                            switch (parsed_args[1].toLowerCase()) {
+                                case "aus truhe":
+                                    StorageItem truhe = (StorageItem) dungeon.getCurrentRoom().getInventory().findItemByName("Truhe");
+                                    if (truhe == null) {
+                                        printText("Hier gibt es keine Truhe", dungeon);
+                                    } else {
+                                        Item item = truhe.getInventory().findItemByName(parsed_args[0]);
+                                        if (item == null) {
+                                            printText("Item nicht gefunden", dungeon);
                                         } else {
-                                            printText("Hier gibt es keine Truhe", dungeon);
+                                            truhe.getInventory().transferItem(dungeon.getPlayer().getInventory(), item);
                                         }
+                                    }
+                                    break;
+                                default:
+                                    if (itemToUse == null) {
+                                        printText("Du musst ein Item angeben.");
+                                    } else {
+                                        printText("Unbekanntes Item: " + parsed_command[1], dungeon);
                                         break;
-                                    default:
-                                        if (itemToUse == null) {
-                                            printText("Du musst ein Item angeben.");
-                                        } else {
-                                            printText("Unbekanntes Item: " + parsed_command[1], dungeon);
-                                            break;
-                                        }
-                                }
-                            } else {
+                                    }
+                            }
+                        } else {
+                            Item item = dungeon.getCurrentRoom().getInventory().findItemByName(parsed_command[1]);
+                            if(item == null){
+                                printText("Unbekanntes Item:" + parsed_command[1], dungeon);
+                            }else {
                                 dungeon.getCurrentRoom().getInventory().transferItem(dungeon.getPlayer().getInventory(), item);
-                                Textie.printText(item.getName()+" zum Inventar hinzugefügt.");
+                                Textie.printText(item.getName() + " zum Inventar hinzugefügt.");
                             }
                         }
+
                         break;
                     case Command.BENUTZE:
                         itemToUse.use(dungeon);

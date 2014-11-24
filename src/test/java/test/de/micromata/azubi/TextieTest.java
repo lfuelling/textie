@@ -339,7 +339,7 @@ public class TextieTest {
 	dungeon.getPlayer().getInventory().hasItem("brief"));
 	out = out.untersuche("brief").next()
 	.benutze("brief").next()
-	.gehe("falltür").next();
+	.benutze("falltür").next();
 	Assert.assertEquals(dungeon.findRoomByNumber(6),
 	dungeon.getCurrentRoom());
 	out = out.benutze("karte").next();
@@ -367,8 +367,7 @@ public class TextieTest {
 	dungeon.getCurrentRoom());
 	out = out.benutze("karte").next();
 	Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--[Raum 7]--(SUED)--",Textie.lastPrintedText);
-	out = out.benutze("schalter").next()
-	.gehe("ost").next()
+	out = out.gehe("ost").next()
 	.benutze("karte").next();
 	Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(WEST)--[Raum 5]--(FALLTUER)--[Raum 6]--(OST)--[Raum 7]--(SUED)--[Raum 4]--(OST)--",Textie.lastPrintedText);
 	System.out.println("Ende.");
@@ -388,8 +387,7 @@ public class TextieTest {
 	.nimm("karte").next()
 	.benutze("karte").next();
 	Assert.assertEquals("[Raum 1]--(WEST)--", Textie.lastPrintedText);
-	out = out.benutze("schalter").next()
-	.gehe("ost").next()
+	out = out.gehe("ost").next()
 	.benutze("Karte").next();
 	Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--",
 	Textie.lastPrintedText);
@@ -458,8 +456,7 @@ public class TextieTest {
 	out = out.gehe("süd").next()
 	.benutze("Karte").next();
 	Assert.assertEquals("[Raum 1]--(WEST)--", Textie.lastPrintedText);
-	out = out.benutze("schalter").next()
-	.gehe("ost").next()
+	out = out.gehe("ost").next()
 	.benutze("Karte").next();
 	Assert.assertEquals("[Raum 1]--(WEST)--[Raum 4]--(OST)--",
 	Textie.lastPrintedText);
