@@ -120,123 +120,120 @@ public class Item implements Serializable {
      * Lets you use an item.
      */
     public void use(Dungeon dungeon) {
-        if (this == null) {
-            Textie.printText("Das Item gibt es nicht.");
-        } else {
-            Inventory roomInventory = dungeon.getCurrentRoom().getInventory();
-            Inventory playerInventory = dungeon.getPlayer().getInventory();
-            if (this.isPickable() == false || playerInventory.hasItem(this.getName())) {
-                String itemName = this.getName();
-                if (Textie.diag == true) {
-                    Textie.printText("Du willst " + itemName + " use");
-                }
-                switch (itemName) {
-                    // Fackel und Feuerzeug sind besonders, da sie auch funktionen
-                    // aufrufen
-                    // und nicht nur einen Text ausgeben. Außerdem sollen diese Items
-                    // benutzbar sein, selbst wenn der Raum dunkel ist.
-                    case "Fackel":// this.itemMap.get("FACKEL").getName():
-                    case "Feuerzeug": // this.itemMap.get("FEUERZEUG").getName():
-                        int fackelSlot = playerInventory.findItem(playerInventory.findItemByName("Fackel"));
-                        int feuerZeugSlot = playerInventory.findItem(playerInventory.findItemByName("Feuerzeug"));
-                        if (feuerZeugSlot < 0) {
-                            Textie.printText("Du hast kein Feuerzeug.");
-                            break;
-                        } else if (fackelSlot < 0) {
-                            Textie.printText("Du hast keine Fackel.");
+        Inventory roomInventory = dungeon.getCurrentRoom().getInventory();
+        Inventory playerInventory = dungeon.getPlayer().getInventory();
+        if (this.isPickable() == false || playerInventory.hasItem(this.getName())) {
+            String itemName = this.getName();
+            if (Textie.diag == true) {
+                Textie.printText("Du willst " + itemName + " use");
+            }
+            switch (itemName) {
+                // Fackel und Feuerzeug sind besonders, da sie auch funktionen
+                // aufrufen
+                // und nicht nur einen Text ausgeben. Außerdem sollen diese Items
+                // benutzbar sein, selbst wenn der Raum dunkel ist.
+                case "Fackel":// this.itemMap.get("FACKEL").getName():
+                case "Feuerzeug": // this.itemMap.get("FEUERZEUG").getName():
+                    int fackelSlot = playerInventory.findItem(playerInventory.findItemByName("Fackel"));
+                    int feuerZeugSlot = playerInventory.findItem(playerInventory.findItemByName("Feuerzeug"));
+                    if (feuerZeugSlot < 0) {
+                        Textie.printText("Du hast kein Feuerzeug.");
+                        break;
+                    } else if (fackelSlot < 0) {
+                        Textie.printText("Du hast keine Fackel.");
+                        break;
+                    } else {
+                        Textie.printText("Du zündest deine Fackel mit dem Feuerzeug an.");
+                        Item item2 = playerInventory.findItemByName("Fackel");
+                        if (item2 instanceof ToggleItem) {
+                            ToggleItem fackel = (ToggleItem) item2;
+                            fackel.setState(true);
+                        }
+                        break;
+                    }
+                case "Falltür":
+                    ToggleItem torch1 = null;
+                    Item torch = Textie.chooseInventory("Fackel", dungeon);
+                    if (torch instanceof ToggleItem) {
+                        torch1 = (ToggleItem) torch;
+                    }
+                    if (dungeon.getCurrentRoom() instanceof DarkRoom && torch1.getState() == false) {
+                        Textie.printText("Du kannst nichts sehen!");
+                    } else {
+                        if (this == null) {
+                            Textie.printText("Das Objekt gibt es nicht.");
                             break;
                         } else {
-                            Textie.printText("Du zündest deine Fackel mit dem Feuerzeug an.");
-                            Item item2 = playerInventory.findItemByName("Fackel");
-                            if (item2 instanceof ToggleItem) {
-                                ToggleItem fackel = (ToggleItem) item2;
-                                fackel.setState(true);
+                            if (roomInventory.hasItem("Falltür")) {
+                                Textie.printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
+                                dungeon.getPlayer().doWalk(Direction.FALLTUER, dungeon);
+                                break;
                             }
+                        }
+                        break;
+                    }
+                    break;
+                case "Axt":
+                    for (Door door : dungeon.getCurrentRoom().getDoors()) {
+                        if (door.isLocked() == true) {
+                            Textie.printText(useText);
+                            door.setLocked(false);
+                            dungeon.findRoomByNumber(door.getNextRoom()).findDoorByDirection(Direction.getOpposite(door.getDirection())).setLocked(false);
+                        } else {
+                            Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum");
+                        }
+                    }
+                    break;
+                case "Sack":
+                    Textie.printText(useText);
+                    playerInventory.removeItem(playerInventory.findItemByName("Sack"));
+                    playerInventory.increaseMaxSlots(2);
+                    break;
+                case "Schalter":
+
+                    Switch schalter = (Switch) this;
+                    Textie.printText(useText);
+                    schalter.toggleState();
+                    schalter.toggleLock(dungeon);
+
+                    break;
+                case "Schwert":
+                    Textie.printText(useText);
+                    dungeon.getPlayer().setAlive(false);
+                    Textie.end(dungeon);
+                    break;
+                case "Schlüssel":
+                    StorageItem truhe = (StorageItem) roomInventory.findItemByName("Truhe");
+                    if (roomInventory.hasItem("Truhe")) {
+                        if (truhe.getLockState() == true) {
+                            truhe.setLockState(false);
+                            Textie.printText("Du öffnest die Truhe mit dem Schlüssel.");
+                            break;
+                        } else {
+                            Textie.printText("Die Truhe ist bereits aufgeschlossen.");
                             break;
                         }
-                    case "Falltür":
-                        ToggleItem torch1 = null;
-                        Item torch = Textie.chooseInventory("Fackel", dungeon);
+                    } else {
+                        Textie.printText("Hier gibt es nichts, was man aufschließen könnte.");
+                        break;
+                    }
+                default:
+                    if (dungeon.getCurrentRoom() instanceof DarkRoom) {
+                        torch = playerInventory.findItemByName("Fackel");
                         if (torch instanceof ToggleItem) {
                             torch1 = (ToggleItem) torch;
-                        }
-                        if (dungeon.getCurrentRoom() instanceof DarkRoom && torch1.getState() == false) {
-                            Textie.printText("Du kannst nichts sehen!");
-                        } else {
-                            if (this == null) {
-                                Textie.printText("Das Objekt gibt es nicht.");
-                                break;
-                            } else {
-                                if (roomInventory.hasItem("Falltür")) {
-                                    Textie.printText("Du schlüpfst durch die Falltür in den darunterliegenden Raum.");
-                                    dungeon.getPlayer().doWalk(Direction.FALLTUER, dungeon);
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                        break;
-                    case "Axt":
-                        for (Door door : dungeon.getCurrentRoom().getDoors()) {
-                            if (door.isLocked() == true) {
+                            if (torch1.getState() == true) {
                                 Textie.printText(useText);
-                                door.setLocked(false);
                             } else {
-                                Textie.printText("Du fuchtelst mit der Axt wild in der Gegend herum");
+                                Textie.printText("Du kannst nichts sehen!");
                             }
                         }
-                        break;
-                    case "Sack":
+                    } else {
                         Textie.printText(useText);
-                        playerInventory.removeItem(playerInventory.findItemByName("Sack"));
-                        playerInventory.increaseMaxSlots(2);
-                        break;
-                    case "Schalter":
-
-                        Switch schalter = (Switch) this;
-                        Textie.printText(useText);
-                        schalter.toggleState();
-                        schalter.toggleLock(dungeon);
-
-                        break;
-                    case "Schwert":
-                        Textie.printText(useText);
-                        dungeon.getPlayer().setAlive(false);
-                        Textie.end(dungeon);
-                        break;
-                    case "Schlüssel":
-                        StorageItem truhe = (StorageItem) roomInventory.findItemByName("Truhe");
-                        if (roomInventory.hasItem("Truhe")) {
-                            if (truhe.getLockState() == true) {
-                                truhe.setLockState(false);
-                                Textie.printText("Du öffnest die Truhe mit dem Schlüssel.");
-                                break;
-                            } else {
-                                Textie.printText("Die Truhe ist bereits aufgeschlossen.");
-                                break;
-                            }
-                        } else {
-                            Textie.printText("Hier gibt es nichts, was man aufschließen könnte.");
-                            break;
-                        }
-                    default:
-                        if (dungeon.getCurrentRoom() instanceof DarkRoom) {
-                            torch = playerInventory.findItemByName("Fackel");
-                            if (torch instanceof ToggleItem) {
-                                torch1 = (ToggleItem) torch;
-                                if (torch1.getState() == true) {
-                                    Textie.printText(useText);
-                                } else {
-                                    Textie.printText("Du kannst nichts sehen!");
-                                }
-                            }
-                        } else {
-                            Textie.printText(useText);
-                        }
-                }
-            } else {
-                Textie.printText("Du musst das Item im Inventar haben.");
+                    }
             }
+        } else {
+            Textie.printText("Du musst das Item im Inventar haben.");
         }
     }
 }

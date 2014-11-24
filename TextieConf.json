@@ -241,7 +241,15 @@
       }
     },
     "inventory": {
-      "items": []
+      "items": [
+        {
+          "class": "de.micromata.azubi.model.Item",
+          "name": "Falltür",
+          "pickable": false,
+          "examineText": "Da ist eine Falltür",
+          "useText": "Du schlüpfst durch die Falltür in den darunterliegenden Raum."
+        }
+      ]
     },
     "doors": [
       {

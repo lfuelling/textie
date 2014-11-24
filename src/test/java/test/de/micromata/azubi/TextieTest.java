@@ -92,8 +92,7 @@ public class TextieTest {
         Assert.assertEquals(0, dungeon.getPlayer().getInventory().getSize());
         out = out.untersuche("").next().benutze("").next().untersuche("sdfghjklhgfd").next();
         Assert.assertEquals(0, dungeon.getPlayer().getInventory().getSize());
-        out = out.nimm("whiteboard").next().
-                nimm("brecheisen").next(); // Darf nicht sein, da das Ding nicht in Raum 1 ist.
+        out = out.nimm("whiteboard").next().nimm("brecheisen").next(); // Darf nicht sein, da das Ding nicht in Raum 1 ist.
         Assert.assertEquals(0, dungeon.getPlayer().getInventory().getSize());
         out = out.gehe("süd").next().nimm("truhe").next().untersuche("truhe").next();
         Assert.assertEquals(0, dungeon.getPlayer().getInventory().getSize());
@@ -167,8 +166,7 @@ public class TextieTest {
 	Assert.assertEquals(dungeon.findRoomByNumber(1),
 	dungeon.getCurrentRoom());
 	System.out.println("Gehe in Raum 4");
-	out = out.benutze("schalter").next()
-	.gehe("west").next()
+	out = out.gehe("west").next()
 	.untersuche("raum").next();
 	Assert.assertEquals(dungeon.findRoomByNumber(4),
 	dungeon.getCurrentRoom());
