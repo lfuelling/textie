@@ -17,6 +17,7 @@ public abstract class BaseRoomBuilder implements Builder<Room> {
     private List<DoorBuilder> dbs = new ArrayList<>();
     private HumanBuilder hb = new HumanBuilder();
     private GhostBuilder gb = new GhostBuilder();
+    private MobileHumanBuilder mb = new MobileHumanBuilder();
 
     public BaseRoomBuilder(Dungeon dungeon){
         this.room = createInstance(dungeon);
@@ -55,7 +56,10 @@ public abstract class BaseRoomBuilder implements Builder<Room> {
         return this;
     }
 
-
+    public BaseRoomBuilder addMobileHuman(MobileHumanBuilder mb) {
+        this.mb = mb;
+        return this;
+    }
 
     @Override
     public BaseRoomBuilder build() {
@@ -68,6 +72,7 @@ public abstract class BaseRoomBuilder implements Builder<Room> {
         }
         room.setHuman(hb.get());
         room.setGhost(gb.get());
+        room.setMobileHuman(mb.get());
         return this;
     }
 

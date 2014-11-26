@@ -20,6 +20,7 @@ public class Room implements Serializable, Examineable {
     protected Dungeon dungeon;
     protected ArrayList<Door> doors = new ArrayList<>();
     protected Ghost ghost;
+    protected MobileHuman mobileHuman;
 
 
     public Room(Dungeon dungeon) {
@@ -186,6 +187,10 @@ public class Room implements Serializable, Examineable {
 
     public void setGhost(Ghost ghost) {
         this.ghost = ghost;
+    }
+
+    public void setMobileHuman(MobileHuman mobileHuman) {
+        this.mobileHuman = mobileHuman;
     }
 
     @Override
