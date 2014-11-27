@@ -13,6 +13,7 @@ public class Textie implements Serializable {
 
     private static final long serialVersionUID = -6980176018028225023L;
     public static boolean diag;
+    public static boolean webapp = false;
     public static String savegame;
     public static String lastPrintedText = "";
 
@@ -229,13 +230,17 @@ public class Textie implements Serializable {
      * @param text The text you want to print.
      */
     public static void printText(String text, Dungeon dungeon) {
-        if (Textie.diag == true && dungeon != null) {
-            System.out.println(dungeon.getCurrentRoom() == null ? text : "[" + dungeon.getCurrentRoom().getRoomNumber() + "], " + text);
+        if(webapp) {
+            lastPrintedText = lastPrintedText + "\n" + text;
         } else {
-            System.out.println(text);
-        }
+            if(Textie.diag == true && dungeon != null) {
+                System.out.println(dungeon.getCurrentRoom() == null ? text : "[" + dungeon.getCurrentRoom().getRoomNumber() + "], " + text);
+            } else {
+                System.out.println(text);
+            }
 
-        lastPrintedText = text;
+            lastPrintedText = text;
+        }
     }
 
     /**
