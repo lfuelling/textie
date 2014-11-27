@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>de.micromata.azubi</groupId>
+  <artifactId>textie</artifactId>
+  <versioning>
+    <versions>
+      <version>4.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20141127121312</lastUpdated>
+  </versioning>
+</metadata>
