@@ -2,6 +2,8 @@ package test.de.micromata.azubi;
 
 
 
+
+import de.micromata.azubi.model.MobileHuman;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,6 +11,7 @@ import org.junit.Test;
 
 import de.micromata.azubi.Textie;
 import de.micromata.azubi.model.Dungeon;
+
 
 
 
@@ -466,6 +469,15 @@ public class TextieTest {
 	Assert.assertTrue("[Raum 1]--(WEST)--[Raum 4]--(OST)--".equals(Textie.lastPrintedText));
 	}
 
-
+	@Test
+	public void testMobileHuman() {
+			TextieOutputTester out = new TextieInputTester(dungeon).next(); 
+		MobileHuman mH = new MobileHuman();
+		out = out.gehe("süd").next();
+		out = out.gehe("nord").next();
+		Assert.assertNotNull(mH.getPosition());
+		out = out.gehe("ost").next();
+		Assert.assertNotNull(mH.getPosition());
+	}
 
 }

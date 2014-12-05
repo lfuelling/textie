@@ -25,4 +25,6 @@ public class MobileHuman {
     public void setPosition(Room position) {
         this.position = position;
     }
+    public Room getPosition() {
+    return this.position;  }
 }
