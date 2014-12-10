@@ -13,6 +13,9 @@ public class MobileHuman {
     // Soll ähnlich wie der Geist auf Bewegen des Spielers sich mit bewegen.
     public void move() {
         nextRoomNumber = (int) (Math.random() *3+1 ); // nur Raum 1 - 3 , wegen dem Rede Befehl.
+        if (position == null || dungeon.findRoomByNumber(nextRoomNumber) == dungeon.getCurrentRoom()  ) {
+            return;
+        }
         setPosition(dungeon.findRoomByNumber(nextRoomNumber));
     }
 
