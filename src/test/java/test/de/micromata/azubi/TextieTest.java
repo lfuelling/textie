@@ -473,6 +473,7 @@ public class TextieTest {
 	public void testMobileHuman() {
 			TextieOutputTester out = new TextieInputTester(dungeon).next(); 
 		MobileHuman mH = new MobileHuman();
+		mH.setPosition(dungeon.findRoomByNumber(2));
 		out = out.gehe("süd").next();
 		out = out.gehe("nord").next();
 		Assert.assertNotNull(mH.getPosition());
