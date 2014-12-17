@@ -318,7 +318,7 @@ public class Dungeon implements Serializable {
                     Textie.printText("Tür verschlossen.", this);
                 } else {
                     Textie.printText("Du öffnest die Tür", this);
-                    currentRoomNumber = nextRoom.getRoomNumber();
+                    this.currentRoomNumber = nextRoom.getRoomNumber();
                     currentRoom.setLeaveRoom(true);
 
                     //previousRoomNumber = raums.indexOf(currentRaum);

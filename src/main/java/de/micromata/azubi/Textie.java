@@ -46,7 +46,9 @@ public class Textie implements Serializable {
         printText("und bist froh, dass du aufgewacht bist.", dungeon);
         if (diag) {
             printText("Programm wird aufgrund des Diagnosemodus nicht beendet. Bitte Ctrl+C drücken.", dungeon);
-        } else {
+        } else if(webapp){
+            printText("\n\n\nUm erneut zu Spielen, logge dich erneut ein!");
+        }else{
             System.exit(0);
         }
         return true;
