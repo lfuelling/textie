@@ -6,8 +6,6 @@ import com.fasterxml.jackson.core.JsonParser;
 import de.micromata.azubi.IOUtils;
 import de.micromata.azubi.Textie;
 import de.micromata.azubi.builder.*;
-
-import javax.xml.soap.Text;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -53,7 +51,27 @@ public class Dungeon implements Serializable {
      */
     public static Dungeon createDungeon() {
 
-        return init();
+        List<LinkedHashMap> roomList = null;
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.getFactory().enable(JsonParser.Feature.ALLOW_COMMENTS);
+        try {
+            roomList = mapper.readValue(new File("config/TextieConf.json"), List.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return init(roomList);
+    }
+
+    public static Dungeon createDungeon(String config){
+        List<LinkedHashMap> roomList = null;
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.getFactory().enable(JsonParser.Feature.ALLOW_COMMENTS);
+        try {
+            roomList = mapper.readValue(config, List.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return init(roomList);
     }
 
     /**
@@ -61,16 +79,7 @@ public class Dungeon implements Serializable {
      *
      * @return
      */
-    private static Dungeon init() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.getFactory().enable(JsonParser.Feature.ALLOW_COMMENTS);
-        List<LinkedHashMap> roomList = null;
-        try {
-            roomList = mapper.readValue(new File("config/TextieConf.json"), List.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    private static Dungeon init(List<LinkedHashMap> roomList) {
         DungeonBuilder dungeonBuilder = new DungeonBuilder(new Dungeon());
         PlayerBuilder fremder = new PlayerBuilder().addName("Fremder").add(new InventoryBuilder().addSize(5).build()).build();
         dungeonBuilder.add(fremder);

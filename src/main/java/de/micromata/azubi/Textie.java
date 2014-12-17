@@ -13,10 +13,9 @@ public class Textie implements Serializable {
 
     private static final long serialVersionUID = -6980176018028225023L;
     public static boolean diag;
-    public static boolean webapp = false;
+    public static boolean webapp;
     public static String savegame;
     public static String lastPrintedText = "";
-
     public static void main(String[] args) {
 
         try {
