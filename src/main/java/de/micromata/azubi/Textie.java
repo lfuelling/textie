@@ -4,6 +4,8 @@ package de.micromata.azubi;
 import java.io.*;
 
 import de.micromata.azubi.model.*;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
@@ -11,16 +13,19 @@ import de.micromata.azubi.model.*;
  */
 public class Textie implements Serializable {
 
-    private static final long serialVersionUID = -6980176018028225023L;
+    public static final String version = "4.5"; // Needs to be the same as in pom.xml
+    
+    private static final Logger logger = LogManager.getLogger(Textie.class);
     public static boolean diag;
     public static boolean webapp;
     public static String savegame;
     public static String lastPrintedText = "";
     public static void main(String[] args) {
-
+        logger.trace("Textie V." + getVersion() + " starting.");
         try {
             if (args[0].equals("--diag")) {
                 diag = true;
+                logger.info("Diagnostic mode active!");
             } else {
                 diag = false;
             }
@@ -30,7 +35,6 @@ public class Textie implements Serializable {
 
         Dungeon dungeon = Dungeon.createDungeon();
         dungeon.runGame();
-        System.exit(0);
     }
 
 
@@ -49,6 +53,7 @@ public class Textie implements Serializable {
         } else if(webapp){
             printText("\n\n\nUm erneut zu Spielen, logge dich erneut ein!");
         }else{
+            logger.trace("Exiting application.");
             System.exit(0);
         }
         return true;
@@ -62,6 +67,7 @@ public class Textie implements Serializable {
         if (withPrompt == true) {
             Textie.prompt(dungeon);
         } else {
+            logger.info("No prompt selected. Assuming we're running tests.");
 //            Runnable wait = new Runnable() {
 //                @Override
 //                public void run() {
@@ -84,7 +90,7 @@ public class Textie implements Serializable {
      */
     public static void executeCommand(String[] parsed_command, String[] parsed_args, Dungeon dungeon) {
         if (dungeon.getCurrentRoom() == null) {
-            System.err.println("currentRaum nicht da");
+            logger.error("currentRaum is not set!");
             // Kein raum nichts tun
             return;
         }
@@ -283,8 +289,7 @@ public class Textie implements Serializable {
             output.close();
         } catch (IOException ex) {
             ex.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Whoops, an IOException occured. Sorry. \n", ex);
         }
         printText("Gespeichert!", dungeon);
     }
@@ -303,15 +308,15 @@ public class Textie implements Serializable {
             Dungeon loadedDungeon = (Dungeon) input.readObject();
             dungeon = loadedDungeon;
 
-        } catch (ClassNotFoundException ex) {
+        }  catch (IOException ex) {
             ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Whoops, an IOException occured. Sorry. \n", ex);
+        } catch(ClassNotFoundException e) {
+            e.printStackTrace();
+            logger.error("Whoops, an ClassNotFoundException occured. Sorry. \n", e);
         }
 
-        printText("Geladen", dungeon);
+        printText("Geladen", dungeon); // geladen und entsichert.
     }
 
     /**
@@ -345,5 +350,13 @@ public class Textie implements Serializable {
         return item;
     }
 
+    public static String getVersion() {
 
+        return version;
+    }
+
+    public static Logger getLogger() {
+
+        return logger;
+    }
 }
