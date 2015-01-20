@@ -1,6 +1,7 @@
 package de.micromata.azubi;
 
 /**
+ * WTH is this?
  * Created by jsiebert on 31.10.14.
  */
 public class Utils {
@@ -10,5 +11,4 @@ public class Utils {
     public static long nextId() {
         return nextid++;
     }
-
 }

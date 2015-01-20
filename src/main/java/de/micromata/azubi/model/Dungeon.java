@@ -56,7 +56,7 @@ public class Dungeon implements Serializable {
         try {
             roomList = mapper.readValue(new File("config/TextieConf.json"), List.class);
         } catch (IOException e) {
-            e.printStackTrace();
+        	Textie.getLogger().error(e);
         }
         return init(roomList);
     }
@@ -68,7 +68,7 @@ public class Dungeon implements Serializable {
         try {
             roomList = mapper.readValue(config, List.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            Textie.getLogger().error(e);
         }
         return init(roomList);
     }
@@ -115,7 +115,7 @@ public class Dungeon implements Serializable {
                         rewardItemBuilder = new ToggleItemBuilder().setState((boolean) rewardItem.get("state"));
                         break;
                     default:
-                        System.out.println("Fehler in der Konfiguration. Fehlerhafte Klasse in rewardItem");
+                        Textie.getLogger().error("Fehler in der Konfiguration. Fehlerhafte Klasse in rewardItem");
                 }
                 rewardItemBuilder.setName((String) rewardItem.get("name")).setBenutzeText((String) rewardItem.get("useText")).setUntersucheText((String) rewardItem.get("examineText")).build();
                 hb.setRewarditem(rewardItemBuilder).build();
@@ -169,7 +169,7 @@ public class Dungeon implements Serializable {
                         }
                         break;
                     default:
-                        System.out.println("Fehler in der Konfiguration. Fehlerhafte Klasse in Item");
+                        Textie.getLogger().error("Fehler in der Konfiguration. Fehlerhafte Klasse in Item");
                 }
                 itemBuilder.setName((String) item.get("name"))
                         .setPickable((boolean) item.get("pickable"))
@@ -227,6 +227,7 @@ public class Dungeon implements Serializable {
         if (firstTestRun == true) {
             // TODO In der Initialisierung Block verschieben.
             // Dann kann auch die unterscheidung weg fallen.
+        														// Und was, wenn nicht?
             firstTestRun = false;
             initializeGame();
         }
