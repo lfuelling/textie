@@ -86,6 +86,11 @@ public class Textie implements Serializable {
             logger.error("currentRaum ist nicht gesetzt!");
             return;
         }
+        String Zcommand = "";
+        for (String str:parsed_command) {
+        	Zcommand = Zcommand + str;
+        }
+        logger.trace("Befehl: " + Zcommand);
         int count = 0;
         int args = 0;
         for (String aParsed_command : parsed_command) {
@@ -149,7 +154,7 @@ public class Textie implements Serializable {
                                         printText("Du musst ein Item angeben.");
                                     } else {
                                         printText("Unbekanntes Item: " + parsed_command[1], dungeon);
-                                        logger.trace("Unbekanntes Item: " + parsed_command[1]);
+                                        logger.info("Unbekanntes Item: " + parsed_command[1]);
                                         break;
                                     }
                             }
@@ -157,7 +162,7 @@ public class Textie implements Serializable {
                             Item item = dungeon.getCurrentRoom().getInventory().findItemByName(parsed_command[1]);
                             if(item == null){
                                 printText("Unbekanntes Item:" + parsed_command[1], dungeon);
-                                logger.trace("Unbekanntes Item: " + parsed_command[1]);
+                                logger.info("Unbekanntes Item: " + parsed_command[1]);
                             }else {
                                 dungeon.getCurrentRoom().getInventory().transferItem(dungeon.getPlayer().getInventory(), item);
                                 Textie.printText(item.getName() + " zum Inventar hinzugefügt.");
@@ -326,13 +331,15 @@ public class Textie implements Serializable {
      * Get an Item.
      *
      * @param item The item you want.
-     * @return Returns true if you could take it.
+     * @return Returns true if you took it.
      */
     public static boolean recieveItem(Item item, Inventory inventory) {
         if (inventory.getSize() < inventory.getMaxSlots()) {
             inventory.addItem(item);
+            logger.trace(item.getName() + " zum Inventar hinzugefügt.");
             return true;
         } else {
+        	logger.trace("Dein Inventar ist voll.");
             return false;
         }
     }
@@ -345,10 +352,16 @@ public class Textie implements Serializable {
      */
     public static Item chooseInventory(String itemName, Dungeon dungeon) {
         Item item = null;
+        logger.trace("Suche nach " + itemName + " (chooseInventory)");
         if (dungeon.getPlayer().getInventory().findItemByName(itemName) != null) {
             item = dungeon.getPlayer().getInventory().findItemByName(itemName);
+            logger.trace(itemName + " ist im Inventar.");
         } else if (dungeon.getCurrentRoom().getInventory().findItemByName(itemName) != null) {
             item = dungeon.getCurrentRoom().getInventory().findItemByName(itemName);
+            logger.trace(itemName + " ist im Raum.");
+        }
+        if (item == null){
+        	logger.error("Item " + itemName + " konnte nicht gefunden werden.");
         }
         return item;
     }
@@ -359,7 +372,6 @@ public class Textie implements Serializable {
     }
 
     public static Logger getLogger() {
-
         return logger;
     }
 }
