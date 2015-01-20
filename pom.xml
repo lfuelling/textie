@@ -65,7 +65,7 @@
 	</build>
 
 	<name>Textie</name>
-	<url>https://github.com/lfuelling/textie</url>
+	<url>http://git.io/GEXJiQ</url>
 	<description>A text adventure Frameworks, written in Java.</description>
 	<ciManagement>
 		<system>Jenkins</system>

@@ -25,15 +25,17 @@ public class Textie implements Serializable {
         try {
             if (args[0].equals("--diag")) {
                 diag = true;
-                logger.info("Diagnosemodus gestartet!");
+                logger.trace("Diagnosemodus gestartet!");
             } else {
                 diag = false;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             diag = false;
+            logger.trace("Eine ArrayIndexOutOfBoundsException wurde geworfen, wahrscheinlich gibt es keine Argumente.");
         }
 
         Dungeon dungeon = Dungeon.createDungeon();
+        logger.trace("Dungeon erstellt, starte das Spiel.");
         dungeon.runGame();
     }
 
@@ -65,6 +67,7 @@ public class Textie implements Serializable {
      */
     public static void wait(Dungeon dungeon, boolean withPrompt) {
         if (withPrompt == true) {
+        	logger.trace("Prompt wird gestartet.");
             Textie.prompt(dungeon);
         } else {
             logger.info("Keine Konsole ausgewählt. Testmodus aktiv.");
@@ -80,7 +83,7 @@ public class Textie implements Serializable {
      */
     public static void executeCommand(String[] parsed_command, String[] parsed_args, Dungeon dungeon) {
         if (dungeon.getCurrentRoom() == null) {
-            logger.error("currentRaum is not set!");
+            logger.error("currentRaum ist nicht gesetzt!");
             return;
         }
         int count = 0;
@@ -110,17 +113,19 @@ public class Textie implements Serializable {
                     Textie.printText("Unbekannter Befehl oder fehlende Argumente: "
                             + parsed_command[0], dungeon);
                     
-                    logger.warn("Couldn't understand: " + parsed_command[0]);
+                    logger.warn("Unbekannter Befehl: " + parsed_command[0]);
                     break;
             }
         } else {
             Item itemToUse = chooseInventory(parsed_command[1], dungeon);
             if ("benutze".equalsIgnoreCase(parsed_command[0]) && itemToUse == null) {
                 printText("Das Item gibt es nicht!");
+                logger.warn("Objekt " + parsed_command[1] + " nicht gefunden." );
             } else {
                 switch (parsed_command[0]) {
                     case Command.HILFE:
                         printHelp(dungeon);
+                        logger.trace("Hilfe ausgegeben.");
                         break;
                     case Command.NIMM:
                         if (args > 1) { // (ACHTUNG: auch bei "nimm blauen hut" wird mehr als ein Argument erkannt)
@@ -129,6 +134,7 @@ public class Textie implements Serializable {
                                     StorageItem truhe = (StorageItem) dungeon.getCurrentRoom().getInventory().findItemByName("Truhe");
                                     if (truhe == null) {
                                         printText("Hier gibt es keine Truhe", dungeon);
+                                        logger.trace("Keine Truhe in Raum " + dungeon.getCurrentRoom().getRoomNumber());
                                     } else {
                                         Item item = truhe.getInventory().findItemByName(parsed_args[0]);
                                         if (item == null) {
@@ -143,6 +149,7 @@ public class Textie implements Serializable {
                                         printText("Du musst ein Item angeben.");
                                     } else {
                                         printText("Unbekanntes Item: " + parsed_command[1], dungeon);
+                                        logger.trace("Unbekanntes Item: " + parsed_command[1]);
                                         break;
                                     }
                             }
@@ -150,6 +157,7 @@ public class Textie implements Serializable {
                             Item item = dungeon.getCurrentRoom().getInventory().findItemByName(parsed_command[1]);
                             if(item == null){
                                 printText("Unbekanntes Item:" + parsed_command[1], dungeon);
+                                logger.trace("Unbekanntes Item: " + parsed_command[1]);
                             }else {
                                 dungeon.getCurrentRoom().getInventory().transferItem(dungeon.getPlayer().getInventory(), item);
                                 Textie.printText(item.getName() + " zum Inventar hinzugefügt.");
@@ -182,6 +190,7 @@ public class Textie implements Serializable {
                         break;
                     default:
                         printText("Unbekannter Befehl: " + parsed_command[0], dungeon);
+                        logger.trace("Unbekannter Befehl: " + parsed_command[0]);
                         break;
                 }
             }
@@ -193,6 +202,7 @@ public class Textie implements Serializable {
             String command = IOUtils.readLine("Was willst du tun? ");
             try {
                 if (command.equals("")) {
+                	Textie.printText("Keine Eingabe.");
                 } else {
                     String[] parsed_command = Textie.parseInput(command);
 
@@ -205,7 +215,6 @@ public class Textie implements Serializable {
                     Textie.executeCommand(parsed_command, parsed_args, dungeon);
                 }
             } catch (NullPointerException e) {
-                Textie.printText("Keine Eingabe.");
                 logger.fatal(e);
             }
         } while (dungeon.getCurrentRoom().isLeaveRoom() == false);
@@ -272,15 +281,17 @@ public class Textie implements Serializable {
     public static void doSave(Dungeon dungeon) {
 
         try (
-                OutputStream file = new FileOutputStream("savegame.save");
+                OutputStream file = new FileOutputStream("savegame.save"); //FIXME Ich hätte ja daraus eine Variable gemacht, allerdings implementiert java.lang.String nicht java.lang.AutoCloseable...
                 OutputStream buffer = new BufferedOutputStream(file);
                 ObjectOutput output = new ObjectOutputStream(buffer);
         ) {
+            logger.trace("Versuche Savegame zu schreiben...");
             output.writeObject(dungeon);
             output.close();
+            logger.info("Geschrieben und gespeichert als: " + "savegame.save"); 
         } catch (IOException ex) {
             ex.printStackTrace();
-            logger.error("Whoops, an IOException occured. Sorry. \n", ex);
+            logger.error("IOException geworfen: ", ex);
         }
         printText("Gespeichert!", dungeon);
     }
@@ -289,25 +300,26 @@ public class Textie implements Serializable {
      * Loads
      */
     public static void doLoad(Dungeon dungeon) {
-
+    	logger.trace("Versuche Savegame zu laden...");
         try (
                 InputStream file = new FileInputStream("savegame.save");
                 InputStream buffer = new BufferedInputStream(file);
                 ObjectInput input = new ObjectInputStream(buffer);
         ) {
-            //deserialize the List
+        	logger.trace("Lese Savegame...");
             Dungeon loadedDungeon = (Dungeon) input.readObject();
             dungeon = loadedDungeon;
 
         }  catch (IOException ex) {
             ex.printStackTrace();
-            logger.error("Whoops, an IOException occured. Sorry. \n", ex);
+            logger.error("IOException geworfen: ", ex);
         } catch(ClassNotFoundException e) {
             e.printStackTrace();
-            logger.error("Whoops, an ClassNotFoundException occured. Sorry. \n", e);
+            logger.error("ClassNotFoundException geworfen: ", e);
         }
 
-        printText("Geladen", dungeon); // geladen und entsichert.
+        printText("Geladen", dungeon);
+        logger.trace("Savegame erfolgreich geladen.");
     }
 
     /**
