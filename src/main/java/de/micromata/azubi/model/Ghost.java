@@ -9,8 +9,7 @@ package de.micromata.azubi.model;
         import java.util.List;
 
 public class Ghost implements Serializable{
-
-    private static final long serialVersionUID = -6334257305676290673L;private String name ="Geist";
+	private String name ="Geist";
     private String dialog ="Geist";
     private int nextRoomNumber;
     private Room position;

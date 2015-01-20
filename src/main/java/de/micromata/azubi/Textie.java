@@ -4,8 +4,8 @@ package de.micromata.azubi;
 import java.io.*;
 
 import de.micromata.azubi.model.*;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Lukas F&uuml;lling (l.fuelling@micromata.de)
@@ -13,19 +13,19 @@ import org.apache.log4j.Logger;
  */
 public class Textie implements Serializable {
 
-    public static final String version = "4.5"; // Needs to be the same as in pom.xml
+	public static final String version = "4.5"; // Needs to be the same as in pom.xml
     
-    private static final Logger logger = LogManager.getLogger(Textie.class);
+    private static final Logger logger = LogManager.getLogger(Textie.class.getName());
     public static boolean diag;
     public static boolean webapp;
     public static String savegame;
     public static String lastPrintedText = "";
     public static void main(String[] args) {
-        logger.trace("Textie V." + getVersion() + " starting.");
+        logger.trace("Textie V." + getVersion() + " geladen.");
         try {
             if (args[0].equals("--diag")) {
                 diag = true;
-                logger.info("Diagnostic mode active!");
+                logger.info("Diagnosemodus gestartet!");
             } else {
                 diag = false;
             }
@@ -53,7 +53,7 @@ public class Textie implements Serializable {
         } else if(webapp){
             printText("\n\n\nUm erneut zu Spielen, logge dich erneut ein!");
         }else{
-            logger.trace("Exiting application.");
+            logger.trace("Spiel beendet.");
             System.exit(0);
         }
         return true;
@@ -67,7 +67,7 @@ public class Textie implements Serializable {
         if (withPrompt == true) {
             Textie.prompt(dungeon);
         } else {
-            logger.info("No prompt selected. Assuming we're running tests.");
+            logger.info("Keine Konsole ausgewählt. Testmodus aktiv.");
 //            Runnable wait = new Runnable() {
 //                @Override
 //                public void run() {
@@ -120,6 +120,8 @@ public class Textie implements Serializable {
                 default:
                     Textie.printText("Unbekannter Befehl oder fehlende Argumente: "
                             + parsed_command[0], dungeon);
+                    
+                    logger.warn("Couldn't understand: " + parsed_command[0]);
                     break;
             }
         } else {
@@ -215,7 +217,7 @@ public class Textie implements Serializable {
                 }
             } catch (NullPointerException e) {
                 Textie.printText("Keine Eingabe.");
-                e.printStackTrace();
+                logger.fatal(e);
             }
         } while (dungeon.getCurrentRoom().isLeaveRoom() == false);
     }

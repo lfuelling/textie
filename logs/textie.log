@@ -1,0 +1,36 @@
+2015-01-20 09:39:40,631 TRACE d.m.a.Textie [main] Textie V.4.5 starting.
+2015-01-20 09:39:51,562 WARN d.m.a.Textie [main] Couldn't understand: benisfarmen
+2015-01-20 09:41:24,554 FATAL d.m.a.Textie [main] java.lang.NullPointerException
+2015-01-20 09:41:24,554 FATAL d.m.a.Textie [main] java.lang.NullPointerException
+2015-01-20 09:41:24,554 FATAL d.m.a.Textie [main] java.lang.NullPointerException
+2015-01-20 09:41:24,555 FATAL d.m.a.Textie [main] java.lang.NullPointerException
+2015-01-20 09:41:24,555 FATAL d.m.a.Textie [main] java.lang.NullPointerException
+2015-01-20 09:41:24,555 FATAL d.m.a.Textie [main] java.lang.NullPointerException
+2015-01-20 09:41:39,354 [TRACE] d.m.a.Textie [main] Textie V.4.5 starting.
+2015-01-20 09:41:53,555 [WARN] d.m.a.Textie [main] Couldn't understand: benisfarmen
+2015-01-20 09:41:56,025 [WARN] d.m.a.Textie [main] Couldn't understand: egal
+2015-01-20 09:42:17,316 [ERROR] d.m.a.Textie [main] Whoops, an IOException occured. Sorry. 
+
+java.io.NotSerializableException: de.micromata.azubi.model.MobileHuman
+	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1183) ~[?:1.7.0_71]
+	at java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:1547) ~[?:1.7.0_71]
+	at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1508) ~[?:1.7.0_71]
+	at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1431) ~[?:1.7.0_71]
+	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1177) ~[?:1.7.0_71]
+	at java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:1547) ~[?:1.7.0_71]
+	at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1508) ~[?:1.7.0_71]
+	at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1431) ~[?:1.7.0_71]
+	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1177) ~[?:1.7.0_71]
+	at java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:1547) ~[?:1.7.0_71]
+	at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1508) ~[?:1.7.0_71]
+	at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1431) ~[?:1.7.0_71]
+	at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1177) ~[?:1.7.0_71]
+	at java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:347) ~[?:1.7.0_71]
+	at de.micromata.azubi.Textie.doSave(Textie.java:290) [classes/:?]
+	at de.micromata.azubi.Textie.executeCommand(Textie.java:115) [classes/:?]
+	at de.micromata.azubi.Textie.prompt(Textie.java:216) [classes/:?]
+	at de.micromata.azubi.Textie.wait(Textie.java:68) [classes/:?]
+	at de.micromata.azubi.model.Room.start(Room.java:63) [classes/:?]
+	at de.micromata.azubi.model.Dungeon.runGame(Dungeon.java:209) [classes/:?]
+	at de.micromata.azubi.Textie.main(Textie.java:37) [classes/:?]
+2015-01-20 09:42:33,775 [TRACE] d.m.a.Textie [main] Exiting application.

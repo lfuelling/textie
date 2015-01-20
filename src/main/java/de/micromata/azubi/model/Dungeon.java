@@ -18,11 +18,10 @@ import java.util.*;
  * @see java.io.Serializable
  */
 public class Dungeon implements Serializable {
-    private static final long serialVersionUID = -7870743513679247263L;
     private ArrayList<Room> rooms = new ArrayList<>();
-    private int currentRoomNumber; //Index des aktuellen Raumes in der RaumListe FIXME In Spieler
+    private int currentRoomNumber;
     private Player player;
-    private HashMap<ToggleItem, Door> doorSchalter = new HashMap<>();//FIXME ab in den Raum
+    private HashMap<ToggleItem, Door> doorSchalter = new HashMap<>();
 
     private Dungeon() {
     }

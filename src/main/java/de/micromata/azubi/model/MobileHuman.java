@@ -1,9 +1,11 @@
 package de.micromata.azubi.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Daniel on 26.11.2014.
  */
-public class MobileHuman {
+public class MobileHuman implements Serializable {
     private String name;
     private String dialog;
     private int nextRoomNumber;
