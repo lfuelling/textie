@@ -1,5 +1,11 @@
 package de.micromata.azubi;
 
+
+/**
+ * Items and NPC names.
+ * @author Lukas Fülling (l.fuelling@micromata.de)
+ * @see de.micromata.azubi.Textie
+ */
 public class Consts {
 
     //ITEMs

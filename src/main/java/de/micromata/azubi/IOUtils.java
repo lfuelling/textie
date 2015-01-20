@@ -18,7 +18,7 @@ public class IOUtils {
         try {
             eingabe = br.readLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            Textie.getLogger().error(e);
         }
         return eingabe;
     }
@@ -52,7 +52,7 @@ public class IOUtils {
             // Schließt den Stream
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Textie.getLogger().error(e);
         }
     }
 
@@ -70,10 +70,10 @@ public class IOUtils {
                     savegame = zeile;
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+            	Textie.getLogger().error(e);
             }
         } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
+        	Textie.getLogger().error(e1);
         }
         return savegame;
     }

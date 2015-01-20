@@ -1,7 +1,8 @@
 package de.micromata.azubi;
 
 /**
- * Created by lfuelling on 25.09.14.
+ * Commands we can use in the tests.
+ * @author Lukas Fülling (l.fuelling@micromata.de)
  */
 public interface Command {
     static final String HILFE = "hilfe";
