@@ -118,6 +118,28 @@ public class TextieOutputTester {
 				new String[] { item }, dungeon);
 		return new TextieInputTester(this.dungeon);
 	}
+	
+	/**
+	 * Ermöglicht es, zu speichern.
+	 * 
+	 * @return gibt den Test weiter.
+	 * @see de.micromata.azubi.Textie#savegame
+	 */
+	public TextieInputTester speichern() {
+		Textie.executeCommand(new String[]{Command.SPEICHERN}, new String[]{}, dungeon);
+		return new TextieInputTester(this.dungeon);
+	}
+	
+	/**
+	 * Ermöglicht es, zu laden.
+	 * 
+	 * @return gibt den Test weiter.
+	 * @see de.micromata.azubi.Textie#savegame
+	 */
+	public TextieInputTester laden() {
+		Textie.executeCommand(new String[]{Command.LADEN}, new String[]{}, dungeon);
+		return new TextieInputTester(this.dungeon);
+	}
 
 	/**
 	 * Gibt die hilfe aus.
