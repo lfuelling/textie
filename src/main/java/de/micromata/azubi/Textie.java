@@ -68,16 +68,6 @@ public class Textie implements Serializable {
             Textie.prompt(dungeon);
         } else {
             logger.info("Keine Konsole ausgewählt. Testmodus aktiv.");
-//            Runnable wait = new Runnable() {
-//                @Override
-//                public void run() {
-//                    do {
-//                    } while (Dungeon.getDungeon().getCurrentRoom().isLeaveRoom() == false);
-//                }
-//            };
-//
-//            Thread thread = new Thread(wait);
-//            thread.start();
         }
     }
 
@@ -91,7 +81,6 @@ public class Textie implements Serializable {
     public static void executeCommand(String[] parsed_command, String[] parsed_args, Dungeon dungeon) {
         if (dungeon.getCurrentRoom() == null) {
             logger.error("currentRaum is not set!");
-            // Kein raum nichts tun
             return;
         }
         int count = 0;
