@@ -15,7 +15,7 @@ public class Textie implements Serializable {
 
 	public static final String version = "4.5"; // Needs to be the same as in pom.xml
     
-    private static final Logger logger = LogManager.getLogger(Textie.class.getName());
+    private static Logger logger = LogManager.getLogger(Textie.class.getName());
     public static boolean diag;
     public static boolean webapp;
     public static String savegame;
@@ -31,7 +31,7 @@ public class Textie implements Serializable {
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             diag = false;
-            logger.trace("Eine ArrayIndexOutOfBoundsException wurde geworfen, wahrscheinlich gibt es keine Argumente.");
+            logger.error("Eine ArrayIndexOutOfBoundsException wurde geworfen, wahrscheinlich gibt es keine Argumente.");
         }
 
         Dungeon dungeon = Dungeon.createDungeon();
@@ -274,7 +274,7 @@ public class Textie implements Serializable {
         printText("\tnimm [gegenstand] -> Gegenstand zum Inventar hinzufügen", dungeon);
         printText("\tnimm [gegenstand] aus truhe -> Gegenstand aus Truhe zum Inventar hinzufügen", dungeon);
         printText("\tbenutze [gegenstand] -> Gegenstand use", dungeon);
-        printText("\tuntersuche [gegenstand/raum/inventar] -> Gegenstand, Raum oder Inventar examine", dungeon);
+        printText("\tuntersuche [gegenstand/raum/inventar] -> Gegenstand, Raum oder Inventar untersuchen", dungeon);
         printText("\tvernichte [gegenstand] -> Gegenstand aus dem Inventar löschen", dungeon);
         printText("\tgehe [nord/süd/ost/west] -> In eine Richtung gehen", dungeon);
         printText("\trede [person] -> Rede mit einer Person", dungeon);
