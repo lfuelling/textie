@@ -220,6 +220,7 @@ public class Textie implements Serializable {
                     Textie.executeCommand(parsed_command, parsed_args, dungeon);
                 }
             } catch (NullPointerException e) {
+                printText("Das angegebene Argument ist ungültig.", dungeon);
                 logger.fatal(e);
             }
         } while (dungeon.getCurrentRoom().isLeaveRoom() == false);

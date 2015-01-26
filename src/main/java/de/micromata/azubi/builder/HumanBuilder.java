@@ -67,6 +67,11 @@ public class HumanBuilder implements Builder<Human> {
 
     @Override
     public Human get() {
-        return human;
+        if(name == null){
+            return null;
+        }
+        else {
+            return human;
+        }
     }
 }
