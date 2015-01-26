@@ -22,18 +22,19 @@ public class Textie implements Serializable {
     public static String lastPrintedText = "";
     public static void main(String[] args) {
         logger.trace("Textie V." + getVersion() + " geladen.");
-        try {
-            if (args[0].equals("--diag")) {
-                diag = true;
-                logger.trace("Diagnosemodus gestartet!");
-            } else {
+        if(args.length > 0) {
+            try {
+                if (args[0].equals("--diag")) {
+                    diag = true;
+                    logger.trace("Diagnosemodus gestartet!");
+                } else {
+                    diag = false;
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
                 diag = false;
+                logger.error("Eine ArrayIndexOutOfBoundsException wurde geworfen, wahrscheinlich gibt es keine Argumente.");
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            diag = false;
-            logger.error("Eine ArrayIndexOutOfBoundsException wurde geworfen, wahrscheinlich gibt es keine Argumente.");
         }
-
         Dungeon dungeon = Dungeon.createDungeon();
         logger.trace("Dungeon erstellt, starte das Spiel.");
         dungeon.runGame();
