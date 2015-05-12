@@ -1,7 +1,7 @@
 .textie 
 ======
 
-[![Build Status](http://ci.k40s.net/job/Textie/badge/icon)](http://ci.k40s.net/job/Textie/) ![Repo Size](https://reposs.herokuapp.com/?path=lfuelling/tips-tricks) ![Doge Badge](https://img.shields.io/badge/doge-wow-AB00FF.svg)
+[![Build Status](http://irkngthand.k40s.net/job/textie/badge/icon)](http://irkngthand.k40s.net/job/textie/) ![Repo Size](https://reposs.herokuapp.com/?path=lfuelling/tips-tricks) ![Doge Badge](https://img.shields.io/badge/doge-wow-AB00FF.svg)
 
 Ein Textadventure von @[lfuelling](https://github.com/lfuelling) und @[YuleZ](https://github.com/YuleZ). 
 
